@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Nili's Kitchen AI</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <img
+      src="logo.jpeg"
+      class="logo"
+    >
+
+    <h1>
+      Nili's Kitchen <span>AI</span>
+    </h1>
+
+    <p class="subtitle">
+      Cook with what you have
+    </p>
+
+    <!-- LANG -->
+
+    <select id="langSelect">
+
+      <option>
+        English
+      </option>
+
+    </select>
+
+    <!-- UPLOAD -->
+
+    <div
+      class="upload"
+      onclick="photo.click()"
+    >
+
+      <p id="statusText">
+        Upload ingredient photo
+      </p>
+
+      <div class="progress">
+
+        <div
+          class="bar"
+          id="bar"
+        ></div>
+
+      </div>
+
+    </div>
+
+    <input
+      type="file"
+      id="photo"
+      hidden
+      accept="image/*"
+    >
+
+    <!-- MANUAL -->
+
+    <div class="manual">
+
+      <input
+        id="manualInput"
+        placeholder="Add ingredient"
+      >
+
+      <button onclick="addManual()">
+        +
+      </button>
+
+    </div>
+
+    <!-- CATEGORY -->
+
+    <div
+      class="category"
+      id="category"
+    ></div>
+
+    <!-- CHECKLIST -->
+
+    <div
+      class="checklist"
+      id="checklist"
+    ></div>
+
+    <!-- CONFIRM -->
+
+    <label class="confirm">
+
+      <input
+        type="checkbox"
+        id="confirmCheck"
+      >
+
+      Confirm ingredients
+
+    </label>
+
+    <!-- BUTTON -->
+
+    <button
+      class="recipeBtn"
+      id="recipeBtn"
+    >
+
+      Get Recipes
+
+    </button>
+
+  </aside>
+
+  <!-- CONTENT -->
+
+  <main class="content">
+
+    <div id="screen"></div>
+
+  </main>
+
+  <!-- MODAL -->
+
+  <div
+    class="modal"
+    id="modal"
+  >
+
+    <div class="modal-content">
+
+      <div
+        class="close"
+        onclick="closeModal()"
+      >
+
+        ×
+
+      </div>
+
+      <div id="modalBody"></div>
+
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
