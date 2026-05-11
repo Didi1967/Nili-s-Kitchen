@@ -1,7 +1,7 @@
-/* ELEMENTS */
+let currentRecipes = [];
 
-const screen =
-document.getElementById("screen");
+
+/* ELEMENTS */
 
 const photo =
 document.getElementById("photo");
@@ -12,14 +12,8 @@ document.getElementById("statusText");
 const bar =
 document.getElementById("bar");
 
-const category =
-document.getElementById("category");
-
 const checklist =
 document.getElementById("checklist");
-
-const manualInput =
-document.getElementById("manualInput");
 
 const recipeBtn =
 document.getElementById("recipeBtn");
@@ -27,205 +21,314 @@ document.getElementById("recipeBtn");
 const confirmCheck =
 document.getElementById("confirmCheck");
 
+const result =
+document.getElementById("result");
+
 const modal =
 document.getElementById("modal");
 
 const modalBody =
 document.getElementById("modalBody");
 
+const manualInput =
+document.getElementById("manualInput");
+
+const langSelect =
+document.getElementById("langSelect");
+
+const subcategories =
+document.getElementById("subcategories");
+
 /* DATA */
 
 let selected = [];
 
-/* MOSAIC */
+let currentLang =
+localStorage.getItem("lang")
+|| "en";
 
-const DISHES = [
+/* CATEGORY DATA */
 
-  "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+const CATEGORY_DATA = {
 
-  "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
-
-  "https://images.unsplash.com/photo-1525755662778-989d0524087e",
-
-  "https://images.unsplash.com/photo-1498837167922-ddd27525d352"
-
-];
-
-/* CATEGORY */
-
-const CATEGORIES = {
-
-  Protein:[
-    "chicken",
-    "beef",
-    "egg",
-    "fish",
-    "salmon",
-    "shrimp"
-  ],
-
-  Carbs:[
-    "rice",
-    "pasta",
-    "bread",
-    "potato"
-  ],
-
-  Vegetables:[
+  vegetables:[
     "tomato",
     "onion",
-    "garlic",
-    "pepper",
-    "carrot",
-    "broccoli"
+    "potato",
+    "pepper"
   ],
 
-  Fruits:[
-    "apple",
-    "banana",
-    "orange",
-    "lemon"
+  meat:[
+    "chicken",
+    "beef",
+    "lamb",
+    "turkey"
   ],
 
-  Dairy:[
-    "milk",
-    "cheese",
-    "butter",
-    "yogurt"
+  seafood:[
+    "salmon",
+    "shrimp",
+    "tuna",
+    "mussels"
+  ],
+
+  vegan:[
+    "tofu",
+    "lentils",
+    "beans",
+    "mushroom"
+  ],
+
+  pasta:[
+    "spaghetti",
+    "penne",
+    "fusilli",
+    "lasagna"
+  ],
+
+  dessert:[
+    "chocolate",
+    "vanilla",
+    "strawberry",
+    "cream"
   ]
 
 };
 
-/* HOME */
+/* LANG */
 
-function renderHome(){
+const LANG = {
 
-  screen.innerHTML = `
+  en:{
 
-    <div class="mosaic">
+    subtitle:
+    "AI Recipe Assistant",
 
-      <div class="left-mosaic">
+    upload:
+    "Upload ingredients photo",
 
-        <img src="${DISHES[0]}">
+    add:
+    "Add ingredient",
 
-      </div>
+    confirm:
+    "Confirm ingredients",
 
-      <div class="right-mosaic">
+    recipes:
+    "Get Recipes",
 
-        <img src="${DISHES[1]}">
+    uploadTitle:
+    "📸 Upload Ingredients",
 
-        <img src="${DISHES[2]}">
+    manualTitle:
+    "✍ Manual Ingredient",
 
-        <img src="${DISHES[3]}">
+    categories:
+    "🥦 Categories",
 
-      </div>
+    vegetables:
+    "Vegetables",
 
-    </div>
+    meat:
+    "Meat",
 
-  `;
+    seafood:
+    "Seafood",
 
-}
+    vegan:
+    "Vegan",
 
-/* CATEGORY */
+    pasta:
+    "Pasta",
 
-function renderCategories(){
+    dessert:
+    "Dessert",
 
-  let html = "";
+    selectedTitle:
+    "✅ Selected Ingredients"
 
-  for(let k in CATEGORIES){
+  },
 
-    html += `
+  tr:{
 
-      <details open>
+    subtitle:
+    "AI Tarif Asistanı",
 
-        <summary>${k}</summary>
+    upload:
+    "Malzeme fotoğrafı yükle",
 
-    `;
+    add:
+    "Malzeme ekle",
 
-    CATEGORIES[k].forEach(x=>{
+    confirm:
+    "Malzemeleri onayla",
 
-      html += `
+    recipes:
+    "Tarifleri Getir",
 
-        <label>
+    uploadTitle:
+    "📸 Malzeme Yükle",
 
-          <input
-            type="checkbox"
-            onchange="
-              toggleIngredient(
-                '${x}',
-                this
-              )
-            "
-          >
+    manualTitle:
+    "✍ Manuel Malzeme",
 
-          ${x}
+    categories:
+    "🥦 Kategoriler",
 
-        </label>
+    vegetables:
+    "Sebzeler",
 
-      `;
+    meat:
+    "Et",
 
-    });
+    seafood:
+    "Deniz Ürünleri",
 
-    html += `</details>`;
+    vegan:
+    "Vegan",
+
+    pasta:
+    "Makarna",
+
+    dessert:
+    "Tatlı",
+
+    selectedTitle:
+    "✅ Seçilen Malzemeler"
 
   }
 
-  category.innerHTML = html;
+};
+
+/* APPLY LANGUAGE */
+
+function applyLanguage(){
+
+
+const t =
+LANG[currentLang]
+|| LANG.en;
+
+
+  document.documentElement.lang =
+  currentLang;
+
+  document.getElementById(
+    "appSubtitle"
+  ).innerText =
+  t.subtitle;
+
+  statusText.innerText =
+  t.upload;
+
+  manualInput.placeholder =
+  t.add;
+
+  document.getElementById(
+    "confirmText"
+  ).innerText =
+  t.confirm;
+
+  recipeBtn.innerText =
+  t.recipes;
+
+  document.getElementById(
+    "uploadTitle"
+  ).innerText =
+  t.uploadTitle;
+
+  document.getElementById(
+    "manualTitle"
+  ).innerText =
+  t.manualTitle;
+
+  document.getElementById(
+    "categoriesTitle"
+  ).innerText =
+  t.categories;
+
+  document.getElementById(
+    "selectedTitle"
+  ).innerText =
+  t.selectedTitle;
+
+  document.getElementById(
+    "catVegetables"
+  ).innerText =
+  t.vegetables;
+
+  document.getElementById(
+    "catMeat"
+  ).innerText =
+  t.meat;
+
+  document.getElementById(
+    "catSeafood"
+  ).innerText =
+  t.seafood;
+
+  document.getElementById(
+    "catVegan"
+  ).innerText =
+  t.vegan;
+
+  document.getElementById(
+    "catPasta"
+  ).innerText =
+  t.pasta;
+
+  document.getElementById(
+    "catDessert"
+  ).innerText =
+  t.dessert;
 
 }
 
-/* TOGGLE */
+/* LANGUAGE SWITCH */
 
-function toggleIngredient(v,e){
+langSelect.value =
+currentLang;
 
-  if(e.checked){
+langSelect.addEventListener(
+  "change",
+  ()=>{
 
-    selected.push(v);
+    currentLang =
+    langSelect.value;
 
-  }else{
+    localStorage.setItem(
+      "lang",
+      currentLang
+    );
 
-    selected =
-    selected.filter(x=>x!==v);
+    applyLanguage();
 
-  }
-
-  selected = [...new Set(selected)];
-
-  renderChecklist();
-
-}
+});
 
 /* CHECKLIST */
 
 function renderChecklist(){
 
-  checklist.innerHTML = `
+  checklist.innerHTML =
 
-    <h3>
-      Selected Ingredients
-    </h3>
+  selected.map(x=>`
 
-    ${selected.map(x=>`
+    <label class="check-item">
 
-      <label>
+      <input
+        type="checkbox"
+        checked
+        onchange="
+          removeIngredient(
+            '${x}'
+          )
+        "
+      >
 
-        <input
-          type="checkbox"
-          checked
-          onchange="
-            removeIngredient(
-              '${x}'
-            )
-          "
-        >
+      ${x}
 
-        ${x}
+    </label>
 
-      </label>
-
-    `).join("")}
-
-  `;
+  `).join("");
 
 }
 
@@ -234,7 +337,9 @@ function renderChecklist(){
 function removeIngredient(v){
 
   selected =
-  selected.filter(x=>x!==v);
+  selected.filter(
+    x=>x!==v
+  );
 
   renderChecklist();
 
@@ -249,17 +354,76 @@ function addManual(){
 
   if(!v) return;
 
-  selected.push(v.toLowerCase());
+  if(!selected.includes(v)){
 
-  selected = [...new Set(selected)];
+    selected.push(v);
 
-  manualInput.value = "";
+  }
+
+  manualInput.value =
+  "";
 
   renderChecklist();
 
 }
 
-/* UPLOAD */
+/* CATEGORY */
+
+document
+.querySelectorAll(
+  ".category-grid button"
+)
+.forEach(btn=>{
+
+  btn.addEventListener(
+    "click",
+    ()=>{
+
+      const key =
+      btn.dataset.category;
+
+      const items =
+      CATEGORY_DATA[key];
+
+      subcategories.innerHTML =
+      items.map(x=>`
+
+        <button
+          class="sub-btn"
+          onclick="
+            addCategory(
+              '${x}'
+            )
+          "
+        >
+
+          ${x}
+
+        </button>
+
+      `).join("");
+
+    }
+
+  );
+
+});
+
+/* ADD CATEGORY */
+
+function addCategory(v){
+
+  if(!selected.includes(v)){
+
+    selected.push(v);
+
+  }
+
+  renderChecklist();
+
+}
+
+ /* UPLOAD + ANALYZE */
 
 photo.addEventListener(
   "change",
@@ -271,64 +435,74 @@ photo.addEventListener(
     if(!file) return;
 
     statusText.innerText =
-    "Uploading...";
-
-    bar.style.width = "30%";
-
-    await sleep(600);
-
-    statusText.innerText =
     "Analyzing...";
 
-    bar.style.width = "70%";
+    bar.style.width =
+    "30%";
 
-    const fd =
+    const formData =
     new FormData();
 
-    fd.append("image",file);
+    formData.append(
+      "photo",
+      file
+    );
 
     try{
 
-      const r =
-      await fetch("/analyze",{
+      const res =
+      await fetch(
+        "/analyze",
+        {
+          method:"POST",
+          body:formData
+        }
+      );
 
-        method:"POST",
+      const data =
+      await res.json();
 
-        body:fd
+      bar.style.width =
+      "100%";
 
-      });
+      if(
+        data.ingredients
+      ){
 
-      const d =
-      await r.json();
+        data.ingredients.forEach(
+          item=>{
 
-      if(d.ingredients){
+            if(
+              !selected.includes(item)
+            ){
 
-        selected = [
+              selected.push(item);
 
-          ...new Set([
+            }
 
-            ...selected,
-
-            ...d.ingredients
-
-          ])
-
-        ];
+          }
+        );
 
         renderChecklist();
 
+        statusText.innerText =
+        "Ingredients detected";
+
+      }else{
+
+        statusText.innerText =
+        "No ingredients found";
+
       }
 
-    }catch(e){
+    }catch(err){
 
-      console.log(e);
+      console.error(err);
+
+      statusText.innerText =
+      "Analyze failed";
 
     }
-
-    statusText.innerText =
-    "Completed";
-
-    bar.style.width = "100%";
 
 });
 
@@ -348,90 +522,109 @@ recipeBtn.addEventListener(
 
     }
 
-    screen.innerHTML = `
-
-      <div style="
-        font-size:34px;
-        text-align:center;
-        padding-top:80px;
-      ">
-
-        🍳 Loading recipes...
-
-      </div>
-
-    `;
+    result.innerHTML =
+    "<p>Loading recipes...</p>";
 
     try{
 
-      const r =
-      await fetch("/recipes",{
+      const res =
+      await fetch(
+        "/recipes",
+        {
+          method:"POST",
 
-        method:"POST",
+          headers:{
+            "Content-Type":
+            "application/json"
+          },
 
-        headers:{
-          "Content-Type":
-          "application/json"
-        },
+          body:JSON.stringify({
 
-        body:JSON.stringify({
-          ingredients:selected
-        })
+            ingredients:selected,
 
-      });
+            lang:currentLang
 
-      const d =
-      await r.json();
+          })
+
+        }
+      );
+
+      const data =
+      await res.json();
+
+      console.log(data);
+
+      currentRecipes =
+      data;
+
+      if(
+        !Array.isArray(data)
+        ||
+        !data.length
+      ){
+
+        result.innerHTML =
+        "<p>No recipes found</p>";
+
+        return;
+
+      }
 
       let html = "";
 
-      d.recipes.forEach(x=>{
-
-        const ingredients = [
-
-          "tomato",
-          "cheese",
-          "garlic",
-          "onion"
-
-        ];
+      data.forEach(recipe=>{
 
         html += `
 
           <div
             class="card"
-            data-id="${x.id}"
-            data-source="${x.source}"
+            onclick="openRecipe('${recipe.id}')"
           >
 
             <img
               src="${
-                x.image.replace(
-                  '312x231',
-                  '636x393'
-                )
+                recipe.image
+                ||
+                'https://www.themealdb.com/images/media/meals/llcbn01574260722.jpg'
               }"
+
+              alt="${recipe.title}"
             >
 
             <div class="card-body">
 
               <h3>
-                ${x.title}
+                ${recipe.title || "Recipe"}
               </h3>
 
               <p class="time">
 
-                ⏱ 25 min
+                ⏱ ${
+                  recipe.readyInMinutes
+                  || 30
+                } min
 
               </p>
 
               <div class="ingredients">
 
-                ${ingredients.map(i=>`
+                ${
+                  recipe.usedIngredients
+                  ? recipe.usedIngredients
+                      .slice(0,4)
+                      .map(item=>`
 
-                  <span>${i}</span>
+                        <span>
+                          ${
+                            item.name
+                            || item.original
+                            || "ingredient"
+                          }
+                        </span>
 
-                `).join("")}
+                      `).join("")
+                  : ""
+                }
 
               </div>
 
@@ -443,141 +636,317 @@ recipeBtn.addEventListener(
 
       });
 
-      screen.innerHTML = `
-
-        <div class="grid">
-
-          ${html}
-
-        </div>
-
-      `;
+      result.innerHTML =
+      html;
 
       document
-      .querySelectorAll(".card")
-      .forEach(card=>{
+      .getElementById("mosaic")
+      .style.display =
+      "none";
 
-        card.addEventListener(
-          "click",
-          ()=>{
-
-            const id =
-            card.dataset.id;
-
-            openRecipe(id);
-
-        });
-
+      result.scrollIntoView({
+        behavior:"smooth"
       });
 
-    }catch(e){
+    }catch(err){
 
-      console.log(e);
+      console.log(err);
 
-      alert(
-        "Recipe crashed"
-      );
+      result.innerHTML =
+      "<p>Recipes failed</p>";
 
     }
 
 });
 
-/* DETAIL */
+/* RECIPES */
 
-async function openRecipe(id){
+app.post(
+  "/recipes",
+  async (req, res) => {
 
-  try{
+    try {
 
-    const r =
-    await fetch(
-      "/spoon-recipe/" + id
-    );
+      const ingredients =
+      req.body.ingredients || [];
 
-    const recipe =
-    await r.json();
+      const lang =
+      req.body.lang || "en";
 
-    modalBody.innerHTML = `
+      if (!ingredients.length) {
 
-      <img
-        src="${recipe.image}"
-        style="
-          width:100%;
-          border-radius:20px;
-          margin-bottom:20px;
-        "
-      >
+        return res.json([]);
 
-      <h1>
-        ${recipe.title}
-      </h1>
+      }
 
-      <h2>
-        Ingredients
-      </h2>
+      const query =
+      ingredients.join(",");
 
-      <ul>
+      /* SPOON */
 
-        ${(
-          recipe.ingredients || []
-        ).map(i=>`
+      const spoonRes =
+      await fetch(
 
-          <li>${i}</li>
+`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&number=6&apiKey=${process.env.SPOON_KEY}`
 
-        `).join("")}
+      );
 
-      </ul>
+      const spoonData =
+      await spoonRes.json();
 
-      <h2>
-        Instructions
-      </h2>
+      console.log(spoonData);
 
-      <p style="
-        white-space:pre-line
-      ">
+      /* SPOON SUCCESS */
 
-        ${
-          recipe.instructions ||
-          "No instructions"
-        }
+      if(Array.isArray(spoonData)){
 
-      </p>
+        const fullRecipes =
+        await Promise.all(
 
-    `;
+          spoonData.map(async recipe=>{
 
-    modal.style.display =
-    "block";
+            try{
 
-  }catch(e){
+              const detailRes =
+              await fetch(
 
-    console.log(e);
+`https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${process.env.SPOON_KEY}`
 
-  }
+              );
 
-}
+              const detail =
+              await detailRes.json();
 
-/* CLOSE */
+              return {
 
+                id:
+                recipe.id,
+
+                title:
+                detail.title,
+
+                image:
+                detail.image,
+
+                readyInMinutes:
+                detail.readyInMinutes || 30,
+
+                usedIngredients:
+                recipe.usedIngredients || [],
+
+                instructions:
+                detail.instructions || ""
+
+              };
+
+            }catch{
+
+              return recipe;
+
+            }
+
+          })
+
+        );
+
+        return res.json(fullRecipes);
+
+      }
+
+      /* THEMEALDB */
+
+      const mealRes =
+      await fetch(
+
+`https://www.themealdb.com/api/json/v1/1/search.php?s=${ingredients[0]}`
+
+      );
+
+      const mealData =
+      await mealRes.json();
+
+      console.log(mealData);
+
+      if(!mealData.meals){
+
+        return res.json([]);
+
+      }
+
+      const recipes =
+      mealData.meals
+      .slice(0,6)
+      .map((meal,index)=>({
+
+        id:index + 1,
+
+        title:
+        meal.strMeal,
+
+        image:
+        meal.strMealThumb,
+
+        readyInMinutes:30,
+
+        usedIngredients:
+        ingredients
+        .slice(0,3)
+        .map(x=>({
+          name:x
+        })),
+
+        instructions:
+        meal.strInstructions || ""
+
+      }));
+
+      return res.json(recipes);
+
+    } catch (err) {
+
+      console.log(err);
+
+      res.status(500).json({
+        error:"Recipes failed"
+      });
+
+    }
+
+});
+
+/* MODAL */
+ 
 function closeModal(){
 
   modal.style.display =
   "none";
 
 }
+ 
 
-/* UTIL */
+ 
+async function openRecipe(id){
 
-function sleep(ms){
+  modal.style.display =
+  "block";
 
-  return new Promise(
-    r=>setTimeout(r,ms)
+  const recipe =
+  currentRecipes.find(
+    r => String(r.id) === String(id)
   );
+
+  if(!recipe){
+
+    modalBody.innerHTML =
+
+ 
+
+
+
+    "<h2>Recipe not found</h2>";
+
+    return;
+
+  }
+
+  modalBody.innerHTML = `
+
+  <button
+  onclick="closeModal()"
+  style="
+    position:absolute;
+    top:20px;
+    right:20px;
+    border:none;
+    background:black;
+    color:white;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:22px;
+  "
+>
+  ×
+</button>
+
+    <img
+      src="${
+        recipe.image
+        ||
+        'https://www.themealdb.com/images/media/meals/llcbn01574260722.jpg'
+      }"
+
+      style="
+        width:100%;
+        max-height:340px;
+        object-fit:cover;
+        border-radius:24px;
+        margin-bottom:24px;
+      "
+    >
+
+    <h1>
+      ${recipe.title}
+    </h1>
+
+    <br>
+
+    <p class="time">
+
+      ⏱ ${
+        recipe.readyInMinutes
+        || 30
+      } min
+
+    </p>
+
+    <br>
+
+    <h2>
+      Ingredients
+    </h2>
+
+    <div class="ingredients">
+
+      ${
+        recipe.usedIngredients
+        ? recipe.usedIngredients
+            .map(item=>`
+
+              <span>
+                ${
+                  item.name
+                  || item.original
+                  || "ingredient"
+                }
+              </span>
+
+            `).join("")
+        : ""
+      }
+
+    </div>
+
+    <br><br>
+
+    <h2>
+      Instructions
+    </h2>
+
+    <p style="line-height:1.8;">
+
+      ${
+        recipe.instructions
+        || "No instructions"
+      }
+
+    </p>
+
+  `;
 
 }
 
-/* INIT */
-
-renderHome();
-
-renderCategories();
+applyLanguage();
 
 renderChecklist();

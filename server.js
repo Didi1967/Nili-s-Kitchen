@@ -5,109 +5,237 @@ import express from "express";
 import multer from "multer";
 import fetch from "node-fetch";
 import OpenAI from "openai";
+import fs from "fs";
+ 
 
-const app = express();
 
-const upload = multer();
+const app =
+express();
 
 app.use(express.json());
 
-app.use(express.static("public"));
+app.use(
+  express.static("public")
+);
 
-/* OPENAI */
-
-const openai = new OpenAI({
-  apiKey:
-  process.env.OPENAI_API_KEY
+const upload =
+multer({
+  dest:"uploads/"
 });
+
+console.log(
+  process.env.SPOON_KEY
+);
+ 
+/* TRANSLATE */
+
+async function translateText(
+  text,
+  lang
+){
+
+  if(
+    !text ||
+    lang === "en"
+  ){
+
+    return text;
+
+  }
+
+  try{
+
+    const gpt =
+    await openai.chat.completions.create({
+
+      model:"gpt-4o-mini",
+
+      messages:[
+
+        {
+          role:"system",
+
+          content:`
+
+Translate recipe content.
+
+Keep food names natural.
+
+Return ONLY translated text.
+
+`
+
+        },
+
+        {
+          role:"user",
+
+          content:`
+
+Language:
+${lang}
+
+Text:
+${text}
+
+`
+
+        }
+
+      ]
+
+    });
+
+    return gpt
+    .choices[0]
+    .message.content;
+
+  }catch(e){
+
+    console.log(e);
+
+    return text;
+
+  }
+
+}
 
 /* ANALYZE */
 
 app.post(
   "/analyze",
-  upload.single("image"),
-  async (req,res)=>{
+  upload.single("photo"),
+  async (req, res) => {
 
-    try{
+    try {
 
-      const base64 =
-      req.file.buffer.toString(
-        "base64"
+      if (!req.file) {
+
+        return res.status(400).json({
+          error: "No photo"
+        });
+
+      }
+
+      const imageBase64 =
+      fs.readFileSync(
+        req.file.path,
+        {
+          encoding:"base64"
+        }
       );
 
-      const gpt =
+      const openai =
+      new OpenAI({
+
+        apiKey:
+        process.env.OPENAI_API_KEY
+
+      });
+
+      const response =
       await openai.chat.completions.create({
 
         model:"gpt-4o-mini",
 
-        response_format:{
-          type:"json_object"
-        },
+        messages:[
 
-        messages:[{
+          {
+            role:"system",
 
-          role:"user",
+            content:
+            "Return only ingredient names as JSON array."
+          },
 
-          content:[
+          {
+            role:"user",
 
-            {
-              type:"text",
+            content:[
 
-              text:`
+              {
+                type:"text",
 
-Return ONLY valid JSON.
+                text:
+                "Detect ingredients from this image"
+              },
 
-Format:
+              {
+                type:"image_url",
 
-{
-  "ingredients":[]
-}
+                image_url:{
+                  url:
+`data:image/jpeg;base64,${imageBase64}`
+                }
 
-Detect visible cooking ingredients.
-
-Use:
-- lowercase English
-- simple ingredient names
-- max 12 ingredients
-
-`
-
-            },
-
-            {
-              type:"image_url",
-
-              image_url:{
-                url:
-                `data:image/jpeg;base64,${base64}`
               }
 
-            }
+            ]
 
-          ]
+          }
 
-        }]
+        ]
 
       });
 
-      const data =
-      JSON.parse(
-        gpt.choices[0]
-        .message.content
+      const text =
+      response
+      .choices[0]
+      .message
+      .content;
+
+      console.log(text);
+
+      let ingredients =
+      [];
+
+      try{
+
+        ingredients =
+        JSON.parse(text);
+
+      }
+
+      catch{
+
+        ingredients =
+        text
+        .replace(/```json/gi,"")
+        .replace(/```/g,"")
+        .replace(/\[/g,"")
+        .replace(/\]/g,"")
+        .replace(/"/g,"")
+        .replace(/'/g,"")
+        .replace(/[“”]/g,"")
+        .replace(/[‘’]/g,"")
+        .replace(/\n/g,"")
+        .split(",")
+        .map(x=>x.trim())
+        .map(x=>x.replace(/json/gi,""))
+        .filter(Boolean);
+
+      }
+
+      ingredients =
+      ingredients.map(x=>
+
+        x
+        .replace(/[^\w\s-]/g,"")
+        .trim()
+
       );
 
-      res.json(data);
-
-    }catch(e){
-
-      console.log(e);
-
       res.json({
-        ingredients:[
-          "chicken",
-          "rice",
-          "tomato"
-        ]
+
+        ingredients
+
+      });
+
+    } catch (err) {
+
+      console.log(err);
+
+      res.status(500).json({
+        error:"Analyze failed"
       });
 
     }
@@ -118,69 +246,212 @@ Use:
 
 app.post(
   "/recipes",
-  async (req,res)=>{
+  async (req, res) => {
 
-    try{
+    try {
 
-      let {
-        ingredients=[]
-      } = req.body;
+      const ingredients =
+      req.body.ingredients || [];
 
-      if(
-        ingredients.length < 2
-      ){
+      if (!ingredients.length) {
 
-        ingredients.push(
-          "chicken"
-        );
-
-        ingredients.push(
-          "rice"
-        );
+        return res.json([]);
 
       }
 
-      const spoonKey =
-      process.env.SPOON_KEY;
+      const query =
+      ingredients.join(",");
 
-      const url =
+      const response =
+      await fetch(
 
-`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients.join(",")}&number=6&ranking=1&ignorePantry=true&apiKey=${spoonKey}`;
+`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&number=6&apiKey=${process.env.SPOON_KEY}`
 
-      const spoonRes =
-      await fetch(url);
+      );
 
-      const spoonData =
-      await spoonRes.json();
+      const basicRecipes =
+      await response.json();
 
-      const recipes =
-      spoonData.map(x=>({
+      console.log(basicRecipes);
 
-        id:String(x.id),
+      /* THEMALDB */
 
-        title:x.title,
+ 
+if(
+  !Array.isArray(basicRecipes)
+  ||
+  basicRecipes.status === "failure"
+)
 
-        image:x.image,
+{
+   
+const randomIngredient =
+ingredients[
+  Math.floor(
+    Math.random() *
+    ingredients.length
+  )
+];
 
-        source:"spoon"
+const mealRes =
+await fetch(
 
-      }));
+`https://www.themealdb.com/api/json/v1/1/filter.php?i=${randomIngredient}`
 
-      res.json({
-        recipes
-      });
+);
 
-    }catch(e){
+ 
+console.log(
+  "THEMEAL INGREDIENT:",
+  randomIngredient
+);
+ 
 
-      console.log(e);
 
-      res.json({
-        recipes:[]
+  const mealData =
+  await mealRes.json();
+
+  if(!mealData.meals){
+
+    return res.json([]);
+
+  }
+
+ 
+ 
+const recipes =
+await Promise.all(
+
+  mealData.meals
+  .slice(0,6)
+  .map(async meal=>{
+
+    const detailRes =
+    await fetch(
+
+`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`
+
+    );
+
+    const detailData =
+    await detailRes.json();
+
+    const detail =
+    detailData.meals[0];
+
+    return {
+
+      id:
+      detail.idMeal,
+
+      title:
+      detail.strMeal,
+
+      image:
+      detail.strMealThumb,
+
+      readyInMinutes:
+      30,
+
+      usedIngredients:
+      ingredients
+      .slice(0,3)
+      .map(x=>({
+        name:x
+      })),
+
+      instructions:
+      detail.strInstructions
+      || "No instructions"
+
+    };
+
+  })
+
+);
+
+
+
+
+  return res.json(recipes);
+
+}
+
+
+
+      /* SPOON SUCCESS */
+
+      const fullRecipes =
+      await Promise.all(
+
+        basicRecipes.map(async recipe=>{
+
+          try{
+
+            const detailRes =
+            await fetch(
+
+`https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${process.env.SPOON_KEY}`
+
+            );
+
+            const detail =
+            await detailRes.json();
+
+            return {
+
+              id:
+              recipe.id,
+
+              title:
+              recipe.title,
+
+              image:
+              recipe.image,
+
+              readyInMinutes:
+
+              detail.readyInMinutes
+              ?? detail.cookingMinutes
+              ?? detail.preparationMinutes
+              ?? recipe.readyInMinutes
+              ?? null,
+
+              usedIngredients:
+              recipe.usedIngredients || [],
+
+              instructions:
+              detail.instructions || "",
+
+              summary:
+              detail.summary || ""
+
+            };
+
+          }catch{
+
+            return recipe;
+
+          }
+
+        })
+
+      );
+
+      res.json(fullRecipes);
+
+    } catch (err) {
+
+      console.log(err);
+
+      res.status(500).json({
+        error:"Recipes failed"
       });
 
     }
 
 });
+
 
 /* DETAIL */
 
@@ -192,6 +463,9 @@ app.get(
 
       const id =
       req.params.id;
+
+      const lang =
+      req.query.lang || "en";
 
       const spoonKey =
       process.env.SPOON_KEY;
@@ -206,20 +480,51 @@ app.get(
       const d =
       await r.json();
 
+      const translatedTitle =
+      await translateText(
+        d.title,
+        lang
+      );
+
+      const translatedInstructions =
+      await translateText(
+        d.instructions ||
+        "No instructions",
+        lang
+      );
+
+      let translatedIngredients =
+      [];
+
+      for(
+        const i of
+        d.extendedIngredients || []
+      ){
+
+        const t =
+        await translateText(
+          i.original,
+          lang
+        );
+
+        translatedIngredients
+        .push(t);
+
+      }
+
       res.json({
 
-        title:d.title,
+        title:
+        translatedTitle,
 
-        image:d.image,
-
-        ingredients:
-        d.extendedIngredients?.map(
-          x=>x.original
-        ) || [],
+        image:
+        d.image,
 
         instructions:
-        d.instructions ||
-        "No instructions"
+        translatedInstructions,
+
+        ingredients:
+        translatedIngredients
 
       });
 

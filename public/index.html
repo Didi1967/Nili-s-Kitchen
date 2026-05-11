@@ -10,11 +10,13 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Nili's Kitchen AI</title>
+  <title>
+    Nili's Kitchen AI
+  </title>
 
   <link
     rel="stylesheet"
-    href="style.css"
+    href="/style.css"
   >
 
 </head>
@@ -25,118 +27,275 @@
 
   <aside class="sidebar">
 
-    <img
-      src="logo.jpeg"
-      class="logo"
-    >
+    <!-- TOP -->
 
-    <h1>
-      Nili's Kitchen <span>AI</span>
-    </h1>
+    <div class="sidebar-top">
 
-    <p class="subtitle">
-      Cook with what you have
-    </p>
+      <img
+        src="logo.jpeg"
+        class="logo"
+      >
 
-    <!-- LANG -->
+      <h1>
+        Nili's Kitchen
+      </h1>
 
-    <select id="langSelect">
-
-      <option>
-        English
-      </option>
-
-    </select>
-
-    <!-- UPLOAD -->
-
-    <div
-      class="upload"
-      onclick="photo.click()"
-    >
-
-      <p id="statusText">
-        Upload ingredient photo
+      <p
+        class="subtitle"
+        id="appSubtitle"
+      >
+        AI Recipe Assistant
       </p>
 
-      <div class="progress">
+      <!-- LANGUAGE -->
 
-        <div
-          class="bar"
-          id="bar"
-        ></div>
+      <select id="langSelect">
+
+        <option value="en">
+          English
+        </option>
+
+        <option value="tr">
+          Türkçe
+        </option>
+
+        <option value="ru">
+          Русский
+        </option>
+
+        <option value="ar">
+          العربية
+        </option>
+
+        <option value="es">
+          Español
+        </option>
+
+        <option value="pt">
+          Português
+        </option>
+
+        <option value="fr">
+          Français
+        </option>
+
+      </select>
+
+      <!-- UPLOAD -->
+
+      <div
+        class="upload"
+        onclick="photo.click()"
+      >
+
+        <h3 id="uploadTitle">
+          📸 Upload Ingredients
+        </h3>
+
+        <p id="statusText">
+          Upload ingredients photo
+        </p>
+
+        <div class="progress">
+
+          <div
+            class="bar"
+            id="bar"
+          ></div>
+
+        </div>
+
+      </div>
+
+      <input
+        type="file"
+        id="photo"
+        hidden
+        accept="image/*"
+      >
+
+      <!-- MANUAL -->
+
+      <div class="manual-box">
+
+        <h3
+          class="section-title"
+          id="manualTitle"
+        >
+          ✍ Manual Ingredient
+        </h3>
+
+        <div class="manual">
+
+          <input
+            id="manualInput"
+            placeholder="Add ingredient"
+          >
+
+          <button onclick="addManual()">
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- CATEGORY -->
+
+      <div class="category-box">
+
+        <h3
+          class="section-title"
+          id="categoriesTitle"
+        >
+          🥦 Categories
+        </h3>
+
+        <div class="category-grid">
+
+          <button
+  id="catVegetables"
+  data-category="vegetables"
+>
+  Vegetables
+</button>
+
+<button
+  id="catMeat"
+  data-category="meat"
+>
+  Meat
+</button>
+
+<button
+  id="catSeafood"
+  data-category="seafood"
+>
+  Seafood
+</button>
+
+<button
+  id="catVegan"
+  data-category="vegan"
+>
+  Vegan
+</button>
+
+<button
+  id="catPasta"
+  data-category="pasta"
+>
+  Pasta
+</button>
+
+<button
+  id="catDessert"
+  data-category="dessert"
+>
+  Dessert
+</button>
+        </div>
 
       </div>
 
     </div>
 
-    <input
-      type="file"
-      id="photo"
-      hidden
-      accept="image/*"
-    >
-
-    <!-- MANUAL -->
-
-    <div class="manual">
-
-      <input
-        id="manualInput"
-        placeholder="Add ingredient"
-      >
-
-      <button onclick="addManual()">
-        +
-      </button>
-
-    </div>
-
-    <!-- CATEGORY -->
-
     <div
-      class="category"
-      id="category"
-    ></div>
+  class="subcategories"
+  id="subcategories"
+></div>
 
     <!-- CHECKLIST -->
 
-    <div
-      class="checklist"
-      id="checklist"
-    ></div>
+    <div class="checklist">
 
-    <!-- CONFIRM -->
+      <h3
+  class="section-title"
+  id="selectedTitle"
+>
+  ✅ Selected Ingredients
+</h3>
 
-    <label class="confirm">
+      <div
+        class="check-grid"
+        id="checklist"
+      ></div>
 
-      <input
-        type="checkbox"
-        id="confirmCheck"
+    </div>
+
+    <!-- BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+      <label class="confirm">
+
+        <input
+          type="checkbox"
+          id="confirmCheck"
+        >
+
+        <span id="confirmText">
+          Confirm ingredients
+        </span>
+
+      </label>
+
+      <button
+        class="recipeBtn"
+        id="recipeBtn"
       >
+        Get Recipes
+      </button>
 
-      Confirm ingredients
-
-    </label>
-
-    <!-- BUTTON -->
-
-    <button
-      class="recipeBtn"
-      id="recipeBtn"
-    >
-
-      Get Recipes
-
-    </button>
+    </div>
 
   </aside>
 
   <!-- CONTENT -->
 
-  <main class="content">
+  <main
+    class="content"
+    id="content"
+  >
 
-    <div id="screen"></div>
+    <!-- HERO -->
+
+<div
+  class="hero"
+  id="mosaic"
+>
+
+  <div class="hero-left">
+
+    <img
+      src="/images/YEMEK-2.jpeg"
+      alt="Food"
+    >
+
+  </div>
+
+  <div class="hero-right">
+
+    <img
+      src="/images/YEMEK-1.jpeg"
+      alt="Food"
+    >
+
+    <img
+      src="/images/YEMEK-3.jpeg"
+      alt="Food"
+    >
+
+  </div>
+
+</div>
+
+    <!-- RESULT -->
+
+    <div
+      class="grid"
+      id="result"
+    ></div>
 
   </main>
 
@@ -153,9 +312,7 @@
         class="close"
         onclick="closeModal()"
       >
-
         ×
-
       </div>
 
       <div id="modalBody"></div>
@@ -164,7 +321,7 @@
 
   </div>
 
-  <script src="app.js"></script>
+  <script src="/app.js"></script>
 
 </body>
 </html>
