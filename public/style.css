@@ -48,11 +48,13 @@ body{
 
   top:18px;
 
-  background:white;
+  background:#fdf6eb;
+
+  color:#111;
 
   border-radius:32px;
 
-  padding:28px;
+  padding:40px 32px;
 
   box-sizing:border-box;
 
@@ -61,9 +63,56 @@ body{
   box-shadow:
   0 10px 30px rgba(0,0,0,.08);
 
-}
- 
+  gap:28px;
 
+  border: 1px solid rgba(255,255,255,.35);
+
+}
+
+.sidebar h1{
+
+  font-size:42px;
+
+  line-height:1;
+
+  margin:0;
+
+  color:#111;
+
+  font-weight:800;
+
+  letter-spacing:-1px;
+ 
+}
+
+ 
+.sidebar p{
+
+  font-size:19px;
+
+  margin-top:-10px;
+
+  color:#111; 
+
+  line-height:1.8;
+
+}
+
+.sidebar input{ 
+  
+  background:#f4ede2; 
+  
+  color: rgba(255,255,255,.45); 
+  
+  border:none; }
+
+
+.sidebar button{ 
+    
+    background:#ff5a00
+  
+  }
+ 
 
 /* TOP */
 
@@ -95,13 +144,11 @@ body{
 
 .logo{
 
-  width:240px;
+  width:220px;
 
   display:block;
 
-  margin:0 auto;
-
-  object-fit:contain;
+  margin:0 auto 10px auto;
 
 }
 
@@ -165,7 +212,7 @@ h1{
 
 .upload{
 
-  background:#1d1d1d;
+  background:#6b8e23;
 
   border-radius:24px;
 
@@ -187,7 +234,11 @@ h1{
 
   font-size:30px;
 
-  margin-bottom:12px;
+  margin-bottom:12px; 
+  
+  color:white; 
+  
+  font-weight:700;
 
 }
 
@@ -195,6 +246,22 @@ h1{
 
   font-size:20px;
 
+  color:white; 
+
+}
+
+
+.upload-box{
+
+ color:white;
+
+}
+
+.upload-box p, 
+.upload-box small, 
+.upload-box span{ 
+  
+  color: rgba(255,255,255,.72); 
 }
 
 /* PROGRESS */
@@ -242,15 +309,17 @@ h1{
 
 .manual input{
 
-  padding:22px;
+  background:#f4ede2; 
 
-  border:none;
+  color:#111;
 
-  border-radius:18px;
+  border:none; 
 
-  font-size:20px;
+  border-radius:18px; 
 
-  outline:none;
+  padding:18px;
+
+  font-size:18px;
 
 }
 
@@ -260,7 +329,7 @@ h1{
 
   background:#ff5a00;
 
-  color:#fff;
+  color:#111;
 
   border-radius:18px;
 
@@ -284,12 +353,11 @@ h1{
 
 .category-box{
 
-  background:#1d1d1d;
-
   border-radius:24px;
 
   padding:24px;
 
+  background:#6b8e23 
 }
 
 .category-grid{
@@ -306,8 +374,8 @@ h1{
 .category-grid button{
 
   border:none;
-
-  background:#262626;
+ 
+  background:#111;
 
   color:#fff;
 
@@ -325,11 +393,13 @@ h1{
 
   transition:.25s;
 
+
+
 }
 
 .category-grid button:hover{
 
-  background:#333;
+  background:#fff;
 
   transform:translateY(-2px);
 
@@ -394,9 +464,15 @@ h1{
 
   background:#1d1d1d;
 
-  border-radius:24px;
+  color:#fff;
 
-  padding:24px;
+  padding:22px;
+
+  margin-top:22px; 
+
+  margin-bottom:22px; 
+
+  border-radius:24px
 
 }
 
@@ -443,6 +519,8 @@ h1{
 
   flex-shrink:0;
 
+  color: rgba(255,255,255,.45);
+
 }
 
 /* CONFIRM */
@@ -465,6 +543,21 @@ h1{
 
   height:22px;
 
+  color: rgba(255,255,255,.45);
+
+}
+
+.confirm-row{ 
+  
+  margin-top:18px; 
+  
+  margin-bottom:22px; 
+  
+  display:flex; 
+  
+  align-items:center; 
+  
+  gap:10px; 
 }
 
 /* BUTTON */
@@ -475,11 +568,11 @@ h1{
 
   border:none;
 
-  background:#ff5a00;
+  background:#ff6a00;
 
   color:#fff;
 
-  padding:28px;
+  padding:24px 28px;
 
   border-radius:24px;
 
@@ -490,6 +583,12 @@ h1{
   cursor:pointer;
 
   transition:.25s;
+
+  box-shadow: 0 12px 24px rgba(255,90,0,.25); 
+  
+  letter-spacing:-1px; 
+  
+  margin-top:14px;
 
 }
 
@@ -986,6 +1085,8 @@ h1{
 
     font-size:22px;
 
+    color:#f1f1f1
+
   }
 
   .manual{
@@ -1000,6 +1101,10 @@ h1{
     padding:16px;
 
     font-size:16px;
+
+    color: rgba(255,255,255,.45);
+
+    background:#f4ede2;
 
   }
 
