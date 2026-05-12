@@ -512,15 +512,11 @@ recipeBtn.addEventListener(
   "click",
   async ()=>{
 
-    if(!confirmCheck.checked){
-
-      alert(
-        "Confirm ingredients first"
-      );
-
-      return;
-
-    }
+ 
+if(
+  !confirmCheck.checked
+){
+}
 
     result.innerHTML =
     "<p>Loading recipes...</p>";
@@ -552,10 +548,20 @@ recipeBtn.addEventListener(
       const data =
       await res.json();
 
-      console.log(data);
+    
+console.log(
+  "RECIPES DATA:",
+  data
+);
+ 
+
 
       currentRecipes =
       data;
+
+
+result.innerHTML = "";
+
 
       if(
         !Array.isArray(data)
@@ -571,6 +577,17 @@ recipeBtn.addEventListener(
       }
 
       let html = "";
+ 
+if(!Array.isArray(data)){
+
+  result.innerHTML =
+  "<p>Recipe format error</p>";
+
+  return;
+
+}
+ 
+
 
       data.forEach(recipe=>{
 
@@ -606,25 +623,33 @@ recipeBtn.addEventListener(
 
               </p>
 
-              <div class="ingredients">
+               
+<div class="ingredients-count">
 
-                ${
-                  recipe.usedIngredients
-                  ? recipe.usedIngredients
-                      .slice(0,4)
-                      .map(item=>`
+  🥗 Uses
+  ${
+    recipe.usedIngredients
+    ? recipe.usedIngredients.length
+    : 0
+  }
+  ingredients
 
-                        <span>
-                          ${
-                            item.name
-                            || item.original
-                            || "ingredient"
-                          }
-                        </span>
+</div>
+ 
 
-                      `).join("")
-                  : ""
-                }
+ 
+${
+  recipe.usedIngredients
+    .slice(0,4)
+    .map(item=>`
+
+      <span>
+        ${item.name}
+      </span>
+
+    `).join("")
+}
+ 
 
               </div>
 
@@ -639,10 +664,45 @@ recipeBtn.addEventListener(
       result.innerHTML =
       html;
 
-      document
-      .getElementById("mosaic")
-      .style.display =
-      "none";
+       
+const hero =
+document.querySelector(
+  ".hero"
+);
+
+ 
+window.scrollTo({
+
+  top:0,
+
+  behavior:"smooth"
+
+});
+ 
+
+
+if(hero){
+
+  hero.style.display =
+  "none";
+
+}
+ 
+
+ 
+const mosaic =
+document.getElementById(
+  "mosaic"
+);
+
+if(mosaic){
+
+  mosaic.style.display =
+  "none";
+
+}
+ 
+
 
       result.scrollIntoView({
         behavior:"smooth"
@@ -659,160 +719,6 @@ recipeBtn.addEventListener(
 
 });
 
-/* RECIPES */
-
-app.post(
-  "/recipes",
-  async (req, res) => {
-
-    try {
-
-      const ingredients =
-      req.body.ingredients || [];
-
-      const lang =
-      req.body.lang || "en";
-
-      if (!ingredients.length) {
-
-        return res.json([]);
-
-      }
-
-      const query =
-      ingredients.join(",");
-
-      /* SPOON */
-
-      const spoonRes =
-      await fetch(
-
-`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&number=6&apiKey=${process.env.SPOON_KEY}`
-
-      );
-
-      const spoonData =
-      await spoonRes.json();
-
-      console.log(spoonData);
-
-      /* SPOON SUCCESS */
-
-      if(Array.isArray(spoonData)){
-
-        const fullRecipes =
-        await Promise.all(
-
-          spoonData.map(async recipe=>{
-
-            try{
-
-              const detailRes =
-              await fetch(
-
-`https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${process.env.SPOON_KEY}`
-
-              );
-
-              const detail =
-              await detailRes.json();
-
-              return {
-
-                id:
-                recipe.id,
-
-                title:
-                detail.title,
-
-                image:
-                detail.image,
-
-                readyInMinutes:
-                detail.readyInMinutes || 30,
-
-                usedIngredients:
-                recipe.usedIngredients || [],
-
-                instructions:
-                detail.instructions || ""
-
-              };
-
-            }catch{
-
-              return recipe;
-
-            }
-
-          })
-
-        );
-
-        return res.json(fullRecipes);
-
-      }
-
-      /* THEMEALDB */
-
-      const mealRes =
-      await fetch(
-
-`https://www.themealdb.com/api/json/v1/1/search.php?s=${ingredients[0]}`
-
-      );
-
-      const mealData =
-      await mealRes.json();
-
-      console.log(mealData);
-
-      if(!mealData.meals){
-
-        return res.json([]);
-
-      }
-
-      const recipes =
-      mealData.meals
-      .slice(0,6)
-      .map((meal,index)=>({
-
-        id:index + 1,
-
-        title:
-        meal.strMeal,
-
-        image:
-        meal.strMealThumb,
-
-        readyInMinutes:30,
-
-        usedIngredients:
-        ingredients
-        .slice(0,3)
-        .map(x=>({
-          name:x
-        })),
-
-        instructions:
-        meal.strInstructions || ""
-
-      }));
-
-      return res.json(recipes);
-
-    } catch (err) {
-
-      console.log(err);
-
-      res.status(500).json({
-        error:"Recipes failed"
-      });
-
-    }
-
-});
 
 /* MODAL */
  
@@ -824,7 +730,6 @@ function closeModal(){
 }
  
 
- 
 async function openRecipe(id){
 
   modal.style.display =
@@ -936,10 +841,12 @@ async function openRecipe(id){
 
     <p style="line-height:1.8;">
 
-      ${
-        recipe.instructions
-        || "No instructions"
-      }
+${
+  recipe.instructions
+  ? recipe.instructions
+  : "Recipe instructions unavailable."
+}
+
 
     </p>
 

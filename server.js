@@ -285,13 +285,7 @@ if(
 
 {
    
-const randomIngredient =
-ingredients[
-  Math.floor(
-    Math.random() *
-    ingredients.length
-  )
-];
+const validIngredients = ingredients.filter(x=> !x.includes("apple") && !x.includes("banana") && !x.includes("orange") && !x.includes("bell pepper") ); const randomIngredient = validIngredients[0] || ingredients[0];
 
 const mealRes =
 await fetch(
@@ -353,16 +347,19 @@ await Promise.all(
       readyInMinutes:
       30,
 
-      usedIngredients:
-      ingredients
-      .slice(0,3)
-      .map(x=>({
-        name:x
-      })),
+  
+usedIngredients:[],
+ 
 
-      instructions:
-      detail.strInstructions
-      || "No instructions"
+
+instructions:
+
+detail.strInstructions
+?.trim()
+
+|| 
+
+"Recipe instructions unavailable."
 
     };
 
@@ -398,35 +395,38 @@ await Promise.all(
             const detail =
             await detailRes.json();
 
-            return {
+ 
+return {
 
-              id:
-              recipe.id,
+  id:
+  recipe.id,
 
-              title:
-              recipe.title,
+  title:
+  recipe.title || "Recipe",
 
-              image:
-              recipe.image,
+  image:
+  recipe.image ||
 
-              readyInMinutes:
+  "https://img.spoonacular.com/recipes/716429-556x370.jpg",
 
-              detail.readyInMinutes
-              ?? detail.cookingMinutes
-              ?? detail.preparationMinutes
-              ?? recipe.readyInMinutes
-              ?? null,
+  readyInMinutes:
 
-              usedIngredients:
-              recipe.usedIngredients || [],
+  detail.readyInMinutes
+  || 30,
 
-              instructions:
-              detail.instructions || "",
+  usedIngredients:
 
-              summary:
-              detail.summary || ""
+  recipe.usedIngredients
+  || [],
 
-            };
+  instructions:
+
+  detail.instructions
+  || detail.summary
+  || "No instructions"
+
+};
+
 
           }catch{
 
@@ -437,6 +437,8 @@ await Promise.all(
         })
 
       );
+
+console.log(fullRecipes);
 
       res.json(fullRecipes);
 
