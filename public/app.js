@@ -55,45 +55,45 @@ const CATEGORY_DATA = {
     "tomato",
     "onion",
     "potato",
-    "pepper"
+    "pepper",
+    "broccoli",
+    "garlic"
   ],
 
   meat:[
     "chicken",
     "beef",
-    "lamb",
-    "turkey"
+    "steak",
+    "lamb"
   ],
 
   seafood:[
     "salmon",
     "shrimp",
-    "tuna",
-    "mussels"
+    "tuna"
   ],
 
   vegan:[
     "tofu",
     "lentils",
-    "beans",
     "mushroom"
   ],
 
   pasta:[
     "spaghetti",
-    "penne",
-    "fusilli",
-    "lasagna"
+    "parmesan",
+    "basil"
   ],
 
   dessert:[
     "chocolate",
-    "vanilla",
-    "strawberry",
+    "banana",
     "cream"
   ]
 
 };
+
+
 
 /* LANG */
 
@@ -854,6 +854,87 @@ ${
 
 }
 
+ 
+document
+.querySelectorAll(
+  ".category-btn"
+)
+.forEach(btn=>{
+
+  btn.onclick = ()=>{
+
+ 
+alert("CATEGORY WORKS");
+ 
+
+console.log("CATEGORY CLICK");
+ 
+
+
+    const category =
+    btn.innerText.trim();
+
+    const items =
+    categoryIngredients[
+      category
+    ];
+
+    if(!items) return;
+
+    ingredientDrawer.style.cssText = ` position:fixed; inset:0; display:flex; align-items:flex-end; justify-content:center; background:rgba(0,0,0,.45); z-index:999999; `;
+
+console.log(ingredientDrawer);
+
+    drawerTitle.innerText =
+    category;
+
+    drawerItems.innerHTML =
+
+    items.map(item=>`
+
+      <button
+        class="drawer-chip"
+      >
+
+        ${item}
+
+      </button>
+
+    `).join("");
+
+    document
+    .querySelectorAll(
+      ".drawer-chip"
+    )
+    .forEach(chip=>{
+
+      chip.onclick = ()=>{
+
+        const value =
+        chip.innerText;
+
+        if(
+          !selected.includes(value)
+        ){
+
+          selected.push(value);
+
+          renderSelected();
+
+        }
+
+      };
+
+    });
+
+  };
+
+});
+ 
+
+
 applyLanguage();
 
 renderChecklist();
+
+ 

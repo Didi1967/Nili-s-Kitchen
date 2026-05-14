@@ -20,6 +20,9 @@
   >
 
 </head>
+ 
+
+
 
 <body>
 
@@ -311,7 +314,35 @@
 
   </div>
 
-  <script src="/app.js"></script>
+
+
+<script
+  src="app.js"
+  defer
+></script>
 
 </body>
+
+<div id="ingredientDrawer" style=" position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:flex-end; justify-content:center; z-index:99999; " >
+
+  <div class="drawer-content" style=" width:100%; max-width:900px; background:#f6efe4; border-radius:32px 32px 0 0; padding:32px; min-height:45vh; " >
+
+    <div class="drawer-top">
+
+      <h2 id="drawerTitle">
+        Ingredients
+      </h2>
+
+      <button id="closeDrawer">
+        ✕
+      </button>
+
+    </div>
+
+    <div id="drawerItems">
+    </div>
+
+  </div>
+
+</div>
 </html>
