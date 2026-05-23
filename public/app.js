@@ -854,87 +854,71 @@ ${
 
 }
 
- 
+/* CATEGORY */
+
 document
 .querySelectorAll(
-  ".category-btn"
+  ".category-grid button"
 )
 .forEach(btn=>{
 
-  btn.onclick = ()=>{
+  btn.addEventListener(
+    "click",
+    ()=>{
 
- 
-alert("CATEGORY WORKS");
- 
+      const key =
+      btn.dataset.category;
 
-console.log("CATEGORY CLICK");
- 
+      const items =
+      CATEGORY_DATA[key];
 
+      subcategories.innerHTML =
+      items.map(x=>`
 
-    const category =
-    btn.innerText.trim();
+        <button
+          class="sub-btn"
+          data-value="${x}"
+        >
 
-    const items =
-    categoryIngredients[
-      category
-    ];
+          ${x}
 
-    if(!items) return;
+        </button>
 
-    ingredientDrawer.style.cssText = ` position:fixed; inset:0; display:flex; align-items:flex-end; justify-content:center; background:rgba(0,0,0,.45); z-index:999999; `;
+      `).join("");
 
-console.log(ingredientDrawer);
+      document
+      .querySelectorAll(".sub-btn")
+      .forEach(subBtn=>{
 
-    drawerTitle.innerText =
-    category;
+        subBtn.addEventListener(
+          "click",
+          ()=>{
 
-    drawerItems.innerHTML =
+            addCategory(
+              subBtn.dataset.value
+            );
 
-    items.map(item=>`
+          }
+        );
 
-      <button
-        class="drawer-chip"
-      >
+      });
 
-        ${item}
+    }
 
-      </button>
-
-    `).join("");
-
-    document
-    .querySelectorAll(
-      ".drawer-chip"
-    )
-    .forEach(chip=>{
-
-      chip.onclick = ()=>{
-
-        const value =
-        chip.innerText;
-
-        if(
-          !selected.includes(value)
-        ){
-
-          selected.push(value);
-
-          renderSelected();
-
-        }
-
-      };
-
-    });
-
-  };
+  );
 
 });
- 
 
+/* ADD CATEGORY */
 
-applyLanguage();
+function addCategory(v){
 
-renderChecklist();
+  if(!selected.includes(v)){
 
- 
+    selected.push(v);
+
+  }
+
+  renderChecklist();
+
+}

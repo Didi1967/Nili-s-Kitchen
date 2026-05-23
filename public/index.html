@@ -20,143 +20,107 @@
   >
 
 </head>
- 
-
 
 
 <body>
 
   <!-- SIDEBAR -->
 
-  <aside class="sidebar">
+ <aside id="sidebar">
 
-    <!-- TOP -->
+  <!-- TOP -->
 
-    <div class="sidebar-top">
+  <div class="sidebar-top">
 
-      <img
-        src="logo.jpeg"
-        class="logo"
-      >
+    <img
+      src="logo.jpeg"
+      class="logo"
+    >
 
-      <h1>
-        Nili's Kitchen
-      </h1>
+    <h1>
+      Nili's Kitchen
+    </h1>
 
-      <p
-        class="subtitle"
-        id="appSubtitle"
-      >
-        AI Recipe Assistant
-      </p>
+    <p class="subtitle">
+      AI Recipe Assistant
+    </p>
 
-      <!-- LANGUAGE -->
+    <!-- LANGUAGE -->
 
-      <select id="langSelect">
+    <select id="langSelect">
 
-        <option value="en">
-          English
-        </option>
+      <option value="en">
+        English
+      </option>
 
-        <option value="tr">
-          Türkçe
-        </option>
+      <option value="tr">
+        Türkçe
+      </option>
 
-        <option value="ru">
-          Русский
-        </option>
+    </select>
 
-        <option value="ar">
-          العربية
-        </option>
+    <!-- UPLOAD -->
 
-        <option value="es">
-          Español
-        </option>
+    <div
+      class="upload"
+      onclick="photo.click()"
+    >
 
-        <option value="pt">
-          Português
-        </option>
+      <h3 id="uploadTitle">
+  📸 Upload Ingredients
+</h3>
 
-        <option value="fr">
-          Français
-        </option>
+      <p id="statusText">
+  Upload ingredients photo
+</p>
 
-      </select>
+    </div>
 
-      <!-- UPLOAD -->
+    <input
+      type="file"
+      id="photo"
+      hidden
+      accept="image/*"
+    >
 
-      <div
-        class="upload"
-        onclick="photo.click()"
-      >
+    <!-- MANUAL -->
 
-        <h3 id="uploadTitle">
-          📸 Upload Ingredients
-        </h3>
+    <div class="manual-box">
 
-        <p id="statusText">
-          Upload ingredients photo
-        </p>
+      <h3
+  class="section-title"
+  id="manualTitle"
+>
+  ✍ Manual Ingredient
+</h3>
 
-        <div class="progress">
+      <div class="manual">
 
-          <div
-            class="bar"
-            id="bar"
-          ></div>
+        <input
+          id="manualInput"
+          placeholder="Add ingredient"
+        >
 
-        </div>
+        <button onclick="addManual()">
+          +
+        </button>
 
       </div>
 
-      <input
-        type="file"
-        id="photo"
-        hidden
-        accept="image/*"
-      >
+    </div>
 
-      <!-- MANUAL -->
+    <!-- CATEGORY -->
 
-      <div class="manual-box">
+    <div class="category-box">
 
-        <h3
-          class="section-title"
-          id="manualTitle"
-        >
-          ✍ Manual Ingredient
-        </h3>
+      <h3 class="section-title">
+        🥦 Categories
+      </h3>
 
-        <div class="manual">
+      <div class="category-grid">
 
-          <input
-            id="manualInput"
-            placeholder="Add ingredient"
-          >
-
-          <button onclick="addManual()">
-            +
-          </button>
-
-        </div>
-
-      </div>
-
-      <!-- CATEGORY -->
-
-      <div class="category-box">
-
-        <h3
-          class="section-title"
-          id="categoriesTitle"
-        >
-          🥦 Categories
-        </h3>
-
-        <div class="category-grid">
-
-          <button
+        <button
+  class="category-btn"
   id="catVegetables"
   data-category="vegetables"
 >
@@ -164,6 +128,7 @@
 </button>
 
 <button
+  class="category-btn"
   id="catMeat"
   data-category="meat"
 >
@@ -171,6 +136,7 @@
 </button>
 
 <button
+  class="category-btn"
   id="catSeafood"
   data-category="seafood"
 >
@@ -178,6 +144,7 @@
 </button>
 
 <button
+  class="category-btn"
   id="catVegan"
   data-category="vegan"
 >
@@ -185,6 +152,7 @@
 </button>
 
 <button
+  class="category-btn"
   id="catPasta"
   data-category="pasta"
 >
@@ -192,67 +160,70 @@
 </button>
 
 <button
+  class="category-btn"
   id="catDessert"
   data-category="dessert"
 >
   Dessert
 </button>
-        </div>
-
       </div>
 
     </div>
 
+    <!-- SUB -->
+
     <div
-  class="subcategories"
-  id="subcategories"
-></div>
+      class="subcategories"
+      id="subcategories"
+    ></div>
 
-    <!-- CHECKLIST -->
+  </div>
 
-    <div class="checklist">
+  <!-- CHECKLIST -->
 
-      <h3
+  <div class="checklist">
+
+   <h3
   class="section-title"
   id="selectedTitle"
 >
   ✅ Selected Ingredients
 </h3>
 
-      <div
-        class="check-grid"
-        id="checklist"
-      ></div>
+    <div
+      class="check-grid"
+      id="checklist"
+    ></div>
 
-    </div>
+  </div>
 
-    <!-- BOTTOM -->
+  <!-- BOTTOM -->
 
-    <div class="sidebar-bottom">
+  <div class="sidebar-bottom">
 
-      <label class="confirm">
+    <label class="confirm">
 
-        <input
-          type="checkbox"
-          id="confirmCheck"
-        >
-
-        <span id="confirmText">
-          Confirm ingredients
-        </span>
-
-      </label>
-
-      <button
-        class="recipeBtn"
-        id="recipeBtn"
+      <input
+        type="checkbox"
+        id="confirmCheck"
       >
-        Get Recipes
-      </button>
 
-    </div>
+      <span id="confirmText">
+  Confirm ingredients
+</span>
 
-  </aside>
+    </label>
+
+    <button
+      class="recipeBtn"
+      id="recipeBtn"
+    >
+      Get Recipes
+    </button>
+
+  </div>
+
+</aside>
 
   <!-- CONTENT -->
 
@@ -314,18 +285,9 @@
 
   </div>
 
+<div id="ingredientDrawer">
 
-
-<script
-  src="app.js"
-  defer
-></script>
-
-</body>
-
-<div id="ingredientDrawer" style=" position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:flex-end; justify-content:center; z-index:99999; " >
-
-  <div class="drawer-content" style=" width:100%; max-width:900px; background:#f6efe4; border-radius:32px 32px 0 0; padding:32px; min-height:45vh; " >
+  <div class="drawer-content">
 
     <div class="drawer-top">
 
@@ -339,10 +301,15 @@
 
     </div>
 
-    <div id="drawerItems">
-    </div>
+    <div id="drawerItems"></div>
 
   </div>
 
 </div>
+
+<script src="app.js" defer></script>
+
+</body>
+
+
 </html>

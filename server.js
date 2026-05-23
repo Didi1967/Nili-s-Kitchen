@@ -107,6 +107,10 @@ app.post(
   upload.single("photo"),
   async (req, res) => {
 
+    console.log("ANALYZE STARTED");
+console.log("FILE:", req.file);
+console.log("OPENAI KEY:", process.env.OPENAI_API_KEY ? "VAR" : "YOK");
+
     try {
 
       if (!req.file) {
@@ -133,49 +137,46 @@ app.post(
 
       });
 
-      const response =
-      await openai.chat.completions.create({
+      console.log("OPENAI REQUEST START");
 
-        model:"gpt-4o-mini",
+const response =
+await openai.chat.completions.create({
 
-        messages:[
+  model:"gpt-4o-mini",
 
-          {
-            role:"system",
+  messages:[
 
-            content:
-            "Return only ingredient names as JSON array."
-          },
+    {
+      role:"system",
+      content:"Return only ingredient names as JSON array."
+    },
 
-          {
-            role:"user",
+    {
+      role:"user",
 
-            content:[
+      content:[
 
-              {
-                type:"text",
+        {
+          type:"text",
+          text:"Detect ingredients from this image"
+        },
 
-                text:
-                "Detect ingredients from this image"
-              },
-
-              {
-                type:"image_url",
-
-                image_url:{
-                  url:
-`data:image/jpeg;base64,${imageBase64}`
-                }
-
-              }
-
-            ]
-
+        {
+          type:"image_url",
+          image_url:{
+            url:`data:image/jpeg;base64,${imageBase64}`
           }
+        }
 
-        ]
+      ]
 
-      });
+    }
+
+  ]
+
+});
+
+console.log("OPENAI RESPONSE OK");
 
       const text =
       response
