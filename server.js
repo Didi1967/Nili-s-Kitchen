@@ -107,11 +107,11 @@ app.post(
   upload.single("photo"),
   async (req, res) => {
 
-    console.log("ANALYZE STARTED");
-console.log("FILE:", req.file);
-console.log("OPENAI KEY:", process.env.OPENAI_API_KEY ? "VAR" : "YOK");
+    let uploadedPath = null;
 
     try {
+
+      console.log("1 - ANALYZE START");
 
       if (!req.file) {
 
@@ -121,62 +121,72 @@ console.log("OPENAI KEY:", process.env.OPENAI_API_KEY ? "VAR" : "YOK");
 
       }
 
+      uploadedPath = req.file.path;
+
+      console.log("2 - FILE RECEIVED:", req.file.originalname);
+      console.log("3 - MIME:", req.file.mimetype);
+
       const imageBase64 =
       fs.readFileSync(
         req.file.path,
         {
-          encoding:"base64"
+          encoding: "base64"
         }
       );
 
+      console.log("4 - IMAGE CONVERTED BASE64");
+
       const openai =
       new OpenAI({
-
-        apiKey:
-        process.env.OPENAI_API_KEY
-
+        apiKey: process.env.OPENAI_API_KEY
       });
 
-      console.log("OPENAI REQUEST START");
+      console.log("5 - OPENAI REQUEST START");
 
-const response =
-await openai.chat.completions.create({
-
-  model:"gpt-4o-mini",
-
-  messages:[
-
-    {
-      role:"system",
-      content:"Return only ingredient names as JSON array."
-    },
-
-    {
-      role:"user",
-
-      content:[
-
+      const response =
+      await openai.chat.completions.create(
         {
-          type:"text",
-          text:"Detect ingredients from this image"
+          model: "gpt-4o-mini",
+
+          messages: [
+
+            {
+              role: "system",
+              content:
+              "Return ONLY a valid JSON array of ingredient names. Example: [\"tomato\",\"onion\",\"cheese\"]"
+            },
+
+            {
+              role: "user",
+
+              content: [
+
+                {
+                  type: "text",
+                  text: "Detect visible food ingredients in this image."
+                },
+
+                {
+                  type: "image_url",
+                  image_url: {
+                    url:
+                    `data:${req.file.mimetype};base64,${imageBase64}`
+                  }
+                }
+
+              ]
+
+            }
+
+          ]
+
         },
-
         {
-          type:"image_url",
-          image_url:{
-            url:`data:image/jpeg;base64,${imageBase64}`
-          }
+          timeout: 20000
         }
+      );
 
-      ]
-
-    }
-
-  ]
-
-});
-
-console.log("OPENAI RESPONSE OK");
+      console.log("6 - OPENAI ANSWER RECEIVED");
 
       const text =
       response
@@ -184,64 +194,157 @@ console.log("OPENAI RESPONSE OK");
       .message
       .content;
 
-      console.log(text);
+      console.log("AI RAW:", text);
 
       let ingredients =
       [];
 
-      try{
+      try {
 
         ingredients =
         JSON.parse(text);
 
-      }
-
-      catch{
+      } catch {
 
         ingredients =
         text
-        .replace(/```json/gi,"")
-        .replace(/```/g,"")
-        .replace(/\[/g,"")
-        .replace(/\]/g,"")
-        .replace(/"/g,"")
-        .replace(/'/g,"")
-        .replace(/[“”]/g,"")
-        .replace(/[‘’]/g,"")
-        .replace(/\n/g,"")
+        .replace(/```json/gi, "")
+        .replace(/```/g, "")
+        .replace(/\[/g, "")
+        .replace(/\]/g, "")
+        .replace(/"/g, "")
+        .replace(/'/g, "")
+        .replace(/[“”]/g, "")
+        .replace(/[‘’]/g, "")
+        .replace(/\n/g, "")
         .split(",")
-        .map(x=>x.trim())
-        .map(x=>x.replace(/json/gi,""))
+        .map(x => x.trim())
         .filter(Boolean);
 
       }
 
       ingredients =
-      ingredients.map(x=>
-
-        x
-        .replace(/[^\w\s-]/g,"")
+      ingredients
+      .map(x =>
+        String(x)
+        .replace(/[^\w\s-]/g, "")
         .trim()
+      )
+      .filter(Boolean);
 
-      );
+      if (uploadedPath && fs.existsSync(uploadedPath)) {
+        fs.unlinkSync(uploadedPath);
+      }
 
-      res.json({
+      console.log("7 - ANALYZE DONE:", ingredients);
 
+      return res.json({
         ingredients
-
       });
 
     } catch (err) {
 
-      console.log(err);
+      console.log("ANALYZE ERROR:", err.message);
 
-      res.status(500).json({
-        error:"Analyze failed"
+      if (uploadedPath && fs.existsSync(uploadedPath)) {
+        fs.unlinkSync(uploadedPath);
+      }
+
+      return res.status(500).json({
+        error: "Analyze failed",
+        details: err.message
       });
 
     }
 
-});
+  }
+);
+
+/* NORMALIZE INGREDIENT */
+
+app.post(
+  "/normalize-ingredient",
+  async (req, res) => {
+
+    try {
+
+      const input =
+      req.body.ingredient;
+
+      if(!input){
+        return res.json({
+          ingredient: ""
+        });
+      }
+
+      const openai =
+      new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY
+      });
+
+      const response =
+      await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+
+        messages: [
+          {
+            role: "system",
+            content:
+            `
+You normalize food ingredient names.
+
+Rules:
+- Return only ONE ingredient name.
+- Return in English.
+- Fix typos.
+- Translate if needed.
+- Remove quantity words.
+- Remove unnecessary adjectives unless important.
+- Do not return sentences.
+- Do not add explanations.
+
+Examples:
+domates -> tomato
+tavuk gogsu -> chicken breast
+kaşar peyniri -> cheese
+kirmizi biber -> red pepper
+zeytin yag -> olive oil
+2 adet yumurta -> egg
+biraz tuz -> salt
+`
+          },
+          {
+            role: "user",
+            content: String(input)
+          }
+        ]
+      });
+
+      const ingredient =
+      response
+      .choices[0]
+      .message
+      .content
+      .trim()
+      .toLowerCase();
+
+      return res.json({
+        ingredient
+      });
+
+    } catch (err) {
+
+      console.log("NORMALIZE ERROR:", err.message);
+
+      return res.status(500).json({
+        error: "Normalize failed",
+        details: err.message
+      });
+
+    }
+
+  }
+);
 
 /* RECIPES */
 

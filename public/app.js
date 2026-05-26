@@ -1,330 +1,218 @@
-let currentRecipes = [];
-
-
-/* ELEMENTS */
-
-const photo =
-document.getElementById("photo");
-
-const statusText =
-document.getElementById("statusText");
-
-const bar =
-document.getElementById("bar");
-
-const checklist =
-document.getElementById("checklist");
-
-const recipeBtn =
-document.getElementById("recipeBtn");
-
-const confirmCheck =
-document.getElementById("confirmCheck");
-
-const result =
-document.getElementById("result");
-
-const modal =
-document.getElementById("modal");
-
-const modalBody =
-document.getElementById("modalBody");
-
-const manualInput =
-document.getElementById("manualInput");
-
-const langSelect =
-document.getElementById("langSelect");
-
-const subcategories =
-document.getElementById("subcategories");
-
-/* DATA */
-
+ let currentRecipes = [];
 let selected = [];
 
-let currentLang =
-localStorage.getItem("lang")
-|| "en";
+const photo = document.getElementById("photo");
+const statusText = document.getElementById("statusText");
+const bar = document.getElementById("bar");
+const checklist = document.getElementById("checklist");
+const recipeBtn = document.getElementById("recipeBtn");
+const confirmCheck = document.getElementById("confirmCheck");
+const result = document.getElementById("result");
+const modal = document.getElementById("modal");
+const modalBody = document.getElementById("modalBody");
+const manualInput = document.getElementById("manualInput");
+const langSelect = document.getElementById("langSelect");
 
-/* CATEGORY DATA */
+const ingredientModal = document.getElementById("ingredientModal");
+const ingredientModalTitle = document.getElementById("ingredientModalTitle");
+const ingredientModalItems = document.getElementById("ingredientModalItems");
+
+let currentLang =
+localStorage.getItem("lang") || "en";
 
 const CATEGORY_DATA = {
 
   vegetables:[
-    "tomato",
-    "onion",
-    "potato",
-    "pepper",
-    "broccoli",
-    "garlic"
+    "tomato","onion","potato","pepper","red pepper","green pepper",
+    "garlic","broccoli","zucchini","eggplant","cucumber","mushroom",
+    "spinach","lettuce","cabbage","carrot"
+  ],
+
+  fruits:[
+    "apple","banana","orange","lemon","lime","avocado",
+    "strawberry","blueberry","pineapple","mango"
   ],
 
   meat:[
-    "chicken",
-    "beef",
-    "steak",
-    "lamb"
+    "chicken","chicken breast","beef","ground beef",
+    "steak","lamb","turkey","sausage"
   ],
 
   seafood:[
-    "salmon",
-    "shrimp",
-    "tuna"
+    "salmon","tuna","shrimp","fish","cod","sardine"
   ],
 
   vegan:[
-    "tofu",
-    "lentils",
-    "mushroom"
+    "tofu","lentils","mushroom","chickpeas","beans","peas"
   ],
 
   pasta:[
-    "spaghetti",
-    "parmesan",
-    "basil"
+    "pasta","spaghetti","noodles","parmesan","basil","tomato sauce"
+  ],
+
+  dairy:[
+    "milk","cheese","yogurt","butter","cream","mozzarella","parmesan"
+  ],
+
+  grains:[
+    "rice","pasta","spaghetti","bread","flour","oats","bulgur","noodles"
+  ],
+
+  legumes:[
+    "lentils","beans","peas","chickpeas","kidney beans","black beans"
+  ],
+
+  spices:[
+    "salt","black pepper","paprika","oregano","thyme",
+    "basil","cumin","cinnamon","chili flakes"
+  ],
+
+  oils:[
+    "olive oil","vegetable oil","sunflower oil","sesame oil"
+  ],
+
+  sauces:[
+    "soy sauce","tomato sauce","ketchup","mustard",
+    "mayonnaise","vinegar","honey"
   ],
 
   dessert:[
-    "chocolate",
-    "banana",
-    "cream"
+    "chocolate","banana","cream","vanilla","cocoa","cookie"
   ]
 
 };
 
-
-
-/* LANG */
-
 const LANG = {
 
   en:{
-
-    subtitle:
-    "AI Recipe Assistant",
-
-    upload:
-    "Upload ingredients photo",
-
-    add:
-    "Add ingredient",
-
-    confirm:
-    "Confirm ingredients",
-
-    recipes:
-    "Get Recipes",
-
-    uploadTitle:
-    "📸 Upload Ingredients",
-
-    manualTitle:
-    "✍ Manual Ingredient",
-
-    categories:
-    "🥦 Categories",
-
-    vegetables:
-    "Vegetables",
-
-    meat:
-    "Meat",
-
-    seafood:
-    "Seafood",
-
-    vegan:
-    "Vegan",
-
-    pasta:
-    "Pasta",
-
-    dessert:
-    "Dessert",
-
-    selectedTitle:
-    "✅ Selected Ingredients"
-
+    subtitle:"AI Recipe Assistant",
+    upload:"Upload ingredients photo",
+    add:"Add ingredient",
+    confirm:"Confirm ingredients",
+    recipes:"Get Recipes",
+    uploadTitle:"📸 Upload Ingredients",
+    manualTitle:"✍ Manual Ingredient"
   },
 
   tr:{
-
-    subtitle:
-    "AI Tarif Asistanı",
-
-    upload:
-    "Malzeme fotoğrafı yükle",
-
-    add:
-    "Malzeme ekle",
-
-    confirm:
-    "Malzemeleri onayla",
-
-    recipes:
-    "Tarifleri Getir",
-
-    uploadTitle:
-    "📸 Malzeme Yükle",
-
-    manualTitle:
-    "✍ Manuel Malzeme",
-
-    categories:
-    "🥦 Kategoriler",
-
-    vegetables:
-    "Sebzeler",
-
-    meat:
-    "Et",
-
-    seafood:
-    "Deniz Ürünleri",
-
-    vegan:
-    "Vegan",
-
-    pasta:
-    "Makarna",
-
-    dessert:
-    "Tatlı",
-
-    selectedTitle:
-    "✅ Seçilen Malzemeler"
-
+    subtitle:"AI Tarif Asistanı",
+    upload:"Malzeme fotoğrafı yükle",
+    add:"Malzeme ekle",
+    confirm:"Malzemeleri onayla",
+    recipes:"Tarifleri Getir",
+    uploadTitle:"📸 Malzeme Yükle",
+    manualTitle:"✍ Manuel Malzeme"
   }
 
 };
 
-/* APPLY LANGUAGE */
-
 function applyLanguage(){
 
+  const t = LANG[currentLang] || LANG.en;
 
-const t =
-LANG[currentLang]
-|| LANG.en;
+  document.documentElement.lang = currentLang;
 
+  const appSubtitle = document.getElementById("appSubtitle");
+  const uploadTitle = document.getElementById("uploadTitle");
+  const manualTitle = document.getElementById("manualTitle");
+  const confirmText = document.getElementById("confirmText");
 
-  document.documentElement.lang =
-  currentLang;
-
-  document.getElementById(
-    "appSubtitle"
-  ).innerText =
-  t.subtitle;
-
-  statusText.innerText =
-  t.upload;
-
-  manualInput.placeholder =
-  t.add;
-
-  document.getElementById(
-    "confirmText"
-  ).innerText =
-  t.confirm;
-
-  recipeBtn.innerText =
-  t.recipes;
-
-  document.getElementById(
-    "uploadTitle"
-  ).innerText =
-  t.uploadTitle;
-
-  document.getElementById(
-    "manualTitle"
-  ).innerText =
-  t.manualTitle;
-
-  document.getElementById(
-    "categoriesTitle"
-  ).innerText =
-  t.categories;
-
-  document.getElementById(
-    "selectedTitle"
-  ).innerText =
-  t.selectedTitle;
-
-  document.getElementById(
-    "catVegetables"
-  ).innerText =
-  t.vegetables;
-
-  document.getElementById(
-    "catMeat"
-  ).innerText =
-  t.meat;
-
-  document.getElementById(
-    "catSeafood"
-  ).innerText =
-  t.seafood;
-
-  document.getElementById(
-    "catVegan"
-  ).innerText =
-  t.vegan;
-
-  document.getElementById(
-    "catPasta"
-  ).innerText =
-  t.pasta;
-
-  document.getElementById(
-    "catDessert"
-  ).innerText =
-  t.dessert;
+  if(appSubtitle) appSubtitle.innerText = t.subtitle;
+  if(statusText) statusText.innerText = t.upload;
+  if(manualInput) manualInput.placeholder = t.add;
+  if(confirmText) confirmText.innerText = t.confirm;
+  if(recipeBtn) recipeBtn.innerText = t.recipes;
+  if(uploadTitle) uploadTitle.innerText = t.uploadTitle;
+  if(manualTitle) manualTitle.innerText = t.manualTitle;
 
 }
 
-/* LANGUAGE SWITCH */
+if(langSelect){
 
-langSelect.value =
-currentLang;
+  langSelect.value = currentLang;
 
-langSelect.addEventListener(
-  "change",
-  ()=>{
+  langSelect.addEventListener("change", () => {
 
-    currentLang =
-    langSelect.value;
+    currentLang = langSelect.value;
 
-    localStorage.setItem(
-      "lang",
-      currentLang
-    );
+    localStorage.setItem("lang", currentLang);
 
     applyLanguage();
 
-});
+  });
 
-/* CHECKLIST */
+}
+
+function saveState(){
+
+  localStorage.setItem(
+    "selectedIngredients",
+    JSON.stringify(selected)
+  );
+
+}
+
+function loadState(){
+
+  const saved =
+  localStorage.getItem("selectedIngredients");
+
+  if(saved){
+
+    try{
+      selected = JSON.parse(saved) || [];
+    }catch{
+      selected = [];
+    }
+
+  }
+
+  renderChecklist();
+
+}
 
 function renderChecklist(){
 
-  checklist.innerHTML =
+  if(!checklist) return;
 
-  selected.map(x=>`
+  if(!selected.length){
+
+    checklist.innerHTML = "";
+
+    return;
+
+  }
+
+  checklist.innerHTML =
+  `
+    <div class="selected-header">
+
+      <div class="selected-box-title">
+        ✅ Selected Ingredients
+      </div>
+
+      <button
+        class="clear-btn"
+        type="button"
+        onclick="clearIngredients()"
+      >
+        Clear
+      </button>
+
+    </div>
+  `
+  +
+  selected.map(item => `
 
     <label class="check-item">
 
       <input
         type="checkbox"
         checked
-        onchange="
-          removeIngredient(
-            '${x}'
-          )
-        "
+        onchange="removeIngredient('${item}')"
       >
 
-      ${x}
+      <span>${item}</span>
 
     </label>
 
@@ -332,191 +220,314 @@ function renderChecklist(){
 
 }
 
-/* REMOVE */
+function addIngredient(value){
 
-function removeIngredient(v){
+  const clean =
+  String(value)
+  .trim()
+  .toLowerCase();
 
-  selected =
-  selected.filter(
-    x=>x!==v
-  );
+  if(!clean) return;
 
-  renderChecklist();
-
-}
-
-/* MANUAL */
-
-function addManual(){
-
-  const v =
-  manualInput.value.trim();
-
-  if(!v) return;
-
-  if(!selected.includes(v)){
-
-    selected.push(v);
-
+  if(!selected.includes(clean)){
+    selected.push(clean);
   }
 
-  manualInput.value =
-  "";
-
+  saveState();
   renderChecklist();
 
 }
 
-/* CATEGORY */
+window.removeIngredient = function(value){
 
-document
-.querySelectorAll(
-  ".category-grid button"
-)
-.forEach(btn=>{
+  selected =
+  selected.filter(item => item !== value);
 
-  btn.addEventListener(
-    "click",
-    ()=>{
+  saveState();
+  renderChecklist();
 
-      const key =
-      btn.dataset.category;
+};
 
-      const items =
-      CATEGORY_DATA[key];
+window.clearIngredients = function(){
 
-      subcategories.innerHTML =
-      items.map(x=>`
+  selected = [];
 
-        <button
-          class="sub-btn"
-          onclick="
-            addCategory(
-              '${x}'
-            )
-          "
-        >
+  saveState();
+  renderChecklist();
 
-          ${x}
+};
 
-        </button>
+window.addManual = function(){
 
-      `).join("");
+  const value =
+  manualInput.value
+  .trim()
+  .toLowerCase();
+
+  if(!value) return;
+
+  addIngredient(value);
+
+  manualInput.value = "";
+
+  if(statusText){
+    statusText.innerText = "Ingredient added";
+  }
+
+};
+
+if(manualInput){
+
+  manualInput.addEventListener("keydown", e => {
+
+    if(e.key === "Enter"){
+
+      e.preventDefault();
+
+      window.addManual();
 
     }
 
-  );
-
-});
-
-/* ADD CATEGORY */
-
-function addCategory(v){
-
-  if(!selected.includes(v)){
-
-    selected.push(v);
-
-  }
-
-  renderChecklist();
+  });
 
 }
 
- /* UPLOAD + ANALYZE */
+function resetUploadStatus(){
 
-photo.addEventListener(
-  "change",
-  async ()=>{
+  if(statusText){
+    statusText.innerText = "Upload ingredients photo";
+  }
 
-    const file =
-    photo.files[0];
+  if(bar){
+    bar.style.width = "0%";
+  }
+
+  if(photo){
+    photo.value = "";
+  }
+
+}
+
+if(photo){
+
+  photo.addEventListener("change", async () => {
+
+    const file = photo.files[0];
 
     if(!file) return;
 
-    statusText.innerText =
-    "Analyzing...";
+    if(statusText){
+      statusText.innerText = "Analyzing photo...";
+    }
 
-    bar.style.width =
-    "30%";
+    if(bar){
+      bar.style.width = "35%";
+    }
 
-    const formData =
-    new FormData();
+    const formData = new FormData();
 
-    formData.append(
-      "photo",
-      file
-    );
+    formData.append("photo", file);
 
     try{
 
+      if(bar){
+        bar.style.width = "65%";
+      }
+
       const res =
-      await fetch(
-        "/analyze",
-        {
-          method:"POST",
-          body:formData
-        }
-      );
+      await fetch("/analyze", {
+        method:"POST",
+        body:formData
+      });
 
       const data =
       await res.json();
 
-      bar.style.width =
-      "100%";
+      if(!res.ok){
 
-      if(
-        data.ingredients
-      ){
+        if(statusText){
+          statusText.innerText =
+          data.details || "Analyze failed";
+        }
 
-        data.ingredients.forEach(
-          item=>{
+        if(bar){
+          bar.style.width = "0%";
+        }
 
-            if(
-              !selected.includes(item)
-            ){
+        return;
 
-              selected.push(item);
+      }
 
-            }
+      if(data.ingredients && data.ingredients.length){
 
-          }
-        );
+        data.ingredients.forEach(item => {
+          addIngredient(item);
+        });
 
-        renderChecklist();
+        if(statusText){
+          statusText.innerText = "Ingredients detected";
+        }
 
-        statusText.innerText =
-        "Ingredients detected";
+        if(bar){
+          bar.style.width = "100%";
+        }
 
-      }else{
+        setTimeout(() => {
+          resetUploadStatus();
+        }, 1200);
 
-        statusText.innerText =
-        "No ingredients found";
+      } else {
+
+        if(statusText){
+          statusText.innerText = "No ingredients found";
+        }
+
+        setTimeout(() => {
+          resetUploadStatus();
+        }, 1200);
 
       }
 
     }catch(err){
 
-      console.error(err);
+      console.error("FRONT ANALYZE ERROR:", err);
 
-      statusText.innerText =
-      "Analyze failed";
+      if(statusText){
+        statusText.innerText = "Analyze failed";
+      }
+
+      if(bar){
+        bar.style.width = "0%";
+      }
+
+      setTimeout(() => {
+        resetUploadStatus();
+      }, 1200);
 
     }
 
+  });
+
+}
+
+window.toggleCategories = function(){
+
+  const grid =
+  document.getElementById("categoryGrid");
+
+  const arrow =
+  document.getElementById("categoryArrow");
+
+  if(!grid) return;
+
+  grid.classList.toggle("collapsed");
+
+  if(arrow){
+    arrow.innerText =
+    grid.classList.contains("collapsed")
+    ? "▼"
+    : "▲";
+  }
+
+};
+
+function openIngredientModal(title, items){
+
+  if(!ingredientModal || !ingredientModalItems) return;
+
+  ingredientModal.style.display = "flex";
+
+  if(ingredientModalTitle){
+    ingredientModalTitle.innerText = title;
+  }
+
+  ingredientModalItems.innerHTML =
+  items.map(item => `
+
+    <button
+      class="modal-ingredient-btn ${selected.includes(item) ? "active" : ""}"
+      type="button"
+      data-value="${item}"
+    >
+      ${item}
+    </button>
+
+  `).join("");
+
+}
+
+window.closeIngredientModal = function(){
+
+  if(ingredientModal){
+    ingredientModal.style.display = "none";
+  }
+
+};
+
+document
+.querySelectorAll(".category-btn")
+.forEach(btn => {
+
+  btn.addEventListener("click", () => {
+
+    const key =
+    btn.dataset.category;
+
+    const items =
+    CATEGORY_DATA[key] || [];
+
+    document
+    .querySelectorAll(".category-btn")
+    .forEach(b => b.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    openIngredientModal(
+      btn.innerText.trim(),
+      items
+    );
+
+  });
+
 });
 
-/* RECIPES */
+if(ingredientModalItems){
 
-recipeBtn.addEventListener(
-  "click",
-  async ()=>{
+  ingredientModalItems.addEventListener("click", e => {
 
- 
-if(
-  !confirmCheck.checked
-){
+    const btn =
+    e.target.closest(".modal-ingredient-btn");
+
+    if(!btn) return;
+
+    const value =
+    btn.dataset.value;
+
+    if(selected.includes(value)){
+
+      selected =
+      selected.filter(item => item !== value);
+
+      btn.classList.remove("active");
+
+    } else {
+
+      selected.push(value);
+
+      btn.classList.add("active");
+
+    }
+
+    saveState();
+    renderChecklist();
+
+  });
+
 }
+
+if(recipeBtn){
+
+  recipeBtn.addEventListener("click", async () => {
 
     result.innerHTML =
     "<p>Loading recipes...</p>";
@@ -524,50 +535,34 @@ if(
     try{
 
       const res =
-      await fetch(
-        "/recipes",
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-            "application/json"
-          },
-
-          body:JSON.stringify({
-
-            ingredients:selected,
-
-            lang:currentLang
-
-          })
-
-        }
-      );
+      await fetch("/recipes", {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          ingredients:selected,
+          lang:currentLang
+        })
+      });
 
       const data =
       await res.json();
 
-    
-console.log(
-  "RECIPES DATA:",
-  data
-);
- 
+      if(!res.ok){
 
+        console.error(data);
 
-      currentRecipes =
-      data;
+        result.innerHTML =
+        "<p>Recipes failed</p>";
 
+        return;
 
-result.innerHTML = "";
+      }
 
+      currentRecipes = data;
 
-      if(
-        !Array.isArray(data)
-        ||
-        !data.length
-      ){
+      if(!Array.isArray(data) || !data.length){
 
         result.innerHTML =
         "<p>No recipes found</p>";
@@ -576,133 +571,14 @@ result.innerHTML = "";
 
       }
 
-      let html = "";
- 
-if(!Array.isArray(data)){
+      renderRecipes(data);
 
-  result.innerHTML =
-  "<p>Recipe format error</p>";
+      const hero =
+      document.querySelector(".hero");
 
-  return;
-
-}
- 
-
-
-      data.forEach(recipe=>{
-
-        html += `
-
-          <div
-            class="card"
-            onclick="openRecipe('${recipe.id}')"
-          >
-
-            <img
-              src="${
-                recipe.image
-                ||
-                'https://www.themealdb.com/images/media/meals/llcbn01574260722.jpg'
-              }"
-
-              alt="${recipe.title}"
-            >
-
-            <div class="card-body">
-
-              <h3>
-                ${recipe.title || "Recipe"}
-              </h3>
-
-              <p class="time">
-
-                ⏱ ${
-                  recipe.readyInMinutes
-                  || 30
-                } min
-
-              </p>
-
-               
-<div class="ingredients-count">
-
-  🥗 Uses
-  ${
-    recipe.usedIngredients
-    ? recipe.usedIngredients.length
-    : 0
-  }
-  ingredients
-
-</div>
- 
-
- 
-${
-  recipe.usedIngredients
-    .slice(0,4)
-    .map(item=>`
-
-      <span>
-        ${item.name}
-      </span>
-
-    `).join("")
-}
- 
-
-              </div>
-
-            </div>
-
-          </div>
-
-        `;
-
-      });
-
-      result.innerHTML =
-      html;
-
-       
-const hero =
-document.querySelector(
-  ".hero"
-);
-
- 
-window.scrollTo({
-
-  top:0,
-
-  behavior:"smooth"
-
-});
- 
-
-
-if(hero){
-
-  hero.style.display =
-  "none";
-
-}
- 
-
- 
-const mosaic =
-document.getElementById(
-  "mosaic"
-);
-
-if(mosaic){
-
-  mosaic.style.display =
-  "none";
-
-}
- 
-
+      if(hero){
+        hero.style.display = "none";
+      }
 
       result.scrollIntoView({
         behavior:"smooth"
@@ -710,78 +586,139 @@ if(mosaic){
 
     }catch(err){
 
-      console.log(err);
+      console.error(err);
 
       result.innerHTML =
       "<p>Recipes failed</p>";
 
     }
 
-});
-
-
-/* MODAL */
- 
-function closeModal(){
-
-  modal.style.display =
-  "none";
+  });
 
 }
- 
 
-async function openRecipe(id){
+function renderRecipes(data){
 
-  modal.style.display =
-  "block";
+  result.innerHTML =
+  data.map(recipe => {
+
+    const usedCount =
+    recipe.usedIngredients && recipe.usedIngredients.length
+    ? recipe.usedIngredients.length
+    : selected.length;
+
+    const usedList =
+    recipe.usedIngredients && recipe.usedIngredients.length
+    ? recipe.usedIngredients
+        .slice(0,4)
+        .map(item => `<span>${item.name || item.original || item}</span>`)
+        .join("")
+    : selected
+        .slice(0,4)
+        .map(item => `<span>${item}</span>`)
+        .join("");
+
+    return `
+
+      <div
+        class="card"
+        data-recipe-id="${recipe.id}"
+      >
+
+        <img
+          src="${
+            recipe.image ||
+            "https://img.spoonacular.com/recipes/716429-556x370.jpg"
+          }"
+          alt="${recipe.title || "Recipe"}"
+        >
+
+        <div class="card-body">
+
+          <h3>
+            ${recipe.title || "Recipe"}
+          </h3>
+
+          <p class="time">
+            ⏱ ${recipe.readyInMinutes || 30} min
+          </p>
+
+          <div class="ingredients-count">
+            🥗 Uses ${usedCount} ingredients
+          </div>
+
+          <div class="ingredients">
+            ${usedList}
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }).join("");
+
+}
+
+if(result){
+
+  result.addEventListener("click", e => {
+
+    const card =
+    e.target.closest(".card");
+
+    if(!card) return;
+
+    const id =
+    card.dataset.recipeId;
+
+    openRecipe(id);
+
+  });
+
+}
+
+function openRecipe(id){
 
   const recipe =
   currentRecipes.find(
-    r => String(r.id) === String(id)
+    item => String(item.id) === String(id)
   );
 
   if(!recipe){
 
     modalBody.innerHTML =
-
- 
-
-
-
     "<h2>Recipe not found</h2>";
+
+    modal.style.display = "flex";
 
     return;
 
   }
 
-  modalBody.innerHTML = `
+  const ingredientHtml =
+  recipe.usedIngredients && recipe.usedIngredients.length
+  ? recipe.usedIngredients
+      .map(item => `
+        <span>
+          ${item.name || item.original || item}
+        </span>
+      `).join("")
+  : selected
+      .map(item => `
+        <span>
+          ${item}
+        </span>
+      `).join("");
 
-  <button
-  onclick="closeModal()"
-  style="
-    position:absolute;
-    top:20px;
-    right:20px;
-    border:none;
-    background:black;
-    color:white;
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    cursor:pointer;
-    font-size:22px;
-  "
->
-  ×
-</button>
+  modalBody.innerHTML = `
 
     <img
       src="${
-        recipe.image
-        ||
-        'https://www.themealdb.com/images/media/meals/llcbn01574260722.jpg'
+        recipe.image ||
+        "https://img.spoonacular.com/recipes/716429-556x370.jpg"
       }"
-
       style="
         width:100%;
         max-height:340px;
@@ -792,133 +729,48 @@ async function openRecipe(id){
     >
 
     <h1>
-      ${recipe.title}
+      ${recipe.title || "Recipe"}
     </h1>
 
-    <br>
-
     <p class="time">
-
-      ⏱ ${
-        recipe.readyInMinutes
-        || 30
-      } min
-
+      ⏱ ${recipe.readyInMinutes || 30} min
     </p>
-
-    <br>
 
     <h2>
       Ingredients
     </h2>
 
     <div class="ingredients">
-
-      ${
-        recipe.usedIngredients
-        ? recipe.usedIngredients
-            .map(item=>`
-
-              <span>
-                ${
-                  item.name
-                  || item.original
-                  || "ingredient"
-                }
-              </span>
-
-            `).join("")
-        : ""
-      }
-
+      ${ingredientHtml}
     </div>
 
-    <br><br>
+    <br>
 
     <h2>
       Instructions
     </h2>
 
     <p style="line-height:1.8;">
-
-${
-  recipe.instructions
-  ? recipe.instructions
-  : "Recipe instructions unavailable."
-}
-
-
+      ${
+        recipe.instructions ||
+        "Recipe instructions unavailable."
+      }
     </p>
 
   `;
 
+  modal.style.display = "flex";
+
 }
 
-/* CATEGORY */
+window.closeModal = function(){
 
-document
-.querySelectorAll(
-  ".category-grid button"
-)
-.forEach(btn=>{
-
-  btn.addEventListener(
-    "click",
-    ()=>{
-
-      const key =
-      btn.dataset.category;
-
-      const items =
-      CATEGORY_DATA[key];
-
-      subcategories.innerHTML =
-      items.map(x=>`
-
-        <button
-          class="sub-btn"
-          data-value="${x}"
-        >
-
-          ${x}
-
-        </button>
-
-      `).join("");
-
-      document
-      .querySelectorAll(".sub-btn")
-      .forEach(subBtn=>{
-
-        subBtn.addEventListener(
-          "click",
-          ()=>{
-
-            addCategory(
-              subBtn.dataset.value
-            );
-
-          }
-        );
-
-      });
-
-    }
-
-  );
-
-});
-
-/* ADD CATEGORY */
-
-function addCategory(v){
-
-  if(!selected.includes(v)){
-
-    selected.push(v);
-
+  if(modal){
+    modal.style.display = "none";
   }
 
-  renderChecklist();
+};
 
-}
+applyLanguage();
+loadState();
+resetUploadStatus();
