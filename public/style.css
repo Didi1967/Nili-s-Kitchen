@@ -979,4 +979,121 @@ button{
 
 }
 
- 
+/* HERO PERFECT FIT */
+
+.hero{
+  height:calc(100vh - 48px) !important;
+}
+
+.hero-bg{
+  height:100% !important;
+}
+
+.hero-main-card{
+  height:100% !important;
+}
+
+.hero-side-images{
+  height:100% !important;
+}
+
+.hero-side-images img{
+  height:100% !important;
+}
+
+/* sağdaki 2 resmi eşit yap */
+
+.hero-side-images{
+  grid-template-rows:
+  repeat(2,minmax(0,1fr)) !important;
+}
+
+/* taşmayı engelle */
+
+.hero-main-card,
+.hero-side-images,
+.hero-side-images img{
+  overflow:hidden !important;
+}
+
+/* resimler tam otursun */
+
+.hero-main-img,
+.hero-side-images img{
+  object-fit:cover !important;
+  object-position:center !important;
+}
+
+/* içerik alta taşmasın */
+
+.content{
+  overflow:hidden !important;
+}
+
+ /* =========================
+   MOBILE
+========================= */
+
+@media (max-width:900px){
+
+  .content{
+    margin-left:0;
+    padding:14px;
+    height:auto;
+    overflow:auto;
+  }
+
+  .sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+    border-radius:0;
+  }
+
+  .hero{
+    height:auto;
+  }
+
+  .hero-bg{
+    height:auto;
+
+    grid-template-columns:1fr;
+
+    gap:14px;
+  }
+
+  .hero-main-card{
+    height:420px;
+  }
+
+  .hero-side-images{
+    height:220px;
+
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:none;
+  }
+
+  .hero-content{
+    left:26px;
+    right:26px;
+    max-width:none;
+  }
+
+  .hero-content h2{
+    font-size:42px;
+    line-height:.95;
+  }
+
+  .hero-content p{
+    font-size:16px;
+  }
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .card img{
+    height:220px;
+  }
+
+}

@@ -346,9 +346,19 @@ biraz tuz -> salt
   }
 );
 
-/* RECIPES */
+ /* RECIPES */
+
+ const useSpoonacular =
+process.env.USE_SPOONACULAR === "true";
+
+const useEdamam =
+process.env.USE_EDAMAM === "true";
+
+const useTheMealDB =
+process.env.USE_THEMEALDB === "true";
 
 app.post(
+  
   "/recipes",
   async (req, res) => {
 
@@ -357,207 +367,347 @@ app.post(
       const ingredients =
       req.body.ingredients || [];
 
+      const offset =
+Number(req.body.offset || 0);
+
+const limit =
+8;
+
+const targetCount =
+offset + limit + 1;
+
       if (!ingredients.length) {
-
         return res.json([]);
-
       }
 
       const query =
       ingredients.join(",");
 
-      const response =
-      await fetch(
+      let allRecipes =
+      [];
 
-`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&number=6&apiKey=${process.env.SPOON_KEY}`
+      /*
+        1. SPOONACULAR
+      */
 
-      );
+      if (
+  useSpoonacular &&
+  allRecipes.length < targetCount
+) {  
 
-      const basicRecipes =
-      await response.json();
+      try {
 
-      console.log(basicRecipes);
+        const spoonRes =
+        await fetch(
+`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(query)}&number=6&apiKey=${process.env.SPOON_KEY}`
+        );
 
-      /* THEMALDB */
+console.log("SPOON STATUS:", spoonRes.status);
 
- 
-if(
-  !Array.isArray(basicRecipes)
-  ||
-  basicRecipes.status === "failure"
-)
+        const basicRecipes =
+        await spoonRes.json();
 
-{
-   
-const validIngredients = ingredients.filter(x=> !x.includes("apple") && !x.includes("banana") && !x.includes("orange") && !x.includes("bell pepper") ); const randomIngredient = validIngredients[0] || ingredients[0];
+        console.log("SPOON RAW:", basicRecipes);
 
-const mealRes =
-await fetch(
+        if (
+          Array.isArray(basicRecipes) &&
+          basicRecipes.length > 0 &&
+          basicRecipes.status !== "failure"
+        ) {
 
-`https://www.themealdb.com/api/json/v1/1/filter.php?i=${randomIngredient}`
+          console.log("SOURCE: SPOONACULAR");
 
-);
+          const spoonRecipes =
+          await Promise.all(
 
- 
-console.log(
-  "THEMEAL INGREDIENT:",
-  randomIngredient
-);
- 
+            basicRecipes
+            .slice(0, 6)
+            .map(async recipe => {
 
+              try {
 
-  const mealData =
-  await mealRes.json();
+                const detailRes =
+                await fetch(
+`https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${process.env.SPOON_KEY}`
+                );
 
-  if(!mealData.meals){
+                const detail =
+                await detailRes.json();
 
-    return res.json([]);
+                return {
+                  id: recipe.id,
+                  source: "spoonacular",
+                  title: recipe.title || "Recipe",
+                  image: recipe.image || "",
+                  readyInMinutes: detail.readyInMinutes || 30,
+                  usedIngredients: recipe.usedIngredients || [],
+                  instructions:
+                    detail.instructions ||
+                    detail.summary ||
+                    "No instructions"
+                };
 
-  }
+              } catch {
 
- 
- 
-const recipes =
-await Promise.all(
+                return {
+                  id: recipe.id,
+                  source: "spoonacular",
+                  title: recipe.title || "Recipe",
+                  image: recipe.image || "",
+                  readyInMinutes: 30,
+                  usedIngredients: recipe.usedIngredients || [],
+                  instructions: "No instructions"
+                };
 
-  mealData.meals
-  .slice(0,6)
-  .map(async meal=>{
+              }
 
-    const detailRes =
-    await fetch(
+            })
 
-`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`
+          );
 
-    );
+          allRecipes.push(...spoonRecipes);
 
-    const detailData =
-    await detailRes.json();
+        }
 
-    const detail =
-    detailData.meals[0];
+      } catch (e) {
 
-    return {
+        console.log("SPOONACULAR FAILED:", e.message);
 
-      id:
-      detail.idMeal,
+      }
 
-      title:
-      detail.strMeal,
-
-      image:
-      detail.strMealThumb,
-
-      readyInMinutes:
-      30,
-
-  
-usedIngredients:[],
- 
-
-
-instructions:
-
-detail.strInstructions
-?.trim()
-
-|| 
-
-"Recipe instructions unavailable."
-
-    };
-
-  })
-
-);
-
-
-
-
-  return res.json(recipes);
-
+      } else {
+  console.log("SPOONACULAR DISABLED");
 }
 
 
+      /*
+        2. EDAMAM
+      */
 
-      /* SPOON SUCCESS */
+       if (
+  useEdamam &&
+  allRecipes.length < targetCount
+) { 
 
-      const fullRecipes =
-      await Promise.all(
+      try {
 
-        basicRecipes.map(async recipe=>{
+        if (
+          process.env.EDAMAM_APP_ID &&
+          process.env.EDAMAM_APP_KEY
+        ) {
 
-          try{
+const edamamQueries = [
+  ingredients.slice(0, 3).join(" "),
+  ingredients[0],
+  ingredients[1],
+  ingredients[2],
+  "chicken",
+  "pasta",
+  "salad"
+].filter(Boolean);
 
-            const detailRes =
-            await fetch(
+let edamamData = null;
 
-`https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${process.env.SPOON_KEY}`
+for (const edamamQuery of edamamQueries) {
 
-            );
+  console.log("EDAMAM QUERY:", edamamQuery);
 
-            const detail =
-            await detailRes.json();
+  const edamamUrl =
+`https://api.edamam.com/api/recipes/v2?type=public&q=${encodeURIComponent(edamamQuery)}&app_id=${process.env.EDAMAM_APP_ID}&app_key=${process.env.EDAMAM_APP_KEY}`;
 
- 
-return {
+const edamamRes =
+await fetch(
+  edamamUrl,
+  {
+    method: "GET"
+  }
+);
 
-  id:
-  recipe.id,
+console.log("EDAMAM STATUS:", edamamRes.status);
 
-  title:
-  recipe.title || "Recipe",
+const testData =
+await edamamRes.json();
+console.log("EDAMAM COUNT:", testData.count);
 
-  image:
-  recipe.image ||
+  if (
+    testData.hits &&
+    Array.isArray(testData.hits) &&
+    testData.hits.length > 0
+  ) {
+    edamamData = testData;
+    break;
+  }
 
-  "https://img.spoonacular.com/recipes/716429-556x370.jpg",
+}
 
-  readyInMinutes:
+          if (
+  edamamData &&
+  edamamData.hits &&
+  Array.isArray(edamamData.hits) &&
+  edamamData.hits.length > 0
+) {
 
-  detail.readyInMinutes
-  || 30,
+            console.log("SOURCE: EDAMAM");
 
-  usedIngredients:
+            const edamamRecipes =
+            edamamData.hits
+            .slice(0, 6)
+            .map(item => {
 
-  recipe.usedIngredients
-  || [],
+              const recipe =
+              item.recipe;
 
-  instructions:
+              return {
+                id: encodeURIComponent(recipe.uri),
+                source: "edamam",
+                title: recipe.label || "Recipe",
+                image: recipe.image || "",
+                readyInMinutes:
+                  recipe.totalTime && recipe.totalTime > 0
+                    ? recipe.totalTime
+                    : 30,
+                usedIngredients:
+                  recipe.ingredients || [],
+                instructions:
+                  recipe.url ||
+                  "Open recipe source for instructions."
+              };
 
-  detail.instructions
-  || detail.summary
-  || "No instructions"
+            });
 
-};
+            allRecipes.push(...edamamRecipes);
+
+          } else {
+  console.log("EDAMAM FOUND 0 RECIPES");
+}
+
+        } else {
+
+          console.log("EDAMAM KEYS MISSING");
+
+        }
+
+      } catch (e) {
+
+        console.log("EDAMAM FAILED:", e.message);
+
+      }
+
+      } else {
+  console.log("EDAMAM DISABLED");
+}
 
 
-          }catch{
+      /*
+        3. THEMEALDB
+      */
 
-            return recipe;
+        if (
+  useTheMealDB &&
+  allRecipes.length < targetCount
+) {
 
-          }
+      try {
 
-        })
+        const validIngredients =
+        ingredients.filter(x =>
+          !x.toLowerCase().includes("apple") &&
+          !x.toLowerCase().includes("banana") &&
+          !x.toLowerCase().includes("orange") &&
+          !x.toLowerCase().includes("bell pepper")
+        );
 
+        const mealIngredient =
+        validIngredients[0] || ingredients[0];
+
+        console.log("THEMEAL INGREDIENT:", mealIngredient);
+
+        const mealRes =
+        await fetch(
+`https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(mealIngredient)}`
+        );
+
+        const mealData =
+        await mealRes.json();
+
+        if (
+          mealData.meals &&
+          Array.isArray(mealData.meals) &&
+          mealData.meals.length > 0
+        ) {
+
+          console.log("SOURCE: THEMEALDB");
+
+          const mealRecipes =
+          await Promise.all(
+
+            mealData.meals
+            .slice(0, 6)
+            .map(async meal => {
+
+              const detailRes =
+              await fetch(
+`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`
+              );
+
+              const detailData =
+              await detailRes.json();
+
+              const detail =
+              detailData.meals[0];
+
+              return {
+                id: detail.idMeal,
+                source: "themealdb",
+                title: detail.strMeal,
+                image: detail.strMealThumb,
+                readyInMinutes: 30,
+                usedIngredients: [],
+                instructions:
+                  detail.strInstructions?.trim() ||
+                  "Recipe instructions unavailable."
+              };
+
+            })
+
+          );
+
+          allRecipes.push(...mealRecipes);
+
+        } else {
+
+          console.log("THEMEALDB FOUND 0 RECIPES");
+
+        }
+
+      } catch (e) {
+
+        console.log("THEMEALDB FAILED:", e.message);
+
+      }
+
+      } else {
+  console.log("THEMEALDB DISABLED");
+}
+
+
+      console.log("TOTAL RECIPES:", allRecipes.length);
+
+      return res.json(
+        allRecipes.slice(0, 18)
       );
-
-console.log(fullRecipes);
-
-      res.json(fullRecipes);
 
     } catch (err) {
 
       console.log(err);
 
       res.status(500).json({
-        error:"Recipes failed"
+        error: "Recipes failed"
       });
 
     }
 
 });
-
 
 /* DETAIL */
 

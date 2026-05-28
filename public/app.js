@@ -529,6 +529,10 @@ if(recipeBtn){
 
   recipeBtn.addEventListener("click", async () => {
 
+    console.log("GET RECIPES CLICKED", selected);
+
+    console.log("FETCH START");
+
     result.innerHTML =
     "<p>Loading recipes...</p>";
 
@@ -548,6 +552,9 @@ if(recipeBtn){
 
       const data =
       await res.json();
+
+      console.log("FETCH STATUS:", res.status);
+      console.log("FETCH DATA:", data);
 
       if(!res.ok){
 
@@ -585,6 +592,8 @@ if(recipeBtn){
       });
 
     }catch(err){
+
+      console.error("FRONT RECIPES ERROR:", err);
 
       console.error(err);
 
@@ -774,3 +783,6 @@ window.closeModal = function(){
 applyLanguage();
 loadState();
 resetUploadStatus();
+
+console.log("APP JS LOADED");
+console.log("RECIPE BUTTON:", recipeBtn);
