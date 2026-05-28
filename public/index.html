@@ -13,22 +13,36 @@
 
     <div class="sidebar-top">
 
-      <img src="logo.jpeg" class="logo">
+      <div class="brand-card">
 
-      <h1>Nili's Kitchen</h1>
+        <select id="langSelect">
+  <option value="en">EN</option>
+  <option value="tr">TR</option>
+  <option value="ru">RU</option>
+  <option value="fr">FR</option>
+  <option value="es">ES</option>
+  <option value="pt">PT</option>
+  <option value="ar">AR</option>
+</select>
 
-      <p class="subtitle" id="appSubtitle">
-        AI Recipe Assistant
-      </p>
+        <div class="logo-shell">
+          <img src="logo.jpeg" class="logo">
+        </div>
 
-      <select id="langSelect">
-        <option value="en">English</option>
-        <option value="tr">Türkçe</option>
-      </select>
+        <div class="brand-text">
+          <h1>Nili's Kitchen</h1>
+
+          <p class="subtitle" id="appSubtitle">
+            AI Recipe Assistant
+          </p>
+        </div>
+
+      </div>
 
       <div class="upload" onclick="photo.click()">
-        <h3 id="uploadTitle">📸 Upload Ingredients</h3>
-        <p id="statusText">Upload ingredients photo</p>
+        <h3 id="uploadTitle">
+  Scan ingredients by photo
+</h3>
 
         <div class="analyze-progress">
           <div id="bar"></div>
@@ -39,8 +53,8 @@
 
       <div class="manual-box">
         <h3 class="section-title" id="manualTitle">
-          ✍ Manual Ingredient
-        </h3>
+  Add ingredients manually
+</h3>
 
         <div class="manual">
           <input id="manualInput" placeholder="Add ingredient">
@@ -51,22 +65,16 @@
         </div>
       </div>
 
-      <div id="checklist"></div>
-
       <div class="category-box">
 
-        <div
-          class="section-title category-toggle"
-          onclick="toggleCategories()"
-        >
-          <span>🥦 Categories</span>
-          <span id="categoryArrow">▼</span>
-        </div>
+        <div class="section-title category-toggle">
+  <span>Add ingredients by category</span>
+</div>
 
-        <div
-          class="category-grid collapsed"
-          id="categoryGrid"
-        >
+<div
+  class="category-grid"
+  id="categoryGrid"
+>
 
           <button class="category-btn" id="catVegetables" data-category="vegetables">
             Vegetables
@@ -128,28 +136,44 @@
 
     <div class="sidebar-bottom">
 
-      <label class="confirm">
-        <input type="checkbox" id="confirmCheck">
-
-        <span id="confirmText">
-          Confirm ingredients
-        </span>
-      </label>
-
       <button class="recipeBtn" id="recipeBtn">
-        Get Recipes
-      </button>
+  Find Recipes
+</button>
 
     </div>
 
   </aside>
 
+  <div id="selectedTray">
+
+    <div class="selected-tray-header">
+      <span>Selected ingredients</span>
+
+      <button type="button" onclick="clearSelectedIngredients()">
+        Clear
+      </button>
+    </div>
+
+    <div id="selectedTrayItems"></div>
+
+    <label class="tray-confirm">
+      <input type="checkbox" id="confirmCheck">
+
+   <span id="confirmText">
+  Confirm ingredients
+</span>
+    </label>
+
+  </div>
+
   <div id="ingredientModal" class="ingredient-modal">
+
     <div class="ingredient-modal-content">
 
       <button
         class="ingredient-modal-close"
         onclick="closeIngredientModal()"
+        type="button"
       >
         ×
       </button>
@@ -161,6 +185,7 @@
       <div id="ingredientModalItems"></div>
 
     </div>
+
   </div>
 
   <main class="content" id="content">
@@ -171,7 +196,7 @@
 
         <div class="hero-main-card">
 
-          <img src="/YEMEK-1.jpeg" class="hero-main-img">
+          <img src="/YEMEK-6.jpeg" class="hero-main-img">
 
           <div class="hero-dark"></div>
 
@@ -194,7 +219,7 @@
         </div>
 
         <div class="hero-side-images">
-          <img src="/YEMEK-3.jpeg">
+          <img src="/YEMEK-2.jpeg">
           <img src="/YEMEK-5.jpeg">
         </div>
 

@@ -1,4 +1,4 @@
- let currentRecipes = [];
+let currentRecipes = [];
 let selected = [];
 
 const photo = document.getElementById("photo");
@@ -17,8 +17,7 @@ const ingredientModal = document.getElementById("ingredientModal");
 const ingredientModalTitle = document.getElementById("ingredientModalTitle");
 const ingredientModalItems = document.getElementById("ingredientModalItems");
 
-let currentLang =
-localStorage.getItem("lang") || "en";
+let currentLang = "en";
 
 const CATEGORY_DATA = {
 
@@ -173,50 +172,34 @@ function loadState(){
 
 function renderChecklist(){
 
-  if(!checklist) return;
+  const checklist =
+  document.getElementById("checklist");
 
-  if(!selected.length){
-
-    checklist.innerHTML = "";
-
+  if (!checklist) {
     return;
-
   }
 
-  checklist.innerHTML =
-  `
-    <div class="selected-header">
+  if (!selected.length) {
+    checklist.innerHTML = "";
+    return;
+  }
 
-      <div class="selected-box-title">
-        ✅ Selected Ingredients
-      </div>
+  checklist.innerHTML = `
+    <h3 class="section-title" id="selectedTitle">
+      Selected ingredients
+    </h3>
 
-      <button
-        class="clear-btn"
-        type="button"
-        onclick="clearIngredients()"
-      >
-        Clear
-      </button>
-
+    <div class="check-grid">
+      ${
+        selected.map(item => `
+          <label class="check-item">
+            <input type="checkbox" checked>
+            <span>${item}</span>
+          </label>
+        `).join("")
+      }
     </div>
-  `
-  +
-  selected.map(item => `
-
-    <label class="check-item">
-
-      <input
-        type="checkbox"
-        checked
-        onchange="removeIngredient('${item}')"
-      >
-
-      <span>${item}</span>
-
-    </label>
-
-  `).join("");
+  `;
 
 }
 
@@ -777,6 +760,61 @@ window.closeModal = function(){
   if(modal){
     modal.style.display = "none";
   }
+
+}
+
+function renderChecklist(){
+
+  const tray =
+  document.getElementById("selectedTray");
+
+  const trayItems =
+  document.getElementById("selectedTrayItems");
+
+  if (!tray || !trayItems) {
+    return;
+  }
+
+  if (!selected.length) {
+    tray.classList.remove("has-items");
+    trayItems.innerHTML = "";
+    return;
+  }
+
+  tray.classList.add("has-items");
+
+  trayItems.innerHTML =
+  selected.map(item => {
+    return `
+      <div class="selected-chip">
+        <span>${item}</span>
+
+        <button
+          type="button"
+          onclick="removeSelectedIngredient('${item.replace(/'/g, "\\'")}')"
+        >
+          ×
+        </button>
+      </div>
+    `;
+  }).join("");
+
+}
+
+function removeSelectedIngredient(item){
+
+  selected =
+  selected.filter(x => x !== item);
+
+  renderChecklist();
+
+}
+
+function clearSelectedIngredients(){
+
+  selected = [];
+
+  renderChecklist();
 
 };
 
