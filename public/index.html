@@ -134,37 +134,61 @@
 
     </div>
 
-    <div class="sidebar-bottom">
-
-      <button class="recipeBtn" id="recipeBtn">
-  Find Recipes
-</button>
-
-    </div>
-
   </aside>
 
-  <div id="selectedTray">
+  <div id="selectedTray" class="selected-tray-modal">
+
+  <div class="selected-tray-box">
 
     <div class="selected-tray-header">
-      <span>Selected ingredients</span>
+  <div>
+    <h2>Selected ingredients</h2>
+    <p>Review your ingredients before finding recipes.</p>
+  </div>
 
-      <button type="button" onclick="clearSelectedIngredients()">
-        Clear
-      </button>
-    </div>
+  <div class="selected-tray-header-actions">
+      <button
+      type="button"
+      class="selected-tray-close"
+      onclick="closeSelectedTray()"
+    >
+      ×
+    </button>
+  </div>
+</div>
 
     <div id="selectedTrayItems"></div>
 
-    <label class="tray-confirm">
-      <input type="checkbox" id="confirmCheck">
+    <button
+  type="button"
+  class="selected-clear-bottom"
+  onclick="clearSelectedIngredients()"
+>
+  Clear all ingredients
+</button>
 
-   <span id="confirmText">
-  Confirm ingredients
-</span>
-    </label>
+    <div class="selected-tray-bottom">
+
+      <label class="tray-confirm">
+        <input type="checkbox" id="confirmCheck">
+        <span>Confirm ingredients</span>
+      </label>
+
+      <button
+        type="button"
+        id="trayGetRecipesBtn"
+        onclick="confirmAndGetRecipes()"
+      >
+        Get Recipes
+      </button>
+
+    </div>
 
   </div>
+
+</div>
+
+  
 
   <div id="ingredientModal" class="ingredient-modal">
 
@@ -179,8 +203,8 @@
       </button>
 
       <h2 id="ingredientModalTitle">
-        Ingredients
-      </h2>
+  Ingredients
+</h2>
 
       <div id="ingredientModalItems"></div>
 

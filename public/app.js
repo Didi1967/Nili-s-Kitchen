@@ -170,53 +170,23 @@ function loadState(){
 
 }
 
-function renderChecklist(){
+function addIngredient(item){
 
-  const checklist =
-  document.getElementById("checklist");
+  if(!item) return;
 
-  if (!checklist) {
-    return;
+  const cleanItem =
+  String(item)
+    .trim()
+    .toLowerCase();
+
+  if(!cleanItem) return;
+
+  if(!selected.includes(cleanItem)){
+    selected.push(cleanItem);
   }
 
-  if (!selected.length) {
-    checklist.innerHTML = "";
-    return;
-  }
+  console.log("SELECTED UPDATED:", selected);
 
-  checklist.innerHTML = `
-    <h3 class="section-title" id="selectedTitle">
-      Selected ingredients
-    </h3>
-
-    <div class="check-grid">
-      ${
-        selected.map(item => `
-          <label class="check-item">
-            <input type="checkbox" checked>
-            <span>${item}</span>
-          </label>
-        `).join("")
-      }
-    </div>
-  `;
-
-}
-
-function addIngredient(value){
-
-  const clean =
-  String(value)
-  .trim()
-  .toLowerCase();
-
-  if(!clean) return;
-
-  if(!selected.includes(clean)){
-    selected.push(clean);
-  }
-
-  saveState();
   renderChecklist();
 
 }
@@ -346,6 +316,8 @@ if(photo){
         data.ingredients.forEach(item => {
           addIngredient(item);
         });
+
+        renderChecklist();
 
         if(statusText){
           statusText.innerText = "Ingredients detected";
@@ -508,84 +480,137 @@ if(ingredientModalItems){
 
 }
 
-if(recipeBtn){
+ async function getRecipesFromIngredients(ingredientsForRecipe){
 
-  recipeBtn.addEventListener("click", async () => {
+  console.log("GET RECIPES START", ingredientsForRecipe);
 
-    console.log("GET RECIPES CLICKED", selected);
+  if(
+    !ingredientsForRecipe ||
+    !ingredientsForRecipe.length
+  ){
+    alert("Please add at least one ingredient.");
+    return;
+  }
 
-    console.log("FETCH START");
+  console.log("FETCH START");
 
-    result.innerHTML =
-    "<p>Loading recipes...</p>";
+  result.innerHTML =
+  "<p>Loading recipes...</p>";
 
-    try{
+  try{
 
-      const res =
-      await fetch("/recipes", {
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-          ingredients:selected,
-          lang:currentLang
-        })
-      });
+    const res =
+    await fetch("/recipes", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        ingredients:ingredientsForRecipe,
+        lang:"en"
+      })
+    });
 
-      const data =
-      await res.json();
+    const data =
+    await res.json();
 
-      console.log("FETCH STATUS:", res.status);
-      console.log("FETCH DATA:", data);
+    console.log("FETCH STATUS:", res.status);
+    console.log("FETCH DATA:", data);
 
-      if(!res.ok){
+    if(!res.ok){
 
-        console.error(data);
-
-        result.innerHTML =
-        "<p>Recipes failed</p>";
-
-        return;
-
-      }
-
-      currentRecipes = data;
-
-      if(!Array.isArray(data) || !data.length){
-
-        result.innerHTML =
-        "<p>No recipes found</p>";
-
-        return;
-
-      }
-
-      renderRecipes(data);
-
-      const hero =
-      document.querySelector(".hero");
-
-      if(hero){
-        hero.style.display = "none";
-      }
-
-      result.scrollIntoView({
-        behavior:"smooth"
-      });
-
-    }catch(err){
-
-      console.error("FRONT RECIPES ERROR:", err);
-
-      console.error(err);
+      console.error(data);
 
       result.innerHTML =
       "<p>Recipes failed</p>";
 
+      return;
+
     }
 
-  });
+    /*
+      Backend bazen array dönebilir:
+      [ ...recipes ]
+
+      Yeni sistemde bazen object dönebilir:
+      { recipes: [...], hasMore: true }
+    */
+
+    const recipes =
+    Array.isArray(data)
+      ? data
+      : data.recipes || [];
+
+    currentRecipes =
+    recipes;
+
+    if(
+      !Array.isArray(recipes)
+      ||
+      !recipes.length
+    ){
+
+      result.innerHTML =
+      "<p>No recipes found</p>";
+
+      return;
+
+    }
+
+    renderRecipes(recipes);
+
+    const hero =
+    document.querySelector(".hero");
+
+    if(hero){
+      hero.style.display = "none";
+    }
+
+    result.scrollIntoView({
+      behavior:"smooth"
+    });
+
+  }catch(err){
+
+    console.error("FRONT RECIPES ERROR:", err);
+
+    result.innerHTML =
+    "<p>Recipes failed</p>";
+
+  }
+
+}
+
+async function confirmAndGetRecipes(){
+
+  const confirmCheck =
+  document.getElementById("confirmCheck");
+
+  if(!selected.length){
+    alert("Please add at least one ingredient.");
+    return;
+  }
+
+  if(
+    !confirmCheck ||
+    !confirmCheck.checked
+  ){
+    alert("Please confirm your ingredients first.");
+    return;
+  }
+
+  const ingredientsForRecipe =
+  [...selected];
+
+  closeSelectedTray();
+
+  selected = [];
+
+  renderChecklist();
+
+  await getRecipesFromIngredients(
+    ingredientsForRecipe
+  );
 
 }
 
@@ -768,36 +793,47 @@ function renderChecklist(){
   const tray =
   document.getElementById("selectedTray");
 
-  const trayItems =
+  const itemsBox =
   document.getElementById("selectedTrayItems");
 
-  if (!tray || !trayItems) {
+  const confirmCheck =
+  document.getElementById("confirmCheck");
+
+  if(!tray || !itemsBox){
+    console.log("SELECTED TRAY NOT FOUND");
     return;
   }
 
-  if (!selected.length) {
+  if(!selected.length){
+    itemsBox.innerHTML = "";
     tray.classList.remove("has-items");
-    trayItems.innerHTML = "";
+
+    if(confirmCheck){
+      confirmCheck.checked = false;
+    }
+
     return;
   }
 
   tray.classList.add("has-items");
 
-  trayItems.innerHTML =
-  selected.map(item => {
-    return `
-      <div class="selected-chip">
-        <span>${item}</span>
+  if(confirmCheck){
+    confirmCheck.checked = false;
+  }
 
-        <button
-          type="button"
-          onclick="removeSelectedIngredient('${item.replace(/'/g, "\\'")}')"
-        >
-          ×
-        </button>
-      </div>
-    `;
-  }).join("");
+  itemsBox.innerHTML =
+  selected.map(item => `
+    <div class="selected-chip">
+      <span>${item}</span>
+
+      <button
+        type="button"
+        onclick="removeSelectedIngredient('${item.replace(/'/g, "\\'")}')"
+      >
+        ×
+      </button>
+    </div>
+  `).join("");
 
 }
 
@@ -814,9 +850,43 @@ function clearSelectedIngredients(){
 
   selected = [];
 
-  renderChecklist();
+  const tray =
+  document.getElementById("selectedTray");
 
-};
+  const itemsBox =
+  document.getElementById("selectedTrayItems");
+
+  const confirmCheck =
+  document.getElementById("confirmCheck");
+
+  if(tray){
+    tray.classList.add("has-items");
+  }
+
+  if(itemsBox){
+    itemsBox.innerHTML = `
+      <div class="empty-selected-message">
+        No ingredients selected yet.
+      </div>
+    `;
+  }
+
+  if(confirmCheck){
+    confirmCheck.checked = false;
+  }
+
+}
+
+function closeSelectedTray(){
+
+  const tray =
+  document.getElementById("selectedTray");
+
+  if(tray){
+    tray.classList.remove("has-items");
+  }
+
+}
 
 applyLanguage();
 loadState();
