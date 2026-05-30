@@ -2386,7 +2386,6 @@ button{
 /* Web: kategori biraz büyüsün */
 .category-panel{
   flex:1.25 !important;
-  min-height:185px !important;
   overflow:visible !important;
 }
 
@@ -2495,7 +2494,6 @@ button{
 /* Kategori kutusu: alt yuvarlaklar görünsün */
 .category-panel{
   flex:0 0 auto !important;
-  min-height:225px !important;
   padding:18px 18px 30px !important;
   border-radius:24px !important;
   overflow:visible !important;
@@ -2579,16 +2577,10 @@ button{
     font-size:12px !important;
     display:block !important;
   }
-
-  .category-panel{
-    min-height:225px !important;
-    padding-bottom:32px !important;
-  }
 }
 
 /* CATEGORY BOTTOM FIX */
 .category-panel{
-  min-height:260px !important;
   height:auto !important;
   padding:16px 16px 38px !important;
   overflow:visible !important;
@@ -2661,7 +2653,6 @@ button{
 .category-panel{
   border-radius:24px !important;
   overflow:hidden !important;
-  padding-bottom:42px !important;
 }
 
 .category-grid{
@@ -3611,6 +3602,93 @@ body,
     height:auto !important;
     min-height:0 !important;
   }
+}
+
+.lang-menu{
+  position:absolute;
+  top:10px;
+  right:10px;
+  z-index:99999;
+}
+
+#langBtn{
+  height:28px;
+  padding:0 9px;
+  border:none;
+  border-radius:999px;
+  background:#fff;
+  font-size:11px;
+  font-weight:900;
+}
+
+.lang-options{
+  display:none;
+  position:absolute;
+  top:34px;
+  right:0;
+  background:white;
+  border-radius:14px;
+  padding:6px;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+.lang-options.open{
+  display:grid;
+  gap:4px;
+}
+
+.lang-options button{
+  border:none;
+  background:#f3f4f6;
+  border-radius:10px;
+  padding:6px 10px;
+  font-size:11px;
+  font-weight:900;
+}
+
+.category-panel{
+  height:auto !important;
+  min-height:unset !important;
+  padding:16px !important;
+  padding-bottom:14px !important;
+}
+
+.category-grid{
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+}
+
+.category-panel{
+  overflow:hidden !important;
+  border-radius:20px !important;
+}
+
+.category-panel{
+  min-height:auto !important;
+}
+
+/* CATEGORY RADIUS FINAL */
+.category-panel{
+  height:fit-content !important;
+  min-height:0 !important;
+  max-height:none !important;
+
+  padding:16px !important;
+  padding-bottom:16px !important;
+
+  border-radius:22px !important;
+  overflow:hidden !important;
+}
+
+.category-grid{
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+
+  margin:0 !important;
+  padding:0 !important;
+
+  overflow:visible !important;
 }
 
  

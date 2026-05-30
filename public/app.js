@@ -2035,3 +2035,20 @@ document.addEventListener("DOMContentLoaded", () => {
   window.setCreatorMode("signup");
 
 });
+
+function toggleLangMenu(){
+  document.getElementById("langOptions").classList.toggle("open");
+}
+
+function setLang(lang){
+  const btn = document.getElementById("langBtn");
+  btn.textContent = "🌐 " + lang.toUpperCase();
+
+  document.getElementById("langOptions").classList.remove("open");
+
+  const oldSelect = document.getElementById("langSelect");
+  if(oldSelect){
+    oldSelect.value = lang;
+    oldSelect.dispatchEvent(new Event("change"));
+  }
+}

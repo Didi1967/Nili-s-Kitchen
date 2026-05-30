@@ -17,15 +17,19 @@
     <div class="sidebar-brand">
 
       <div class="sidebar-topline">
-  <select id="langSelect" class="lang-small">
-    <option value="en">EN</option>
-    <option value="tr">TR</option>
-    <option value="ru">RU</option>
-    <option value="fr">FR</option>
-    <option value="es">ES</option>
-    <option value="pt">PT</option>
-    <option value="ar">AR</option>
-  </select>
+  <div class="lang-menu">
+  <button type="button" id="langBtn" onclick="toggleLangMenu()">🌐 EN</button>
+
+  <div class="lang-options" id="langOptions">
+    <button type="button" onclick="setLang('en')">EN</button>
+    <button type="button" onclick="setLang('tr')">TR</button>
+    <button type="button" onclick="setLang('ru')">RU</button>
+    <button type="button" onclick="setLang('fr')">FR</button>
+    <button type="button" onclick="setLang('es')">ES</button>
+    <button type="button" onclick="setLang('pt')">PT</button>
+    <button type="button" onclick="setLang('ar')">AR</button>
+  </div>
+</div>
 </div>
 
       <div class="brand-row">
