@@ -1412,4 +1412,176 @@ video{
   }
 }
 
- 
+.sidebar-main{
+  gap:10px !important;
+}
+
+.category-panel{
+  margin-bottom:0 !important;
+}
+
+.ad-media-box{
+  margin:0 !important;
+}
+
+@media(max-width:980px){
+
+  .creator-card{
+    margin-top:-16px !important;
+  }
+
+}
+
+ /* FINAL SIDEBAR SPACING FOR NEW HTML */
+
+.sidebar-shell,
+.sidebar-main{
+  display:flex !important;
+  flex-direction:column !important;
+}
+
+.sidebar-shell{
+  gap:10px !important;
+}
+
+.sidebar-main{
+  gap:10px !important;
+}
+
+.sidebar-brand,
+.mobile-hero-big,
+.scan-action,
+.manual,
+.mobile-hero-small,
+.category-panel,
+.ad-media-box,
+.creator-card,
+.site-footer-note{
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+}
+
+.category-panel{
+  padding:14px !important;
+  border-radius:18px !important;
+}
+
+.ad-media-box{
+  height:180px !important;
+  border-radius:18px !important;
+  overflow:hidden !important;
+}
+
+.ad-media-box video{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  display:block !important;
+}
+
+/* MOBILE */
+@media(max-width:980px){
+
+  .sidebar-shell{
+    gap:10px !important;
+  }
+
+  .sidebar-main{
+    gap:10px !important;
+  }
+
+  .mobile-only{
+    display:block !important;
+  }
+
+  .content{
+    display:none !important;
+  }
+
+  .mobile-hero-big img{
+    width:100% !important;
+    height:320px !important;
+    object-fit:cover !important;
+    border-radius:16px !important;
+    display:block !important;
+  }
+
+  .mobile-hero-small img{
+    width:100% !important;
+    height:150px !important;
+    object-fit:cover !important;
+    border-radius:16px !important;
+    display:block !important;
+  }
+
+  .ad-media-box{
+    height:190px !important;
+  }
+
+  .site-footer-note{
+    padding-bottom:0 !important;
+  }
+}
+
+/* DESKTOP */
+@media(min-width:981px){
+
+  .mobile-only{
+    display:none !important;
+  }
+
+  .ad-media-box{
+    height:170px !important;
+  }
+}/* VIDEO → LOGIN GAP FIX */
+
+.ad-media-box{
+  margin-bottom:0 !important;
+}
+
+.creator-card{
+  margin-top:-10px !important;
+}
+
+@media(max-width:980px){
+  .creator-card{
+    margin-top:-12px !important;
+  }
+}/* VIDEO → LOGIN GAP FIX */
+
+.ad-media-box{
+  margin-bottom:0 !important;
+}
+
+.creator-card{
+  margin-top:-10px !important;
+}
+
+@media(max-width:980px){
+  .creator-card{
+    margin-top:-12px !important;
+  }
+}
+
+/* WEB ONLY */
+
+@media (min-width:981px){
+
+  .ad-media-box{
+    height:220px !important;
+    margin:4px 0 !important;
+    padding:0 !important;
+  }
+
+  .ad-media-box video{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    display:block !important;
+  }
+
+  .creator-card{
+    margin-top:0 !important;
+  }
+
+}
