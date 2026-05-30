@@ -1,11 +1,27 @@
-import dotenv from "dotenv";
 dotenv.config();
+
+const __filename =
+fileURLToPath(import.meta.url);
+
+const __dirname =
+path.dirname(__filename);
+
+const openai =
+new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
+
+ 
 
 import express from "express";
 import multer from "multer";
-import fetch from "node-fetch";
-import OpenAI from "openai";
 import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+import OpenAI from "openai";
+import nodemailer from "nodemailer";
+import crypto from "crypto";
  
 
 
@@ -801,10 +817,368 @@ app.get(
 const PORT =
 process.env.PORT || 3000;
 
-app.listen(PORT,()=>{
+app.listen(3000, "0.0.0.0", () => {
+  console.log("Server running on http://0.0.0.0:3000");
+});
 
-  console.log(
-    `http://localhost:${PORT}`
-  );
+const creatorUploadDir =
+path.join(__dirname, "creator-uploads");
+
+const pendingRecipesDir =
+path.join(__dirname, "pending-recipes");
+
+if(!fs.existsSync(creatorUploadDir)){
+  fs.mkdirSync(creatorUploadDir);
+}
+
+if(!fs.existsSync(pendingRecipesDir)){
+  fs.mkdirSync(pendingRecipesDir);
+}
+
+const creatorStorage =
+multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, creatorUploadDir);
+  },
+
+  filename: (req, file, cb) => {
+    const safeName =
+    Date.now() + "-" + file.originalname.replace(/\s+/g, "-");
+
+    cb(null, safeName);
+  }
+});
+
+const creatorUpload =
+multer({
+  storage: creatorStorage,
+  limits:{
+    fileSize: 80 * 1024 * 1024
+  }
+});
+
+app.post(
+  "/submit-recipe",
+  creatorUpload.single("media"),
+  async (req, res) => {
+
+    try{
+
+      const {
+        creatorUsername,
+        creatorEmail,
+        title,
+        prepTime,
+        servings,
+        ingredients,
+        instructions
+      } = req.body;
+
+      if(
+        !title ||
+        !ingredients ||
+        !instructions ||
+        !req.file
+      ){
+        return res.status(400).json({
+          error:"Missing required fields"
+        });
+      }
+
+      const recipe =
+      {
+        id: Date.now().toString(),
+        creatorUsername: creatorUsername || "Guest creator",
+        creatorEmail: creatorEmail || "",
+        title,
+        prepTime: prepTime || "",
+        servings: servings || "",
+        ingredients,
+        instructions,
+        mediaFile: req.file.filename,
+        mediaType: req.file.mimetype,
+        status:"pending_review",
+        views:0,
+        clicks:0,
+        createdAt:new Date().toISOString()
+      };
+
+      const pendingFile =
+      path.join(
+        pendingRecipesDir,
+        "pending_recipes.json"
+      );
+
+      let recipes =
+      [];
+
+      if(fs.existsSync(pendingFile)){
+        recipes =
+        JSON.parse(
+          fs.readFileSync(pendingFile, "utf8")
+        );
+      }
+
+      recipes.push(recipe);
+
+      fs.writeFileSync(
+  pendingFile,
+  JSON.stringify(recipes, null, 2)
+);
+
+console.log("NEW CREATOR RECIPE:", recipe.title);
+
+/* USER EMAIL: recipe received */
+await sendMailSafe({
+  to: creatorEmail,
+  subject: "Your recipe has been received",
+  text: `Your recipe "${title}" has been received and is now under review.`,
+  html: `
+    <h2>Your recipe has been received</h2>
+    <p>Thank you for submitting your recipe.</p>
+    <p><strong>${title}</strong></p>
+    <p>Your recipe is now under review. If approved, it may be published on Nili's Kitchen with your creator name.</p>
+  `
+});
+
+/* ADMIN EMAIL: new recipe submitted */
+await sendMailSafe({
+  to: process.env.ADMIN_EMAIL,
+  subject: "New recipe submitted for review",
+  text: `New recipe submitted: ${title}`,
+  html: `
+    <h2>New recipe submitted</h2>
+    <p><strong>Recipe:</strong> ${title}</p>
+    <p><strong>Creator:</strong> ${creatorUsername}</p>
+    <p><strong>Email:</strong> ${creatorEmail}</p>
+    <p>Status: pending review</p>
+  `
+});
+
+return res.json({
+  success:true,
+  message:"Recipe submitted for review"
+});
+
+    }catch(err){
+
+      console.log("SUBMIT RECIPE ERROR:", err);
+
+      return res.status(500).json({
+        error:"Submit failed"
+      });
+
+    }
+
+  }
+);
+
+const mailer =
+nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT || 587),
+  secure: process.env.SMTP_SECURE === "true",
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS
+  }
+});
+
+async function sendMailSafe({ to, subject, html, text }){
+
+  try{
+
+    if(
+      !process.env.SMTP_USER ||
+      !process.env.SMTP_PASS ||
+      !to
+    ){
+      console.log("MAIL SKIPPED:", subject);
+      return;
+    }
+
+    await mailer.sendMail({
+      from: process.env.MAIL_FROM || process.env.SMTP_USER,
+      to,
+      subject,
+      text,
+      html
+    });
+
+    console.log("MAIL SENT:", subject, to);
+
+  }catch(err){
+
+    console.log("MAIL ERROR:", err.message);
+
+  }
+
+}
+
+function hashPassword(password){
+
+  const salt =
+  crypto.randomBytes(16).toString("hex");
+
+  const hash =
+  crypto
+    .pbkdf2Sync(password, salt, 100000, 64, "sha512")
+    .toString("hex");
+
+  return `${salt}:${hash}`;
+
+}
+
+function verifyPassword(password, saved){
+
+  const [salt, originalHash] =
+  saved.split(":");
+
+  const hash =
+  crypto
+    .pbkdf2Sync(password, salt, 100000, 64, "sha512")
+    .toString("hex");
+
+  return hash === originalHash;
+
+}
+
+const creatorsDir =
+"creator-users";
+
+const creatorsFile =
+`${creatorsDir}/creators.json`;
+
+if(!fs.existsSync(creatorsDir)){
+  fs.mkdirSync(creatorsDir);
+}
+
+if(!fs.existsSync(creatorsFile)){
+  fs.writeFileSync(creatorsFile, "[]");
+}
+
+app.post("/creator-auth", async (req, res) => {
+
+  try{
+
+    const {
+      mode,
+      username,
+      emailOrUser,
+      password
+    } = req.body;
+
+    if(!mode || !emailOrUser || !password){
+      return res.status(400).json({
+        error:"Missing required fields"
+      });
+    }
+
+    let users =
+    JSON.parse(
+      fs.readFileSync(creatorsFile, "utf8")
+    );
+
+    if(mode === "signup"){
+
+      if(!username){
+        return res.status(400).json({
+          error:"Username is required"
+        });
+      }
+
+      const exists =
+      users.find(user =>
+        user.email === emailOrUser ||
+        user.username === username
+      );
+
+      if(exists){
+        return res.status(409).json({
+          error:"User already exists"
+        });
+      }
+
+      const newUser =
+      {
+        id: Date.now().toString(),
+        username,
+        email: emailOrUser,
+        passwordHash: hashPassword(password),
+        role:"creator",
+        createdAt:new Date().toISOString()
+      };
+
+      users.push(newUser);
+
+      fs.writeFileSync(
+        creatorsFile,
+        JSON.stringify(users, null, 2)
+      );
+
+      await sendMailSafe({
+        to: emailOrUser,
+        subject:"Welcome to Nili's Kitchen Creator Program",
+        text:`Hi ${username}, your creator account was created successfully.`,
+        html:`
+          <h2>Welcome to Nili's Kitchen!</h2>
+          <p>Hi ${username},</p>
+          <p>Your creator account was created successfully.</p>
+          <p>You can now submit your recipes for review.</p>
+        `
+      });
+
+      return res.json({
+        success:true,
+        username,
+        email:emailOrUser
+      });
+
+    }
+
+    if(mode === "login"){
+
+      const user =
+      users.find(user =>
+        user.email === emailOrUser ||
+        user.username === emailOrUser
+      );
+
+      if(!user){
+        return res.status(401).json({
+          error:"User not found"
+        });
+      }
+
+      const valid =
+      verifyPassword(password, user.passwordHash);
+
+      if(!valid){
+        return res.status(401).json({
+          error:"Wrong password"
+        });
+      }
+
+      return res.json({
+        success:true,
+        username:user.username,
+        email:user.email
+      });
+
+    }
+
+    return res.status(400).json({
+      error:"Invalid mode"
+    });
+
+  }catch(err){
+
+    console.log("CREATOR AUTH ERROR:", err);
+
+    return res.status(500).json({
+      error:"Creator auth failed"
+    });
+
+  }
 
 });

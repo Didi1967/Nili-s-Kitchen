@@ -1158,3 +1158,1009 @@ button{
 
 }
 
+/* =========================
+   CREATOR AUTH CARD
+========================= */
+
+.creator-card{
+  margin-top:12px;
+  background:#ffffff;
+  border:1px solid rgba(24,34,52,.08);
+  border-radius:18px;
+  padding:12px;
+  box-shadow:0 12px 28px rgba(40,24,8,.06);
+}
+
+.creator-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  padding:4px;
+  background:#f3f4f6;
+  border-radius:14px;
+  margin-bottom:10px;
+}
+
+.creator-tab{
+  height:30px;
+  border:none;
+  border-radius:11px;
+  background:transparent;
+  color:#6b7280;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.creator-tab.active{
+  background:#ffffff;
+  color:#182234;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+
+.creator-card-text{
+  margin-bottom:10px;
+}
+
+.creator-card-text strong{
+  display:block;
+  color:#182234;
+  font-size:14px;
+  font-weight:950;
+  margin-bottom:3px;
+}
+
+.creator-card-text span{
+  display:block;
+  color:#6b7280;
+  font-size:11.5px;
+  line-height:1.3;
+  font-weight:700;
+}
+
+.creator-card input{
+  width:100%;
+  height:34px;
+  border:1px solid rgba(24,34,52,.10);
+  border-radius:11px;
+  background:#f9fafb;
+  color:#182234;
+  padding:0 10px;
+  font-size:12px;
+  font-weight:700;
+  outline:none;
+  margin-bottom:7px;
+}
+
+.creator-card input::placeholder{
+  color:#9ca3af;
+}
+
+.creator-password-wrap{
+  display:grid;
+  grid-template-columns:1fr 54px;
+  gap:7px;
+  margin-bottom:7px;
+}
+
+.creator-password-wrap input{
+  margin-bottom:0;
+}
+
+.creator-password-wrap button{
+  height:34px;
+  border:none;
+  border-radius:11px;
+  background:#eef2f7;
+  color:#374151;
+  font-size:11px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.creator-password-wrap button:hover{
+  background:#e5e7eb;
+}
+
+.creator-continue-btn{
+  width:100%;
+  height:36px;
+  border:none;
+  border-radius:12px;
+  background:#182234;
+  color:#ffffff;
+  font-size:12.5px;
+  font-weight:950;
+  cursor:pointer;
+}
+
+.creator-continue-btn:hover{
+  background:#315c45;
+}
+
+/* =====================================
+   FINAL SIDEBAR VISUAL OVERRIDE
+   for new sidebar-shell HTML
+===================================== */
+
+#sidebar{
+  width:360px !important;
+  height:100vh !important;
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  z-index:20 !important;
+
+  padding:16px !important;
+  overflow:hidden !important;
+
+  background:linear-gradient(180deg,#fbf4ea 0%,#efe0cc 100%) !important;
+  border-right:1px solid rgba(24,34,52,.08) !important;
+  box-shadow:18px 0 48px rgba(24,34,52,.08) !important;
+}
+
+.sidebar-shell{
+  height:100% !important;
+  display:flex !important;
+  flex-direction:column !important;
+  gap:12px !important;
+}
+
+/* BRAND */
+
+.sidebar-brand{
+  background:#ffffff !important;
+  border:1px solid rgba(24,34,52,.08) !important;
+  border-radius:24px !important;
+  padding:12px !important;
+  box-shadow:0 14px 34px rgba(24,34,52,.055) !important;
+}
+
+.sidebar-topline{
+  display:flex !important;
+  justify-content:flex-start !important;
+  margin-bottom:10px !important;
+}
+
+#langSelect{
+  width:70px !important;
+  height:30px !important;
+  margin:0 !important;
+  padding:0 8px !important;
+
+  border:none !important;
+  border-radius:999px !important;
+
+  background:#f3f4f6 !important;
+  color:#182234 !important;
+
+  font-size:12px !important;
+  font-weight:900 !important;
+  box-shadow:none !important;
+  outline:none !important;
+}
+
+.brand-row{
+  display:flex !important;
+  align-items:center !important;
+  gap:12px !important;
+}
+
+.logo-shell{
+  width:72px !important;
+  height:72px !important;
+  flex:0 0 72px !important;
+
+  margin:0 !important;
+  border-radius:20px !important;
+
+  background:#fff7ec !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  overflow:hidden !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.9) !important;
+}
+
+.logo-shell .logo,
+.logo{
+  width:66px !important;
+  height:auto !important;
+  margin:0 !important;
+  display:block !important;
+}
+
+.brand-text h1,
+#sidebar h1{
+  margin:0 !important;
+  text-align:left !important;
+  color:#182234 !important;
+
+  font-size:23px !important;
+  line-height:1 !important;
+  font-weight:950 !important;
+  letter-spacing:-.8px !important;
+}
+
+.subtitle,
+#appSubtitle{
+  margin:5px 0 0 !important;
+  text-align:left !important;
+  color:#6b7280 !important;
+
+  font-size:12px !important;
+  line-height:1.25 !important;
+  font-weight:700 !important;
+}
+
+/* MAIN AREA */
+
+.sidebar-main{
+  flex:1 !important;
+  min-height:0 !important;
+
+  display:flex !important;
+  flex-direction:column !important;
+  gap:10px !important;
+
+  overflow:hidden !important;
+}
+
+/* SHARED CARDS */
+
+.scan-action,
+.manual-panel,
+.category-panel,
+.creator-card{
+  background:#ffffff !important;
+  border:1px solid rgba(24,34,52,.08) !important;
+  border-radius:22px !important;
+  box-shadow:0 14px 34px rgba(24,34,52,.055) !important;
+}
+
+/* SCAN PHOTO */
+
+.scan-action{
+  width:100% !important;
+  min-height:78px !important;
+  padding:14px !important;
+
+  display:block !important;
+
+  border:none !important;
+  outline:none !important;
+
+  text-align:left !important;
+  cursor:pointer !important;
+
+  background:linear-gradient(135deg,#182234 0%,#315c45 100%) !important;
+  color:#ffffff !important;
+}
+
+.scan-title{
+  display:block !important;
+  color:#ffffff !important;
+
+  font-size:15px !important;
+  font-weight:950 !important;
+  line-height:1.1 !important;
+  letter-spacing:-.15px !important;
+}
+
+.scan-subtitle{
+  display:block !important;
+  margin-top:5px !important;
+
+  color:rgba(255,255,255,.74) !important;
+  font-size:11.5px !important;
+  font-weight:700 !important;
+  line-height:1.3 !important;
+}
+
+.analyze-progress{
+  width:100% !important;
+  height:5px !important;
+
+  margin-top:11px !important;
+  border-radius:999px !important;
+
+  background:rgba(255,255,255,.24) !important;
+  overflow:hidden !important;
+}
+
+#bar{
+  width:0%;
+  height:100% !important;
+  background:#ffffff !important;
+  border-radius:999px !important;
+}
+
+/* MANUAL */
+
+.manual-panel{
+  padding:14px !important;
+}
+
+.panel-title{
+  margin:0 0 10px !important;
+
+  color:#182234 !important;
+  font-size:14px !important;
+  font-weight:950 !important;
+  letter-spacing:-.1px !important;
+  line-height:1.2 !important;
+}
+
+.manual{
+  display:grid !important;
+  grid-template-columns:1fr 42px !important;
+  gap:8px !important;
+  align-items:center !important;
+}
+
+#manualInput{
+  width:100% !important;
+  height:40px !important;
+
+  border:1px solid rgba(24,34,52,.10) !important;
+  border-radius:13px !important;
+
+  background:#f9fafb !important;
+  color:#182234 !important;
+
+  padding:0 12px !important;
+
+  font-size:13px !important;
+  font-weight:800 !important;
+
+  outline:none !important;
+  box-shadow:none !important;
+}
+
+#manualInput::placeholder{
+  color:#9ca3af !important;
+}
+
+.manual button{
+  width:42px !important;
+  height:40px !important;
+  min-width:42px !important;
+
+  border:none !important;
+  border-radius:13px !important;
+
+  background:#ef6a1a !important;
+  color:#ffffff !important;
+
+  font-size:22px !important;
+  font-weight:950 !important;
+  line-height:1 !important;
+
+  box-shadow:none !important;
+}
+
+/* CATEGORY */
+
+.category-panel{
+  flex:1 !important;
+  min-height:0 !important;
+  padding:14px !important;
+  overflow:hidden !important;
+}
+
+.category-grid,
+.category-grid.collapsed{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:7px !important;
+
+  max-height:none !important;
+  overflow:visible !important;
+
+  opacity:1 !important;
+  pointer-events:auto !important;
+  margin-top:0 !important;
+}
+
+.category-btn{
+  width:auto !important;
+  height:27px !important;
+  min-height:27px !important;
+
+  padding:4px 10px !important;
+  border-radius:999px !important;
+
+  background:#eef6ec !important;
+  color:#315c45 !important;
+  border:1px solid #d3e6c9 !important;
+
+  font-size:10.5px !important;
+  font-weight:900 !important;
+  line-height:1 !important;
+  white-space:nowrap !important;
+
+  box-shadow:none !important;
+}
+
+.category-btn:hover,
+.category-btn.active{
+  background:#315c45 !important;
+  color:#ffffff !important;
+  border-color:#315c45 !important;
+}
+
+/* CREATOR */
+
+.creator-card{
+  flex:0 0 auto !important;
+  padding:12px !important;
+  margin:0 !important;
+}
+
+.creator-tabs{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:6px !important;
+
+  padding:4px !important;
+  margin-bottom:10px !important;
+
+  background:#f3f4f6 !important;
+  border-radius:14px !important;
+}
+
+.creator-tab{
+  height:29px !important;
+
+  border:none !important;
+  border-radius:10px !important;
+
+  background:transparent !important;
+  color:#6b7280 !important;
+
+  font-size:12px !important;
+  font-weight:900 !important;
+}
+
+.creator-tab.active{
+  background:#ffffff !important;
+  color:#182234 !important;
+  box-shadow:0 4px 12px rgba(0,0,0,.06) !important;
+}
+
+.creator-card-text{
+  margin-bottom:9px !important;
+}
+
+.creator-card-text strong{
+  display:block !important;
+  color:#182234 !important;
+
+  font-size:13.5px !important;
+  font-weight:950 !important;
+  margin-bottom:3px !important;
+}
+
+.creator-card-text span{
+  display:block !important;
+  color:#6b7280 !important;
+
+  font-size:11px !important;
+  line-height:1.28 !important;
+  font-weight:700 !important;
+}
+
+.creator-card input{
+  width:100% !important;
+  height:32px !important;
+
+  border:1px solid rgba(24,34,52,.10) !important;
+  border-radius:10px !important;
+
+  background:#f9fafb !important;
+  color:#182234 !important;
+
+  padding:0 10px !important;
+
+  font-size:12px !important;
+  font-weight:800 !important;
+
+  outline:none !important;
+  margin-bottom:7px !important;
+}
+
+.creator-password-wrap{
+  display:grid !important;
+  grid-template-columns:1fr 52px !important;
+  gap:7px !important;
+  margin-bottom:7px !important;
+}
+
+.creator-password-wrap input{
+  margin-bottom:0 !important;
+}
+
+.creator-password-wrap button{
+  height:32px !important;
+
+  border:none !important;
+  border-radius:10px !important;
+
+  background:#eef2f7 !important;
+  color:#374151 !important;
+
+  font-size:11px !important;
+  font-weight:900 !important;
+}
+
+.creator-continue-btn{
+  width:100% !important;
+  height:35px !important;
+
+  border:none !important;
+  border-radius:12px !important;
+
+  background:#182234 !important;
+  color:#ffffff !important;
+
+  font-size:12.5px !important;
+  font-weight:950 !important;
+}
+
+.creator-continue-btn:hover{
+  background:#315c45 !important;
+}
+
+/* HIDE OLD PIECES */
+
+.category-toggle,
+#categoryArrow,
+.sidebar-bottom,
+.recipeBtn,
+#recipeBtn,
+#checklist{
+  display:none !important;
+}
+
+.category-toggle,
+#categoryArrow,
+.sidebar-bottom,
+.recipeBtn,
+#recipeBtn,
+#checklist{
+  display:none !important;
+}
+
+/* =========================
+   BRAND CARD FINAL FIX
+========================= */
+
+.sidebar-brand{
+  position:relative !important;
+  padding:14px 14px 16px !important;
+}
+
+.sidebar-topline{
+  position:absolute !important;
+  top:12px !important;
+  left:12px !important;
+  margin:0 !important;
+  z-index:5 !important;
+}
+
+#langSelect{
+  width:64px !important;
+  height:30px !important;
+  font-size:12px !important;
+  border-radius:999px !important;
+}
+
+.brand-row{
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:8px !important;
+  text-align:center !important;
+  padding-top:8px !important;
+}
+
+.logo-shell{
+  width:76px !important;
+  height:76px !important;
+  flex:0 0 76px !important;
+  margin:0 auto !important;
+}
+
+.logo-shell .logo,
+.logo{
+  width:68px !important;
+}
+
+.brand-text{
+  width:100% !important;
+  text-align:center !important;
+}
+
+.brand-text h1,
+#sidebar h1{
+  text-align:center !important;
+  font-size:24px !important;
+  line-height:1.05 !important;
+  margin:0 !important;
+  letter-spacing:-0.7px !important;
+}
+
+.subtitle,
+#appSubtitle{
+  text-align:center !important;
+  font-size:12px !important;
+  margin-top:5px !important;
+  line-height:1.2 !important;
+}
+
+/* =========================
+   MOBILE LAYOUT FIX
+========================= */
+
+@media (max-width: 768px){
+
+  body{
+    overflow-x:hidden !important;
+  }
+
+  #sidebar{
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+
+    width:100% !important;
+    height:auto !important;
+    min-height:auto !important;
+
+    padding:12px !important;
+    border-right:none !important;
+    box-shadow:none !important;
+
+    background:#f4eadc !important;
+  }
+
+  .sidebar-shell{
+    height:auto !important;
+    gap:10px !important;
+  }
+
+  .sidebar-brand{
+    border-radius:20px !important;
+    padding:12px !important;
+  }
+
+  .sidebar-topline{
+    position:static !important;
+    margin-bottom:10px !important;
+    justify-content:flex-end !important;
+  }
+
+  #langSelect{
+    width:70px !important;
+    height:30px !important;
+  }
+
+  .brand-row{
+    flex-direction:row !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:10px !important;
+    text-align:left !important;
+    padding-top:0 !important;
+  }
+
+  .logo-shell{
+    width:56px !important;
+    height:56px !important;
+    flex:0 0 56px !important;
+    border-radius:15px !important;
+  }
+
+  .logo-shell .logo,
+  .logo{
+    width:50px !important;
+  }
+
+  .brand-text h1,
+  #sidebar h1{
+    font-size:20px !important;
+    text-align:left !important;
+    line-height:1.05 !important;
+  }
+
+  .subtitle,
+  #appSubtitle{
+    font-size:11.5px !important;
+    text-align:left !important;
+  }
+
+  .sidebar-main{
+    height:auto !important;
+    overflow:visible !important;
+    gap:10px !important;
+  }
+
+  .scan-action{
+    min-height:72px !important;
+    border-radius:18px !important;
+    padding:13px !important;
+  }
+
+  .scan-title{
+    font-size:14px !important;
+  }
+
+  .scan-subtitle{
+    font-size:11px !important;
+  }
+
+  .manual-panel,
+  .category-panel,
+  .creator-card{
+    border-radius:18px !important;
+    padding:12px !important;
+  }
+
+  .manual{
+    grid-template-columns:1fr 42px !important;
+  }
+
+  #manualInput{
+    height:38px !important;
+    font-size:13px !important;
+  }
+
+  .manual button{
+    height:38px !important;
+  }
+
+  .category-panel{
+    flex:none !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+
+  .category-grid{
+    display:flex !important;
+    flex-wrap:wrap !important;
+    gap:7px !important;
+    overflow:visible !important;
+  }
+
+  .category-btn{
+    height:28px !important;
+    font-size:10.5px !important;
+    padding:5px 10px !important;
+  }
+
+  .creator-card{
+    margin-bottom:10px !important;
+  }
+
+  .creator-card input{
+    height:34px !important;
+  }
+
+  .creator-password-wrap button{
+    height:34px !important;
+  }
+
+  .creator-continue-btn{
+    height:38px !important;
+  }
+
+  .content,
+  main,
+  #content{
+    margin-left:0 !important;
+    width:100% !important;
+    max-width:100% !important;
+    padding:14px !important;
+  }
+
+  .hero{
+    margin:0 !important;
+    padding:26px 18px !important;
+    min-height:auto !important;
+    border-radius:24px !important;
+  }
+
+  .hero h1{
+    font-size:34px !important;
+    line-height:1.02 !important;
+  }
+
+  .hero p{
+    font-size:14px !important;
+    line-height:1.45 !important;
+  }
+
+  #result{
+    margin-left:0 !important;
+    width:100% !important;
+    padding:12px !important;
+  }
+
+  .card{
+    width:100% !important;
+  }
+
+}
+
+/* =========================
+   SMALL PHONE FIX
+========================= */
+
+@media (max-width: 430px){
+
+  #sidebar{
+    padding:10px !important;
+  }
+
+  .brand-row{
+    gap:8px !important;
+  }
+
+  .logo-shell{
+    width:50px !important;
+    height:50px !important;
+    flex:0 0 50px !important;
+  }
+
+  .logo-shell .logo,
+  .logo{
+    width:44px !important;
+  }
+
+  .brand-text h1,
+  #sidebar h1{
+    font-size:18px !important;
+  }
+
+  .subtitle,
+  #appSubtitle{
+    font-size:10.5px !important;
+  }
+
+  .panel-title{
+    font-size:13px !important;
+  }
+
+  .category-btn{
+    font-size:10px !important;
+    padding:5px 9px !important;
+  }
+
+  .creator-card-text span{
+    font-size:10.5px !important;
+  }
+
+  .hero h1{
+    font-size:30px !important;
+  }
+
+  .hero p{
+    font-size:13px !important;
+  }
+
+  .selected-tray{
+    width:94vw !important;
+    max-width:94vw !important;
+    left:50% !important;
+    right:auto !important;
+    transform:translateX(-50%) !important;
+    bottom:12px !important;
+  }
+
+  .ingredient-modal-content{
+    width:94vw !important;
+    max-height:78vh !important;
+    border-radius:22px !important;
+    padding:20px !important;
+  }
+
+  #ingredientModalTitle{
+    font-size:22px !important;
+  }
+
+  .modal-ingredient-btn{
+    font-size:12px !important;
+    padding:9px 12px !important;
+  }
+
+}
+
+/* =========================
+   MOBILE ORDER FIX
+========================= */
+
+@media (max-width: 768px){
+
+  .sidebar-shell{
+    display:flex !important;
+    flex-direction:column !important;
+  }
+
+  .sidebar-brand{
+    order:1 !important;
+  }
+
+  .sidebar-main{
+    order:2 !important;
+  }
+
+  .creator-card{
+    order:9 !important;
+  }
+
+}
+
+/* =========================
+   MOBILE CAMERA CTA
+========================= */
+
+@media (max-width: 768px){
+
+  .scan-action{
+    min-height:86px !important;
+    border-radius:22px !important;
+    padding:16px !important;
+    background:linear-gradient(135deg,#12251b,#2f6b4b) !important;
+  }
+
+  .scan-title{
+    font-size:16px !important;
+    font-weight:950 !important;
+  }
+
+  .scan-subtitle{
+    font-size:12px !important;
+    margin-top:6px !important;
+  }
+
+  .analyze-progress{
+    height:6px !important;
+    margin-top:13px !important;
+  }
+
+}
+
+@media (max-width: 768px){
+
+  .sidebar-shell{
+    display:flex !important;
+    flex-direction:column !important;
+  }
+
+  .sidebar-brand{
+    order:1 !important;
+  }
+
+  .sidebar-main{
+    order:2 !important;
+  }
+
+  .hero{
+    order:3 !important;
+    display:block !important;
+    margin-top:12px !important;
+  }
+
+  .creator-card{
+    order:9 !important;
+  }
+
+  .scan-action{
+    min-height:86px !important;
+    border-radius:22px !important;
+    padding:16px !important;
+  }
+
+}
