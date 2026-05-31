@@ -218,6 +218,9 @@ timeMin: "min",
 ingredientsTitle: "Ingredients",
 instructionsTitle: "Instructions",
 instructionsUnavailable: "Recipe instructions unavailable.",
+heroBadge: "AI Powered Real Recipes",
+  heroTitle: "Cook smarter with what you already have",
+  heroDesc: "Upload ingredients, select what you have, and discover real recipes instantly.",
 
 
 
@@ -294,6 +297,9 @@ timeMin: "dk",
 ingredientsTitle: "Malzemeler",
 instructionsTitle: "Hazırlanış",
 instructionsUnavailable: "Tarif açıklaması mevcut değil.",
+ heroBadge: "Yapay Zeka Destekli Gerçek Tarifler",
+  heroTitle: "Elindeki malzemelerle daha akıllı yemek pişir",
+  heroDesc: "Malzemeleri yükle, elindekileri seç ve gerçek tarifleri anında keşfet.",
 
     categories: {
   vegetables: "Sebzeler",
@@ -367,8 +373,11 @@ timeMin: "мин",
 ingredientsTitle: "Ингредиенты",
 instructionsTitle: "Инструкции",
 instructionsUnavailable: "Инструкции рецепта недоступны.",
+heroBadge: "Реальные рецепты с поддержкой ИИ",
+heroTitle: "Готовьте умнее из того, что уже есть дома",
+heroDesc: "Загрузите ингредиенты, выберите то, что у вас есть, и мгновенно находите реальные рецепты.",
 
-    categories: {
+  categories: {
   vegetables: "Овощи",
   meat: "Мясо",
   seafood: "Морепродукты",
@@ -440,6 +449,10 @@ timeMin: "min",
 ingredientsTitle: "Ingrédients",
 instructionsTitle: "Instructions",
 instructionsUnavailable: "Instructions de recette indisponibles.",
+heroBadge: "De vraies recettes avec l’IA",
+heroTitle: "Cuisinez plus intelligemment avec ce que vous avez déjà",
+heroDesc: "Téléchargez vos ingrédients, sélectionnez ce que vous avez et découvrez instantanément de vraies recettes.",
+
 
     categories: {
   vegetables: "Légumes",
@@ -513,6 +526,9 @@ timeMin: "min",
 ingredientsTitle: "Ingredientes",
 instructionsTitle: "Instrucciones",
 instructionsUnavailable: "Instrucciones de receta no disponibles.",
+heroBadge: "Recetas reales con IA",
+  heroTitle: "Cocina de forma más inteligente con lo que ya tienes",
+  heroDesc: "Sube tus ingredientes, selecciona lo que tienes y descubre recetas reales al instante.",
 
     categories: {
   vegetables: "Verduras",
@@ -586,6 +602,9 @@ timeMin: "min",
 ingredientsTitle: "Ingredientes",
 instructionsTitle: "Instruções",
 instructionsUnavailable: "Instruções da receita indisponíveis.",
+heroBadge: "Receitas reais com IA",
+  heroTitle: "Cozinhe de forma mais inteligente com o que você já tem",
+  heroDesc: "Envie seus ingredientes, selecione o que você tem e descubra receitas reais instantaneamente.",
 
     categories: {
   vegetables: "Vegetais",
@@ -659,6 +678,9 @@ timeMin: "دقيقة",
 ingredientsTitle: "المكونات",
 instructionsTitle: "طريقة التحضير",
 instructionsUnavailable: "تعليمات الوصفة غير متوفرة.",
+heroBadge: "وصفات حقيقية مدعومة بالذكاء الاصطناعي",
+  heroTitle: "اطبخ بذكاء أكبر بما لديك بالفعل",
+  heroDesc: "حمّل المكونات، واختر ما لديك، واكتشف وصفات حقيقية فورًا.",
 
     categories: {
   vegetables: "خضروات",
@@ -680,6 +702,60 @@ instructionsUnavailable: "تعليمات الوصفة غير متوفرة.",
 
 function t(key){
   return translations[currentLang]?.[key] || translations.en[key] || key;
+}
+
+const ingredientCache = {};
+
+function ingredientCacheKey(item){
+  return currentLang + ":" + String(item).trim().toLowerCase();
+}
+
+function ingredientLabel(item){
+  if(currentLang === "en") return item;
+
+  const key = ingredientCacheKey(item);
+
+  return ingredientCache[key] || item;
+}
+
+async function translateSelectedIngredients(){
+
+  if(currentLang === "en") return;
+
+  const missing =
+  selected.filter(item => !ingredientCache[ingredientCacheKey(item)]);
+
+  if(!missing.length) return;
+
+  try{
+
+    const res = await fetch("/translate-ingredients", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        items:missing,
+        lang:currentLang
+      })
+    });
+
+    const data = await res.json();
+
+    if(data && Array.isArray(data.items)){
+
+      missing.forEach((item, index) => {
+        ingredientCache[ingredientCacheKey(item)] =
+        data.items[index] || item;
+      });
+
+      renderChecklist();
+    }
+
+  }catch(err){
+    console.error("Selected ingredient translate error:", err);
+  }
+
 }
 
 function setText(selector, text){
@@ -706,12 +782,24 @@ function applyLanguage(){
   document.documentElement.dir =
   currentLang === "ar" ? "rtl" : "ltr";
 
+ document.querySelectorAll(".hero-badge-text").forEach(el => {
+  el.textContent = t("heroBadge");
+});
+
+document.querySelectorAll(".hero-title-text").forEach(el => {
+  el.textContent = t("heroTitle");
+});
+
+document.querySelectorAll(".hero-desc-text").forEach(el => {
+  el.textContent = t("heroDesc");
+});
+
   setText("#appSubtitle", t("appSubtitle"));
 
-  setText(".scan-title", t("scanTitle"));
-  setText(".scan-subtitle", t("scanSubtitle"));
+setText("#scanTitle", t("scanTitle"));
+setText("#statusText", t("scanSubtitle"));
 
-  setText(".manual-panel .panel-title", t("manualTitle"));
+setText(".manual-panel .panel-title", t("manualTitle"));
   setPlaceholder("#manualInput", t("manualPlaceholder"));
 
   setText(".category-panel .panel-title", t("categoryTitle"));
@@ -1046,8 +1134,7 @@ window.toggleCategories = function(){
   }
 
 };
-
-function openIngredientModal(categoryKey, items){
+async function openIngredientModal(categoryKey, items){
 
   if(!ingredientModal || !ingredientModalItems) return;
 
@@ -1061,35 +1148,65 @@ function openIngredientModal(categoryKey, items){
   ingredientModal.style.display = "flex";
 
   if(ingredientModalTitle){
-
     ingredientModalTitle.innerText =
-    translations[currentLang]?.categories?.[categoryKey] ||
-    translations.en.categories[categoryKey] ||
-    categoryKey;
-
+      translations[currentLang]?.categories?.[categoryKey] ||
+      translations.en.categories[categoryKey] ||
+      categoryKey;
   }
 
   if(!safeItems.length){
-
     ingredientModalItems.innerHTML = `
       <p style="font-weight:800;color:#777;">
         No ingredients found.
       </p>
     `;
-
     return;
+  }
+
+  let displayItems = safeItems;
+
+  if(currentLang !== "en"){
+
+    try{
+
+      console.log("TRANSLATE POPUP START:", currentLang, safeItems);
+
+      const res = await fetch("/translate-ingredients", {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          items:safeItems,
+          lang:currentLang
+        })
+      });
+
+      const data = await res.json();
+
+      console.log("TRANSLATE POPUP DATA:", data);
+
+      if(data && Array.isArray(data.items)){
+        displayItems = data.items;
+      }
+
+    }catch(err){
+
+      console.error("Ingredient translate error:", err);
+
+    }
 
   }
 
   ingredientModalItems.innerHTML =
-  safeItems.map(item => `
+  safeItems.map((item, index) => `
 
     <button
       class="modal-ingredient-btn ${selected.includes(item) ? "active" : ""}"
       type="button"
       data-value="${item}"
     >
-      ${typeof ingredientLabel === "function" ? ingredientLabel(item) : item}
+      ${displayItems[index] || item}
     </button>
 
   `).join("");
@@ -1187,18 +1304,50 @@ if(ingredientModalItems){
 
   try{
 
-    const res =
-    await fetch("/recipes", {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        ingredients:ingredientsForRecipe,
-        lang:currentLang
-      })
-    });
+    const normalizeRes =
+await fetch("/normalize-ingredients", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    ingredients: ingredientsForRecipe,
+    lang: currentLang
+  })
+});
 
+const normalizeData =
+await normalizeRes.json();
+
+let normalizedIngredientsForRecipe =
+ingredientsForRecipe;
+
+if (
+  normalizeData.success &&
+  Array.isArray(normalizeData.ingredients)
+) {
+  normalizedIngredientsForRecipe =
+  normalizeData.ingredients
+    .map(item => item.canonicalEn)
+    .filter(Boolean);
+}
+
+console.log(
+  "NORMALIZED INGREDIENTS FOR SEARCH:",
+  normalizedIngredientsForRecipe
+);
+
+const res =
+await fetch("/recipes", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    ingredients: normalizedIngredientsForRecipe,
+    lang: currentLang
+  })
+});
     const data =
     await res.json();
 
@@ -1308,9 +1457,9 @@ function renderRecipes(data){
   data.map(recipe => {
 
     const usedCount =
-    recipe.usedIngredients && recipe.usedIngredients.length
-    ? recipe.usedIngredients.length
-    : selected.length;
+Array.isArray(recipe.usedIngredients) && recipe.usedIngredients.length
+  ? recipe.usedIngredients.length
+  : recipe.usedIngredientCount || recipe.usedCount || selected.length || 0;
 
     const usedList =
     recipe.usedIngredients && recipe.usedIngredients.length
@@ -1523,6 +1672,8 @@ function renderChecklist(){
     </div>
   `).join("");
 
+  translateSelectedIngredients();
+
 }
 
 function removeSelectedIngredient(item){
@@ -1657,66 +1808,6 @@ window.setCreatorMode = function(mode){
   }
 
 };
-
-window.goToCreatorPage = function(){
-
-  console.log("GO TO CREATOR CLICKED");
-
-  const usernameInput = document.getElementById("creatorUsernameInput");
-  const emailInput = document.getElementById("creatorEmailInput");
-  const passwordInput = document.getElementById("creatorPasswordInput");
-
-  const username =
-  usernameInput ? usernameInput.value.trim() : "";
-
-  const emailOrUser =
-  emailInput ? emailInput.value.trim() : "";
-
-  const password =
-  passwordInput ? passwordInput.value.trim() : "";
-
-  if(creatorMode === "signup" && !username){
-    alert(t("alertUsername"));
-    return;
-  }
-
-  if(!emailOrUser){
-    alert(
-      creatorMode === "signup"
-        ? t("alertEmail")
-        : t("alertEmailOrUser")
-    );
-    return;
-  }
-
-  if(!password){
-    alert(t("alertPassword"));
-    return;
-  }
-
-  localStorage.setItem("creatorMode", creatorMode);
-  localStorage.setItem("creatorUsername", username);
-  localStorage.setItem("creatorEmailOrUser", emailOrUser);
-
-  window.location.href = "/creator.html";
-
-};
-
-window.toggleCreatorPassword = function(){
-
-  const passwordInput =
-  document.getElementById("creatorPasswordInput");
-
-  if(!passwordInput) return;
-
-  passwordInput.type =
-  passwordInput.type === "password"
-    ? "text"
-    : "password";
-
-};
-
- 
 
 const langSelectEl =
 document.getElementById("langSelect");
@@ -1935,7 +2026,7 @@ window.setCreatorMode = function(mode){
 
 };
 
-window.goToCreatorPage = function(){
+window.goToCreatorPage = async function(){
 
   console.log("GO TO CREATOR CLICKED");
 
@@ -1976,11 +2067,43 @@ window.goToCreatorPage = function(){
     return;
   }
 
-  localStorage.setItem("creatorMode", window.creatorMode);
-  localStorage.setItem("creatorUsername", username);
-  localStorage.setItem("creatorEmailOrUser", emailOrUser);
+  try{
 
-  window.location.href = "/creator.html";
+    const res = await fetch("/creator-auth", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        mode: window.creatorMode,
+        username: username,
+        emailOrUser: emailOrUser,
+        password: password
+      })
+    });
+
+    const data = await res.json();
+
+    console.log("CREATOR AUTH RESPONSE:", data);
+
+    if(!res.ok){
+      alert(data.error || "Creator auth failed");
+      return;
+    }
+
+    localStorage.setItem("creatorMode", window.creatorMode);
+    localStorage.setItem("creatorUsername", data.username || username);
+    localStorage.setItem("creatorEmail", data.email || emailOrUser);
+    localStorage.setItem("creatorEmailOrUser", data.email || emailOrUser);
+
+    window.location.href = "/creator.html";
+
+  }catch(err){
+
+    console.error("CREATOR AUTH FRONTEND ERROR:", err);
+    alert("Connection error. Please try again.");
+
+  }
 
 };
 
@@ -2041,14 +2164,39 @@ function toggleLangMenu(){
 }
 
 function setLang(lang){
+
+  currentLang = lang;
+
+  localStorage.setItem(LANG_STORAGE_KEY, lang);
+
   const btn = document.getElementById("langBtn");
-  btn.textContent = "🌐 " + lang.toUpperCase();
 
   document.getElementById("langOptions").classList.remove("open");
 
-  const oldSelect = document.getElementById("langSelect");
-  if(oldSelect){
-    oldSelect.value = lang;
-    oldSelect.dispatchEvent(new Event("change"));
+  if(btn){
+    btn.textContent = "🌐 " + lang.toUpperCase();
   }
+
+  const options = document.getElementById("langOptions");
+
+  if(options){
+    options.classList.remove("open");
+  }
+
+  applyLanguage();
+  renderChecklist();
+
+  if(
+    ingredientModal &&
+    ingredientModal.style.display === "flex" &&
+    activeCategoryKey
+  ){
+    openIngredientModal(
+      activeCategoryKey,
+      CATEGORY_DATA[activeCategoryKey] || []
+    );
+  }
+
 }
+
+ 

@@ -11,6 +11,8 @@ new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
+const BONUS_PER_CLICK =
+Number(process.env.BONUS_PER_CLICK || 0.01);
  
 
 import express from "express";
@@ -25,13 +27,18 @@ import crypto from "crypto";
  
 
 
-const app =
-express();
+const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
   express.static("public")
+);
+
+app.use(
+  "/creator-uploads",
+  express.static(path.join(__dirname, "creator-uploads"))
 );
 
 const upload =
@@ -115,6 +122,51 @@ ${text}
   }
 
 }
+
+app.post("/translate-ingredients", async (req, res) => {
+
+  try{
+
+    const { items, lang } = req.body;
+
+    if(!Array.isArray(items) || !lang){
+      return res.status(400).json({
+        error:"Missing items or lang"
+      });
+    }
+
+    if(lang === "en"){
+      return res.json({ items });
+    }
+
+    const translatedItems = [];
+
+    for(const item of items){
+      const translated =
+      await translateText(item, lang);
+
+      translatedItems.push(
+        String(translated).trim()
+      );
+    }
+
+    return res.json({
+      items: translatedItems
+    });
+
+  }catch(err){
+
+    console.log("TRANSLATE INGREDIENTS ERROR:", err.message);
+
+    return res.status(500).json({
+      error:"Ingredient translation failed"
+    });
+
+  }
+
+});
+
+
 
 /* ANALYZE */
 
@@ -709,9 +761,104 @@ console.log("EDAMAM COUNT:", testData.count);
 
       console.log("TOTAL RECIPES:", allRecipes.length);
 
-      return res.json(
-        allRecipes.slice(0, 18)
-      );
+/* NILI APPROVED CREATOR RECIPES */
+
+const approvedCreatorRecipes =
+findApprovedRecipesByIngredients(ingredients);
+
+const approvedCreatorCards =
+approvedCreatorRecipes.map(recipe => ({
+  id: recipe.id,
+  source: "nili_creator",
+
+  title:
+    recipe.adminTitleTr ||
+    recipe.title ||
+    "Creator Recipe",
+
+  image:
+    recipe.mediaUrl ||
+    (
+      recipe.mediaFile
+        ? "/creator-uploads/" + recipe.mediaFile
+        : ""
+    ),
+
+  readyInMinutes:
+    recipe.prepTime || 30,
+
+  servings:
+    recipe.servings || "",
+
+  usedIngredients:
+    recipe.matchedIngredients || [],
+
+  instructions:
+    recipe.adminInstructionsTr ||
+    recipe.instructions ||
+    "Recipe instructions unavailable.",
+
+  ingredientsText:
+    recipe.adminIngredientsTr ||
+    recipe.ingredients ||
+    "",
+
+  creatorUsername:
+    recipe.creatorUsername || "",
+
+  clicks:
+    recipe.clicks || 0,
+
+  totalBonus:
+    recipe.totalBonus || 0
+}));
+
+console.log("NILI APPROVED RECIPES:", approvedCreatorCards.length);
+
+const finalRecipes =
+[
+  ...approvedCreatorCards,
+  ...allRecipes
+].slice(offset, offset + limit);
+
+const lang =
+req.body.lang || "en";
+
+console.log("RECIPE TRANSLATE LANG:", lang);
+
+if(lang !== "en"){
+
+  for(const recipe of finalRecipes){
+
+    recipe.title =
+    await translateText(recipe.title, lang);
+
+    recipe.instructions =
+    await translateText(recipe.instructions, lang);
+
+    if(Array.isArray(recipe.usedIngredients)){
+
+      for(const ing of recipe.usedIngredients){
+
+        if(ing.name){
+          ing.name =
+          await translateText(ing.name, lang);
+        }
+
+        if(ing.original){
+          ing.original =
+          await translateText(ing.original, lang);
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+return res.json(finalRecipes);
 
     } catch (err) {
 
@@ -817,10 +964,6 @@ app.get(
 const PORT =
 process.env.PORT || 3000;
 
-app.listen(3000, "0.0.0.0", () => {
-  console.log("Server running on http://0.0.0.0:3000");
-});
-
 const creatorUploadDir =
 path.join(__dirname, "creator-uploads");
 
@@ -857,6 +1000,64 @@ multer({
   }
 });
 
+async function translateRecipeToTurkish({ title, ingredients, instructions }) {
+  try {
+    if (!process.env.OPENAI_API_KEY) {
+      return {
+        titleTr: title,
+        ingredientsTr: ingredients,
+        instructionsTr: instructions
+      };
+    }
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You translate recipe content to Turkish for admin review. Return only valid JSON. Do not add extra text."
+        },
+        {
+          role: "user",
+          content: JSON.stringify({
+            title,
+            ingredients,
+            instructions,
+            task:
+              "Translate this recipe to clear Turkish. Keep recipe meaning. Return JSON with titleTr, ingredientsTr, instructionsTr."
+          })
+        }
+      ],
+      temperature: 0.2
+    });
+
+    let content =
+      response.choices[0].message.content || "";
+
+    content = content
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
+    const parsed = JSON.parse(content);
+
+    return {
+      titleTr: parsed.titleTr || title,
+      ingredientsTr: parsed.ingredientsTr || ingredients,
+      instructionsTr: parsed.instructionsTr || instructions
+    };
+  } catch (err) {
+    console.log("TRANSLATE RECIPE ERROR:", err.message);
+
+    return {
+      titleTr: title,
+      ingredientsTr: ingredients,
+      instructionsTr: instructions
+    };
+  }
+}
+
 app.post(
   "/submit-recipe",
   creatorUpload.single("media"),
@@ -885,23 +1086,42 @@ app.post(
         });
       }
 
-      const recipe =
-      {
-        id: Date.now().toString(),
-        creatorUsername: creatorUsername || "Guest creator",
-        creatorEmail: creatorEmail || "",
-        title,
-        prepTime: prepTime || "",
-        servings: servings || "",
-        ingredients,
-        instructions,
-        mediaFile: req.file.filename,
-        mediaType: req.file.mimetype,
-        status:"pending_review",
-        views:0,
-        clicks:0,
-        createdAt:new Date().toISOString()
-      };
+      const translated =
+await translateRecipeToTurkish({
+  title,
+  ingredients,
+  instructions
+});
+
+const recipe =
+{
+  id: Date.now().toString(),
+
+  creatorUsername: creatorUsername || "Guest creator",
+  creatorEmail: creatorEmail || "",
+
+  title,
+  ingredients,
+  instructions,
+
+  adminTitleTr: translated.titleTr,
+  adminIngredientsTr: translated.ingredientsTr,
+  adminInstructionsTr: translated.instructionsTr,
+
+  prepTime: prepTime || "",
+  servings: servings || "",
+
+  mediaFile: req.file.filename,
+  mediaUrl: "/creator-uploads/" + req.file.filename,
+  mediaType: req.file.mimetype,
+
+  status: "pending_review",
+
+  views: 0,
+  clicks: 0,
+
+  createdAt: new Date().toISOString()
+};
 
       const pendingFile =
       path.join(
@@ -1059,7 +1279,10 @@ if(!fs.existsSync(creatorsFile)){
 
 app.post("/creator-auth", async (req, res) => {
 
-  try{
+  console.log("CREATOR AUTH CALLED");
+  console.log("BODY:", req.body);
+
+  try {
 
     const {
       mode,
@@ -1068,7 +1291,16 @@ app.post("/creator-auth", async (req, res) => {
       password
     } = req.body;
 
-    if(!mode || !emailOrUser || !password){
+    const cleanUsername =
+username ? username.trim().toLowerCase() : "";
+
+const cleanEmailOrUser =
+emailOrUser ? emailOrUser.trim().toLowerCase() : "";
+
+const cleanPassword =
+password ? password.trim() : "";
+
+    if(!mode || !cleanEmailOrUser || !cleanPassword){
       return res.status(400).json({
         error:"Missing required fields"
       });
@@ -1081,17 +1313,17 @@ app.post("/creator-auth", async (req, res) => {
 
     if(mode === "signup"){
 
-      if(!username){
+      if(!cleanUsername){
         return res.status(400).json({
           error:"Username is required"
         });
       }
 
-      const exists =
-      users.find(user =>
-        user.email === emailOrUser ||
-        user.username === username
-      );
+     const exists =
+users.find(user =>
+  String(user.email || "").toLowerCase() === cleanEmailOrUser ||
+  String(user.username || "").toLowerCase() === cleanUsername
+);
 
       if(exists){
         return res.status(409).json({
@@ -1099,15 +1331,15 @@ app.post("/creator-auth", async (req, res) => {
         });
       }
 
-      const newUser =
-      {
-        id: Date.now().toString(),
-        username,
-        email: emailOrUser,
-        passwordHash: hashPassword(password),
-        role:"creator",
-        createdAt:new Date().toISOString()
-      };
+     const newUser =
+{
+  id: Date.now().toString(),
+  username: cleanUsername,
+  email: cleanEmailOrUser,
+  passwordHash: hashPassword(cleanPassword),
+  role:"creator",
+  createdAt:new Date().toISOString()
+};
 
       users.push(newUser);
 
@@ -1129,20 +1361,20 @@ app.post("/creator-auth", async (req, res) => {
       });
 
       return res.json({
-        success:true,
-        username,
-        email:emailOrUser
-      });
+  success:true,
+  username: cleanUsername,
+  email: cleanEmailOrUser
+});
 
     }
 
     if(mode === "login"){
 
-      const user =
-      users.find(user =>
-        user.email === emailOrUser ||
-        user.username === emailOrUser
-      );
+     const user =
+users.find(user =>
+  String(user.email || "").toLowerCase() === cleanEmailOrUser ||
+  String(user.username || "").toLowerCase() === cleanEmailOrUser
+);
 
       if(!user){
         return res.status(401).json({
@@ -1151,7 +1383,7 @@ app.post("/creator-auth", async (req, res) => {
       }
 
       const valid =
-      verifyPassword(password, user.passwordHash);
+verifyPassword(cleanPassword, user.passwordHash);
 
       if(!valid){
         return res.status(401).json({
@@ -1181,4 +1413,487 @@ app.post("/creator-auth", async (req, res) => {
 
   }
 
+});
+
+function getPendingRecipesFile() {
+  return path.join(
+    __dirname,
+    "pending-recipes",
+    "pending_recipes.json"
+  );
+}
+
+function readPendingRecipes() {
+  const file = getPendingRecipesFile();
+
+  if (!fs.existsSync(file)) {
+    fs.writeFileSync(file, "[]");
+  }
+
+  return JSON.parse(
+    fs.readFileSync(file, "utf8")
+  );
+}
+
+function getPendingRecipesFile() {
+  return path.join(
+    __dirname,
+    "pending-recipes",
+    "pending_recipes.json"
+  );
+}
+
+function readPendingRecipes() {
+  const file = getPendingRecipesFile();
+
+  if (!fs.existsSync(file)) {
+    fs.writeFileSync(file, "[]");
+  }
+
+  return JSON.parse(
+    fs.readFileSync(file, "utf8")
+  );
+}
+
+function writePendingRecipes(recipes) {
+  const file = getPendingRecipesFile();
+
+  fs.writeFileSync(
+    file,
+    JSON.stringify(recipes, null, 2)
+  );
+}
+
+app.post(
+  "/admin/update-recipe/:id",
+  creatorUpload.single("media"),
+  async (req, res) => {
+    try {
+      const recipes = readPendingRecipes();
+
+      const recipe =
+      recipes.find(item =>
+        item.id === req.params.id
+      );
+
+      if (!recipe) {
+        return res.status(404).json({
+          error: "Recipe not found"
+        });
+      }
+
+      const {
+        title,
+        adminTitleTr,
+        ingredients,
+        adminIngredientsTr,
+        instructions,
+        adminInstructionsTr,
+        prepTime,
+        servings
+      } = req.body;
+
+      if (title !== undefined) {
+        recipe.title = title;
+      }
+
+      if (adminTitleTr !== undefined) {
+        recipe.adminTitleTr = adminTitleTr;
+      }
+
+      if (ingredients !== undefined) {
+        recipe.ingredients = ingredients;
+      }
+
+      if (adminIngredientsTr !== undefined) {
+        recipe.adminIngredientsTr = adminIngredientsTr;
+      }
+
+      if (instructions !== undefined) {
+        recipe.instructions = instructions;
+      }
+
+      if (adminInstructionsTr !== undefined) {
+        recipe.adminInstructionsTr = adminInstructionsTr;
+      }
+
+      if (prepTime !== undefined) {
+        recipe.prepTime = prepTime;
+      }
+
+      if (servings !== undefined) {
+        recipe.servings = servings;
+      }
+
+      if (req.file) {
+        recipe.mediaFile = req.file.filename;
+        recipe.mediaUrl = "/creator-uploads/" + req.file.filename;
+        recipe.mediaType = req.file.mimetype;
+        recipe.mediaUpdatedAt = new Date().toISOString();
+      }
+
+      recipe.updatedAt = new Date().toISOString();
+      recipe.updatedBy = "admin";
+
+      writePendingRecipes(recipes);
+
+      return res.json({
+        success: true,
+        recipe
+      });
+
+    } catch (err) {
+      console.log("ADMIN UPDATE RECIPE ERROR:", err);
+
+      return res.status(500).json({
+        error: "Recipe update failed"
+      });
+    }
+  }
+);
+
+app.get("/admin/pending-recipes", (req, res) => {
+  try {
+    const recipes = readPendingRecipes();
+
+    const pending = recipes.filter(recipe =>
+      recipe.status === "pending_review"
+    );
+
+    res.json({
+      success: true,
+      recipes: pending
+    });
+  } catch (err) {
+    console.log("ADMIN PENDING RECIPES ERROR:", err);
+
+    res.status(500).json({
+      error: "Could not load pending recipes"
+    });
+  }
+});
+
+
+app.post("/admin/reject-recipe/:id", (req, res) => {
+  try {
+    const recipes = readPendingRecipes();
+
+    const recipe = recipes.find(item =>
+      item.id === req.params.id
+    );
+
+    if (!recipe) {
+      return res.status(404).json({
+        error: "Recipe not found"
+      });
+    }
+
+    recipe.status = "rejected";
+    recipe.rejectedAt = new Date().toISOString();
+
+    writePendingRecipes(recipes);
+
+    res.json({
+      success: true,
+      recipe
+    });
+  } catch (err) {
+    console.log("REJECT RECIPE ERROR:", err);
+
+    res.status(500).json({
+      error: "Reject failed"
+    });
+  }
+});
+
+app.post("/admin/delete-recipe/:id", (req, res) => {
+  try {
+    let recipes = readPendingRecipes();
+
+    recipes = recipes.filter(item =>
+      item.id !== req.params.id
+    );
+
+    writePendingRecipes(recipes);
+
+    res.json({
+      success: true
+    });
+  } catch (err) {
+    console.log("DELETE RECIPE ERROR:", err);
+
+    res.status(500).json({
+      error: "Delete failed"
+    });
+  }
+});
+
+
+function normalizeText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .trim();
+}
+
+function findApprovedRecipesByIngredients(ingredientsInput) {
+  const approvedRecipes =
+  readApprovedRecipes();
+
+  let ingredients = [];
+
+  if (Array.isArray(ingredientsInput)) {
+    ingredients = ingredientsInput;
+  } else {
+    ingredients =
+    String(ingredientsInput || "")
+      .split(",")
+      .map(item => item.trim())
+      .filter(Boolean);
+  }
+
+  const normalizedIngredients =
+  ingredients.map(item => normalizeText(item));
+
+  return approvedRecipes
+    .filter(recipe => recipe.status === "approved")
+    .map(recipe => {
+      const searchText =
+      normalizeText(`
+        ${recipe.title}
+        ${recipe.adminTitleTr}
+        ${recipe.ingredients}
+        ${recipe.adminIngredientsTr}
+      `);
+
+      const matchedIngredients =
+      normalizedIngredients.filter(ingredient =>
+        searchText.includes(ingredient)
+      );
+
+      return {
+        ...recipe,
+        matchedIngredients,
+        matchCount: matchedIngredients.length
+      };
+    })
+    .filter(recipe => recipe.matchCount > 0)
+    .sort((a, b) => b.matchCount - a.matchCount);
+}
+
+app.post("/community-recipes/search", (req, res) => {
+  try {
+    const { ingredients } = req.body;
+
+    const recipes =
+    findApprovedRecipesByIngredients(ingredients);
+
+    res.json({
+      success: true,
+      source: "nili_creator",
+      recipes
+    });
+
+  } catch (err) {
+    console.log("COMMUNITY RECIPE SEARCH ERROR:", err);
+
+    res.status(500).json({
+      error: "Community recipe search failed"
+    });
+  }
+});
+
+function getApprovedRecipesFile() {
+  return path.join(
+    __dirname,
+    "approved-recipes",
+    "approved_recipes.json"
+  );
+}
+
+function readApprovedRecipes() {
+  const dir =
+  path.join(__dirname, "approved-recipes");
+
+  const file =
+  getApprovedRecipesFile();
+
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+
+  if (!fs.existsSync(file)) {
+    fs.writeFileSync(file, "[]");
+  }
+
+  return JSON.parse(
+    fs.readFileSync(file, "utf8")
+  );
+}
+
+function writeApprovedRecipes(recipes) {
+  const file =
+  getApprovedRecipesFile();
+
+  fs.writeFileSync(
+    file,
+    JSON.stringify(recipes, null, 2)
+  );
+}
+
+app.post("/admin/approve-recipe/:id", async (req, res) => {
+
+  console.log("APPROVE ENDPOINT CALLED:", req.params.id);
+  try {
+    let pendingRecipes =
+    readPendingRecipes();
+
+    let approvedRecipes =
+    readApprovedRecipes();
+
+    const recipeIndex =
+    pendingRecipes.findIndex(item =>
+      item.id === req.params.id
+    );
+
+    if (recipeIndex === -1) {
+      return res.status(404).json({
+        error: "Recipe not found"
+      });
+    }
+
+    const recipe =
+    pendingRecipes[recipeIndex];
+
+    const approvedRecipe = {
+      ...recipe,
+      status: "approved",
+      approvedAt: new Date().toISOString(),
+      source: "nili_creator",
+      clicks: Number(recipe.clicks || 0),
+      bonusPerClick: Number(process.env.BONUS_PER_CLICK || 0.01),
+      totalBonus: Number(recipe.totalBonus || 0)
+    };
+
+    approvedRecipes.push(approvedRecipe);
+
+    pendingRecipes.splice(recipeIndex, 1);
+
+    writeApprovedRecipes(approvedRecipes);
+    writePendingRecipes(pendingRecipes);
+
+    console.log("APPROVED FILE:", getApprovedRecipesFile());
+console.log("APPROVED COUNT:", approvedRecipes.length);
+console.log("MOVED RECIPE:", approvedRecipe.title);
+
+    console.log("RECIPE MOVED TO APPROVED:", approvedRecipe.title);
+
+    return res.json({
+      success: true,
+      recipe: approvedRecipe
+    });
+
+  } catch (err) {
+    console.log("APPROVE RECIPE ERROR:", err);
+
+    return res.status(500).json({
+      error: "Approve failed"
+    });
+  }
+});
+
+app.post("/normalize-ingredients", async (req, res) => {
+  try {
+    const ingredients =
+    req.body.ingredients || [];
+
+    const lang =
+    req.body.lang || "en";
+
+    if (!Array.isArray(ingredients) || ingredients.length === 0) {
+      return res.json({
+        success: true,
+        ingredients: []
+      });
+    }
+
+    if (!process.env.OPENAI_API_KEY) {
+      return res.json({
+        success: true,
+        ingredients: ingredients.map(item => ({
+          original: item,
+          canonicalEn: String(item || "").trim().toLowerCase(),
+          display: String(item || "").trim()
+        }))
+      });
+    }
+
+    const response =
+    await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You normalize food ingredients. Fix spelling mistakes, translate every ingredient to canonical English for recipe API search, and also provide display name in the requested language. Return only valid JSON array. No extra text."
+        },
+        {
+          role: "user",
+          content: JSON.stringify({
+            ingredients,
+            displayLanguage: lang,
+            requiredFormat: [
+              {
+                original: "original user input",
+                canonicalEn: "clean English ingredient name",
+                display: "ingredient name in displayLanguage"
+              }
+            ]
+          })
+        }
+      ],
+      temperature: 0.1
+    });
+
+    let content =
+    response.choices[0].message.content || "";
+
+    content = content
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
+    let normalized =
+    JSON.parse(content);
+
+    if (!Array.isArray(normalized)) {
+      normalized = [];
+    }
+
+    normalized =
+    normalized
+      .filter(item => item && item.canonicalEn)
+      .map(item => ({
+        original: item.original || "",
+        canonicalEn: String(item.canonicalEn || "").trim().toLowerCase(),
+        display: item.display || item.canonicalEn
+      }));
+
+    return res.json({
+      success: true,
+      ingredients: normalized
+    });
+
+  } catch (err) {
+    console.log("NORMALIZE INGREDIENTS ERROR:", err.message);
+
+    return res.status(500).json({
+      error: "Ingredient normalization failed"
+    });
+  }
+});
+
+
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on http://0.0.0.0:${PORT}`);
 });

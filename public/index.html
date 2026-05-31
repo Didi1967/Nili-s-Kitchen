@@ -9,37 +9,37 @@
 
 <body>
 
+  <div class="floating-lang">
+  <div class="lang-wrapper" id="langWrapper">
+    <button id="langBtn" class="lang-btn" onclick="toggleLangMenu()">
+      🌐 EN
+    </button>
+
+    <div id="langOptions" class="lang-options">
+      <button onclick="setLang('en')">EN</button>
+      <button onclick="setLang('tr')">TR</button>
+      <button onclick="setLang('ru')">RU</button>
+      <button onclick="setLang('fr')">FR</button>
+      <button onclick="setLang('es')">ES</button>
+      <button onclick="setLang('pt')">PT</button>
+      <button onclick="setLang('ar')">AR</button>
+    </div>
+  </div>
+</div>
+
   <aside id="sidebar">
     <div class="sidebar-shell">
 
-      <div class="sidebar-brand">
-        <div class="sidebar-topline">
-          <div class="lang-menu">
-            <button type="button" id="langBtn" onclick="toggleLangMenu()">🌐 EN</button>
+      <div class="nk-brand-card">
+  <div class="nk-brand-inner">
+    <img src="logo.jpeg" alt="Nili's Kitchen" class="nk-logo">
 
-            <div class="lang-options" id="langOptions">
-              <button type="button" onclick="setLang('en')">EN</button>
-              <button type="button" onclick="setLang('tr')">TR</button>
-              <button type="button" onclick="setLang('ru')">RU</button>
-              <button type="button" onclick="setLang('fr')">FR</button>
-              <button type="button" onclick="setLang('es')">ES</button>
-              <button type="button" onclick="setLang('pt')">PT</button>
-              <button type="button" onclick="setLang('ar')">AR</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="brand-row">
-          <div class="logo-shell">
-            <img src="logo.jpeg" class="logo" alt="Nili's Kitchen Logo">
-          </div>
-
-          <div class="brand-text">
-            <h1>Nili's Kitchen</h1>
-            <p class="subtitle" id="appSubtitle">AI Recipe Assistant</p>
-          </div>
-        </div>
-      </div>
+    <div class="nk-brand-text">
+      <h1 class="nk-title">Nili's Kitchen</h1>
+      <p class="nk-subtitle" id="appSubtitle">AI Recipe Assistant</p>
+    </div>
+  </div>
+</div>
 
       <div class="mobile-only mobile-hero-big">
         <img src="/YEMEK-6.jpeg" alt="">
@@ -47,17 +47,18 @@
 
       <div class="sidebar-main">
 
-        <button class="scan-action" type="button" onclick="photo.click()">
-          <span class="scan-title">Scan ingredients by photo</span>
-          <span class="scan-subtitle">Upload a photo and let AI detect ingredients</span>
+  <button type="button" class="upload-card" onclick="document.getElementById('photo').click()">
+    <div class="upload-card-text">
+      <strong id="scanTitle">Scan ingredients by photo</strong>
+      <span id="statusText">Upload a photo and let AI detect ingredients</span>
+    </div>
 
-          <div class="analyze-progress">
-            <div id="bar"></div>
-          </div>
-        </button>
+    <div class="analyze-progress">
+      <div id="bar"></div>
+    </div>
+  </button>
 
-        <input type="file" id="photo" hidden accept="image/*" capture="environment">
-
+  <input type="file" id="photo" hidden accept="image/*" capture="environment">
         <div class="manual">
           <input id="manualInput" placeholder="Add ingredient">
           <button type="button" onclick="addManual()">+</button>
@@ -219,13 +220,9 @@
           <div class="hero-dark"></div>
 
           <div class="hero-content">
-            <span class="hero-badge">AI Powered Real Recipes</span>
-
-            <h2>Cook smarter with what you already have</h2>
-
-            <p>
-              Upload ingredients, select what you have, and discover real recipes instantly.
-            </p>
+<span class="hero-badge-text">AI Powered Real Recipes</span>
+<h1 class="hero-title-text">Cook smarter with what you already have</h1>
+<p class="hero-desc-text">Upload ingredients...</p>
           </div>
         </div>
 
