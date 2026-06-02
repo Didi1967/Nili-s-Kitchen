@@ -1235,6 +1235,76 @@ async function sendMailSafe({ to, subject, html, text }){
 
 }
 
+function getRecipeStatusMail(type, lang, recipeTitle) {
+
+  const messages = {
+    approved: {
+      en: {
+        subject: "Your recipe has been published",
+        text: `Thank you for sharing your recipe with Nili’s Kitchen. Your recipe "${recipeTitle}" has been reviewed and published. It can now appear in recipe search results.`
+      },
+      tr: {
+        subject: "Tarifiniz yayınlandı",
+        text: `Nili’s Kitchen ile tarifinizi paylaştığınız için teşekkür ederiz. "${recipeTitle}" adlı tarifiniz incelendi ve yayınlandı. Artık uygun malzeme aramalarında görünebilir.`
+      },
+      ru: {
+        subject: "Ваш рецепт опубликован",
+        text: `Спасибо, что поделились рецептом с Nili’s Kitchen. Ваш рецепт "${recipeTitle}" был проверен и опубликован. Теперь он может появляться в результатах поиска.`
+      },
+      fr: {
+        subject: "Votre recette a été publiée",
+        text: `Merci d’avoir partagé votre recette avec Nili’s Kitchen. Votre recette "${recipeTitle}" a été vérifiée et publiée. Elle peut maintenant apparaître dans les résultats de recherche.`
+      },
+      es: {
+        subject: "Tu receta ha sido publicada",
+        text: `Gracias por compartir tu receta con Nili’s Kitchen. Tu receta "${recipeTitle}" fue revisada y publicada. Ahora puede aparecer en los resultados de búsqueda.`
+      },
+      pt: {
+        subject: "Sua receita foi publicada",
+        text: `Obrigado por compartilhar sua receita com o Nili’s Kitchen. Sua receita "${recipeTitle}" foi revisada e publicada. Agora ela pode aparecer nos resultados de busca.`
+      },
+      ar: {
+        subject: "تم نشر وصفتك",
+        text: `شكرًا لمشاركة وصفتك مع Nili’s Kitchen. تمت مراجعة وصفتك "${recipeTitle}" ونشرها. يمكن أن تظهر الآن في نتائج البحث.`
+      }
+    },
+
+    rejected: {
+      en: {
+        subject: "Update about your recipe submission",
+        text: `Thank you for sharing your recipe with Nili’s Kitchen. After review, we are not able to publish "${recipeTitle}" at this time. You are welcome to improve it and submit it again.`
+      },
+      tr: {
+        subject: "Tarif başvurunuz hakkında",
+        text: `Nili’s Kitchen ile tarifinizi paylaştığınız için teşekkür ederiz. Yapılan inceleme sonucunda "${recipeTitle}" adlı tarifinizi şu anda yayınlayamıyoruz. Dilerseniz tarifi geliştirip tekrar gönderebilirsiniz.`
+      },
+      ru: {
+        subject: "Информация о вашей заявке на рецепт",
+        text: `Спасибо, что поделились рецептом с Nili’s Kitchen. После проверки мы пока не можем опубликовать рецепт "${recipeTitle}". Вы можете улучшить его и отправить снова.`
+      },
+      fr: {
+        subject: "Mise à jour concernant votre recette",
+        text: `Merci d’avoir partagé votre recette avec Nili’s Kitchen. Après vérification, nous ne pouvons pas publier "${recipeTitle}" pour le moment. Vous pouvez l’améliorer et la soumettre à nouveau.`
+      },
+      es: {
+        subject: "Actualización sobre tu receta",
+        text: `Gracias por compartir tu receta con Nili’s Kitchen. Después de revisarla, no podemos publicar "${recipeTitle}" en este momento. Puedes mejorarla y enviarla nuevamente.`
+      },
+      pt: {
+        subject: "Atualização sobre sua receita",
+        text: `Obrigado por compartilhar sua receita com o Nili’s Kitchen. Após a análise, não podemos publicar "${recipeTitle}" neste momento. Você pode melhorá-la e enviar novamente.`
+      },
+      ar: {
+        subject: "تحديث بخصوص وصفتك",
+        text: `شكرًا لمشاركة وصفتك مع Nili’s Kitchen. بعد المراجعة، لا يمكننا نشر وصفتك "${recipeTitle}" في الوقت الحالي. يمكنك تعديلها وإرسالها مرة أخرى.`
+      }
+    }
+  };
+
+  return messages[type]?.[lang] || messages[type]?.en;
+}
+
+
 function hashPassword(password){
 
   const salt =
@@ -1423,25 +1493,7 @@ function getPendingRecipesFile() {
   );
 }
 
-function readPendingRecipes() {
-  const file = getPendingRecipesFile();
-
-  if (!fs.existsSync(file)) {
-    fs.writeFileSync(file, "[]");
-  }
-
-  return JSON.parse(
-    fs.readFileSync(file, "utf8")
-  );
-}
-
-function getPendingRecipesFile() {
-  return path.join(
-    __dirname,
-    "pending-recipes",
-    "pending_recipes.json"
-  );
-}
+ 
 
 function readPendingRecipes() {
   const file = getPendingRecipesFile();
@@ -1574,7 +1626,7 @@ app.get("/admin/pending-recipes", (req, res) => {
 });
 
 
-app.post("/admin/reject-recipe/:id", (req, res) => {
+app.post("/admin/reject-recipe/:id", async(req, res) => {
   try {
     const recipes = readPendingRecipes();
 
@@ -1597,6 +1649,26 @@ app.post("/admin/reject-recipe/:id", (req, res) => {
       success: true,
       recipe
     });
+
+    const mail =
+getRecipeStatusMail(
+  "rejected",
+  recipe.creatorLang || recipe.lang || "en",
+  recipe.adminTitleTr || recipe.title || "Recipe"
+);
+
+await sendMailSafe({
+  to: recipe.creatorEmail,
+  subject: mail.subject,
+  text: mail.text,
+  html: `
+    <div style="font-family:Arial,sans-serif;line-height:1.5;">
+      <h2>${mail.subject}</h2>
+      <p>${mail.text}</p>
+      <p><strong>Nili’s Kitchen Team</strong></p>
+    </div>
+  `
+});
   } catch (err) {
     console.log("REJECT RECIPE ERROR:", err);
 
@@ -1791,6 +1863,26 @@ console.log("MOVED RECIPE:", approvedRecipe.title);
       success: true,
       recipe: approvedRecipe
     });
+
+    const mail =
+getRecipeStatusMail(
+  "approved",
+  recipe.creatorLang || recipe.lang || "en",
+  recipe.adminTitleTr || recipe.title || "Recipe"
+);
+
+await sendMailSafe({
+  to: recipe.creatorEmail,
+  subject: mail.subject,
+  text: mail.text,
+  html: `
+    <div style="font-family:Arial,sans-serif;line-height:1.5;">
+      <h2>${mail.subject}</h2>
+      <p>${mail.text}</p>
+      <p><strong>Nili’s Kitchen Team</strong></p>
+    </div>
+  `
+});
 
   } catch (err) {
     console.log("APPROVE RECIPE ERROR:", err);

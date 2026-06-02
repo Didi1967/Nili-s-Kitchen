@@ -162,6 +162,65 @@ const CATEGORY_DATA = {
   ]
 };
 
+const ingredientTranslationCache = {};
+const ingredientTranslationLoading = {};
+
+function getAllCategoryIngredients(){
+  return [
+    ...new Set(
+      Object.values(CATEGORY_DATA)
+        .flat()
+        .filter(Boolean)
+    )
+  ];
+}
+
+function getIngredientLabel(item){
+  if(currentLang === "en") return item;
+
+  return ingredientTranslationCache[currentLang]?.[item] || item;
+}
+
+async function preloadIngredientTranslations(lang){
+  if(!lang || lang === "en") return;
+
+  if(ingredientTranslationCache[lang]) return;
+
+  if(ingredientTranslationLoading[lang]){
+    return ingredientTranslationLoading[lang];
+  }
+
+  const allItems = getAllCategoryIngredients();
+
+  ingredientTranslationLoading[lang] = fetch("/translate-ingredients", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      items: allItems,
+      lang
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    const translated = {};
+
+    if(data && Array.isArray(data.items)){
+      allItems.forEach((item, index) => {
+        translated[item] = data.items[index] || item;
+      });
+    }
+
+    ingredientTranslationCache[lang] = translated;
+  })
+  .catch(err => {
+    console.error("Preload ingredient translations error:", err);
+  });
+
+  return ingredientTranslationLoading[lang];
+}
+
 const translations = {
   en: {
     appSubtitle: "AI Recipe Assistant",
@@ -1134,6 +1193,7 @@ window.toggleCategories = function(){
   }
 
 };
+
 async function openIngredientModal(categoryKey, items){
 
   if(!ingredientModal || !ingredientModalItems) return;
@@ -1141,11 +1201,9 @@ async function openIngredientModal(categoryKey, items){
   activeCategoryKey = categoryKey;
 
   const safeItems =
-  Array.isArray(items) && items.length
-    ? items
-    : CATEGORY_DATA[categoryKey] || [];
-
-  ingredientModal.style.display = "flex";
+    Array.isArray(items) && items.length
+      ? items
+      : CATEGORY_DATA[categoryKey] || [];
 
   if(ingredientModalTitle){
     ingredientModalTitle.innerText =
@@ -1160,56 +1218,60 @@ async function openIngredientModal(categoryKey, items){
         No ingredients found.
       </p>
     `;
+
+    ingredientModal.style.display = "flex";
     return;
   }
 
-  let displayItems = safeItems;
+  // Önce malzemeleri hemen göster
+  ingredientModalItems.innerHTML =
+    safeItems.map((item, index) => `
+      <button
+        class="modal-ingredient-btn ${selected.includes(item) ? "active" : ""}"
+        type="button"
+        data-value="${item}"
+        data-index="${index}"
+      >
+        ${item}
+      </button>
+    `).join("");
 
-  if(currentLang !== "en"){
+  ingredientModal.style.display = "flex";
 
-    try{
+  // İngilizce ise çeviri yok
+  if(currentLang === "en") return;
 
-      console.log("TRANSLATE POPUP START:", currentLang, safeItems);
+  // Sonra çeviri gelince buton yazılarını değiştir
+  try{
 
-      const res = await fetch("/translate-ingredients", {
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-          items:safeItems,
-          lang:currentLang
-        })
-      });
+    console.log("TRANSLATE POPUP START:", currentLang, safeItems);
 
-      const data = await res.json();
+    const res = await fetch("/translate-ingredients", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        items:safeItems,
+        lang:currentLang
+      })
+    });
 
-      console.log("TRANSLATE POPUP DATA:", data);
+    const data = await res.json();
 
-      if(data && Array.isArray(data.items)){
-        displayItems = data.items;
-      }
+    console.log("TRANSLATE POPUP DATA:", data);
 
-    }catch(err){
-
-      console.error("Ingredient translate error:", err);
-
+    if(data && Array.isArray(data.items)){
+      document
+        .querySelectorAll("#ingredientModalItems .modal-ingredient-btn")
+        .forEach((btn, index) => {
+          btn.textContent = data.items[index] || safeItems[index];
+        });
     }
 
+  }catch(err){
+    console.error("Ingredient translate error:", err);
   }
-
-  ingredientModalItems.innerHTML =
-  safeItems.map((item, index) => `
-
-    <button
-      class="modal-ingredient-btn ${selected.includes(item) ? "active" : ""}"
-      type="button"
-      data-value="${item}"
-    >
-      ${displayItems[index] || item}
-    </button>
-
-  `).join("");
 
 }
 
@@ -2184,6 +2246,19 @@ function setLang(lang){
   }
 
   applyLanguage();
+
+  preloadIngredientTranslations(currentLang).then(() => {
+  if(
+    ingredientModal &&
+    ingredientModal.style.display === "flex" &&
+    activeCategoryKey
+  ){
+    openIngredientModal(
+      activeCategoryKey,
+      CATEGORY_DATA[activeCategoryKey]
+    );
+  }
+});
   renderChecklist();
 
   if(

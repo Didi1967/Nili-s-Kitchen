@@ -3826,3 +3826,98 @@ main,
     line-height: 1.15 !important;
   }
 }
+
+/* HERO TEXT PREMIUM LOOK */
+
+.hero-badge-text {
+  display: inline-flex !important;
+  align-items: center !important;
+
+  padding: 8px 14px !important;
+  margin-bottom: 14px !important;
+
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, rgba(255,140,66,0.95), rgba(255,94,98,0.95)) !important;
+  color: #ffffff !important;
+
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.3px !important;
+  line-height: 1 !important;
+
+  box-shadow: 0 10px 24px rgba(255, 94, 98, 0.28) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.hero-title-text {
+  display: block !important;
+
+  margin: 0 !important;
+  color: #ffffff !important;
+
+  font-size: 54px !important;
+  font-weight: 900 !important;
+  line-height: 0.98 !important;
+  letter-spacing: -1.2px !important;
+
+  text-shadow:
+    0 4px 18px rgba(0,0,0,0.30),
+    0 2px 6px rgba(0,0,0,0.22) !important;
+}
+
+.hero-desc-text {
+  display: block !important;
+
+  margin-top: 16px !important;
+  max-width: 620px !important;
+
+  color: rgba(255,255,255,0.92) !important;
+
+  font-size: 22px !important;
+  font-weight: 500 !important;
+  line-height: 1.45 !important;
+
+  text-shadow: 0 3px 12px rgba(0,0,0,0.22) !important;
+}
+
+/* Hero yazı kutusunu biraz daha şık göster */
+.hero-text-box,
+.hero-copy,
+.hero-content-text,
+.mobile-hero-text {
+  max-width: 700px !important;
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .hero-title-text {
+    font-size: 42px !important;
+  }
+
+  .hero-desc-text {
+    font-size: 18px !important;
+    max-width: 520px !important;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .hero-badge-text {
+    padding: 6px 12px !important;
+    margin-bottom: 10px !important;
+    font-size: 11px !important;
+  }
+
+  .hero-title-text {
+    font-size: 28px !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.6px !important;
+  }
+
+  .hero-desc-text {
+    margin-top: 10px !important;
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    max-width: 280px !important;
+  }
+}
