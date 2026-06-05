@@ -1,22 +1,6 @@
-dotenv.config();
-
-const __filename =
-fileURLToPath(import.meta.url);
-
-const __dirname =
-path.dirname(__filename);
-
-const openai =
-new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
-
-const BONUS_PER_CLICK =
-Number(process.env.BONUS_PER_CLICK || 0.01);
- 
-
 import express from "express";
 import multer from "multer";
+import cors from "cors";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -24,31 +8,80 @@ import dotenv from "dotenv";
 import OpenAI from "openai";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
- 
 
+dotenv.config();
 
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
+
+const BONUS_PER_CLICK = Number(process.env.BONUS_PER_CLICK || 0.01);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  express.static("public")
-);
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://niliskitchen.com",
+    "https://www.niliskitchen.com"
+  ],
+  credentials: true
+}));
+
+app.use(express.static(__dirname));
 
 app.use(
   "/creator-uploads",
   express.static(path.join(__dirname, "creator-uploads"))
 );
 
-const upload =
-multer({
-  dest:"uploads/"
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-console.log(
-  process.env.SPOON_KEY
-);
+const upload = multer({
+  dest: "uploads/"
+});
+
+console.log(process.env.SPOON_KEY);
+
+const mailer = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT || 587),
+  secure: process.env.SMTP_SECURE === "true",
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS
+  }
+});
+
+async function sendMailSafe({ to, subject, html, text }) {
+  try {
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS || !to) {
+      console.log("MAIL SKIPPED:", subject);
+      return;
+    }
+
+    await mailer.sendMail({
+      from: process.env.MAIL_FROM || process.env.SMTP_USER,
+      to,
+      subject,
+      text,
+      html
+    });
+
+    console.log("MAIL SENT:", subject, to);
+  } catch (err) {
+    console.log("MAIL ERROR:", err.message);
+  }
+}
  
 /* TRANSLATE */
 
@@ -1162,78 +1195,45 @@ await sendMailSafe({
 });
 
 /* ADMIN EMAIL: new recipe submitted */
+const adminUrl = `${process.env.SITE_URL || "https://niliskitchen.com"}/admin.html`;
+
 await sendMailSafe({
   to: process.env.ADMIN_EMAIL,
   subject: "New recipe submitted for review",
-  text: `New recipe submitted: ${title}`,
+  text: `New recipe submitted: ${title}\nOpen admin panel: ${adminUrl}`,
   html: `
-    <h2>New recipe submitted</h2>
-    <p><strong>Recipe:</strong> ${title}</p>
-    <p><strong>Creator:</strong> ${creatorUsername}</p>
-    <p><strong>Email:</strong> ${creatorEmail}</p>
-    <p>Status: pending review</p>
+    <div style="font-family:Arial,sans-serif;max-width:620px">
+      <h2>New recipe submitted</h2>
+
+      <div style="border:1px solid #e5e5e5;border-radius:16px;padding:16px;margin:16px 0">
+        <h3 style="margin-top:0">${title}</h3>
+        <p><strong>Creator:</strong> ${creatorUsername}</p>
+        <p><strong>Email:</strong> ${creatorEmail}</p>
+        <p><strong>Status:</strong> pending review</p>
+      </div>
+
+      <a href="${adminUrl}"
+         style="display:inline-block;background:#1f7a4d;color:white;text-decoration:none;padding:12px 18px;border-radius:10px;font-weight:bold">
+        Open in Admin Panel
+      </a>
+    </div>
   `
 });
-
+      
 return res.json({
-  success:true,
-  message:"Recipe submitted for review"
+  success: true,
+  message: "Recipe submitted for review"
 });
 
-    }catch(err){
+  } catch (err) {
+    console.log("SUBMIT RECIPE ERROR:", err);
 
-      console.log("SUBMIT RECIPE ERROR:", err);
-
-      return res.status(500).json({
-        error:"Submit failed"
-      });
-
-    }
-
-  }
-);
-
-const mailer =
-nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT || 587),
-  secure: process.env.SMTP_SECURE === "true",
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
-  }
-});
-
-async function sendMailSafe({ to, subject, html, text }){
-
-  try{
-
-    if(
-      !process.env.SMTP_USER ||
-      !process.env.SMTP_PASS ||
-      !to
-    ){
-      console.log("MAIL SKIPPED:", subject);
-      return;
-    }
-
-    await mailer.sendMail({
-      from: process.env.MAIL_FROM || process.env.SMTP_USER,
-      to,
-      subject,
-      text,
-      html
+    return res.status(500).json({
+      error: "Submit failed"
     });
-
-    console.log("MAIL SENT:", subject, to);
-
-  }catch(err){
-
-    console.log("MAIL ERROR:", err.message);
-
   }
 
-}
+});
 
 function getRecipeStatusMail(type, lang, recipeTitle) {
 
@@ -1859,10 +1859,7 @@ console.log("MOVED RECIPE:", approvedRecipe.title);
 
     console.log("RECIPE MOVED TO APPROVED:", approvedRecipe.title);
 
-    return res.json({
-      success: true,
-      recipe: approvedRecipe
-    });
+   
 
     const mail =
 getRecipeStatusMail(
@@ -1883,6 +1880,11 @@ await sendMailSafe({
     </div>
   `
 });
+
+return res.json({
+      success: true,
+      recipe: approvedRecipe
+    });
 
   } catch (err) {
     console.log("APPROVE RECIPE ERROR:", err);

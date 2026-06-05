@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share Your Recipe | Nili's Kitchen</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      min-height:100vh;
+      background:#f8f1e7;
+      font-family:Arial, sans-serif;
+      color:#182234;
+      padding:32px;
+    }
+
+    .creator-page{
+      max-width:820px;
+      margin:0 auto;
+      background:white;
+      border-radius:30px;
+      padding:34px;
+      box-shadow:0 28px 80px rgba(0,0,0,.12);
+      border:1px solid #eadfce;
+    }
+
+    .top{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      align-items:flex-start;
+      margin-bottom:28px;
+    }
+
+    .top h1{
+      font-size:36px;
+      line-height:1;
+      letter-spacing:-1.2px;
+      margin-bottom:10px;
+    }
+
+    .top p{
+      color:#6b7280;
+      font-size:15px;
+      line-height:1.5;
+      max-width:560px;
+    }
+
+    .back{
+      text-decoration:none;
+      background:#f3f4f6;
+      color:#374151;
+      padding:12px 16px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .creator-info{
+      background:#fffaf3;
+      border:1px solid #eadfce;
+      border-radius:20px;
+      padding:16px;
+      margin-bottom:22px;
+      color:#374151;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .creator-form{
+      display:grid;
+      gap:16px;
+    }
+
+    .creator-form label{
+      display:grid;
+      gap:8px;
+      font-size:13px;
+      font-weight:900;
+      color:#182234;
+    }
+
+    .creator-form input,
+    .creator-form textarea{
+      width:100%;
+      border:1px solid #eadfce;
+      border-radius:16px;
+      padding:14px;
+      font-size:14px;
+      outline:none;
+      font-family:inherit;
+      background:#fffaf3;
+      color:#182234;
+      font-weight:700;
+    }
+
+    .creator-form textarea{
+      min-height:120px;
+      resize:vertical;
+      line-height:1.5;
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .creator-actions{
+      display:flex;
+      gap:12px;
+      margin-top:10px;
+    }
+
+    .creator-submit{
+      height:52px;
+      border:none;
+      border-radius:18px;
+      padding:0 24px;
+      background:linear-gradient(135deg,#ef6a1a,#d94d0a);
+      color:white;
+      font-size:15px;
+      font-weight:950;
+      cursor:pointer;
+    }
+
+    .creator-reset{
+      height:52px;
+      border:none;
+      border-radius:18px;
+      padding:0 22px;
+      background:#f3f4f6;
+      color:#374151;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    #creatorMessage{
+      margin-top:18px;
+      font-weight:900;
+    }
+
+    @media(max-width:700px){
+      body{
+        padding:18px;
+      }
+
+      .creator-page{
+        padding:22px;
+        border-radius:24px;
+      }
+
+      .top{
+        flex-direction:column;
+      }
+
+      .row{
+        grid-template-columns:1fr;
+      }
+
+      .top h1{
+        font-size:30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="creator-page">
+
+    <div class="top">
+      <div>
+        <h1>Share your recipe</h1>
+
+        <p>
+          Upload your own recipe with a food photo or video. After review,
+          approved recipes may appear in Nili’s Kitchen with your name.
+        </p>
+      </div>
+
+      <a class="back" href="/">
+        Back to app
+      </a>
+    </div>
+
+    <div class="creator-info" id="creatorInfo">
+      Creator information loading...
+    </div>
+
+    <form class="creator-form" id="creatorForm">
+
+      <input type="hidden" name="creatorUsername" id="creatorUsernameHidden">
+      <input type="hidden" name="creatorEmail" id="creatorEmailHidden">
+
+      <label>
+        Recipe title
+        <input
+          name="title"
+          placeholder="Example: Maria-style chicken rice"
+          required
+        >
+      </label>
+
+      <div class="row">
+        <label>
+          Prep time
+          <input
+            name="prepTime"
+            placeholder="Example: 15 min"
+          >
+        </label>
+
+        <label>
+          Servings
+          <input
+            name="servings"
+            placeholder="Example: 4"
+          >
+        </label>
+      </div>
+
+      <label>
+        Ingredients
+        <textarea
+          name="ingredients"
+          placeholder="Write ingredients, one per line or separated by commas"
+          required
+        ></textarea>
+      </label>
+
+      <label>
+        Instructions
+        <textarea
+          name="instructions"
+          placeholder="Write how to prepare this recipe"
+          required
+        ></textarea>
+      </label>
+
+      <label>
+        Upload food photo or video
+        <input
+          name="media"
+          type="file"
+          accept="image/*,video/*"
+          required
+        >
+      </label>
+
+      <div class="creator-actions">
+        <button class="creator-submit" type="submit">
+          Submit for Review
+        </button>
+
+        <button class="creator-reset" type="reset">
+          Clear
+        </button>
+      </div>
+
+    </form>
+
+    <div id="creatorMessage"></div>
+
+  </div>
+
+  <script>
+    const API_BASE = "https://api.niliskitchen.com";
+    const creatorForm =
+    document.getElementById("creatorForm");
+
+    const creatorMessage =
+    document.getElementById("creatorMessage");
+
+    const creatorInfo =
+    document.getElementById("creatorInfo");
+
+    const username =
+    localStorage.getItem("creatorUsername") || "";
+
+    const emailOrUser =
+    localStorage.getItem("creatorEmailOrUser") || "";
+
+    const mode =
+    localStorage.getItem("creatorMode") || "signup";
+
+    document.getElementById("creatorUsernameHidden").value =
+    username;
+
+    document.getElementById("creatorEmailHidden").value =
+    emailOrUser;
+
+    creatorInfo.textContent =
+    mode === "login"
+      ? `Logged in as: ${emailOrUser}`
+      : `Creator: ${username} • ${emailOrUser}`;
+
+    creatorForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      creatorMessage.textContent = "Submitting recipe for review...";
+      creatorMessage.style.color = "#6b7280";
+
+      const formData =
+      new FormData(creatorForm);
+
+      try{
+
+  const res = await fetch(`${API_BASE}/submit-recipe`, {
+  method: "POST",
+  body: formData
+});
+
+const raw = await res.text();
+
+let data = {};
+try {
+  data = JSON.parse(raw);
+} catch (e) {
+  console.log("SUBMIT RAW RESPONSE:", raw);
+  throw new Error("Server JSON dönmedi. Status: " + res.status);
+}
+
+if (!res.ok) {
+  creatorMessage.textContent =
+    data.error || "Submit failed.";
+
+  creatorMessage.style.color =
+    "#c2410c";
+
+  return;
+}
+
+        creatorMessage.textContent =
+        "Recipe submitted for review. Thank you!";
+
+        creatorMessage.style.color =
+        "#315c45";
+
+        creatorForm.reset();
+
+      }catch(err){
+
+        creatorMessage.textContent =
+        "Submit failed.";
+
+        creatorMessage.style.color =
+        "#c2410c";
+
+      }
+
+    });
+  </script>
+
+</body>
+</html>
