@@ -170,6 +170,7 @@ const translations = {
     footerNote: "© 2026 Nili's Kitchen AI. All rights reserved.",
     ingredientDetailsUnavailable: "Ingredient details unavailable",
     timeUnavailable: "Time unavailable",
+    serviceTemporaryUnavailable: "Service is temporarily unavailable due to a technical issue. Please try again later.",
 
 
    categories: {
@@ -253,6 +254,7 @@ const translations = {
     footerNote: "© 2026 Nili's Kitchen AI. Tüm hakları saklıdır.",
     ingredientDetailsUnavailable: "Malzeme detayları mevcut değil",
     timeUnavailable: "Süre bilgisi mevcut değil",
+    serviceTemporaryUnavailable: "Teknik bir sorun nedeniyle hizmet şu anda geçici olarak kullanılamıyor. Lütfen daha sonra tekrar deneyiniz.",
 
    categories: {
   vegetables: "Sebzeler",
@@ -334,6 +336,7 @@ const translations = {
     footerNote: "© 2026 Nili's Kitchen AI. Все права защищены.",
     ingredientDetailsUnavailable: "Детали ингредиентов недоступны",
     timeUnavailable: "Время недоступно",
+    serviceTemporaryUnavailable:"Сервис временно недоступен из-за технической проблемы. Пожалуйста, попробуйте позже.",
 
    categories: {
   vegetables: "Овощи",
@@ -415,6 +418,7 @@ const translations = {
     footerNote: "© 2026 Nili's Kitchen AI. Tous droits réservés.",
     ingredientDetailsUnavailable: "Détails des ingrédients indisponibles",
     timeUnavailable: "Temps indisponible",
+    serviceTemporaryUnavailable:"Le service est temporairement indisponible en raison d’un problème technique. Veuillez réessayer plus tard.",
     
 
 
@@ -498,6 +502,7 @@ const translations = {
     footerNote: "© 2026 Nili's Kitchen AI. Todos los derechos reservados.",
     ingredientDetailsUnavailable: "Detalles de ingredientes no disponibles",
     timeUnavailable: "Tiempo no disponible",
+    serviceTemporaryUnavailable:"El servicio no está disponible temporalmente debido a un problema técnico. Por favor, inténtelo de nuevo más tarde.",
 
    categories: {
   vegetables: "Verduras",
@@ -579,6 +584,7 @@ const translations = {
     footerNote: "© 2026 Nili's Kitchen AI. Todos os direitos reservados.",
     ingredientDetailsUnavailable: "Detalhes dos ingredientes indisponíveis",
     timeUnavailable: "Tempo indisponível",
+    serviceTemporaryUnavailable:"O serviço está temporariamente indisponível devido a um problema técnico. Por favor, tente novamente mais tarde.",
 
     categories: {
   vegetables: "Vegetais",
@@ -659,7 +665,8 @@ const translations = {
     creatorDesc: "ارفع وصفاتك واحصل على مكافآت مستقبلًا.",
     footerNote: "© 2026 Nili's Kitchen AI. جميع الحقوق محفوظة.",
     ingredientDetailsUnavailable: "تفاصيل المكونات غير متوفرة",
-   timeUnavailable: "وقت التحضير غير متوفر",
+    timeUnavailable: "وقت التحضير غير متوفر",
+    serviceTemporaryUnavailable:"الخدمة غير متاحة مؤقتًا بسبب مشكلة تقنية. يرجى المحاولة مرة أخرى لاحقًا.",
 
     categories: {
   vegetables: "خضروات",
@@ -730,9 +737,22 @@ async function translateSelectedIngredients(){
       renderChecklist();
     }
 
-  }catch(err){
-    console.error("Selected ingredient translate error:", err);
+ }catch(err){
+
+  showUserFriendlyError("recipe-search", err);
+
+  if(result){
+    result.innerHTML = `
+      <div class="loading-recipes-box">
+        <strong>
+          ${t("serviceTemporaryUnavailable") || "Service is temporarily unavailable."}
+        </strong>
+        <span>Please try again later.</span>
+      </div>
+    `;
   }
+
+}
 
 }
 
@@ -1131,21 +1151,17 @@ async function handlePhotoUpload(e){
 
   }catch(err){
 
-    console.error("FRONT ANALYZE ERROR:", err);
+  showUserFriendlyError("photo-analyze", err);
 
-    if(statusText){
-      statusText.innerText = t("statusAnalyzeFailed");
-    }
-
-    if(bar){
-      bar.style.width = "0%";
-    }
-
-    setTimeout(() => {
-      resetUploadStatus();
-    }, 1200);
-
+  if(bar){
+    bar.style.width = "0%";
   }
+
+  setTimeout(() => {
+    resetUploadStatus();
+  }, 2500);
+
+}
 
 }
 
@@ -1491,12 +1507,20 @@ setTimeout(() => {
 
   }catch(err){
 
-    console.error("FRONT RECIPES ERROR:", err);
+  showUserFriendlyError("recipe-search", err);
 
-    result.innerHTML =
-    "<p>Recipes failed</p>";
-
+  if(result){
+    result.innerHTML = `
+      <div class="loading-recipes-box">
+        <strong>
+          ${t("serviceTemporaryUnavailable") || "Service is temporarily unavailable."}
+        </strong>
+        <span>Please try again later.</span>
+      </div>
+    `;
   }
+
+}
 
 }
 
@@ -1537,13 +1561,14 @@ async function confirmAndGetRecipes(){
 
 function renderRecipes(data){
 
-    console.log("RENDER RECIPES COUNT:", data.length);
-  console.log("RESULT ELEMENT:", result);
+  console.log("RENDER RECIPES COUNT:", data.length);
 
   if(!result){
     alert("Result element not found");
     return;
   }
+
+  document.body.classList.add("show-recipes-page");
 
   result.style.display = "grid";
   result.style.visibility = "visible";
@@ -1553,94 +1578,64 @@ function renderRecipes(data){
   data.map(recipe => {
 
     const usedCount =
-Array.isArray(recipe.usedIngredients) && recipe.usedIngredients.length
-  ? recipe.usedIngredients.length
-  : recipe.usedIngredientCount || recipe.usedCount || selected.length || 0;
+      Array.isArray(recipe.usedIngredients) && recipe.usedIngredients.length
+        ? recipe.usedIngredients.length
+        : recipe.usedIngredientCount || recipe.usedCount || 0;
 
     const usedList =
-recipe.usedIngredients && recipe.usedIngredients.length
-? recipe.usedIngredients
-    .slice(0,4)
-    .map(item => `<span>${item.name || item.original || item}</span>`)
-    .join("")
-: `<span>${t("ingredientDetailsUnavailable")}</span>`;
+      recipe.usedIngredients && recipe.usedIngredients.length
+        ? recipe.usedIngredients
+            .slice(0,4)
+            .map(item => `<span>${item.original || item.name || item}</span>`)
+            .join("")
+        : `<span>${t("ingredientDetailsUnavailable")}</span>`;
 
     return `
+      <div class="card recipe-card" data-recipe-id="${recipe.id}">
 
-      <div
-        class="card"
-        data-recipe-id="${recipe.id}"
-      >
+        <div class="recipe-card-image-wrap">
+          <img
+            src="${
+              recipe.image ||
+              "https://img.spoonacular.com/recipes/716429-556x370.jpg"
+            }"
+            alt="${recipe.title || t("recipeTitleFallback")}"
+          >
+        </div>
 
-        <img
-          src="${
-            recipe.image ||
-            "https://img.spoonacular.com/recipes/716429-556x370.jpg"
-          }"
-          alt="${recipe.title || t("recipeTitleFallback")}"
-        >
+        <div class="card-body recipe-card-body">
 
-        <div class="card-body">
+          <h3>${recipe.title || t("recipeTitleFallback")}</h3>
 
-          <h3>
-            ${recipe.title || t("recipeTitleFallback")}
-          </h3>
-
-          <p class="time">
-  ${
-    recipe.readyInMinutes
-      ? `⏱ ${recipe.readyInMinutes} ${t("timeMin")}`
-      : `⏱ ${recipe.timeLabel || t("timeUnavailable") || "Time unavailable"}`
-  }
-</p>
+          <p class="time recipe-time">
+            ${
+              recipe.readyInMinutes
+                ? `⏱ ${recipe.timeEstimated ? "~" : ""}${recipe.readyInMinutes} ${t("timeMin")}`
+                : `⏱ ${recipe.timeLabel || t("timeUnavailable") || "Time unavailable"}`
+            }
+          </p>
 
           <div class="ingredients-count">
             🥗 ${t("usesIngredients")} ${usedCount} ${t("ingredientsWord")}
           </div>
 
-          <div class="ingredients">
+          <div class="ingredients recipe-ingredients">
             ${usedList}
           </div>
 
         </div>
 
       </div>
-
     `;
 
   }).join("");
 
-  let el = result;
-
-while (el) {
-  el.style.display = "block";
-  el.style.visibility = "visible";
-  el.style.opacity = "1";
-  el.style.height = "auto";
-  el.style.maxHeight = "none";
-  el.style.overflow = "visible";
-  el = el.parentElement;
-}
-
-result.style.display = "grid";
-result.style.gridTemplateColumns = "1fr";
-result.style.background = "yellow";
-
-document.body.style.overflow = "auto";
-document.documentElement.style.overflow = "auto";
-
-setTimeout(() => {
-  window.scrollTo(0, result.offsetTop);
-}, 200);
-
-  alert("RESULT LEN: " + result.innerHTML.length);
-
-result.style.display = "grid";
-result.style.visibility = "visible";
-result.style.opacity = "1";
-result.style.height = "auto";
-result.style.minHeight = "300px";
-result.style.background = "yellow";
+  setTimeout(() => {
+    result.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }, 100);
 
 }
 
@@ -1685,7 +1680,7 @@ function openRecipe(id){
   ? recipe.usedIngredients
       .map(item => `
         <span>
-          ${item.name || item.original || item}
+          ${item.original || item.name || item}
         </span>
       `).join("")
   : `<span>${t("ingredientDetailsUnavailable")}</span>`;
@@ -2086,11 +2081,11 @@ if(creatorContinueBtn){
     localStorage.setItem("creatorUsername", username);
     localStorage.setItem("creatorEmailOrUser", emailOrUser);
 
-    window.location.href = `${window.location.origin}/creator.html`;
+    window.location.href = `${window.location.origin}/creator-.html`;
 
   });
 
-}themeal
+}
 
 /* =========================
    CREATOR AUTH FINAL FIX
@@ -2170,6 +2165,14 @@ window.setCreatorMode = function(mode){
 
 };
 
+window.API_BASE =
+  window.API_BASE ||
+  (
+    location.hostname === "localhost" || location.hostname === "127.0.0.1"
+      ? "http://localhost:3000"
+      : "https://api.niliskitchen.com"
+  );
+
 window.goToCreatorPage = async function(){
 
   console.log("GO TO CREATOR CLICKED");
@@ -2241,14 +2244,18 @@ window.goToCreatorPage = async function(){
     localStorage.setItem("creatorEmail", data.email || emailOrUser);
     localStorage.setItem("creatorEmailOrUser", data.email || emailOrUser);
 
-    window.location.href = "/creator.html";
+    window.location.href = "/creator-dashboard.html";
 
   }catch(err){
 
-    console.error("CREATOR AUTH FRONTEND ERROR:", err);
-    alert("Connection error. Please try again.");
+  showUserFriendlyError("creator-auth", err);
 
-  }
+  alert(
+    t("serviceTemporaryUnavailable") ||
+    "Service is temporarily unavailable due to a technical issue. Please try again later."
+  );
+
+}
 
 };
 
@@ -2337,3 +2344,31 @@ window.setLang = function(lang){
     renderChecklist();
   }
 };
+
+function showUserFriendlyError(source, err){
+
+  const message =
+    t("serviceTemporaryUnavailable") ||
+    "Service is temporarily unavailable due to a technical issue. Please try again later.";
+
+  if(statusText){
+    statusText.innerText = message;
+  }
+
+  console.error("APP ERROR:", source, err);
+
+  fetch(`${API_BASE}/send-error-alert`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      source: source || "frontend",
+      error: err?.message || String(err),
+      page: window.location.href,
+      time: new Date().toISOString()
+    })
+  }).catch(() => {});
+
+}
+

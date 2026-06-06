@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nili's Kitchen Creator Studio</title>
+
+<style>
+body{
+  margin:0;
+  background:#f4efe7;
+  font-family:Arial,sans-serif;
+  color:#07172d;
+}
+
+.dashboard{
+  max-width:1200px;
+  margin:0 auto;
+  padding:24px;
+}
+
+.welcome-card{
+  background:linear-gradient(135deg,#1f7a4d,#2ea86b);
+  color:white;
+  border-radius:28px;
+  padding:34px;
+  margin-bottom:24px;
+  box-shadow:0 14px 35px rgba(0,0,0,.16);
+}
+
+.welcome-card h1{
+  margin:0 0 8px;
+  font-size:36px;
+}
+
+.welcome-card p{
+  margin:0;
+  font-size:18px;
+  opacity:.9;
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:24px;
+}
+
+.stat-card{
+  background:white;
+  border-radius:22px;
+  padding:24px;
+  text-align:center;
+  box-shadow:0 8px 22px rgba(0,0,0,.07);
+}
+
+.stat-card span{
+  font-size:34px;
+}
+
+.stat-card h2{
+  margin:12px 0 6px;
+  font-size:34px;
+}
+
+.stat-card p{
+  margin:0;
+  color:#667085;
+  font-weight:bold;
+}
+
+.action-grid{
+  display:flex;
+  gap:16px;
+  margin-bottom:28px;
+}
+
+.action-btn{
+  background:#1f7a4d;
+  color:white;
+  text-decoration:none;
+  padding:15px 24px;
+  border-radius:16px;
+  font-weight:800;
+  box-shadow:0 8px 18px rgba(31,122,77,.22);
+}
+
+.action-btn.secondary{
+  background:white;
+  color:#07172d;
+  border:1px solid #ddd;
+  box-shadow:none;
+}
+
+.recipes-section{
+  background:white;
+  border-radius:26px;
+  padding:24px;
+  box-shadow:0 8px 22px rgba(0,0,0,.07);
+}
+
+.recipes-section h2{
+  margin-top:0;
+}
+
+#recipeList{
+  display:grid;
+  gap:14px;
+}
+
+.recipe-card{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  border:1px solid #eee;
+  border-radius:18px;
+  padding:14px;
+  background:#fffdf9;
+}
+
+.recipe-card img{
+  width:92px;
+  height:72px;
+  object-fit:cover;
+  border-radius:14px;
+  background:#eee;
+}
+
+.recipe-card h3{
+  margin:0 0 6px;
+}
+
+.recipe-card p{
+  margin:0;
+  color:#667085;
+}
+
+.status{
+  display:inline-block;
+  margin-top:8px;
+  padding:5px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.status.pending_review{
+  background:#fff3cd;
+  color:#8a5a00;
+}
+
+.status.approved{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.empty{
+  padding:20px;
+  color:#667085;
+  text-align:center;
+}
+
+@media(max-width:768px){
+  .dashboard{
+    padding:16px;
+  }
+
+  .welcome-card{
+    padding:26px;
+    border-radius:24px;
+  }
+
+  .welcome-card h1{
+    font-size:26px;
+  }
+
+  .stats-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+  }
+
+  .stat-card{
+    padding:18px;
+  }
+
+  .stat-card h2{
+    font-size:28px;
+  }
+
+  .action-grid{
+    flex-direction:column;
+  }
+
+  .recipe-card{
+    align-items:flex-start;
+  }
+
+  .recipe-card img{
+    width:82px;
+    height:68px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+  <div class="welcome-card">
+    <h1>👋 Welcome Back</h1>
+    <p id="creatorName">Nili's Creator Studio</p>
+  </div>
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <span>📋</span>
+      <h2 id="totalRecipes">0</h2>
+      <p>Total Recipes</p>
+    </div>
+
+    <div class="stat-card">
+      <span>⏳</span>
+      <h2 id="pendingRecipes">0</h2>
+      <p>Pending</p>
+    </div>
+
+    <div class="stat-card">
+      <span>✅</span>
+      <h2 id="publishedRecipes">0</h2>
+      <p>Published</p>
+    </div>
+
+    <div class="stat-card">
+      <span>👀</span>
+      <h2 id="totalViews">0</h2>
+      <p>Views</p>
+    </div>
+
+  </div>
+
+  <div class="action-grid">
+    <a href="creator.html" class="action-btn">➕ Upload New Recipe</a>
+    <a href="/" class="action-btn secondary">🏠 Back to Nili's Kitchen</a>
+  </div>
+
+  <div class="recipes-section">
+    <h2>My Recipes</h2>
+    <div id="recipeList">
+      <div class="empty">Loading recipes...</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const API_BASE =
+  location.hostname === "localhost" || location.hostname === "127.0.0.1"
+    ? "http://localhost:3000"
+    : "https://api.niliskitchen.com";
+
+const creatorEmail =
+  localStorage.getItem("creatorEmail") ||
+  localStorage.getItem("niliCreatorEmail");
+
+const creatorUsername =
+  localStorage.getItem("creatorUsername") ||
+  localStorage.getItem("niliCreatorUsername") ||
+  "Creator";
+
+document.getElementById("creatorName").textContent =
+  creatorUsername + " · Creator Studio";
+
+if(!creatorEmail){
+  location.href = "/creator.html";
+}
+
+async function loadDashboard(){
+  try{
+    const res =
+    await fetch(`${API_BASE}/creator-dashboard/${encodeURIComponent(creatorEmail)}`);
+
+    const data =
+    await res.json();
+
+    if(!data.success){
+      throw new Error(data.error || "Dashboard failed");
+    }
+
+    document.getElementById("totalRecipes").textContent =
+    data.stats.totalRecipes;
+
+    document.getElementById("pendingRecipes").textContent =
+    data.stats.pending;
+
+    document.getElementById("publishedRecipes").textContent =
+    data.stats.published;
+
+    document.getElementById("totalViews").textContent =
+    data.stats.views;
+
+    const allRecipes =
+    [
+      ...(data.pendingRecipes || []),
+      ...(data.publishedRecipes || [])
+    ];
+
+    const recipeList =
+    document.getElementById("recipeList");
+
+    if(!allRecipes.length){
+      recipeList.innerHTML =
+      `<div class="empty">You have not uploaded any recipes yet.</div>`;
+      return;
+    }
+
+    recipeList.innerHTML =
+    allRecipes.map(recipe => {
+
+      const mediaUrl =
+      recipe.mediaUrl && recipe.mediaUrl.startsWith("http")
+        ? recipe.mediaUrl
+        : `${API_BASE}${recipe.mediaUrl || ""}`;
+
+      return `
+        <div class="recipe-card">
+          <img src="${mediaUrl}" alt="${recipe.title || ""}">
+
+          <div>
+            <h3>${recipe.title || "-"}</h3>
+            <p>${recipe.ingredients || ""}</p>
+            <span class="status ${recipe.status || ""}">
+              ${recipe.status === "approved" ? "Published" : "Pending Review"}
+            </span>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+  }catch(err){
+    console.error("DASHBOARD ERROR:", err);
+
+    document.getElementById("recipeList").innerHTML =
+    `<div class="empty">Dashboard could not be loaded.</div>`;
+  }
+}
+
+loadDashboard();
+</script>
+
+</body>
+</html>

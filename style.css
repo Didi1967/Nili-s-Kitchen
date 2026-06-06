@@ -972,3 +972,94 @@ html[dir="rtl"] .hero-content{
   color:#6b7280;
 }
 
+ /* PREMIUM SINGLE RECIPE MODAL - FINAL */
+
+.modal,
+.ingredient-modal{
+  background:rgba(15,23,42,.62) !important;
+  backdrop-filter:blur(8px) !important;
+}
+
+.modal-content{
+  width:min(500px, 92vw) !important;
+  max-height:88vh !important;
+  padding:10px !important;
+  border-radius:28px !important;
+  background:#fffaf3 !important;
+  overflow-y:auto !important;
+  box-shadow:0 40px 120px rgba(0,0,0,.38) !important;
+}
+
+.modal-content img{
+  width:100% !important;
+  height:250px !important;
+  max-height:250px !important;
+  object-fit:cover !important;
+  border-radius:22px !important;
+  margin:0 0 14px 0 !important;
+}
+
+.modal-content h1{
+  font-size:24px !important;
+  line-height:1.12 !important;
+  margin:0 14px 8px !important;
+  color:#07172d !important;
+}
+
+.modal-content .time{
+  display:inline-flex !important;
+  margin:0 14px 16px !important;
+  padding:5px 10px !important;
+  border-radius:999px !important;
+  background:#eef6ec !important;
+  color:#315c45 !important;
+  font-size:12px !important;
+  font-weight:900 !important;
+}
+
+.modal-content h2{
+  font-size:18px !important;
+  line-height:1.15 !important;
+  margin:16px 14px 10px !important;
+  color:#07172d !important;
+}
+
+.modal-content .ingredients{
+  margin:0 14px 20px !important;
+  gap:7px !important;
+}
+
+.modal-content .ingredients span{
+  padding:5px 9px !important;
+  font-size:10.5px !important;
+  border-radius:999px !important;
+  background:#eef6ec !important;
+  color:#315c45 !important;
+  font-weight:850 !important;
+}
+
+.modal-content p{
+  font-size:14px !important;
+  line-height:1.65 !important;
+  margin:0 14px 18px !important;
+  color:#243044 !important;
+}
+
+.close{
+  top:18px !important;
+  right:18px !important;
+  width:36px !important;
+  height:36px !important;
+  background:#07172d !important;
+  color:#fff !important;
+  box-shadow:0 10px 24px rgba(0,0,0,.25) !important;
+}
+.modal-content{
+  max-height:88vh !important;
+  overflow-y:auto !important;
+}
+.modal-content img{
+  position:sticky !important;
+  top:0 !important;
+  z-index:2 !important;
+}

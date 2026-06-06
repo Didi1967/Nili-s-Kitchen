@@ -2025,6 +2025,86 @@ app.post("/normalize-ingredients", async (req, res) => {
   }
 });
 
+app.post("/send-error-alert", async (req, res) => {
+  try {
+    const { source, error, page, time } = req.body;
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.ALERT_EMAIL || process.env.EMAIL_USER,
+      subject: "Nili's Kitchen AI - Critical Error Alert",
+      text: `
+Source: ${source || "unknown"}
+Time: ${time || new Date().toISOString()}
+Page: ${page || "-"}
+
+Error:
+${error || "No error message"}
+`
+    });
+
+    res.json({ success: true });
+
+  } catch (e) {
+    console.error("ERROR ALERT MAIL FAILED:", e.message);
+    res.status(500).json({ success: false });
+  }
+});
+
+app.get("/creator-dashboard/:email", (req, res) => {
+  try {
+    const email =
+    decodeURIComponent(req.params.email || "").trim().toLowerCase();
+
+    const pendingRecipes =
+    readPendingRecipes();
+
+    const approvedRecipes =
+    readApprovedRecipes();
+
+    const creatorPending =
+    pendingRecipes.filter(recipe =>
+      String(recipe.creatorEmail || "").trim().toLowerCase() === email
+    );
+
+    const creatorApproved =
+    approvedRecipes.filter(recipe =>
+      String(recipe.creatorEmail || "").trim().toLowerCase() === email
+    );
+
+    const totalViews =
+    creatorApproved.reduce((sum, recipe) =>
+      sum + Number(recipe.views || 0), 0
+    );
+
+    const totalEarnings =
+    creatorApproved.reduce((sum, recipe) =>
+      sum + Number(recipe.totalBonus || 0), 0
+    );
+
+    return res.json({
+      success: true,
+      creatorEmail: email,
+      stats: {
+        totalRecipes: creatorPending.length + creatorApproved.length,
+        pending: creatorPending.length,
+        published: creatorApproved.length,
+        views: totalViews,
+        earnings: totalEarnings
+      },
+      pendingRecipes: creatorPending,
+      publishedRecipes: creatorApproved
+    });
+
+  } catch (err) {
+    console.log("CREATOR DASHBOARD ERROR:", err);
+
+    return res.status(500).json({
+      success: false,
+      error: "Dashboard failed"
+    });
+  }
+});
 
 
 app.listen(PORT, "0.0.0.0", () => {
