@@ -424,3 +424,551 @@ html,body{width:100%;min-height:100%;font-family:Arial,sans-serif;background:var
 
 }
 
+/* CATEGORY HORIZONTAL COMPACT */
+
+.category-grid,
+.category-grid.collapsed{
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  gap:6px !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  padding-bottom:4px !important;
+  max-height:34px !important;
+}
+
+.category-grid button,
+.category-btn{
+  flex:0 0 auto !important;
+  width:auto !important;
+  min-height:28px !important;
+  height:28px !important;
+  padding:0 9px !important;
+  border-radius:999px !important;
+  font-size:10.5px !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:4px !important;
+  white-space:nowrap !important;
+}
+
+.cat-icon{
+  font-size:12px !important;
+}
+
+/* CATEGORY 2 COLUMN FINAL */
+
+.category-grid,
+.category-grid.collapsed{
+  display:grid !important;
+  grid-template-columns:repeat(2, 1fr) !important;
+  gap:5px 7px !important;
+}
+
+.category-grid button,
+.category-btn{
+  width:100% !important;
+  height:28px !important;
+  min-height:28px !important;
+  padding:0 8px !important;
+  border-radius:999px !important;
+  font-size:10.5px !important;
+  line-height:1 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:5px !important;
+  white-space:nowrap !important;
+}
+
+.cat-icon{
+  font-size:12px !important;
+  flex:0 0 auto !important;
+}
+
+/* FORCE CATEGORY 2 COLUMNS */
+
+#categoryGrid{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:6px !important;
+}
+
+#categoryGrid .category-btn{
+  width:auto !important;
+  max-width:none !important;
+  min-width:0 !important;
+  height:30px !important;
+}
+
+#categoryGrid{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:6px !important;
+  max-height:none !important;
+  height:auto !important;
+  overflow:visible !important;
+}
+
+#categoryGrid .category-btn{
+  display:flex !important;
+  width:100% !important;
+  height:28px !important;
+}
+
+/* FOOTER INSIDE SIDEBAR FIX */
+
+@media (min-width:981px){
+
+  .sidebar,
+  #sidebar{
+    height:100vh !important;
+    overflow:hidden !important;
+  }
+
+  .sidebar-shell{
+    height:100% !important;
+    display:flex !important;
+    flex-direction:column !important;
+  }
+
+  .sidebar-main{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    gap:6px !important;
+  }
+
+  .site-footer-note{
+    flex:0 0 auto !important;
+    margin-top:4px !important;
+    padding-bottom:4px !important;
+    font-size:9px !important;
+    line-height:1.15 !important;
+  }
+
+  .category-panel{
+    padding:10px !important;
+  }
+
+  #categoryGrid .category-btn{
+    height:25px !important;
+    min-height:25px !important;
+    font-size:10px !important;
+  }
+
+}
+
+/* SIDEBAR CENTER ALIGN */
+
+.sidebar,
+#sidebar{
+  text-align:center;
+}
+
+.sidebar .panel-title,
+.sidebar .section-title,
+.sidebar h1,
+.sidebar h2,
+.sidebar h3,
+.sidebar p,
+#appSubtitle,
+.site-footer-note{
+  text-align:center !important;
+}
+
+.manual,
+.category-grid,
+#categoryGrid{
+  justify-content:center !important;
+}
+
+.manual input,
+#manualInput{
+  text-align:center !important;
+}
+
+.category-btn{
+  justify-content:center !important;
+}
+
+.upload-card,
+.scan-action,
+.upload{
+  text-align:center !important;
+  align-items:center !important;
+}
+
+.upload-card-text{
+  align-items:center !important;
+  text-align:center !important;
+}
+
+/* CREATOR SIGNUP HEIGHT FIX */
+
+.creator-card,
+.creator-panel,
+.creator-auth-card{
+  min-height:178px !important;
+}
+
+.creator-card-text span{
+  min-height:28px !important;
+  display:block !important;
+}
+
+.creator-card input{
+  height:28px !important;
+}
+
+.creator-continue-btn{
+  height:32px !important;
+}
+
+/* COMPACT FOOTER */
+
+.site-footer-note{
+  font-size:8.5px !important;
+  line-height:1 !important;
+  min-height:0 !important;
+  height:12px !important;
+  margin:2px 0 0 !important;
+  padding:0 !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+
+.site-footer-note span{
+  display:inline !important;
+  line-height:1 !important;
+}
+
+/* CREATOR CARD COMPACT */
+
+.creator-card,
+.creator-panel,
+.creator-auth-card{
+  padding:6px !important;
+}
+
+.creator-card-text strong{
+  font-size:11px !important;
+  line-height:1.05 !important;
+  margin-bottom:1px !important;
+}
+
+.creator-card-text span{
+  font-size:9.5px !important;
+  line-height:1.05 !important;
+  margin:1px 0 4px !important;
+}
+
+.creator-tabs{
+  height:20px !important;
+  margin-bottom:4px !important;
+}
+
+.creator-tab{
+  height:20px !important;
+  font-size:9px !important;
+}
+
+.creator-card input{
+  height:23px !important;
+  margin-bottom:3px !important;
+  font-size:10px !important;
+}
+
+.creator-password-wrap button{
+  height:15px !important;
+  font-size:9px !important;
+}
+
+.creator-continue-btn{
+  height:20px !important;
+  font-size:10px !important;
+}
+
+/* CREATOR + FOOTER TEXT DARKER */
+
+.creator-card-text strong,
+#creatorCardTitle{
+  color:#111827 !important;
+}
+
+.creator-card-text span,
+#creatorCardDesc{
+  color:#4b5563 !important;
+  opacity:1 !important;
+}
+
+.site-footer-note{
+  color:#5f5142 !important;
+  opacity:1 !important;
+}
+
+/* SIDEBAR + HERO ALIGN / SAME BACKGROUND */
+
+:root{
+  --page-bg:#eef0f3;
+}
+
+body,
+html,
+.sidebar,
+#sidebar,
+.content,
+#content{
+  background:#eef0f3 !important;
+}
+
+@media (min-width:981px){
+
+  #sidebar,
+  .sidebar{
+    padding:14px 8px !important;
+  }
+
+  .content,
+  #content{
+    padding:14px 14px 14px 14px !important;
+  }
+
+  .hero{
+    height:calc(100vh - 36px) !important;
+  }
+
+}
+
+.creator-card-text{
+  margin:0 !important;
+  padding:0 !important;
+  line-height:1 !important;
+}
+
+#creatorCardTitle{
+  font-size:9px !important;
+  line-height:1 !important;
+  margin:0 0 1px 0 !important;
+  padding:0 !important;
+}
+
+#creatorCardDesc{
+  font-size:7.5px !important;
+  line-height:1 !important;
+  margin:0 0 2px 0 !important;
+  padding:0 !important;
+}
+
+.compact-creator-card{
+  padding:5px !important;
+ height:auto !important;
+   min-height:auto !important;
+
+}
+
+.compact-creator-card .creator-tabs{
+  height:24px !important;
+  padding:3px !important;
+  margin-bottom:3px !important;
+}
+
+.compact-creator-card .creator-tab{
+  height:18px !important;
+  font-size:8.5px !important;
+}
+
+.compact-creator-card .creator-card-text{
+  margin:0 !important;
+  padding:0 !important;
+  line-height:1 !important;
+}
+
+.compact-creator-card #creatorCardTitle{
+  display:block !important;
+  font-size:9px !important;
+  line-height:1 !important;
+  margin:0 0 1px !important;
+  padding:0 !important;
+}
+
+.compact-creator-card #creatorCardDesc{
+  display:block !important;
+  font-size:7.5px !important;
+  line-height:1 !important;
+  margin:0 0 3px !important;
+  padding:0 !important;
+}
+
+.compact-creator-card input{
+  height:22px !important;
+  margin-bottom:3px !important;
+  font-size:9.5px !important;
+}
+
+.compact-creator-card .creator-password-wrap{
+  gap:4px !important;
+}
+
+.compact-creator-card .creator-password-wrap button{
+  height:22px !important;
+  font-size:8.5px !important;
+}
+
+.compact-creator-card .creator-continue-btn{
+  height:24px !important;
+  min-height:24px !important;
+  font-size:9.5px !important;
+  display:block !important;
+}
+
+.compact-creator-card{
+  padding:5px !important;
+}
+
+.compact-creator-card .creator-tabs{
+  height:24px !important;
+  padding:3px !important;
+  margin-bottom:3px !important;
+}
+
+.compact-creator-card .creator-tab{
+  height:18px !important;
+  font-size:8.5px !important;
+}
+
+.compact-creator-card .creator-card-text{
+  margin:0 !important;
+  padding:0 !important;
+  line-height:1 !important;
+}
+
+.compact-creator-card #creatorCardTitle{
+  display:block !important;
+  font-size:9px !important;
+  line-height:1 !important;
+  margin:0 0 1px !important;
+  padding:0 !important;
+}
+
+.compact-creator-card #creatorCardDesc{
+  display:block !important;
+  font-size:7.5px !important;
+  line-height:1 !important;
+  margin:0 0 3px !important;
+  padding:0 !important;
+}
+
+.compact-creator-card input{
+  height:22px !important;
+  margin-bottom:3px !important;
+  font-size:9.5px !important;
+}
+
+.compact-creator-card .creator-password-wrap{
+  gap:4px !important;
+}
+
+.compact-creator-card .creator-password-wrap button{
+  height:22px !important;
+  font-size:8.5px !important;
+}
+
+.compact-creator-card .creator-continue-btn{
+  height:24px !important;
+  min-height:24px !important;
+  font-size:9.5px !important;
+  display:block !important;
+}
+
+.creator-card-text{
+  padding:0 !important;
+  margin:0 0 2px 0 !important;
+  min-height:auto !important;
+}
+
+#creatorCardTitle{
+  display:block !important;
+  font-size:11px !important;
+  line-height:1 !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+#creatorCardDesc{
+  display:block !important;
+  font-size:7px !important;
+  line-height:1 !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+/* CREATOR CONTINUE FORCE FIX */
+
+.creator-card,
+.creator-panel,
+.creator-auth-card,
+.compact-creator-card{
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+  padding:5px !important;
+}
+
+.creator-continue-btn{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  height:24px !important;
+  min-height:24px !important;
+  margin-top:3px !important;
+  position:relative !important;
+  z-index:20 !important;
+}
+
+.creator-card input{
+  height:21px !important;
+  margin-bottom:2px !important;
+}
+
+.creator-password-wrap button{
+  height:21px !important;
+}
+
+.creator-tabs{
+  height:22px !important;
+  margin-bottom:2px !important;
+}
+
+/* ARABIC RTL - KEEP HERO LAYOUT SAME */
+
+html[dir="rtl"] .hero,
+html[dir="rtl"] .hero-bg,
+html[dir="rtl"] .hero-main-card,
+html[dir="rtl"] .hero-side-images{
+  direction:ltr !important;
+}
+
+html[dir="rtl"] .hero-content{
+  direction:rtl !important;
+  text-align:right !important;
+}
+.loading-recipes-box{
+  width:100%;
+  padding:28px;
+  border-radius:22px;
+  background:#fff;
+  text-align:center;
+  font-weight:900;
+  box-shadow:0 14px 34px rgba(24,34,52,.08);
+}
+
+.loading-recipes-box span{
+  display:block;
+  margin-top:8px;
+  font-size:13px;
+  color:#6b7280;
+}
+

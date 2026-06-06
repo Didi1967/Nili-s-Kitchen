@@ -31,151 +31,24 @@ const ingredientModalItems = document.getElementById("ingredientModalItems");
 const LANG_STORAGE_KEY = "niliKitchenLangV2";
 
 let currentLang = "en";
+currentLang = "en";
 localStorage.removeItem(LANG_STORAGE_KEY);
 
-const CATEGORY_DATA = {
-  vegetables: [
-    "tomato",
-    "onion",
-    "potato",
-    "carrot",
-    "broccoli",
-    "spinach",
-    "lettuce",
-    "green pepper",
-    "red pepper",
-    "garlic",
-    "mushroom",
-    "zucchini"
-  ],
-
-  meat: [
-    "chicken",
-    "beef",
-    "lamb",
-    "turkey",
-    "steak",
-    "sausage",
-    "ground beef",
-    "pork"
-  ],
-
-  seafood: [
-    "salmon",
-    "shrimp",
-    "tuna",
-    "cod",
-    "sea bass",
-    "sardines",
-    "mussels"
-  ],
-
-  vegan: [
-    "tofu",
-    "lentils",
-    "chickpeas",
-    "beans",
-    "quinoa",
-    "mushroom",
-    "eggplant",
-    "avocado"
-  ],
-
-  pasta: [
-    "spaghetti",
-    "penne",
-    "macaroni",
-    "noodles",
-    "parmesan",
-    "basil",
-    "tomato sauce"
-  ],
-
-  dessert: [
-    "chocolate",
-    "banana",
-    "strawberry",
-    "cream",
-    "sugar",
-    "flour",
-    "butter",
-    "vanilla"
-  ],
-
-  fruits: [
-    "apple",
-    "banana",
-    "orange",
-    "grapes",
-    "lemon",
-    "watermelon",
-    "strawberry",
-    "avocado"
-  ],
-
-  dairy: [
-    "milk",
-    "cheese",
-    "yogurt",
-    "cream",
-    "butter",
-    "mozzarella",
-    "parmesan"
-  ],
-
-  grains: [
-    "rice",
-    "bulgur",
-    "oats",
-    "quinoa",
-    "bread",
-    "flour",
-    "corn"
-  ],
-
-  legumes: [
-    "lentils",
-    "beans",
-    "chickpeas",
-    "peas",
-    "black beans",
-    "kidney beans"
-  ],
-
-  spices: [
-    "salt",
-    "black pepper",
-    "paprika",
-    "cumin",
-    "oregano",
-    "cinnamon",
-    "turmeric",
-    "chili flakes"
-  ],
-
-  oils: [
-    "olive oil",
-    "sunflower oil",
-    "butter",
-    "coconut oil",
-    "sesame oil"
-  ],
-
-  sauces: [
-    "tomato sauce",
-    "soy sauce",
-    "hot sauce",
-    "mustard",
-    "mayonnaise",
-    "vinegar",
-    "pesto"
-  ]
-};
+ 3
 
 const ingredientTranslationCache = {};
 const ingredientTranslationLoading = {};
 
 function getAllCategoryIngredients(){
+
+  if(window.NilisIngredients){
+
+    return Object.keys(
+      window.NilisIngredients.ingredients || {}
+    );
+
+  }
+
   return [
     ...new Set(
       Object.values(CATEGORY_DATA)
@@ -183,6 +56,7 @@ function getAllCategoryIngredients(){
         .filter(Boolean)
     )
   ];
+
 }
 
 function getIngredientLabel(item){
@@ -267,47 +141,50 @@ const translations = {
     alertEmail: "Please enter your email.",
     alertEmailOrUser: "Please enter your email or username.",
     alertPassword: "Please enter your password.",
-statusUpload: "Upload ingredients photo",
-statusAdded: "Ingredient added",
-statusAnalyzing: "Analyzing photo...",
-statusDetected: "Ingredients detected",
-statusNoIngredients: "No ingredients found",
-statusAnalyzeFailed: "Analyze failed",
+    statusUpload: "Upload ingredients photo",
+    statusAdded: "Ingredient added",
+    statusAnalyzing: "Analyzing photo...",
+    statusDetected: "Ingredients detected",
+    statusNoIngredients: "No ingredients found",
+    statusAnalyzeFailed: "Analyze failed",
 
-loadingRecipes: "Loading recipes...",
-recipesFailed: "Recipes failed",
-noRecipesFound: "No recipes found",
+    loadingRecipes: "Loading recipes...",
+    recipesFailed: "Recipes failed",
+    noRecipesFound: "No recipes found",
 
-usesIngredients: "Uses",
-ingredientsWord: "ingredients",
+    usesIngredients: "Uses",
+    ingredientsWord: "ingredients",
 
-recipeNotFound: "Recipe not found",
-recipeTitleFallback: "Recipe",
-timeMin: "min",
-ingredientsTitle: "Ingredients",
-instructionsTitle: "Instructions",
-instructionsUnavailable: "Recipe instructions unavailable.",
-heroBadge: "AI Powered Real Recipes",
-  heroTitle: "Cook smarter with what you already have",
-  heroDesc: "Upload ingredients, select what you have, and discover real recipes instantly.",
-  galleryBtn: "Choose from gallery",
+    recipeNotFound: "Recipe not found",
+    recipeTitleFallback: "Recipe",
+    timeMin: "min",
+    ingredientsTitle: "Ingredients",
+    instructionsTitle: "Instructions",
+    instructionsUnavailable: "Recipe instructions unavailable.",
+    heroBadge: "AI Powered Real Recipes",
+    heroTitle: "Cook smarter with what you already have",
+    heroDesc: "Upload ingredients, select what you have, and discover real recipes instantly.",
+    galleryBtn: "Choose from gallery",
+    becomeCreator: "Become a creator",
+    creatorDesc: "Upload recipes and earn rewards in the future.",
+    footerNote: "© 2026 Nili's Kitchen AI. All rights reserved.",
+    ingredientDetailsUnavailable: "Ingredient details unavailable",
+    timeUnavailable: "Time unavailable",
 
 
-
-    categories: {
+   categories: {
   vegetables: "Vegetables",
+  fruits: "Fruits",
   meat: "Meat",
   seafood: "Seafood",
-  vegan: "Vegan",
-  pasta: "Pasta",
-  dessert: "Dessert",
-  fruits: "Fruits",
-  dairy: "Dairy",
-  grains: "Grains",
+  dairy_eggs: "Dairy",
+  grains_bakery: "Grains",
   legumes: "Legumes",
-  spices: "Spices",
-  oils: "Oils",
-  sauces: "Sauces"
+  herbs_spices: "Herbs",
+  oils_fats: "Oils",
+  sauces_condiments: "Sauces",
+  nuts_seeds: "Nuts",
+  sweeteners_baking: "Baking"
 }
 
   },
@@ -348,44 +225,48 @@ heroBadge: "AI Powered Real Recipes",
     alertEmailOrUser: "Lütfen e-posta veya kullanıcı adınızı girin.",
     alertPassword: "Lütfen şifrenizi girin.",
     statusUpload: "Malzeme fotoğrafı yükle",
-statusAdded: "Malzeme eklendi",
-statusAnalyzing: "Fotoğraf analiz ediliyor...",
-statusDetected: "Malzemeler bulundu",
-statusNoIngredients: "Malzeme bulunamadı",
-statusAnalyzeFailed: "Analiz başarısız",
+    statusAdded: "Malzeme eklendi",
+    statusAnalyzing: "Fotoğraf analiz ediliyor...",
+    statusDetected: "Malzemeler bulundu",
+    statusNoIngredients: "Malzeme bulunamadı",
+    statusAnalyzeFailed: "Analiz başarısız",
 
-loadingRecipes: "Tarifler yükleniyor...",
-recipesFailed: "Tarifler alınamadı",
-noRecipesFound: "Tarif bulunamadı",
+    loadingRecipes: "Tarifler yükleniyor...",
+    recipesFailed: "Tarifler alınamadı",
+    noRecipesFound: "Tarif bulunamadı",
 
-usesIngredients: "Kullanıyor",
-ingredientsWord: "malzeme",
+    usesIngredients: "Kullanıyor",
+    ingredientsWord: "malzeme",
 
-recipeNotFound: "Tarif bulunamadı",
-recipeTitleFallback: "Tarif",
-timeMin: "dk",
-ingredientsTitle: "Malzemeler",
-instructionsTitle: "Hazırlanış",
-instructionsUnavailable: "Tarif açıklaması mevcut değil.",
- heroBadge: "Yapay Zeka Destekli Gerçek Tarifler",
-  heroTitle: "Elindeki malzemelerle daha akıllı yemek pişir",
-  heroDesc: "Malzemeleri yükle, elindekileri seç ve gerçek tarifleri anında keşfet.",
-  galleryBtn: "Galeriden seç",
+    recipeNotFound: "Tarif bulunamadı",
+    recipeTitleFallback: "Tarif",
+    timeMin: "dk",
+    ingredientsTitle: "Malzemeler",
+    instructionsTitle: "Hazırlanış",
+    instructionsUnavailable: "Tarif açıklaması mevcut değil.",
+    heroBadge: "Yapay Zeka Destekli Gerçek Tarifler",
+    heroTitle: "Elindeki malzemelerle daha akıllı yemek pişir",
+    heroDesc: "Malzemeleri yükle, elindekileri seç ve gerçek tarifleri anında keşfet.",
+    galleryBtn: "Galeriden seç",
+    becomeCreator: "Tarif üreticisi ol",
+    creatorDesc: "Tariflerini yükle, ileride ödüller kazan.",
+    footerNote: "© 2026 Nili's Kitchen AI. Tüm hakları saklıdır.",
+    ingredientDetailsUnavailable: "Malzeme detayları mevcut değil",
+    timeUnavailable: "Süre bilgisi mevcut değil",
 
-    categories: {
+   categories: {
   vegetables: "Sebzeler",
-  meat: "Et",
-  seafood: "Deniz ürünleri",
-  vegan: "Vegan",
-  pasta: "Makarna",
-  dessert: "Tatlı",
   fruits: "Meyveler",
-  dairy: "Süt ürünleri",
-  grains: "Tahıllar",
+  meat: "Et",
+  seafood: "Deniz Ürünleri",
+  dairy_eggs: "Süt Ürünleri",
+  grains_bakery: "Tahıllar",
   legumes: "Bakliyat",
-  spices: "Baharatlar",
-  oils: "Yağlar",
-  sauces: "Soslar"
+  herbs_spices: "Otlar",
+  oils_fats: "Yağlar",
+  sauces_condiments: "Soslar",
+  nuts_seeds: "Kuruyemişler",
+  sweeteners_baking: "Pastacılık"
 }
   },
 
@@ -425,44 +306,48 @@ instructionsUnavailable: "Tarif açıklaması mevcut değil.",
     alertEmailOrUser: "Введите email или имя пользователя.",
     alertPassword: "Введите пароль.",
     statusUpload: "Загрузите фото ингредиентов",
-statusAdded: "Ингредиент добавлен",
-statusAnalyzing: "Фото анализируется...",
-statusDetected: "Ингредиенты найдены",
-statusNoIngredients: "Ингредиенты не найдены",
-statusAnalyzeFailed: "Ошибка анализа",
+    statusAdded: "Ингредиент добавлен",
+    statusAnalyzing: "Фото анализируется...",
+    statusDetected: "Ингредиенты найдены",
+    statusNoIngredients: "Ингредиенты не найдены",
+    statusAnalyzeFailed: "Ошибка анализа",
 
-loadingRecipes: "Рецепты загружаются...",
-recipesFailed: "Не удалось загрузить рецепты",
-noRecipesFound: "Рецепты не найдены",
+    loadingRecipes: "Рецепты загружаются...",
+    recipesFailed: "Не удалось загрузить рецепты",
+    noRecipesFound: "Рецепты не найдены",
 
-usesIngredients: "Использует",
-ingredientsWord: "ингредиентов",
+    usesIngredients: "Использует",
+    ingredientsWord: "ингредиентов",
 
-recipeNotFound: "Рецепт не найден",
-recipeTitleFallback: "Рецепт",
-timeMin: "мин",
-ingredientsTitle: "Ингредиенты",
-instructionsTitle: "Инструкции",
-instructionsUnavailable: "Инструкции рецепта недоступны.",
-heroBadge: "Реальные рецепты с поддержкой ИИ",
-heroTitle: "Готовьте умнее из того, что уже есть дома",
-heroDesc: "Загрузите ингредиенты, выберите то, что у вас есть, и мгновенно находите реальные рецепты.",
-galleryBtn: "Выбрать из галереи",
+    recipeNotFound: "Рецепт не найден",
+    recipeTitleFallback: "Рецепт",
+    timeMin: "мин",
+    ingredientsTitle: "Ингредиенты",
+    instructionsTitle: "Инструкции",
+    instructionsUnavailable: "Инструкции рецепта недоступны.",
+    heroBadge: "Реальные рецепты с поддержкой ИИ",
+    heroTitle: "Готовьте умнее из того, что уже есть дома",
+    heroDesc: "Загрузите ингредиенты, выберите то, что у вас есть, и мгновенно находите реальные рецепты.",
+    galleryBtn: "Выбрать из галереи",
+    becomeCreator: "Стать автором",
+    creatorDesc: "Загружайте рецепты и получайте награды в будущем.",
+    footerNote: "© 2026 Nili's Kitchen AI. Все права защищены.",
+    ingredientDetailsUnavailable: "Детали ингредиентов недоступны",
+    timeUnavailable: "Время недоступно",
 
-  categories: {
+   categories: {
   vegetables: "Овощи",
+  fruits: "Фрукты",
   meat: "Мясо",
   seafood: "Морепродукты",
-  vegan: "Веган",
-  pasta: "Паста",
-  dessert: "Десерт",
-  fruits: "Фрукты",
-  dairy: "Молочные",
-  grains: "Крупы",
+  dairy_eggs: "Молочные",
+  grains_bakery: "Крупы",
   legumes: "Бобовые",
-  spices: "Специи",
-  oils: "Масла",
-  sauces: "Соусы"
+  herbs_spices: "Травы",
+  oils_fats: "Масла",
+  sauces_condiments: "Соусы",
+  nuts_seeds: "Орехи",
+  sweeteners_baking: "Выпечка"
 }
   },
 
@@ -502,45 +387,50 @@ galleryBtn: "Выбрать из галереи",
     alertEmailOrUser: "Veuillez entrer votre e-mail ou nom d’utilisateur.",
     alertPassword: "Veuillez entrer votre mot de passe.",
     statusUpload: "Téléverser une photo d’ingrédients",
-statusAdded: "Ingrédient ajouté",
-statusAnalyzing: "Analyse de la photo...",
-statusDetected: "Ingrédients détectés",
-statusNoIngredients: "Aucun ingrédient trouvé",
-statusAnalyzeFailed: "Échec de l’analyse",
+    statusAdded: "Ingrédient ajouté",
+    statusAnalyzing: "Analyse de la photo...",
+    statusDetected: "Ingrédients détectés",
+    statusNoIngredients: "Aucun ingrédient trouvé",
+    statusAnalyzeFailed: "Échec de l’analyse",
 
-loadingRecipes: "Chargement des recettes...",
-recipesFailed: "Échec du chargement des recettes",
-noRecipesFound: "Aucune recette trouvée",
+    loadingRecipes: "Chargement des recettes...",
+    recipesFailed: "Échec du chargement des recettes",
+    noRecipesFound: "Aucune recette trouvée",
 
-usesIngredients: "Utilise",
-ingredientsWord: "ingrédients",
+    usesIngredients: "Utilise",
+    ingredientsWord: "ingrédients",
 
-recipeNotFound: "Recette introuvable",
-recipeTitleFallback: "Recette",
-timeMin: "min",
-ingredientsTitle: "Ingrédients",
-instructionsTitle: "Instructions",
-instructionsUnavailable: "Instructions de recette indisponibles.",
-heroBadge: "De vraies recettes avec l’IA",
-heroTitle: "Cuisinez plus intelligemment avec ce que vous avez déjà",
-heroDesc: "Téléchargez vos ingrédients, sélectionnez ce que vous avez et découvrez instantanément de vraies recettes.",
-galleryBtn: "Choisir dans la galerie",
+    recipeNotFound: "Recette introuvable",
+    recipeTitleFallback: "Recette",
+    timeMin: "min",
+    ingredientsTitle: "Ingrédients",
+    instructionsTitle: "Instructions",
+    instructionsUnavailable: "Instructions de recette indisponibles.",
+    heroBadge: "De vraies recettes avec l’IA",
+    heroTitle: "Cuisinez plus intelligemment avec ce que vous avez déjà",
+    heroDesc: "Téléchargez vos ingrédients, sélectionnez ce que vous avez et découvrez instantanément de vraies recettes.",
+    galleryBtn: "Choisir dans la galerie",
+    becomeCreator: "Devenir créateur",
+    creatorDesc: "Ajoutez vos recettes et gagnez des récompenses plus tard.",
+    footerNote: "© 2026 Nili's Kitchen AI. Tous droits réservés.",
+    ingredientDetailsUnavailable: "Détails des ingrédients indisponibles",
+    timeUnavailable: "Temps indisponible",
+    
 
 
     categories: {
   vegetables: "Légumes",
+  fruits: "Fruits",
   meat: "Viande",
   seafood: "Fruits de mer",
-  vegan: "Vegan",
-  pasta: "Pâtes",
-  dessert: "Dessert",
-  fruits: "Fruits",
-  dairy: "Produits laitiers",
-  grains: "Céréales",
+  dairy_eggs: "Produits laitiers",
+  grains_bakery: "Céréales",
   legumes: "Légumineuses",
-  spices: "Épices",
-  oils: "Huiles",
-  sauces: "Sauces"
+  herbs_spices: "Herbes",
+  oils_fats: "Huiles",
+  sauces_condiments: "Sauces",
+  nuts_seeds: "Noix",
+  sweeteners_baking: "Pâtisserie"
 }
   },
 
@@ -580,44 +470,48 @@ galleryBtn: "Choisir dans la galerie",
     alertEmailOrUser: "Introduce tu correo o usuario.",
     alertPassword: "Introduce tu contraseña.",
     statusUpload: "Subir foto de ingredientes",
-statusAdded: "Ingrediente añadido",
-statusAnalyzing: "Analizando foto...",
-statusDetected: "Ingredientes detectados",
-statusNoIngredients: "No se encontraron ingredientes",
-statusAnalyzeFailed: "Error en el análisis",
+    statusAdded: "Ingrediente añadido",
+    statusAnalyzing: "Analizando foto...",
+    statusDetected: "Ingredientes detectados",
+    statusNoIngredients: "No se encontraron ingredientes",
+    statusAnalyzeFailed: "Error en el análisis",
 
-loadingRecipes: "Cargando recetas...",
-recipesFailed: "No se pudieron cargar las recetas",
-noRecipesFound: "No se encontraron recetas",
+    loadingRecipes: "Cargando recetas...",
+    recipesFailed: "No se pudieron cargar las recetas",
+    noRecipesFound: "No se encontraron recetas",
 
-usesIngredients: "Usa",
-ingredientsWord: "ingredientes",
+    usesIngredients: "Usa",
+    ingredientsWord: "ingredientes",
 
-recipeNotFound: "Receta no encontrada",
-recipeTitleFallback: "Receta",
-timeMin: "min",
-ingredientsTitle: "Ingredientes",
-instructionsTitle: "Instrucciones",
-instructionsUnavailable: "Instrucciones de receta no disponibles.",
-heroBadge: "Recetas reales con IA",
-  heroTitle: "Cocina de forma más inteligente con lo que ya tienes",
-  heroDesc: "Sube tus ingredientes, selecciona lo que tienes y descubre recetas reales al instante.",
-  galleryBtn: "Elegir de la galería",
+    recipeNotFound: "Receta no encontrada",
+    recipeTitleFallback: "Receta",
+    timeMin: "min",
+    ingredientsTitle: "Ingredientes",
+    instructionsTitle: "Instrucciones",
+    instructionsUnavailable: "Instrucciones de receta no disponibles.",
+    heroBadge: "Recetas reales con IA",
+    heroTitle: "Cocina de forma más inteligente con lo que ya tienes",
+    heroDesc: "Sube tus ingredientes, selecciona lo que tienes y descubre recetas reales al instante.",
+    galleryBtn: "Elegir de la galería",
+    becomeCreator: "Ser creador",
+    creatorDesc: "Sube tus recetas y gana recompensas en el futuro.",
+    footerNote: "© 2026 Nili's Kitchen AI. Todos los derechos reservados.",
+    ingredientDetailsUnavailable: "Detalles de ingredientes no disponibles",
+    timeUnavailable: "Tiempo no disponible",
 
-    categories: {
+   categories: {
   vegetables: "Verduras",
+  fruits: "Frutas",
   meat: "Carne",
   seafood: "Mariscos",
-  vegan: "Vegano",
-  pasta: "Pasta",
-  dessert: "Postre",
-  fruits: "Frutas",
-  dairy: "Lácteos",
-  grains: "Granos",
+  dairy_eggs: "Lácteos",
+  grains_bakery: "Granos",
   legumes: "Legumbres",
-  spices: "Especias",
-  oils: "Aceites",
-  sauces: "Salsas"
+  herbs_spices: "Hierbas",
+  oils_fats: "Aceites",
+  sauces_condiments: "Salsas",
+  nuts_seeds: "Frutos secos",
+  sweeteners_baking: "Repostería"
 }
   },
 
@@ -657,43 +551,48 @@ heroBadge: "Recetas reales con IA",
     alertEmailOrUser: "Digite seu e-mail ou usuário.",
     alertPassword: "Digite sua senha.",
     statusUpload: "Enviar foto dos ingredientes",
-statusAdded: "Ingrediente adicionado",
-statusAnalyzing: "Analisando foto...",
-statusDetected: "Ingredientes detectados",
-statusNoIngredients: "Nenhum ingrediente encontrado",
-statusAnalyzeFailed: "Falha na análise",
+    statusAdded: "Ingrediente adicionado",
+    statusAnalyzing: "Analisando foto...",
+    statusDetected: "Ingredientes detectados",
+    statusNoIngredients: "Nenhum ingrediente encontrado",
+    statusAnalyzeFailed: "Falha na análise",
 
-loadingRecipes: "Carregando receitas...",
-recipesFailed: "Falha ao carregar receitas",
-noRecipesFound: "Nenhuma receita encontrada",
+    loadingRecipes: "Carregando receitas...",
+    recipesFailed: "Falha ao carregar receitas",
+    noRecipesFound: "Nenhuma receita encontrada",
 
-usesIngredients: "Usa",
-ingredientsWord: "ingredientes",
+    usesIngredients: "Usa",
+    ingredientsWord: "ingredientes",
 
-recipeNotFound: "Receita não encontrada",
-recipeTitleFallback: "Receita",
-timeMin: "min",
-ingredientsTitle: "Ingredientes",
-instructionsTitle: "Instruções",
-instructionsUnavailable: "Instruções da receita indisponíveis.",
-heroBadge: "Receitas reais com IA",
-  heroTitle: "Cozinhe de forma mais inteligente com o que você já tem",
-  heroDesc: "Envie seus ingredientes, selecione o que você tem e descubra receitas reais instantaneamente.",
-  galleryBtn: "Elegir de la galería",
+    recipeNotFound: "Receita não encontrada",
+    recipeTitleFallback: "Receita",
+    timeMin: "min",
+    ingredientsTitle: "Ingredientes",
+    instructionsTitle: "Instruções",
+    instructionsUnavailable: "Instruções da receita indisponíveis.",
+    heroBadge: "Receitas reais com IA",
+    heroTitle: "Cozinhe de forma mais inteligente com o que você já tem",
+    heroDesc: "Envie seus ingredientes, selecione o que você tem e descubra receitas reais instantaneamente.",
+    galleryBtn: "Elegir de la galería",
+    becomeCreator: "Torne-se criador",
+    creatorDesc: "Envie suas receitas e ganhe recompensas no futuro.",
+    footerNote: "© 2026 Nili's Kitchen AI. Todos os direitos reservados.",
+    ingredientDetailsUnavailable: "Detalhes dos ingredientes indisponíveis",
+    timeUnavailable: "Tempo indisponível",
+
     categories: {
   vegetables: "Vegetais",
+  fruits: "Frutas",
   meat: "Carne",
   seafood: "Frutos do mar",
-  vegan: "Vegano",
-  pasta: "Massa",
-  dessert: "Sobremesa",
-  fruits: "Frutas",
-  dairy: "Laticínios",
-  grains: "Grãos",
+  dairy_eggs: "Laticínios",
+  grains_bakery: "Grãos",
   legumes: "Leguminosas",
-  spices: "Temperos",
-  oils: "Óleos",
-  sauces: "Molhos"
+  herbs_spices: "Ervas",
+  oils_fats: "Óleos",
+  sauces_condiments: "Molhos",
+  nuts_seeds: "Nozes",
+  sweeteners_baking: "Confeitaria"
 }
   },
 
@@ -733,44 +632,48 @@ heroBadge: "Receitas reais com IA",
     alertEmailOrUser: "يرجى إدخال البريد أو اسم المستخدم.",
     alertPassword: "يرجى إدخال كلمة المرور.",
     statusUpload: "رفع صورة المكونات",
-statusAdded: "تمت إضافة المكون",
-statusAnalyzing: "جارٍ تحليل الصورة...",
-statusDetected: "تم اكتشاف المكونات",
-statusNoIngredients: "لم يتم العثور على مكونات",
-statusAnalyzeFailed: "فشل التحليل",
+    statusAdded: "تمت إضافة المكون",
+    statusAnalyzing: "جارٍ تحليل الصورة...",
+    statusDetected: "تم اكتشاف المكونات",
+    statusNoIngredients: "لم يتم العثور على مكونات",
+    statusAnalyzeFailed: "فشل التحليل",
 
-loadingRecipes: "جارٍ تحميل الوصفات...",
-recipesFailed: "فشل تحميل الوصفات",
-noRecipesFound: "لم يتم العثور على وصفات",
+    loadingRecipes: "جارٍ تحميل الوصفات...",
+    recipesFailed: "فشل تحميل الوصفات",
+    noRecipesFound: "لم يتم العثور على وصفات",
 
-usesIngredients: "يستخدم",
-ingredientsWord: "مكونات",
+    usesIngredients: "يستخدم",
+    ingredientsWord: "مكونات",
 
-recipeNotFound: "الوصفة غير موجودة",
-recipeTitleFallback: "وصفة",
-timeMin: "دقيقة",
-ingredientsTitle: "المكونات",
-instructionsTitle: "طريقة التحضير",
-instructionsUnavailable: "تعليمات الوصفة غير متوفرة.",
-heroBadge: "وصفات حقيقية مدعومة بالذكاء الاصطناعي",
-  heroTitle: "اطبخ بذكاء أكبر بما لديك بالفعل",
-  heroDesc: "حمّل المكونات، واختر ما لديك، واكتشف وصفات حقيقية فورًا.",
-  galleryBtn: "اختر من المعرض",
+    recipeNotFound: "الوصفة غير موجودة",
+    recipeTitleFallback: "وصفة",
+    timeMin: "دقيقة",
+    ingredientsTitle: "المكونات",
+    instructionsTitle: "طريقة التحضير",
+    instructionsUnavailable: "تعليمات الوصفة غير متوفرة.",
+    heroBadge: "وصفات حقيقية مدعومة بالذكاء الاصطناعي",
+    heroTitle: "اطبخ بذكاء أكبر بما لديك بالفعل",
+    heroDesc: "حمّل المكونات، واختر ما لديك، واكتشف وصفات حقيقية فورًا.",
+    galleryBtn: "اختر من المعرض",
+    becomeCreator: "كن منشئ وصفات",
+    creatorDesc: "ارفع وصفاتك واحصل على مكافآت مستقبلًا.",
+    footerNote: "© 2026 Nili's Kitchen AI. جميع الحقوق محفوظة.",
+    ingredientDetailsUnavailable: "تفاصيل المكونات غير متوفرة",
+   timeUnavailable: "وقت التحضير غير متوفر",
 
     categories: {
   vegetables: "خضروات",
+  fruits: "فواكه",
   meat: "لحوم",
   seafood: "مأكولات بحرية",
-  vegan: "نباتي",
-  pasta: "معكرونة",
-  dessert: "حلويات",
-  fruits: "فواكه",
-  dairy: "ألبان",
-  grains: "حبوب",
+  dairy_eggs: "ألبان",
+  grains_bakery: "حبوب",
   legumes: "بقوليات",
-  spices: "توابل",
-  oils: "زيوت",
-  sauces: "صلصات"
+  herbs_spices: "أعشاب",
+  oils_fats: "زيوت",
+  sauces_condiments: "صلصات",
+  nuts_seeds: "مكسرات",
+  sweeteners_baking: "مخبوزات"
 }
   }
 };
@@ -900,6 +803,10 @@ setText(".manual-panel .panel-title", t("manualTitle"));
   setText("#signupTab", t("signup"));
   setText("#loginTab", t("login"));
 
+  setText("#creatorCardTitle", t("becomeCreator"));
+setText("#creatorCardDesc", t("creatorDesc"));
+setText("#footerNoteText", t("footerNote"));
+
   const title =
   document.getElementById("creatorCardTitle");
 
@@ -969,10 +876,34 @@ setText(".manual-panel .panel-title", t("manualTitle"));
 
     if(!key) return;
 
-    btn.textContent =
-    translations[currentLang]?.categories?.[key] ||
-    translations.en.categories[key] ||
-    key;
+    const icon =
+btn.dataset.icon || "";
+
+const shortCategoryLabels = {
+  dairy_eggs: "Dairy",
+  grains_bakery: "Grains",
+  herbs_spices: "Herbs",
+  oils_fats: "Oils",
+  sauces_condiments: "Sauces",
+  nuts_seeds: "Nuts",
+  sweeteners_baking: "Baking"
+};
+
+let label =
+translations[currentLang]?.categories?.[key] ||
+translations.en.categories[key] ||
+shortCategoryLabels[key] ||
+key;
+
+label =
+label
+  .replace(/_/g, " ")
+  .replace(/\b\w/g, c => c.toUpperCase());
+
+btn.innerHTML =
+icon
+  ? `<span class="cat-icon">${icon}</span> ${label}`
+  : label;
 
   });
 
@@ -1010,8 +941,12 @@ function addIngredient(item){
 
   if(!item) return;
 
+  const resolved = window.NilisIngredients
+    ? window.NilisIngredients.resolveIngredient(item)
+    : { id:item };
+
   const cleanItem =
-  String(item)
+  String(resolved.id || item)
     .trim()
     .toLowerCase();
 
@@ -1055,7 +990,11 @@ window.addManual = function(){
 
   if(!value) return;
 
-  addIngredient(value);
+  const item = window.NilisIngredients
+  ? window.NilisIngredients.resolveIngredient(value)
+  : { id:value };
+
+addIngredient(item.id);
 
   manualInput.value = "";
 
@@ -1155,8 +1094,14 @@ async function handlePhotoUpload(e){
     if(data.ingredients && data.ingredients.length){
 
       data.ingredients.forEach(item => {
-        addIngredient(item);
-      });
+
+  const resolved = window.NilisIngredients
+    ? window.NilisIngredients.resolveIngredient(item)
+    : { id:item };
+
+  addIngredient(resolved.id);
+
+});
 
       renderChecklist();
 
@@ -1242,19 +1187,35 @@ async function openIngredientModal(categoryKey, items){
 
   activeCategoryKey = categoryKey;
 
-  const safeItems =
+  let safeItems =
     Array.isArray(items) && items.length
       ? items
-      : CATEGORY_DATA[categoryKey] || [];
+      : [];
+
+  if(!safeItems.length && window.NilisIngredients){
+
+    safeItems = Object.values(window.NilisIngredients.ingredients || {})
+      .filter(item => item.category === categoryKey)
+      .map(item => item.id);
+
+  }
+
+  if(!safeItems.length){
+
+    safeItems =
+      CATEGORY_DATA[categoryKey] || [];
+
+  }
 
   if(ingredientModalTitle){
     ingredientModalTitle.innerText =
       translations[currentLang]?.categories?.[categoryKey] ||
-      translations.en.categories[categoryKey] ||
+      translations.en.categories?.[categoryKey] ||
       categoryKey;
   }
 
   if(!safeItems.length){
+
     ingredientModalItems.innerHTML = `
       <p style="font-weight:800;color:#777;">
         No ingredients found.
@@ -1263,57 +1224,31 @@ async function openIngredientModal(categoryKey, items){
 
     ingredientModal.style.display = "flex";
     return;
+
   }
 
-  // Önce malzemeleri hemen göster
   ingredientModalItems.innerHTML =
-    safeItems.map((item, index) => `
-      <button
-        class="modal-ingredient-btn ${selected.includes(item) ? "active" : ""}"
-        type="button"
-        data-value="${item}"
-        data-index="${index}"
-      >
-        ${item}
-      </button>
-    `).join("");
+    safeItems.map((item, index) => {
+
+      const label =
+        window.NilisIngredients?.ingredients?.[item]?.name?.[currentLang] ||
+        window.NilisIngredients?.ingredients?.[item]?.name?.en ||
+        item;
+
+      return `
+        <button
+          class="modal-ingredient-btn ${selected.includes(item) ? "active" : ""}"
+          type="button"
+          data-value="${item}"
+          data-index="${index}"
+        >
+          ${label}
+        </button>
+      `;
+
+    }).join("");
 
   ingredientModal.style.display = "flex";
-
-  // İngilizce ise çeviri yok
-  if(currentLang === "en") return;
-
-  // Sonra çeviri gelince buton yazılarını değiştir
-  try{
-
-    console.log("TRANSLATE POPUP START:", currentLang, safeItems);
-
-    const res = await fetch(`${API_BASE}/translate-ingredients`, {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        items:safeItems,
-        lang:currentLang
-      })
-    });
-
-    const data = await res.json();
-
-    console.log("TRANSLATE POPUP DATA:", data);
-
-    if(data && Array.isArray(data.items)){
-      document
-        .querySelectorAll("#ingredientModalItems .modal-ingredient-btn")
-        .forEach((btn, index) => {
-          btn.textContent = data.items[index] || safeItems[index];
-        });
-    }
-
-  }catch(err){
-    console.error("Ingredient translate error:", err);
-  }
 
 }
 
@@ -1337,8 +1272,22 @@ document
     const key =
     btn.dataset.category;
 
-    const items =
-    CATEGORY_DATA[key] || [];
+    let items = [];
+
+if(window.NilisIngredients){
+
+  items = Object.values(window.NilisIngredients.ingredients || {})
+    .filter(item => item.category === key)
+    .map(item => item.id);
+
+}
+
+if(!items.length){
+
+  items =
+  CATEGORY_DATA[key] || [];
+
+}
 
     document
     .querySelectorAll(".category-btn")
@@ -1403,8 +1352,17 @@ if(ingredientModalItems){
 
   console.log("FETCH START");
 
-  result.innerHTML =
-`<p>${t("loadingRecipes")}</p>`;
+  document.body.classList.add("show-recipes-page");
+
+result.style.display = "grid";
+result.style.visibility = "visible";
+result.style.opacity = "1";
+result.innerHTML = `
+  <div class="loading-recipes-box">
+    <strong>${t("loadingRecipes")}</strong>
+    <span>Please wait...</span>
+  </div>
+`;
 
   try{
 
@@ -1600,15 +1558,12 @@ Array.isArray(recipe.usedIngredients) && recipe.usedIngredients.length
   : recipe.usedIngredientCount || recipe.usedCount || selected.length || 0;
 
     const usedList =
-    recipe.usedIngredients && recipe.usedIngredients.length
-    ? recipe.usedIngredients
-        .slice(0,4)
-        .map(item => `<span>${item.name || item.original || item}</span>`)
-        .join("")
-    : selected
-        .slice(0,4)
-        .map(item => `<span>${item}</span>`)
-        .join("");
+recipe.usedIngredients && recipe.usedIngredients.length
+? recipe.usedIngredients
+    .slice(0,4)
+    .map(item => `<span>${item.name || item.original || item}</span>`)
+    .join("")
+: `<span>${t("ingredientDetailsUnavailable")}</span>`;
 
     return `
 
@@ -1632,8 +1587,12 @@ Array.isArray(recipe.usedIngredients) && recipe.usedIngredients.length
           </h3>
 
           <p class="time">
-            ⏱ ${recipe.readyInMinutes || 30} ${t("timeMin")}
-          </p>
+  ${
+    recipe.readyInMinutes
+      ? `⏱ ${recipe.readyInMinutes} ${t("timeMin")}`
+      : `⏱ ${recipe.timeLabel || t("timeUnavailable") || "Time unavailable"}`
+  }
+</p>
 
           <div class="ingredients-count">
             🥗 ${t("usesIngredients")} ${usedCount} ${t("ingredientsWord")}
@@ -1729,12 +1688,7 @@ function openRecipe(id){
           ${item.name || item.original || item}
         </span>
       `).join("")
-  : selected
-      .map(item => `
-        <span>
-          ${item}
-        </span>
-      `).join("");
+  : `<span>${t("ingredientDetailsUnavailable")}</span>`;
 
   modalBody.innerHTML = `
 
@@ -1757,8 +1711,12 @@ function openRecipe(id){
     </h1>
 
     <p class="time">
-      ⏱ ${recipe.readyInMinutes || 30} min
-    </p>
+  ${
+    recipe.readyInMinutes
+      ? `⏱ ${recipe.readyInMinutes} min`
+      : `⏱ ${recipe.timeLabel || "Time unavailable"}`
+  }
+</p>
 
     <h2>
   ${t("ingredientsTitle")}
@@ -2009,9 +1967,9 @@ if(langSelectEl){
     ){
 
       openIngredientModal(
-        activeCategoryKey,
-        CATEGORY_DATA[activeCategoryKey] || []
-      );
+  activeCategoryKey,
+  CATEGORY_DATA[activeCategoryKey] || []
+);
 
     }
 
@@ -2043,8 +2001,22 @@ if(categoryGridFinal){
     const key =
     btn.dataset.category;
 
-    const items =
-    CATEGORY_DATA[key] || [];
+    let items = [];
+
+if(window.NilisIngredients){
+
+  items = Object.values(window.NilisIngredients.ingredients || {})
+    .filter(item => item.category === key)
+    .map(item => item.id);
+
+}
+
+if(!items.length){
+
+  items =
+  CATEGORY_DATA[key] || [];
+
+}
 
     console.log("FINAL CATEGORY KEY:", key);
     console.log("FINAL CATEGORY ITEMS:", items);
@@ -2118,7 +2090,7 @@ if(creatorContinueBtn){
 
   });
 
-}
+}themeal
 
 /* =========================
    CREATOR AUTH FINAL FIX
@@ -2309,16 +2281,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   currentLang = "en";
 
-  const langSelect = document.getElementById("langSelect");
-  if (langSelect) {
-    langSelect.value = "en";
-
-    langSelect.addEventListener("change", function () {
-      currentLang = this.value;
-      applyLanguage(currentLang);
-    });
-  }
-
   applyLanguage("en");
 
   const signupTab =
@@ -2348,57 +2310,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-function toggleLangMenu(){
-  document.getElementById("langOptions").classList.toggle("open");
-}
+window.toggleLangMenu = function(){
+  const box = document.getElementById("langOptions");
+  if(box){
+    box.classList.toggle("open");
+  }
+};
 
-function setLang(lang){
-
+window.setLang = function(lang){
   currentLang = lang;
 
-  localStorage.setItem(LANG_STORAGE_KEY, lang);
-
   const btn = document.getElementById("langBtn");
-
-  document.getElementById("langOptions").classList.remove("open");
+  const box = document.getElementById("langOptions");
 
   if(btn){
-    btn.textContent = "🌐 " + lang.toUpperCase();
+    btn.innerHTML = "🌐 " + lang.toUpperCase();
   }
 
-  const options = document.getElementById("langOptions");
-
-  if(options){
-    options.classList.remove("open");
+  if(box){
+    box.classList.remove("open");
   }
 
   applyLanguage();
 
-  preloadIngredientTranslations(currentLang).then(() => {
-  if(
-    ingredientModal &&
-    ingredientModal.style.display === "flex" &&
-    activeCategoryKey
-  ){
-    openIngredientModal(
-      activeCategoryKey,
-      CATEGORY_DATA[activeCategoryKey]
-    );
+  if(typeof renderChecklist === "function"){
+    renderChecklist();
   }
-});
-  renderChecklist();
-
-  if(
-    ingredientModal &&
-    ingredientModal.style.display === "flex" &&
-    activeCategoryKey
-  ){
-    openIngredientModal(
-      activeCategoryKey,
-      CATEGORY_DATA[activeCategoryKey] || []
-    );
-  }
-
-}
-
- 
+};

@@ -746,30 +746,69 @@ console.log("EDAMAM COUNT:", testData.count);
             .slice(0, 6)
             .map(async meal => {
 
-              const detailRes =
-              await fetch(
+  const detailRes =
+  await fetch(
 `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`
-              );
+  );
 
-              const detailData =
-              await detailRes.json();
+  const detailData =
+  await detailRes.json();
 
-              const detail =
-              detailData.meals[0];
+  const detail =
+  detailData.meals[0];
 
-              return {
-                id: detail.idMeal,
-                source: "themealdb",
-                title: detail.strMeal,
-                image: detail.strMealThumb,
-                readyInMinutes: 30,
-                usedIngredients: [],
-                instructions:
-                  detail.strInstructions?.trim() ||
-                  "Recipe instructions unavailable."
-              };
+  let estimatedTime = null;
 
-            })
+const instructionText =
+  detail.strInstructions || "";
+
+const stepCount =
+  instructionText
+    .split(".")
+    .filter(x => x.trim().length > 20)
+    .length;
+
+if(stepCount <= 4){
+  estimatedTime = 20;
+}else if(stepCount <= 7){
+  estimatedTime = 30;
+}else if(stepCount <= 10){
+  estimatedTime = 45;
+}else{
+  estimatedTime = 60;
+}
+
+  const usedIngredients = [];
+
+  for(let i = 1; i <= 20; i++){
+
+    const ing = detail[`strIngredient${i}`];
+    const measure = detail[`strMeasure${i}`];
+
+    if(ing && ing.trim()){
+      usedIngredients.push({
+        name: ing.trim(),
+        original: `${measure || ""} ${ing}`.trim()
+      });
+    }
+
+  }
+
+return {
+  id: detail.idMeal,
+  source: "themealdb",
+  title: detail.strMeal,
+  image: detail.strMealThumb,
+  readyInMinutes: estimatedTime,
+timeEstimated: true,
+timeLabel: `~${estimatedTime} min`,
+  usedIngredients: usedIngredients,
+  instructions:
+    detail.strInstructions?.trim() ||
+    "Recipe instructions unavailable."
+};
+
+})
 
           );
 

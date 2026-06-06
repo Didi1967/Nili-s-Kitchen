@@ -16,14 +16,14 @@
     </button>
 
     <div id="langOptions" class="lang-options">
-      <button onclick="setLang('en')">EN</button>
-      <button onclick="setLang('tr')">TR</button>
-      <button onclick="setLang('ru')">RU</button>
-      <button onclick="setLang('fr')">FR</button>
-      <button onclick="setLang('es')">ES</button>
-      <button onclick="setLang('pt')">PT</button>
-      <button onclick="setLang('ar')">AR</button>
-    </div>
+  <button type="button" onclick="setLang('en')">EN</button>
+  <button type="button" onclick="setLang('tr')">TR</button>
+  <button type="button" onclick="setLang('ru')">RU</button>
+  <button type="button" onclick="setLang('fr')">FR</button>
+  <button type="button" onclick="setLang('es')">ES</button>
+  <button type="button" onclick="setLang('pt')">PT</button>
+  <button type="button" onclick="setLang('ar')">AR</button>
+</div>
   </div>
 </div>
 
@@ -88,25 +88,24 @@
           <img src="YEMEK-2.jpeg" alt="">
         </div>
 
-        <div class="category-panel">
-          <div class="panel-title">Add ingredients by category</div>
+       <div class="category-panel">
+  <div class="panel-title">Add ingredients by category</div>
 
-          <div class="category-grid" id="categoryGrid">
-            <button class="category-btn" id="catVegetables" data-category="vegetables">Vegetables</button>
-            <button class="category-btn" id="catMeat" data-category="meat">Meat</button>
-            <button class="category-btn" id="catSeafood" data-category="seafood">Seafood</button>
-            <button class="category-btn" id="catVegan" data-category="vegan">Vegan</button>
-            <button class="category-btn" id="catPasta" data-category="pasta">Pasta</button>
-            <button class="category-btn" id="catDessert" data-category="dessert">Dessert</button>
-            <button class="category-btn" data-category="fruits">Fruits</button>
-            <button class="category-btn" data-category="dairy">Dairy</button>
-            <button class="category-btn" data-category="grains">Grains</button>
-            <button class="category-btn" data-category="legumes">Legumes</button>
-            <button class="category-btn" data-category="spices">Spices</button>
-            <button class="category-btn" data-category="oils">Oils</button>
-            <button class="category-btn" data-category="sauces">Sauces</button>
-          </div>
-        </div>
+  <div class="category-grid" id="categoryGrid">
+    <button class="category-btn" data-category="vegetables" data-icon="🥦">Vegetables</button>
+    <button class="category-btn" data-category="fruits" data-icon="🍎">Fruits</button>
+    <button class="category-btn" data-category="meat" data-icon="🥩">Meat</button>
+    <button class="category-btn" data-category="seafood" data-icon="🐟">Seafood</button>
+    <button class="category-btn" data-category="dairy_eggs" data-icon="🥛">Dairy & Eggs</button>
+    <button class="category-btn" data-category="grains_bakery" data-icon="🌾">Grains</button>
+    <button class="category-btn" data-category="legumes" data-icon="🫘">Legumes</button>
+    <button class="category-btn" data-category="herbs_spices" data-icon="🌿">Herbs</button>
+    <button class="category-btn" data-category="oils_fats" data-icon="🫒">Oils</button>
+    <button class="category-btn" data-category="sauces_condiments" data-icon="🥫">Sauces</button>
+    <button class="category-btn" data-category="nuts_seeds" data-icon="🥜">Nuts</button>
+    <button class="category-btn" data-category="sweeteners_baking" data-icon="🍯">Baking</button>
+  </div>
+</div>
 
         <div class="ad-media-box">
           <video autoplay muted loop playsinline controls>
@@ -118,52 +117,56 @@
           <img src="YEMEK-5.jpeg" alt="">
         </div>
 
-        <div class="creator-card">
-        <div class="creator-tabs">
-          <button
-            type="button"
-            class="creator-tab active"
-            id="signupTab"
-            onclick="setCreatorMode('signup')">
-            Sign up
-          </button>
+       <div class="creator-card compact-creator-card">
 
-          <button
-            type="button"
-            class="creator-tab"
-            id="loginTab"
-            onclick="setCreatorMode('login')">
-            Login
-          </button>
-        </div>
+  <div class="creator-tabs">
+    <button
+      type="button"
+      class="creator-tab active"
+      id="signupTab"
+      onclick="setCreatorMode('signup')">
+      Sign up
+    </button>
 
-        <div class="creator-card-text">
-          <strong id="creatorCardTitle">Become a creator</strong>
-          <span id="creatorCardDesc">Upload recipes and earn rewards in the future.</span>
-        </div>
+    <button
+      type="button"
+      class="creator-tab"
+      id="loginTab"
+      onclick="setCreatorMode('login')">
+      Login
+    </button>
+  </div>
 
-        <input id="creatorUsernameInput" type="text" placeholder="Username">
-        <input id="creatorEmailInput" type="email" placeholder="Email address">
+  <div class="creator-card-text">
+    <strong id="creatorCardTitle">Upload recipes and earn rewards in the future.</strong>
+  
+  </div>
 
-        <div class="creator-password-wrap">
-          <input id="creatorPasswordInput" type="password" placeholder="Password">
+  <input id="creatorUsernameInput" type="text" placeholder="Username">
+  <input id="creatorEmailInput" type="email" placeholder="Email address">
 
-          <button type="button" onclick="toggleCreatorPassword()">
-            Show
-          </button>
-        </div>
+  <div class="creator-password-wrap">
+    <input id="creatorPasswordInput" type="password" placeholder="Password">
 
-                     <button type="button" class="creator-continue-btn" onclick="goToCreatorPage()">
-          Continue
-        </button>
-      </div>
+    <button type="button" onclick="toggleCreatorPassword()">
+      Show
+    </button>
+  </div>
 
-     </div>
+  <button
+    type="button"
+    class="creator-continue-btn"
+    onclick="goToCreatorPage()">
+    Continue
+  </button>
+
+</div>
 
      <div class="site-footer-note">
-        <span>Designed with ChatGPT</span>
-        <span>© 2026 Nili’s Kitchen AI. All rights reserved.</span>
-      </div>
+  <span id="footerNoteText">
+    © 2026 Nili's Kitchen AI. All rights reserved.
+  </span>
+</div>
 
   </aside>
 
@@ -268,7 +271,43 @@
     </div>
   </div>
 
+<script src="ingredient.js" defer></script>
   <script src="app.js" defer></script>
+
+  <script>
+window.toggleLangMenu = function(){
+  const box = document.getElementById("langOptions");
+  if(box){
+    box.classList.toggle("open");
+  }
+};
+
+window.setLang = function(lang){
+  window.currentLang = lang;
+  currentLang = lang;
+
+  localStorage.setItem("niliKitchenLangV2", lang);
+
+  const btn = document.getElementById("langBtn");
+  const box = document.getElementById("langOptions");
+
+  if(btn){
+    btn.innerHTML = "🌐 " + lang.toUpperCase();
+  }
+
+  if(box){
+    box.classList.remove("open");
+  }
+
+  if(typeof applyLanguage === "function"){
+    applyLanguage();
+  }
+
+  if(typeof renderChecklist === "function"){
+    renderChecklist();
+  }
+};
+</script>
 
 </body>
 </html>
