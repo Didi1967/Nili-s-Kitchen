@@ -2,6 +2,10 @@ let currentRecipes = [];
 let selected = [];
 let activeCategoryKey = null;
 
+let recipePage = 1;
+const recipesPerPage = 6;
+ 
+
 window.API_BASE =
   window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1" ||
@@ -99,6 +103,10 @@ async function preloadIngredientTranslations(lang){
   });
 
   return ingredientTranslationLoading[lang];
+}
+
+if(localStorage.getItem("niliLastPage") === "recipes"){
+  document.documentElement.classList.add("restore-recipes");
 }
 
 const translations = {
@@ -1247,16 +1255,20 @@ async function openIngredientModal(categoryKey, items){
         window.NilisIngredients?.ingredients?.[item]?.name?.en ||
         item;
 
-      return `
-        <button
-          class="modal-ingredient-btn ${selected.includes(item) ? "active" : ""}"
-          type="button"
-          data-value="${item}"
-          data-index="${index}"
-        >
-          ${label}
-        </button>
-      `;
+      const isSelected =
+  selected.includes(item);
+
+return `
+  <button
+    class="modal-ingredient-btn ${isSelected ? "active" : ""}"
+    type="button"
+    data-value="${item}"
+    data-index="${index}"
+  >
+    <span>${label}</span>
+    <strong class="ingredient-mark">${isSelected ? "✓" : "+"}</strong>
+  </button>
+`;
 
     }).join("");
 
@@ -1348,6 +1360,18 @@ if(ingredientModalItems){
 
   });
 
+}
+
+function continueSelectingIngredients(){
+  closeSelectedTray();
+
+  const hero = document.getElementById("hero");
+  if(hero){
+    hero.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
 }
 
  async function getRecipesFromIngredients(ingredientsForRecipe){
@@ -1469,7 +1493,9 @@ const res = await fetch(`${window.API_BASE}/recipes`, {
       return;
 
     }
+visibleRecipeCount = 6;
 
+ 
     renderRecipes(recipes);
 
     document.body.classList.add("show-recipes-page");
@@ -1524,6 +1550,10 @@ setTimeout(() => {
 
 async function confirmAndGetRecipes(){
 
+  if(!checkGuestSearchLimit()){
+  return;
+}
+
   const confirmCheck =
   document.getElementById("confirmCheck");
 
@@ -1555,7 +1585,10 @@ async function confirmAndGetRecipes(){
 
 }
 
+
 function renderRecipes(data){
+
+  currentRecipes = data;
 
   console.log("RENDER RECIPES COUNT:", data.length);
 
@@ -1564,67 +1597,129 @@ function renderRecipes(data){
     return;
   }
 
+  localStorage.setItem("niliLastRecipes", JSON.stringify(data));
+
+  if(location.hash !== "#recipes"){
+    history.replaceState(null, "", "#recipes");
+  }
+
   document.body.classList.add("show-recipes-page");
 
   result.style.display = "grid";
   result.style.visibility = "visible";
   result.style.opacity = "1";
 
+ const startIndex =
+  (recipePage - 1) * recipesPerPage;
+
+const endIndex =
+  startIndex + recipesPerPage;
+
+const visibleRecipes =
+  data.slice(startIndex, endIndex);
+
+const totalPages =
+  Math.ceil(data.length / recipesPerPage);
+
   result.innerHTML =
-  data.map(recipe => {
+    visibleRecipes.map(recipe => {
 
-    const usedCount =
-      Array.isArray(recipe.usedIngredients) && recipe.usedIngredients.length
-        ? recipe.usedIngredients.length
-        : recipe.usedIngredientCount || recipe.usedCount || 0;
+      const usedCount =
+        Array.isArray(recipe.usedIngredients) && recipe.usedIngredients.length
+          ? recipe.usedIngredients.length
+          : recipe.usedIngredientCount || recipe.usedCount || 0;
 
-    const usedList =
-      recipe.usedIngredients && recipe.usedIngredients.length
-        ? recipe.usedIngredients
-            .slice(0,4)
-            .map(item => `<span>${item.original || item.name || item}</span>`)
-            .join("")
-        : `<span>${t("ingredientDetailsUnavailable")}</span>`;
+      const usedList =
+        recipe.usedIngredients && recipe.usedIngredients.length
+          ? recipe.usedIngredients
+              .slice(0,4)
+              .map(item => `<span>${item.original || item.name || item}</span>`)
+              .join("")
+          : `<span>${t("ingredientDetailsUnavailable")}</span>`;
 
-    return `
-      <div class="card recipe-card" data-recipe-id="${recipe.id}">
+      return `
+        <div class="card recipe-card" data-recipe-id="${recipe.id}">
 
-        <div class="recipe-card-image-wrap">
-          <img
-            src="${
-              recipe.image ||
-              "https://img.spoonacular.com/recipes/716429-556x370.jpg"
-            }"
-            alt="${recipe.title || t("recipeTitleFallback")}"
-          >
-        </div>
+          <div class="recipe-card-image-wrap">
 
-        <div class="card-body recipe-card-body">
+            <button
+              class="favorite-btn"
+              data-recipe-id="${recipe.id}"
+              type="button"
+            >🤍</button>
 
-          <h3>${recipe.title || t("recipeTitleFallback")}</h3>
-
-          <p class="time recipe-time">
-            ${
-              recipe.readyInMinutes
-                ? `⏱ ${recipe.timeEstimated ? "~" : ""}${recipe.readyInMinutes} ${t("timeMin")}`
-                : `⏱ ${recipe.timeLabel || t("timeUnavailable") || "Time unavailable"}`
-            }
-          </p>
-
-          <div class="ingredients-count">
-            🥗 ${t("usesIngredients")} ${usedCount} ${t("ingredientsWord")}
+            <img
+              src="${
+                recipe.image ||
+                "https://img.spoonacular.com/recipes/716429-556x370.jpg"
+              }"
+              alt="${recipe.title || t("recipeTitleFallback")}"
+            >
           </div>
 
-          <div class="ingredients recipe-ingredients">
-            ${usedList}
+          <div class="card-body recipe-card-body">
+
+            <h3>${recipe.title || t("recipeTitleFallback")}</h3>
+
+            <p class="time recipe-time">
+              ${
+                recipe.readyInMinutes
+                  ? `⏱ ${recipe.timeEstimated ? "~" : ""}${recipe.readyInMinutes} ${t("timeMin")}`
+                  : `⏱ ${recipe.timeLabel || t("timeUnavailable") || "Time unavailable"}`
+              }
+            </p>
+
+            <div class="ingredients-count">
+              🥗 ${t("usesIngredients")} ${usedCount} ${t("ingredientsWord")}
+            </div>
+
+            <div class="ingredients recipe-ingredients">
+              ${usedList}
+            </div>
+
           </div>
 
         </div>
+      `;
 
-      </div>
-    `;
+    }).join("");
 
-  }).join("");
+    const oldActions =
+  document.getElementById("recipeResultActions");
+
+if(oldActions){
+  oldActions.remove();
+}
+
+result.insertAdjacentHTML("afterend", `
+  <div id="recipeResultActions" class="recipe-result-actions">
+
+    <button
+      type="button"
+      class="recipe-back-btn"
+      onclick="backToHome()">
+      ← Back
+    </button>
+
+     
+
+    ${
+      recipePage < totalPages
+        ? `
+          <button
+            type="button"
+            class="recipe-next-btn"
+            onclick="nextRecipePage()">
+            Next →
+          </button>
+        `
+        : ""
+    }
+
+  </div>
+`);
+
+  renderFavoritesUI();
 
   setTimeout(() => {
     result.scrollIntoView({
@@ -1635,9 +1730,20 @@ function renderRecipes(data){
 
 }
 
+
+
 if(result){
 
   result.addEventListener("click", e => {
+
+    const favBtn = e.target.closest(".favorite-btn");
+
+if(favBtn){
+  e.preventDefault();
+  e.stopPropagation();
+  toggleFavorite(favBtn.dataset.recipeId);
+  return;
+}
 
     const card =
     e.target.closest(".card");
@@ -1646,6 +1752,10 @@ if(result){
 
     const id =
     card.dataset.recipeId;
+
+    localStorage.setItem("niliOpenRecipeId", id);
+
+    history.replaceState(null, "", "#recipe-" + id);
 
     openRecipe(id);
 
@@ -1737,6 +1847,8 @@ function openRecipe(id){
 }
 
 window.closeModal = function(){
+
+  history.replaceState(null, "", "#recipes");
 
   if(modal){
     modal.style.display = "none";
@@ -2137,7 +2249,7 @@ window.goToCreatorPage = async function(){
     localStorage.setItem("creatorEmail", data.email || emailOrUser);
     localStorage.setItem("creatorEmailOrUser", data.email || emailOrUser);
 
-    window.location.href = `${window.location.origin}/creator-dashboard.html?lang=${currentLang}`;
+    window.location.href = `${window.location.origin}/?lang=${currentLang}`;
 
   }catch(err){
 
@@ -2236,6 +2348,38 @@ window.setLang = function(lang){
   if(typeof renderChecklist === "function"){
     renderChecklist();
   }
+
+  applyLanguage();
+
+if(document.body.classList.contains("show-recipes-page")){
+  renderRecipes(currentRecipes);
+}
+
+if(modal && modal.style.display === "flex"){
+  const id = location.hash.replace("#recipe-", "");
+  if(id){
+    openRecipe(id);
+  }
+}
+
+if(typeof renderChecklist === "function"){
+  renderChecklist();
+}
+
+if(
+  ingredientModal &&
+  ingredientModal.style.display === "flex" &&
+  activeCategoryKey
+){
+  openIngredientModal(
+    activeCategoryKey,
+    CATEGORY_DATA[activeCategoryKey] || []
+  );
+}
+
+if(typeof updateCreatorLinks === "function"){
+  updateCreatorLinks();
+}
 };
 
 function showUserFriendlyError(source, err){
@@ -2265,3 +2409,195 @@ function showUserFriendlyError(source, err){
 
 }
 
+function getFavorites(){
+  return JSON.parse(localStorage.getItem("niliFavorites") || "[]");
+}
+
+function saveFavorites(favorites){
+  localStorage.setItem("niliFavorites", JSON.stringify(favorites));
+}
+
+function toggleFavorite(recipeId){
+
+  if(!isUserLoggedIn()){
+  openSignupInvite();
+  return;
+}
+  let favorites = getFavorites();
+
+  if(favorites.includes(recipeId)){
+    favorites = favorites.filter(id => id !== recipeId);
+  }else{
+    favorites.push(recipeId);
+  }
+
+  saveFavorites(favorites);
+  renderFavoritesUI();
+}
+
+function renderFavoritesUI(){
+  const favorites = getFavorites();
+
+  document.querySelectorAll(".favorite-btn").forEach(btn => {
+    const id = btn.dataset.recipeId;
+    const active = favorites.includes(id);
+
+    btn.textContent = active ? "❤️" : "🤍";
+    btn.classList.toggle("active", active);
+  });
+}
+
+function saveCurrentPage(pageName){
+  localStorage.setItem("niliLastPage", pageName);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const hash = location.hash;
+  const savedRecipes = localStorage.getItem("niliLastRecipes");
+
+  if(!savedRecipes) return;
+
+  if(hash === "#recipes" || hash.startsWith("#recipe-")){
+    const recipes = JSON.parse(savedRecipes);
+
+    currentRecipes = recipes;
+    recipePage = 1;
+    renderRecipes(recipes);
+
+    if(hash.startsWith("#recipe-")){
+      const id = hash.replace("#recipe-", "");
+
+      setTimeout(() => {
+        openRecipe(id);
+      }, 200);
+    }
+  }
+});
+
+function isUserLoggedIn(){
+  return !!localStorage.getItem("creatorEmail") ||
+         !!localStorage.getItem("niliUserEmail");
+}
+
+function openSignupInvite(){
+  const modal = document.getElementById("signupInviteModal");
+  if(modal){
+    modal.style.display = "flex";
+  }
+}
+
+function closeSignupInvite(){
+  const modal = document.getElementById("signupInviteModal");
+  if(modal){
+    modal.style.display = "none";
+  }
+}
+
+function goToSignup(){
+  window.location.href = "creator.html?lang=" + currentLang;
+}
+
+ function checkGuestSearchLimit(){
+  if(isUserLoggedIn()){
+    return true;
+  }
+
+  let count =
+    Number(localStorage.getItem("guestSearchCount") || "0");
+
+  count++;
+
+  localStorage.setItem("guestSearchCount", String(count));
+
+  if(count > 3){
+    openSignupInvite();
+    return false;
+  }
+
+  return true;
+}
+
+function initUserSessionMenu(){
+  const username =
+    localStorage.getItem("creatorUsername") ||
+    localStorage.getItem("niliCreatorUsername") ||
+    localStorage.getItem("niliUsername");
+
+  const email =
+    localStorage.getItem("creatorEmail") ||
+    localStorage.getItem("niliCreatorEmail") ||
+    localStorage.getItem("niliUserEmail");
+
+  const userMenu = document.getElementById("userMenu");
+  const userMenuName = document.getElementById("userMenuName");
+
+  if(!userMenu || !userMenuName) return;
+
+  if(username || email){
+    userMenu.style.display = "block";
+    userMenuName.textContent = username || email;
+  }else{
+    userMenu.style.display = "none";
+  }
+
+  const dashLink = document.getElementById("userDashboardLink");
+  const addLink = document.getElementById("userAddRecipeLink");
+
+  if(dashLink){
+    dashLink.href = "creator-dashboard.html?lang=" + currentLang;
+  }
+
+  if(addLink){
+    addLink.href = "creator.html?lang=" + currentLang;
+  }
+}
+
+const userMenuBtn = document.getElementById("userMenuBtn");
+const userMenu = document.getElementById("userMenu");
+
+if(userMenuBtn && userMenu){
+  userMenuBtn.addEventListener("click", () => {
+    userMenu.classList.toggle("open");
+  });
+}
+
+function logoutUser(){
+  localStorage.removeItem("creatorUsername");
+  localStorage.removeItem("creatorEmail");
+  localStorage.removeItem("creatorEmailOrUser");
+  localStorage.removeItem("creatorMode");
+  localStorage.removeItem("niliUserEmail");
+  localStorage.removeItem("niliUsername");
+
+  location.reload();
+}
+
+initUserSessionMenu();
+
+function backToHome(){
+  history.replaceState(null, "", location.pathname);
+
+  document.body.classList.remove("show-recipes-page");
+
+  const hero = document.querySelector(".hero");
+  if(hero){
+    hero.style.display = "";
+  }
+
+  const oldActions =
+    document.getElementById("recipeResultActions");
+
+  if(oldActions){
+    oldActions.remove();
+  }
+
+  if(result){
+    result.innerHTML = "";
+    result.style.display = "none";
+  }
+}
+
+function nextRecipePage(){
+  recipePage++;
+  renderRecipes(currentRecipes);
+}

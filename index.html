@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R7WVN8WCPT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-R7WVN8WCPT');
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nili's Kitchen AI</title>
@@ -10,6 +19,18 @@
 <body>
 
   <div class="floating-lang">
+
+    <div id="userMenu" class="user-menu" style="display:none;">
+  <button id="userMenuBtn" class="user-menu-btn">
+    👤 <span id="userMenuName">User</span>
+  </button>
+
+  <div id="userMenuDropdown" class="user-menu-dropdown">
+    <a href="creator-dashboard.html" id="userDashboardLink">Dashboard</a>
+    <a href="creator.html" id="userAddRecipeLink">Add Recipe</a>
+    <button type="button" onclick="logoutUser()">Logout</button>
+  </div>
+</div>
   <div class="lang-wrapper" id="langWrapper">
     <button id="langBtn" class="lang-btn" onclick="toggleLangMenu()">
       🌐 EN
@@ -25,6 +46,7 @@
   <button type="button" onclick="setLang('ar')">AR</button>
 </div>
   </div>
+</div>
 </div>
 
   <aside id="sidebar">
@@ -176,41 +198,50 @@
       <div class="selected-tray-header">
         <div>
           <h2>Selected ingredients</h2>
-          <p>Review your ingredients before finding recipes.</p>
         </div>
 
+        <div id="selectedIngredientList" class="selected-ingredient-list"></div>
+
         <div class="selected-tray-header-actions">
-          <button
-            type="button"
-            class="selected-tray-close"
-            onclick="closeSelectedTray()">
-            ×
-          </button>
-        </div>
+
+  <button
+    type="button"
+    class="continue-selecting-btn"
+    onclick="closeSelectedTray()">
+    + Continue selecting ingredients
+  </button>
+
+</div>
       </div>
 
       <div id="selectedTrayItems"></div>
-
-      <button
-        type="button"
-        class="selected-clear-bottom"
-        onclick="clearSelectedIngredients()">
-        Clear all ingredients
-      </button>
-
+       
       <div class="selected-tray-bottom">
-        <label class="tray-confirm">
-          <input type="checkbox" id="confirmCheck">
-          <span>Confirm ingredients</span>
-        </label>
 
-        <button
-          type="button"
-          id="trayGetRecipesBtn"
-          onclick="confirmAndGetRecipes()">
-          Get Recipes
-        </button>
-      </div>
+  <div class="tray-bottom-row">
+
+    <label class="tray-confirm">
+      <input type="checkbox" id="confirmCheck">
+      <span>Confirm ingredients</span>
+    </label>
+
+    <button
+      type="button"
+      class="selected-clear-bottom"
+      onclick="clearSelectedIngredients()">
+      Clear selected
+    </button>
+
+  </div>
+
+  <button
+    type="button"
+    id="trayGetRecipesBtn"
+    onclick="confirmAndGetRecipes()">
+    Get Recipes
+  </button>
+
+</div>
 
     </div>
   </div>
@@ -218,12 +249,12 @@
   <div id="ingredientModal" class="ingredient-modal">
     <div class="ingredient-modal-content">
 
-      <button
-        class="ingredient-modal-close"
-        onclick="closeIngredientModal()"
-        type="button">
-        ×
-      </button>
+     <button
+  type="button"
+  class="ingredient-modal-close done-close"
+  onclick="closeIngredientModal()">
+  ✓ 
+</button>
 
       <h2 id="ingredientModalTitle">Ingredients</h2>
 
@@ -308,5 +339,26 @@ window.setLang = function(lang){
   }
 };
 </script>
+<div id="signupInviteModal" class="signup-invite-modal">
+  <div class="signup-invite-box">
+    <button class="signup-invite-close" onclick="closeSignupInvite()">×</button>
+
+    <h2>Save your favorite recipes</h2>
+
+    <p>
+      Create a free account to save favorites, access them from any device,
+      and get more recipe searches.
+    </p>
+
+    <button class="signup-main-btn" onclick="goToSignup()">
+      Create Free Account
+    </button>
+
+    <button class="signup-guest-btn" onclick="closeSignupInvite()">
+      Continue as Guest
+    </button>
+  </div>
+</div>
+
 </body>
 </html>

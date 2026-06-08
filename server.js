@@ -522,7 +522,7 @@ console.log("SPOON STATUS:", spoonRes.status);
           await Promise.all(
 
             basicRecipes
-            .slice(0, 6)
+            .slice(0, 12)
             .map(async recipe => {
 
               try {
@@ -652,7 +652,7 @@ console.log("EDAMAM COUNT:", testData.count);
 
             const edamamRecipes =
             edamamData.hits
-            .slice(0, 6)
+            slice(0, 12)
             .map(item => {
 
               const recipe =
@@ -743,7 +743,7 @@ console.log("EDAMAM COUNT:", testData.count);
           await Promise.all(
 
             mealData.meals
-            .slice(0, 6)
+            .slice(0, 12)
             .map(async meal => {
 
   const detailRes =
