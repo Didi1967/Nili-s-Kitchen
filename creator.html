@@ -177,103 +177,321 @@
 
   <div class="creator-page">
 
-    <div class="top">
-      <div>
-        <h1>Share your recipe</h1>
+  <div class="top">
+    <div>
+      <h1 data-i18n="shareTitle">Share your recipe</h1>
 
-        <p>
-          Upload your own recipe with a food photo or video. After review,
-          approved recipes may appear in Nili’s Kitchen with your name.
-        </p>
-      </div>
-
-      <a class="back" href="/">
-        Back to app
-      </a>
+      <p data-i18n="shareDesc">
+        Upload your own recipe with a food photo or video. After review,
+        approved recipes may appear in Nili’s Kitchen with your name.
+      </p>
     </div>
 
-    <div class="creator-info" id="creatorInfo">
-      Creator information loading...
-    </div>
-
-    <form class="creator-form" id="creatorForm">
-
-      <input type="hidden" name="creatorUsername" id="creatorUsernameHidden">
-      <input type="hidden" name="creatorEmail" id="creatorEmailHidden">
-
-      <label>
-        Recipe title
-        <input
-          name="title"
-          placeholder="Example: Maria-style chicken rice"
-          required
-        >
-      </label>
-
-      <div class="row">
-        <label>
-          Prep time
-          <input
-            name="prepTime"
-            placeholder="Example: 15 min"
-          >
-        </label>
-
-        <label>
-          Servings
-          <input
-            name="servings"
-            placeholder="Example: 4"
-          >
-        </label>
-      </div>
-
-      <label>
-        Ingredients
-        <textarea
-          name="ingredients"
-          placeholder="Write ingredients, one per line or separated by commas"
-          required
-        ></textarea>
-      </label>
-
-      <label>
-        Instructions
-        <textarea
-          name="instructions"
-          placeholder="Write how to prepare this recipe"
-          required
-        ></textarea>
-      </label>
-
-      <label>
-        Upload food photo or video
-        <input
-          name="media"
-          type="file"
-          accept="image/*,video/*"
-          required
-        >
-      </label>
-
-      <div class="creator-actions">
-        <button class="creator-submit" type="submit">
-          Submit for Review
-        </button>
-
-        <button class="creator-reset" type="reset">
-          Clear
-        </button>
-      </div>
-
-    </form>
-
-    <div id="creatorMessage"></div>
-
+    <a class="back" href="/" data-i18n="backToApp">
+      Back to app
+    </a>
   </div>
 
+  <div class="creator-info" id="creatorInfo">
+    Creator information loading...
+  </div>
+
+  <form class="creator-form" id="creatorForm">
+
+    <input type="hidden" name="creatorUsername" id="creatorUsernameHidden">
+    <input type="hidden" name="creatorEmail" id="creatorEmailHidden">
+
+    <label>
+      <span data-i18n="recipeTitle">Recipe title</span>
+      <input
+        name="title"
+        data-i18n-placeholder="recipeTitlePlaceholder"
+        placeholder="Example: Maria-style chicken rice"
+        required
+      >
+    </label>
+
+    <div class="row">
+      <label>
+        <span data-i18n="prepTime">Prep time</span>
+        <input
+          name="prepTime"
+          data-i18n-placeholder="prepTimePlaceholder"
+          placeholder="Example: 15 min"
+        >
+      </label>
+
+      <label>
+        <span data-i18n="servings">Servings</span>
+        <input
+          name="servings"
+          data-i18n-placeholder="servingsPlaceholder"
+          placeholder="Example: 4"
+        >
+      </label>
+    </div>
+
+    <label>
+      <span data-i18n="ingredients">Ingredients</span>
+      <textarea
+        name="ingredients"
+        data-i18n-placeholder="ingredientsPlaceholder"
+        placeholder="Write ingredients, one per line or separated by commas"
+        required
+      ></textarea>
+    </label>
+
+    <label>
+      <span data-i18n="instructions">Instructions</span>
+      <textarea
+        name="instructions"
+        data-i18n-placeholder="instructionsPlaceholder"
+        placeholder="Write how to prepare this recipe"
+        required
+      ></textarea>
+    </label>
+
+    <label>
+      <span data-i18n="uploadMedia">Upload food photo or video</span>
+      <input
+        name="media"
+        type="file"
+        accept="image/*,video/*"
+        required
+      >
+    </label>
+
+    <div class="creator-actions">
+      <button class="creator-submit" type="submit" data-i18n="submitReview">
+        Submit for Review
+      </button>
+
+      <button class="creator-reset" type="reset" data-i18n="clear">
+        Clear
+      </button>
+    </div>
+
+  </form>
+
+  <div id="creatorMessage"></div>
+
+</div>
   <script>
+    
     const API_BASE = "https://api.niliskitchen.com";
+
+const urlLang =
+  new URLSearchParams(window.location.search).get("lang");
+
+let currentLang =
+  urlLang ||
+  localStorage.getItem("niliLang") ||
+  localStorage.getItem("lang") ||
+  "en";
+
+if(urlLang){
+  localStorage.setItem("niliLang", urlLang);
+  localStorage.setItem("lang", urlLang);
+}
+
+const creatorTranslations = {
+  en: {
+    shareTitle: "Share your recipe",
+    shareDesc: "Upload your own recipe with a food photo or video. After review, approved recipes may appear in Nili’s Kitchen with your name.",
+    backToApp: "Back to app",
+    loggedInAs: "Logged in as:",
+    creator: "Creator",
+    recipeTitle: "Recipe title",
+    recipeTitlePlaceholder: "Example: Maria-style chicken rice",
+    prepTime: "Prep time",
+    prepTimePlaceholder: "Example: 15 min",
+    servings: "Servings",
+    servingsPlaceholder: "Example: 4",
+    ingredients: "Ingredients",
+    ingredientsPlaceholder: "Write ingredients, one per line or separated by commas",
+    instructions: "Instructions",
+    instructionsPlaceholder: "Write how to prepare this recipe",
+    uploadMedia: "Upload food photo or video",
+    submitReview: "Submit for Review",
+    clear: "Clear",
+    submitting: "Submitting recipe for review...",
+    submitted: "Recipe submitted for review. Thank you!",
+    submitFailed: "Submit failed."
+  },
+
+  tr: {
+    shareTitle: "Tarifini paylaş",
+    shareDesc: "Kendi tarifini yemek fotoğrafı veya videosu ile yükle. İncelemeden sonra onaylanan tarifler adınla Nili’s Kitchen’da yayınlanabilir.",
+    backToApp: "Uygulamaya dön",
+    loggedInAs: "Giriş yapan:",
+    creator: "Oluşturucu",
+    recipeTitle: "Tarif başlığı",
+    recipeTitlePlaceholder: "Örnek: Maria usulü tavuklu pilav",
+    prepTime: "Hazırlık süresi",
+    prepTimePlaceholder: "Örnek: 15 dk",
+    servings: "Porsiyon",
+    servingsPlaceholder: "Örnek: 4",
+    ingredients: "Malzemeler",
+    ingredientsPlaceholder: "Malzemeleri her satıra bir tane veya virgülle yaz",
+    instructions: "Hazırlanışı",
+    instructionsPlaceholder: "Bu tarifin nasıl hazırlanacağını yaz",
+    uploadMedia: "Yemek fotoğrafı veya video yükle",
+    submitReview: "İncelemeye gönder",
+    clear: "Temizle",
+    submitting: "Tarif inceleme için gönderiliyor...",
+    submitted: "Tarif incelemeye gönderildi. Teşekkürler!",
+    submitFailed: "Gönderim başarısız."
+  },
+
+  ru: {
+    shareTitle: "Поделитесь рецептом",
+    shareDesc: "Загрузите свой рецепт с фото или видео блюда. После проверки одобренные рецепты могут появиться в Nili’s Kitchen с вашим именем.",
+    backToApp: "Вернуться в приложение",
+    loggedInAs: "Вы вошли как:",
+    creator: "Автор",
+    recipeTitle: "Название рецепта",
+    recipeTitlePlaceholder: "Например: курица с рисом по-марийски",
+    prepTime: "Время подготовки",
+    prepTimePlaceholder: "Например: 15 мин",
+    servings: "Порции",
+    servingsPlaceholder: "Например: 4",
+    ingredients: "Ингредиенты",
+    ingredientsPlaceholder: "Напишите ингредиенты по строкам или через запятую",
+    instructions: "Инструкции",
+    instructionsPlaceholder: "Опишите, как приготовить этот рецепт",
+    uploadMedia: "Загрузите фото или видео блюда",
+    submitReview: "Отправить на проверку",
+    clear: "Очистить",
+    submitting: "Рецепт отправляется на проверку...",
+    submitted: "Рецепт отправлен на проверку. Спасибо!",
+    submitFailed: "Не удалось отправить."
+  },
+
+  ar: {
+    shareTitle: "شارك وصفتك",
+    shareDesc: "ارفع وصفتك الخاصة مع صورة أو فيديو للطعام. بعد المراجعة، قد تظهر الوصفات المعتمدة في Nili’s Kitchen باسمك.",
+    backToApp: "العودة إلى التطبيق",
+    loggedInAs: "تم تسجيل الدخول باسم:",
+    creator: "المبدع",
+    recipeTitle: "عنوان الوصفة",
+    recipeTitlePlaceholder: "مثال: أرز بالدجاج على طريقة ماريا",
+    prepTime: "وقت التحضير",
+    prepTimePlaceholder: "مثال: 15 دقيقة",
+    servings: "عدد الحصص",
+    servingsPlaceholder: "مثال: 4",
+    ingredients: "المكونات",
+    ingredientsPlaceholder: "اكتب المكونات في أسطر منفصلة أو مفصولة بفواصل",
+    instructions: "طريقة التحضير",
+    instructionsPlaceholder: "اكتب كيفية تحضير هذه الوصفة",
+    uploadMedia: "ارفع صورة أو فيديو للطعام",
+    submitReview: "إرسال للمراجعة",
+    clear: "مسح",
+    submitting: "يتم إرسال الوصفة للمراجعة...",
+    submitted: "تم إرسال الوصفة للمراجعة. شكراً لك!",
+    submitFailed: "فشل الإرسال."
+  },
+
+  es: {
+    shareTitle: "Comparte tu receta",
+    shareDesc: "Sube tu propia receta con una foto o video del plato. Después de la revisión, las recetas aprobadas pueden aparecer en Nili’s Kitchen con tu nombre.",
+    backToApp: "Volver a la app",
+    loggedInAs: "Sesión iniciada como:",
+    creator: "Creador",
+    recipeTitle: "Título de la receta",
+    recipeTitlePlaceholder: "Ejemplo: arroz con pollo estilo María",
+    prepTime: "Tiempo de preparación",
+    prepTimePlaceholder: "Ejemplo: 15 min",
+    servings: "Porciones",
+    servingsPlaceholder: "Ejemplo: 4",
+    ingredients: "Ingredientes",
+    ingredientsPlaceholder: "Escribe los ingredientes, uno por línea o separados por comas",
+    instructions: "Instrucciones",
+    instructionsPlaceholder: "Escribe cómo preparar esta receta",
+    uploadMedia: "Sube una foto o video del plato",
+    submitReview: "Enviar a revisión",
+    clear: "Limpiar",
+    submitting: "Enviando receta para revisión...",
+    submitted: "Receta enviada para revisión. ¡Gracias!",
+    submitFailed: "Error al enviar."
+  },
+
+  fr: {
+    shareTitle: "Partagez votre recette",
+    shareDesc: "Téléchargez votre propre recette avec une photo ou une vidéo du plat. Après vérification, les recettes approuvées peuvent apparaître dans Nili’s Kitchen avec votre nom.",
+    backToApp: "Retour à l’application",
+    loggedInAs: "Connecté en tant que :",
+    creator: "Créateur",
+    recipeTitle: "Titre de la recette",
+    recipeTitlePlaceholder: "Exemple : riz au poulet façon Maria",
+    prepTime: "Temps de préparation",
+    prepTimePlaceholder: "Exemple : 15 min",
+    servings: "Portions",
+    servingsPlaceholder: "Exemple : 4",
+    ingredients: "Ingrédients",
+    ingredientsPlaceholder: "Écrivez les ingrédients, un par ligne ou séparés par des virgules",
+    instructions: "Instructions",
+    instructionsPlaceholder: "Expliquez comment préparer cette recette",
+    uploadMedia: "Télécharger une photo ou vidéo du plat",
+    submitReview: "Envoyer pour vérification",
+    clear: "Effacer",
+    submitting: "Envoi de la recette pour vérification...",
+    submitted: "Recette envoyée pour vérification. Merci !",
+    submitFailed: "Échec de l’envoi."
+  },
+
+  pt: {
+    shareTitle: "Compartilhe sua receita",
+    shareDesc: "Envie sua própria receita com uma foto ou vídeo do prato. Após a revisão, receitas aprovadas podem aparecer no Nili’s Kitchen com seu nome.",
+    backToApp: "Voltar ao app",
+    loggedInAs: "Conectado como:",
+    creator: "Criador",
+    recipeTitle: "Título da receita",
+    recipeTitlePlaceholder: "Exemplo: arroz com frango à moda Maria",
+    prepTime: "Tempo de preparo",
+    prepTimePlaceholder: "Exemplo: 15 min",
+    servings: "Porções",
+    servingsPlaceholder: "Exemplo: 4",
+    ingredients: "Ingredientes",
+    ingredientsPlaceholder: "Escreva os ingredientes, um por linha ou separados por vírgulas",
+    instructions: "Instruções",
+    instructionsPlaceholder: "Escreva como preparar esta receita",
+    uploadMedia: "Enviar foto ou vídeo do prato",
+    submitReview: "Enviar para revisão",
+    clear: "Limpar",
+    submitting: "Enviando receita para revisão...",
+    submitted: "Receita enviada para revisão. Obrigado!",
+    submitFailed: "Falha ao enviar."
+  }
+};
+
+function ct(key){
+  return creatorTranslations[currentLang]?.[key] ||
+         creatorTranslations.en?.[key] ||
+         key;
+}
+
+function applyCreatorLanguage(){
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    el.textContent = ct(key);
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    el.placeholder = ct(key);
+  });
+}
+
+function setText(id, text){
+  const el = document.getElementById(id);
+  if(el) el.textContent = text;
+}
+
+function setPlaceholder(id, text){
+  const el = document.getElementById(id);
+  if(el) el.placeholder = text;
+}
+
     const creatorForm =
     document.getElementById("creatorForm");
 
@@ -299,14 +517,17 @@
     emailOrUser;
 
     creatorInfo.textContent =
-    mode === "login"
-      ? `Logged in as: ${emailOrUser}`
-      : `Creator: ${username} • ${emailOrUser}`;
+  mode === "login"
+    ? ct("loggedInAs") + " " + emailOrUser
+    : ct("creator") + ": " + username + " • " + emailOrUser;
+
+
+    applyCreatorLanguage();  
 
     creatorForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      creatorMessage.textContent = "Submitting recipe for review...";
+      creatorMessage.textContent = ct("submitting");
       creatorMessage.style.color = "#6b7280";
 
       const formData =
@@ -340,7 +561,7 @@ if (!res.ok) {
 }
 
         creatorMessage.textContent =
-        "Recipe submitted for review. Thank you!";
+        ct("submitted")
 
         creatorMessage.style.color =
         "#315c45";
@@ -350,7 +571,7 @@ if (!res.ok) {
       }catch(err){
 
         creatorMessage.textContent =
-        "Submit failed.";
+        ct("submitFailed")
 
         creatorMessage.style.color =
         "#c2410c";
@@ -358,6 +579,8 @@ if (!res.ok) {
       }
 
     });
+
+ 
   </script>
 
 </body>

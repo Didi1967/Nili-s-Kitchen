@@ -208,7 +208,7 @@ body{
 <div class="dashboard">
 
   <div class="welcome-card">
-    <h1>👋 Welcome Back</h1>
+    <h1 id="dashWelcome">👋 Welcome Back</h1>
     <p id="creatorName">Nili's Creator Studio</p>
   </div>
 
@@ -217,36 +217,36 @@ body{
     <div class="stat-card">
       <span>📋</span>
       <h2 id="totalRecipes">0</h2>
-      <p>Total Recipes</p>
+      <p id="dashTotal">Total Recipes</p>
     </div>
 
     <div class="stat-card">
       <span>⏳</span>
       <h2 id="pendingRecipes">0</h2>
-      <p>Pending</p>
+      <p id="dashPending">Pending</p>
     </div>
 
     <div class="stat-card">
       <span>✅</span>
       <h2 id="publishedRecipes">0</h2>
-      <p>Published</p>
+      <p id="dashPublished">Published</p>
     </div>
 
     <div class="stat-card">
       <span>👀</span>
       <h2 id="totalViews">0</h2>
-      <p>Views</p>
+      <p id="dashViews">Views</p>
     </div>
 
   </div>
 
   <div class="action-grid">
-    <a href="creator.html" class="action-btn">➕ Upload New Recipe</a>
-    <a href="/" class="action-btn secondary">🏠 Back to Nili's Kitchen</a>
+    <a href="creator.html" class="action-btn" id="dashUploadBtn">➕ Upload New Recipe</a>
+    <a href="/" class="action-btn secondary" id="dashBackBtn">🏠 Back to Nili's Kitchen</a>
   </div>
 
   <div class="recipes-section">
-    <h2>My Recipes</h2>
+    <h2 id="dashMyRecipes">My Recipes</h2>
     <div id="recipeList">
       <div class="empty">Loading recipes...</div>
     </div>
@@ -260,6 +260,142 @@ const API_BASE =
     ? "http://localhost:3000"
     : "https://api.niliskitchen.com";
 
+
+const urlLang =
+  new URLSearchParams(window.location.search).get("lang");
+
+let currentLang =
+  urlLang ||
+  localStorage.getItem("niliLang") ||
+  localStorage.getItem("lang") ||
+  "en";
+
+if(urlLang){
+  localStorage.setItem("niliLang", urlLang);
+  localStorage.setItem("lang", urlLang);
+}
+
+ 
+
+
+ console.log("DASHBOARD niliLang:", localStorage.getItem("niliLang"));
+console.log("DASHBOARD lang:", localStorage.getItem("lang"));
+console.log("DASHBOARD currentLang:", currentLang);
+
+const dashTranslations = {
+  en: {
+    welcome: "👋 Welcome Back",
+    studio: "Creator Studio",
+    total: "Total Recipes",
+    pending: "Pending",
+    published: "Published",
+    views: "Views",
+    upload: "➕ Upload New Recipe",
+    back: "🏠 Back to Nili's Kitchen",
+    myRecipes: "My Recipes",
+    loading: "Loading recipes...",
+    empty: "You have not uploaded any recipes yet.",
+    pendingStatus: "Pending Review",
+    publishedStatus: "Published"
+  },
+  tr: {
+    welcome: "👋 Tekrar Hoş Geldin",
+    studio: "Creator Studio",
+    total: "Toplam Tarif",
+    pending: "Bekleyen",
+    published: "Yayınlanan",
+    views: "Görüntülenme",
+    upload: "➕ Yeni Tarif Yükle",
+    back: "🏠 Nili's Kitchen’a Dön",
+    myRecipes: "Tariflerim",
+    loading: "Tarifler yükleniyor...",
+    empty: "Henüz tarif yüklemedin.",
+    pendingStatus: "İncelemede",
+    publishedStatus: "Yayınlandı"
+  },
+  ru: {
+    welcome: "👋 С возвращением",
+    studio: "Студия автора",
+    total: "Всего рецептов",
+    pending: "На проверке",
+    published: "Опубликовано",
+    views: "Просмотры",
+    upload: "➕ Загрузить новый рецепт",
+    back: "🏠 Вернуться в Nili's Kitchen",
+    myRecipes: "Мои рецепты",
+    loading: "Рецепты загружаются...",
+    empty: "Вы еще не загрузили рецепты.",
+    pendingStatus: "На проверке",
+    publishedStatus: "Опубликовано"
+  },
+  ar: {
+    welcome: "👋 أهلاً بعودتك",
+    studio: "استوديو المبدع",
+    total: "إجمالي الوصفات",
+    pending: "قيد المراجعة",
+    published: "منشورة",
+    views: "المشاهدات",
+    upload: "➕ رفع وصفة جديدة",
+    back: "🏠 العودة إلى Nili's Kitchen",
+    myRecipes: "وصفاتي",
+    loading: "جارٍ تحميل الوصفات...",
+    empty: "لم تقم برفع أي وصفات بعد.",
+    pendingStatus: "قيد المراجعة",
+    publishedStatus: "منشورة"
+  },
+  es: {
+    welcome: "👋 Bienvenido de nuevo",
+    studio: "Estudio del creador",
+    total: "Recetas totales",
+    pending: "Pendientes",
+    published: "Publicadas",
+    views: "Vistas",
+    upload: "➕ Subir nueva receta",
+    back: "🏠 Volver a Nili's Kitchen",
+    myRecipes: "Mis recetas",
+    loading: "Cargando recetas...",
+    empty: "Aún no has subido ninguna receta.",
+    pendingStatus: "En revisión",
+    publishedStatus: "Publicada"
+  },
+  fr: {
+    welcome: "👋 Bon retour",
+    studio: "Studio créateur",
+    total: "Recettes totales",
+    pending: "En attente",
+    published: "Publiées",
+    views: "Vues",
+    upload: "➕ Ajouter une nouvelle recette",
+    back: "🏠 Retour à Nili's Kitchen",
+    myRecipes: "Mes recettes",
+    loading: "Chargement des recettes...",
+    empty: "Vous n’avez encore ajouté aucune recette.",
+    pendingStatus: "En révision",
+    publishedStatus: "Publiée"
+  },
+  pt: {
+    welcome: "👋 Bem-vindo de volta",
+    studio: "Estúdio do Criador",
+    total: "Total de receitas",
+    pending: "Pendentes",
+    published: "Publicadas",
+    views: "Visualizações",
+    upload: "➕ Enviar nova receita",
+    back: "🏠 Voltar para Nili's Kitchen",
+    myRecipes: "Minhas receitas",
+    loading: "Carregando receitas...",
+    empty: "Você ainda não enviou nenhuma receita.",
+    pendingStatus: "Em revisão",
+    publishedStatus: "Publicada"
+  }
+};
+
+function dt(key){
+  return dashTranslations[currentLang]?.[key] ||
+         dashTranslations.en?.[key] ||
+         key;
+}
+
 const creatorEmail =
   localStorage.getItem("creatorEmail") ||
   localStorage.getItem("niliCreatorEmail");
@@ -269,83 +405,96 @@ const creatorUsername =
   localStorage.getItem("niliCreatorUsername") ||
   "Creator";
 
-document.getElementById("creatorName").textContent =
-  creatorUsername + " · Creator Studio";
-
 if(!creatorEmail){
   location.href = "/creator.html";
 }
 
+function setText(id, text){
+  const el = document.getElementById(id);
+  if(el) el.textContent = text;
+}
+
+function applyDashboardLanguage(){
+  setText("dashWelcome", dt("welcome"));
+  setText("dashTotal", dt("total"));
+  setText("dashPending", dt("pending"));
+  setText("dashPublished", dt("published"));
+  setText("dashViews", dt("views"));
+  setText("dashUploadBtn", dt("upload"));
+  setText("dashBackBtn", dt("back"));
+  setText("dashMyRecipes", dt("myRecipes"));
+
+  const creatorNameEl = document.getElementById("creatorName");
+  if(creatorNameEl){
+    creatorNameEl.textContent =
+      creatorUsername + " · " + dt("studio");
+  }
+}
+
 async function loadDashboard(){
   try{
+    document.getElementById("recipeList").innerHTML =
+      `<div class="empty">${dt("loading")}</div>`;
+
     const res =
-    await fetch(`${API_BASE}/creator-dashboard/${encodeURIComponent(creatorEmail)}`);
+      await fetch(`${API_BASE}/creator-dashboard/${encodeURIComponent(creatorEmail)}`);
 
     const data =
-    await res.json();
+      await res.json();
 
     if(!data.success){
       throw new Error(data.error || "Dashboard failed");
     }
 
-    document.getElementById("totalRecipes").textContent =
-    data.stats.totalRecipes;
+    document.getElementById("totalRecipes").textContent = data.stats.totalRecipes;
+    document.getElementById("pendingRecipes").textContent = data.stats.pending;
+    document.getElementById("publishedRecipes").textContent = data.stats.published;
+    document.getElementById("totalViews").textContent = data.stats.views;
 
-    document.getElementById("pendingRecipes").textContent =
-    data.stats.pending;
-
-    document.getElementById("publishedRecipes").textContent =
-    data.stats.published;
-
-    document.getElementById("totalViews").textContent =
-    data.stats.views;
-
-    const allRecipes =
-    [
+    const allRecipes = [
       ...(data.pendingRecipes || []),
       ...(data.publishedRecipes || [])
     ];
 
     const recipeList =
-    document.getElementById("recipeList");
+      document.getElementById("recipeList");
 
     if(!allRecipes.length){
       recipeList.innerHTML =
-      `<div class="empty">You have not uploaded any recipes yet.</div>`;
+        `<div class="empty">${dt("empty")}</div>`;
       return;
     }
 
     recipeList.innerHTML =
-    allRecipes.map(recipe => {
+      allRecipes.map(recipe => {
+        const mediaUrl =
+          recipe.mediaUrl && recipe.mediaUrl.startsWith("http")
+            ? recipe.mediaUrl
+            : `${API_BASE}${recipe.mediaUrl || ""}`;
 
-      const mediaUrl =
-      recipe.mediaUrl && recipe.mediaUrl.startsWith("http")
-        ? recipe.mediaUrl
-        : `${API_BASE}${recipe.mediaUrl || ""}`;
-
-      return `
-        <div class="recipe-card">
-          <img src="${mediaUrl}" alt="${recipe.title || ""}">
-
-          <div>
-            <h3>${recipe.title || "-"}</h3>
-            <p>${recipe.ingredients || ""}</p>
-            <span class="status ${recipe.status || ""}">
-              ${recipe.status === "approved" ? "Published" : "Pending Review"}
-            </span>
+        return `
+          <div class="recipe-card">
+            <img src="${mediaUrl}" alt="${recipe.title || ""}">
+            <div>
+              <h3>${recipe.title || "-"}</h3>
+              <p>${recipe.ingredients || ""}</p>
+              <span class="status ${recipe.status || ""}">
+                ${recipe.status === "approved" ? dt("publishedStatus") : dt("pendingStatus")}
+              </span>
+            </div>
           </div>
-        </div>
-      `;
-    }).join("");
+        `;
+      }).join("");
 
   }catch(err){
     console.error("DASHBOARD ERROR:", err);
 
     document.getElementById("recipeList").innerHTML =
-    `<div class="empty">Dashboard could not be loaded.</div>`;
+      `<div class="empty">Dashboard could not be loaded.</div>`;
   }
 }
 
+applyDashboardLanguage();
 loadDashboard();
 </script>
 

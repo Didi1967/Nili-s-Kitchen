@@ -30,11 +30,7 @@ const ingredientModalItems = document.getElementById("ingredientModalItems");
 
 const LANG_STORAGE_KEY = "niliKitchenLangV2";
 
-let currentLang = "en";
-currentLang = "en";
-localStorage.removeItem(LANG_STORAGE_KEY);
-
- 3
+let currentLang = localStorage.getItem("niliLang") || "en";
 
 const ingredientTranslationCache = {};
 const ingredientTranslationLoading = {};
@@ -1935,21 +1931,32 @@ window.setCreatorMode = function(mode){
 const langSelectEl =
 document.getElementById("langSelect");
 
+function updateCreatorLinks(){
+  document
+    .querySelectorAll('a[href="creator.html"], a[href="/creator.html"], a[href="creator-dashboard.html"], a[href="/creator-dashboard.html"]')
+    .forEach(a => {
+      const cleanHref = a.getAttribute("href").split("?")[0];
+      a.setAttribute("href", cleanHref + "?lang=" + currentLang);
+    });
+}
+
 if(langSelectEl){
 
-  langSelectEl.value =
-  currentLang;
+  langSelectEl.value = currentLang;
 
   langSelectEl.addEventListener("change", () => {
 
-    currentLang =
-    langSelectEl.value;
+    currentLang = langSelectEl.value;
 
-    console.log("LANG SELECT CHANGED:", currentLang);
+    localStorage.setItem("niliLang", String(currentLang));
+    localStorage.setItem("lang", String(currentLang));
 
-    // localStorage.setItem("niliLang", currentLang);
+    console.log("APP selected currentLang:", currentLang);
+    console.log("APP localStorage niliLang:", localStorage.getItem("niliLang"));
+    console.log("APP localStorage lang:", localStorage.getItem("lang"));
 
     applyLanguage();
+    updateCreatorLinks();
 
     if(typeof renderChecklist === "function"){
       renderChecklist();
@@ -1960,130 +1967,16 @@ if(langSelectEl){
       ingredientModal.style.display === "flex" &&
       activeCategoryKey
     ){
-
       openIngredientModal(
-  activeCategoryKey,
-  CATEGORY_DATA[activeCategoryKey] || []
-);
-
+        activeCategoryKey,
+        CATEGORY_DATA[activeCategoryKey] || []
+      );
     }
 
   });
 
   applyLanguage();
-
-}
-
-/* =========================
-   CATEGORY MODAL FINAL FIX
-========================= */
-
-const categoryGridFinal =
-document.getElementById("categoryGrid");
-
-if(categoryGridFinal){
-
-  categoryGridFinal.addEventListener("click", (e) => {
-
-    const btn =
-    e.target.closest(".category-btn");
-
-    if(!btn) return;
-
-    e.preventDefault();
-    e.stopImmediatePropagation();
-
-    const key =
-    btn.dataset.category;
-
-    let items = [];
-
-if(window.NilisIngredients){
-
-  items = Object.values(window.NilisIngredients.ingredients || {})
-    .filter(item => item.category === key)
-    .map(item => item.id);
-
-}
-
-if(!items.length){
-
-  items =
-  CATEGORY_DATA[key] || [];
-
-}
-
-    console.log("FINAL CATEGORY KEY:", key);
-    console.log("FINAL CATEGORY ITEMS:", items);
-
-    document
-    .querySelectorAll(".category-btn")
-    .forEach(b => b.classList.remove("active"));
-
-    btn.classList.add("active");
-
-    openIngredientModal(key, items);
-
-  }, true);
-
-}
-
-setCreatorMode("signup");
-applyLanguage();
-
-const creatorContinueBtn =
-document.getElementById("creatorContinueBtn");
-
-if(creatorContinueBtn){
-
-  creatorContinueBtn.addEventListener("click", () => {
-
-    console.log("CREATOR CONTINUE CLICKED");
-
-    const usernameInput =
-    document.getElementById("creatorUsernameInput");
-
-    const emailInput =
-    document.getElementById("creatorEmailInput");
-
-    const passwordInput =
-    document.getElementById("creatorPasswordInput");
-
-    const username =
-    usernameInput ? usernameInput.value.trim() : "";
-
-    const emailOrUser =
-    emailInput ? emailInput.value.trim() : "";
-
-    const password =
-    passwordInput ? passwordInput.value.trim() : "";
-
-    if(creatorMode === "signup" && !username){
-      alert(t("alertUsername"));
-      return;
-    }
-
-    if(!emailOrUser){
-      alert(
-        creatorMode === "signup"
-          ? t("alertEmail")
-          : t("alertEmailOrUser")
-      );
-      return;
-    }
-
-    if(!password){
-      alert(t("alertPassword"));
-      return;
-    }
-
-    localStorage.setItem("creatorMode", creatorMode);
-    localStorage.setItem("creatorUsername", username);
-    localStorage.setItem("creatorEmailOrUser", emailOrUser);
-
-    window.location.href = `${window.location.origin}/creator-.html`;
-
-  });
+  updateCreatorLinks();
 
 }
 
@@ -2244,7 +2137,7 @@ window.goToCreatorPage = async function(){
     localStorage.setItem("creatorEmail", data.email || emailOrUser);
     localStorage.setItem("creatorEmailOrUser", data.email || emailOrUser);
 
-    window.location.href = "/creator-dashboard.html";
+    window.location.href = `${window.location.origin}/creator-dashboard.html?lang=${currentLang}`;
 
   }catch(err){
 
