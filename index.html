@@ -25,13 +25,30 @@
     👤 <span id="userMenuName">User</span>
   </button>
 
- <div id="userMenuDropdown" class="user-menu-dropdown">
-  <a id="userDashboardLink">Dashboard</a>
-<a id="userAddRecipeLink">Add Recipe</a>
-<button id="userFavoritesBtn">❤️ Favorites</button>
-<button type="button" id="userLogoutBtn" onclick="logoutUser()">
-  Logout
-</button>
+<div id="userMenuDropdown" class="user-menu-dropdown">
+
+  <a href="creator-dashboard.html" id="userDashboardLink">
+    Dashboard
+  </a>
+
+  <a href="creator.html" id="userAddRecipeLink">
+    Add Recipe
+  </a>
+
+  <button type="button" onclick="openFavoritesPage()"
+          id="userFavoritesBtn">
+    ❤️ Favorites
+  </button>
+
+  <a href="how-it-works.html" id="userHowLink">
+    How It Works
+  </a>
+
+  <button type="button" onclick="logoutUser()"
+          id="userLogoutBtn">
+    Logout
+  </button>
+
 </div>
 </div>
   <div class="lang-wrapper" id="langWrapper">
@@ -67,7 +84,7 @@
 </div>
 
       <div class="mobile-only mobile-hero-big">
-  <img src="YEMEK-6.jpeg" alt="">
+  <img src="YEMEK-2.jpg" alt="">
 
   <div class="mobile-hero-text">
     <span class="hero-badge-text">AI Powered Real Recipes</span>
@@ -110,7 +127,7 @@
   </div>
 
         <div class="mobile-only mobile-hero-small">
-          <img src="YEMEK-2.jpeg" alt="">
+          <img src="YEMEK-4.jpeg" alt="">
         </div>
 
        <div class="category-panel">
@@ -139,7 +156,7 @@
         </div>
 
                <div class="mobile-only mobile-hero-small">
-          <img src="YEMEK-5.jpeg" alt="">
+          <img src="YEMEK-6.jpeg" alt="">
         </div>
 
        <div class="creator-card compact-creator-card">
@@ -271,7 +288,7 @@
       <div class="hero-bg">
 
         <div class="hero-main-card">
-          <img src="YEMEK-6.jpeg" class="hero-main-img">
+          <img src="YEMEK-2.jpg" class="hero-main-img">
 
           <div class="hero-dark"></div>
 
@@ -283,8 +300,8 @@
         </div>
 
         <div class="hero-side-images">
-          <img src="YEMEK-2.jpeg">
-          <img src="YEMEK-5.jpeg">
+          <img src="YEMEK-4.jpeg">
+          <img src="YEMEK-6.jpeg">
         </div>
 
       </div>
@@ -362,6 +379,24 @@ window.setLang = function(lang){
     </button>
   </div>
 </div>
+<div id="howItWorksModal" class="how-modal">
+  <div class="how-box">
+    <button class="how-close" onclick="closeHowItWorks()">×</button>
 
+    <h2>👋 How Nili’s Kitchen Works</h2>
+
+    <div class="how-steps">
+      <p>1️⃣ Select ingredients from categories.</p>
+      <p>2️⃣ Add extra ingredients manually if you want.</p>
+      <p>3️⃣ Confirm your ingredients and tap Get Recipes.</p>
+      <p>4️⃣ Save your favorite recipes with a free account.</p>
+      <p>5️⃣ Creators can upload their own recipes.</p>
+    </div>
+
+    <button class="how-start-btn" onclick="closeHowItWorks()">
+      Start Exploring
+    </button>
+  </div>
+</div>
 </body>
 </html>

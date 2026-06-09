@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works | Nili's Kitchen</title>
+  <link rel="stylesheet" href="/style.css?v=3000">
+</head>
+
+<style>
+.how-page-body{
+  margin:0;
+  background:#f8f1e7;
+  font-family:Arial,sans-serif;
+  color:#182234;
+}
+
+.how-page{
+  max-width:900px;
+  margin:0 auto;
+  padding:28px 18px 60px;
+}
+
+.how-back{
+  display:inline-flex;
+  margin-bottom:18px;
+  text-decoration:none;
+  color:#9a3412;
+  font-weight:900;
+}
+
+.how-hero{
+  background:linear-gradient(135deg,#fff7ed,#ffffff);
+  border:1px solid #eadfce;
+  border-radius:28px;
+  padding:34px;
+  margin-bottom:22px;
+  box-shadow:0 18px 50px rgba(0,0,0,.08);
+}
+
+.how-hero h1{
+  font-size:38px;
+  margin:0 0 14px;
+}
+
+.how-hero p{
+  font-size:17px;
+  line-height:1.6;
+  color:#4b5563;
+  font-weight:700;
+}
+
+.how-card{
+  background:white;
+  border-radius:24px;
+  padding:26px;
+  margin-bottom:18px;
+  border:1px solid #eadfce;
+  box-shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+.how-card h2{
+  margin:0 0 18px;
+  font-size:26px;
+}
+
+.how-step{
+  padding:14px 0;
+  border-top:1px solid #f1e5d8;
+}
+
+.how-step h3{
+  margin:0 0 8px;
+  font-size:18px;
+}
+
+.how-step p,
+.how-note p{
+  margin:0;
+  line-height:1.6;
+  color:#4b5563;
+  font-weight:700;
+}
+
+.how-note{
+  background:#fff7ed;
+}
+
+@media(max-width:768px){
+  .how-hero{
+    padding:24px;
+  }
+
+  .how-hero h1{
+    font-size:30px;
+  }
+
+  .how-card{
+    padding:22px;
+  }
+}
+
+</style>
+
+<body class="how-page-body">
+
+  <main class="how-page">
+
+    <a id="backHomeLink" class="how-back" href="/">← Back</a>
+
+    <section class="how-hero">
+      <h1 id="howTitle"></h1>
+      <p id="howWelcome"></p>
+    </section>
+
+    <section class="how-card">
+      <h2 id="howWorksTitle"></h2>
+
+      <div class="how-step">
+        <h3 id="howStep1Title"></h3>
+        <p id="howStep1Text"></p>
+      </div>
+
+      <div class="how-step">
+        <h3 id="howStep2Title"></h3>
+        <p id="howStep2Text"></p>
+      </div>
+
+      <div class="how-step">
+        <h3 id="howStep3Title"></h3>
+        <p id="howStep3Text"></p>
+      </div>
+    </section>
+
+    <section class="how-card">
+      <h2 id="creatorTitle"></h2>
+
+      <div class="how-step">
+        <h3 id="creatorStep1Title"></h3>
+        <p id="creatorStep1Text"></p>
+      </div>
+
+      <div class="how-step">
+        <h3 id="creatorStep2Title"></h3>
+        <p id="creatorStep2Text"></p>
+      </div>
+
+      <div class="how-step">
+        <h3 id="creatorStep3Title"></h3>
+        <p id="creatorStep3Text"></p>
+      </div>
+    </section>
+
+    <section class="how-card how-note">
+      <h2 id="pointsTitle"></h2>
+      <p id="pointsText"></p>
+    </section>
+
+  </main>
+
+<script>
+const urlLang =
+  new URLSearchParams(window.location.search).get("lang");
+
+const currentLang =
+  urlLang ||
+  localStorage.getItem("niliLang") ||
+  localStorage.getItem("lang") ||
+  "en";
+
+localStorage.setItem("niliLang", currentLang);
+localStorage.setItem("lang", currentLang);
+
+const howTexts = {
+  en: {
+    back: "← Back",
+    title: "Welcome to Nili’s Kitchen AI",
+    welcome: "Nili’s Kitchen helps you cook smarter with the ingredients you already have. Select what is in your kitchen, get recipe ideas, save your favorites, and share your own recipes with the community.",
+    worksTitle: "How the site works",
+    step1Title: "1. Select your ingredients",
+    step1Text: "Choose ingredients from categories or add your own ingredients manually.",
+    step2Title: "2. Get recipe suggestions",
+    step2Text: "Confirm your ingredients and tap Get Recipes. Nili’s Kitchen will show recipe ideas based on your selections.",
+    step3Title: "3. Save your favorites",
+    step3Text: "Create a free account to save favorite recipes and access them again later.",
+    creatorTitle: "For creators",
+    creatorStep1Title: "1. Upload your recipe",
+    creatorStep1Text: "Creators can add their own recipes with photos or videos.",
+    creatorStep2Title: "2. Build your creator profile",
+    creatorStep2Text: "Your approved recipes may appear on Nili’s Kitchen with your creator name.",
+    creatorStep3Title: "3. Earn points",
+    creatorStep3Text: "Recipes can collect points through views, clicks, favorites, and user engagement.",
+    pointsTitle: "Points and future earning opportunity",
+    pointsText: "As Nili’s Kitchen grows and begins earning revenue from ads or other monetization methods, creators with strong recipe performance may have the opportunity to earn according to their points and engagement. This is a future opportunity, not a guaranteed income promise."
+  },
+
+  tr: {
+    back: "← Geri",
+    title: "Nili’s Kitchen AI’ye Hoş Geldiniz",
+    welcome: "Nili’s Kitchen, evinizdeki malzemelerle daha akıllı yemek yapmanıza yardımcı olur. Mutfağınızdaki malzemeleri seçin, tarif önerileri alın, favorilerinizi kaydedin ve kendi tariflerinizi toplulukla paylaşın.",
+    worksTitle: "Site nasıl çalışır?",
+    step1Title: "1. Malzemelerinizi seçin",
+    step1Text: "Kategorilerden malzeme seçebilir veya kendi malzemelerinizi manuel olarak ekleyebilirsiniz.",
+    step2Title: "2. Tarif önerileri alın",
+    step2Text: "Malzemelerinizi onaylayıp Get Recipes butonuna basın. Nili’s Kitchen seçtiğiniz malzemelere göre tarif önerileri gösterir.",
+    step3Title: "3. Favorilerinizi kaydedin",
+    step3Text: "Ücretsiz hesap oluşturarak favori tariflerinizi kaydedebilir ve daha sonra tekrar ulaşabilirsiniz.",
+    creatorTitle: "İçerik üreticileri için",
+    creatorStep1Title: "1. Tarifinizi yükleyin",
+    creatorStep1Text: "İçerik üreticileri kendi tariflerini fotoğraf veya video ile ekleyebilir.",
+    creatorStep2Title: "2. Creator profilinizi büyütün",
+    creatorStep2Text: "Onaylanan tarifleriniz Nili’s Kitchen’da creator adınızla yayınlanabilir.",
+    creatorStep3Title: "3. Puan biriktirin",
+    creatorStep3Text: "Tarifler görüntülenme, tıklanma, favoriye eklenme ve kullanıcı etkileşimleriyle puan toplayabilir.",
+    pointsTitle: "Puanlar ve gelecekte gelir fırsatı",
+    pointsText: "Nili’s Kitchen büyüyüp reklamlar veya farklı gelir modelleriyle kazanç sağlamaya başladığında, güçlü performans gösteren creator’lar puan ve etkileşimlerine göre gelir elde etme şansına sahip olabilir. Bu geleceğe dönük bir fırsattır, garanti gelir vaadi değildir."
+  }
+};
+
+function ht(key){
+  return howTexts[currentLang]?.[key] ||
+         howTexts.en[key] ||
+         key;
+}
+
+function setText(id, text){
+  const el = document.getElementById(id);
+  if(el) el.textContent = text;
+}
+
+setText("backHomeLink", ht("back"));
+setText("howTitle", ht("title"));
+setText("howWelcome", ht("welcome"));
+setText("howWorksTitle", ht("worksTitle"));
+setText("howStep1Title", ht("step1Title"));
+setText("howStep1Text", ht("step1Text"));
+setText("howStep2Title", ht("step2Title"));
+setText("howStep2Text", ht("step2Text"));
+setText("howStep3Title", ht("step3Title"));
+setText("howStep3Text", ht("step3Text"));
+setText("creatorTitle", ht("creatorTitle"));
+setText("creatorStep1Title", ht("creatorStep1Title"));
+setText("creatorStep1Text", ht("creatorStep1Text"));
+setText("creatorStep2Title", ht("creatorStep2Title"));
+setText("creatorStep2Text", ht("creatorStep2Text"));
+setText("creatorStep3Title", ht("creatorStep3Title"));
+setText("creatorStep3Text", ht("creatorStep3Text"));
+setText("pointsTitle", ht("pointsTitle"));
+setText("pointsText", ht("pointsText"));
+
+document.getElementById("backHomeLink").href =
+  "/?lang=" + currentLang;
+</script>
+
+</body>
+</html>

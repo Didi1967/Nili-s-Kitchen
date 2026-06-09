@@ -179,7 +179,15 @@ const translations = {
     menuAddRecipe: "Add Recipe",
     menuFavorites: "Favorites",
     menuLogout: "Logout",
+    howTitle: "👋 How Nili's Kitchen Works",
+howStep1: "1️⃣ Select ingredients from categories.",
+howStep2: "2️⃣ Add extra ingredients manually if you want.",
+howStep3: "3️⃣ Confirm your ingredients and tap Get Recipes.",
+howStep4: "4️⃣ Save your favorite recipes with a free account.",
+howStep5: "5️⃣ Creators can upload their own recipes.",
+howStart: "Start Exploring",
 
+menuHowItWorks: "How It Works",
 
    categories: {
   vegetables: "Vegetables",
@@ -267,6 +275,16 @@ const translations = {
     menuAddRecipe: "Tarif Ekle",
     menuFavorites: "Favoriler",
     menuLogout: "Çıkış Yap",
+    howTitle: "👋 Nili's Kitchen Nasıl Çalışır?",
+
+
+howStep1: "1️⃣ Kategorilerden malzemelerinizi seçin.",
+howStep2: "2️⃣ İsterseniz ekstra malzemeleri manuel ekleyin.",
+howStep3: "3️⃣ Malzemeleri onaylayın ve Tarifleri Getir'e basın.",
+howStep4: "4️⃣ Ücretsiz hesap ile favori tariflerinizi kaydedin.",
+howStep5: "5️⃣ İçerik üreticileri kendi tariflerini ekleyebilir.",
+howStart: "Keşfetmeye Başla",
+menuHowItWorks: "Nasıl Kullanılır",
 
 
    categories: {
@@ -354,6 +372,16 @@ const translations = {
     menuAddRecipe: "Добавить рецепт",
     menuFavorites: "Избранное",
     menuLogout: "Выйти",
+    menuHowItWorks: "Как это работает",
+
+    howTitle: "👋 Как работает Nili's Kitchen",
+    howStep1: "1️⃣ Выберите ингредиенты из категорий.",
+    howStep2: "2️⃣ При желании добавьте свои ингредиенты вручную.",
+    howStep3: "3️⃣ Подтвердите ингредиенты и нажмите Получить рецепты.",
+    howStep4: "4️⃣ Сохраняйте любимые рецепты с бесплатной учетной записью.",
+    howStep5: "5️⃣ Авторы могут добавлять собственные рецепты.",
+    howStart: "Начать",
+    
 
    categories: {
   vegetables: "Овощи",
@@ -440,6 +468,16 @@ const translations = {
     menuAddRecipe: "Ajouter une recette",
     menuFavorites: "Favoris",
     menuLogout: "Déconnexion",
+    menuHowItWorks: "Comment ça marche",
+
+    howTitle: "👋 Comment fonctionne Nili's Kitchen",
+    howStep1: "1️⃣ Sélectionnez vos ingrédients par catégorie.",
+    howStep2: "2️⃣ Ajoutez d'autres ingrédients manuellement si nécessaire.",
+    howStep3: "3️⃣ Confirmez vos ingrédients et cliquez sur Obtenir des recettes.",
+    howStep4: "4️⃣ Enregistrez vos recettes préférées avec un compte gratuit.",
+    howStep5: "5️⃣ Les créateurs peuvent publier leurs propres recettes.",
+    howStart: "Commencer",
+ 
 
 
     categories: {
@@ -527,8 +565,15 @@ const translations = {
     menuAddRecipe: "Agregar receta",
     menuFavorites: "Favoritos",
     menuLogout: "Cerrar sesión",
-
-
+    menuHowItWorks: "Como funciona",
+    
+    howTitle: "👋 Cómo funciona Nili's Kitchen",
+    howStep1: "1️⃣ Selecciona ingredientes por categorías.",
+    howStep2: "2️⃣ Añade ingredientes adicionales manualmente si lo deseas.",
+    howStep3: "3️⃣ Confirma los ingredientes y pulsa Obtener Recetas.",
+    howStep4: "4️⃣ Guarda tus recetas favoritas con una cuenta gratuita.",
+    howStep5: "5️⃣ Los creadores pueden subir sus propias recetas.",
+    howStart: "Comenzar",
 
    categories: {
   vegetables: "Verduras",
@@ -615,6 +660,15 @@ const translations = {
     menuAddRecipe: "Adicionar receita",
     menuFavorites: "Favoritos",
     menuLogout: "Sair",
+    menuHowItWorks: "Como funciona", 
+
+    howTitle: "👋 Como funciona o Nili's Kitchen",
+    howStep1: "1️⃣ Selecione ingredientes por categorias.",
+    howStep2: "2️⃣ Adicione ingredientes extras manualmente se desejar.",
+    howStep3: "3️⃣ Confirme os ingredientes e toque em Obter Receitas.",
+    howStep4: "4️⃣ Salve suas receitas favoritas com uma conta gratuita.",
+    howStep5: "5️⃣ Criadores podem enviar suas próprias receitas.",
+    howStart: "Começar",
 
 
     categories: {
@@ -702,6 +756,15 @@ const translations = {
     menuAddRecipe: "إضافة وصفة",
     menuFavorites: "المفضلة",
     menuLogout: "تسجيل الخروج",
+    menuHowItWorks: "كيف يعمل",
+
+    howTitle: "👋 كيف يعمل Nili's Kitchen",
+    howStep1: "1️⃣ اختر المكونات من الفئات المختلفة.",
+    howStep2: "2️⃣ أضف مكونات إضافية يدويًا إذا أردت.",
+    howStep3: "3️⃣ أكد المكونات واضغط على الحصول على الوصفات.",
+    howStep4: "4️⃣ احفظ وصفاتك المفضلة بحساب مجاني.",
+    howStep5: "5️⃣ يمكن للمنشئين إضافة وصفاتهم الخاصة.",
+    howStart: "ابدأ الاستكشاف",
 
     categories: {
   vegetables: "خضروات",
@@ -865,6 +928,16 @@ setText("userDashboardLink", t("menuDashboard"));
 setText("userAddRecipeLink", t("menuAddRecipe"));
 setText("userFavoritesBtn", "❤️ " + t("menuFavorites"));
 setText("userLogoutBtn", t("menuLogout"));
+
+setText("howTitle", t("howTitle"));
+setText("howStep1", t("howStep1"));
+setText("howStep2", t("howStep2"));
+setText("howStep3", t("howStep3"));
+setText("howStep4", t("howStep4"));
+setText("howStep5", t("howStep5"));
+setText("howStartBtn", t("howStart"));
+
+setText("userHowLink", t("menuHowItWorks"));
 
   const title =
   document.getElementById("creatorCardTitle");
@@ -2421,6 +2494,9 @@ const addRecipeLink = document.getElementById("userAddRecipeLink");
 const favoritesBtn = document.getElementById("userFavoritesBtn");
 const logoutBtn = document.getElementById("userLogoutBtn");
 
+const howLink = document.getElementById("userHowLink"); 
+if(howLink) howLink.textContent = t("menuHowItWorks");
+
 if(dashboardLink) dashboardLink.textContent = t("menuDashboard");
 if(addRecipeLink) addRecipeLink.textContent = t("menuAddRecipe");
 if(favoritesBtn) favoritesBtn.textContent = "❤️ " + t("menuFavorites");
@@ -2713,6 +2789,7 @@ function initUserSessionMenu(){
 
   const dashLink = document.getElementById("userDashboardLink");
   const addLink = document.getElementById("userAddRecipeLink");
+  const howLink = document.getElementById("userHowLink");
 
   if(dashLink){
     dashLink.href = "creator-dashboard.html?lang=" + currentLang;
@@ -2721,6 +2798,10 @@ function initUserSessionMenu(){
   if(addLink){
     addLink.href = "creator.html?lang=" + currentLang;
   }
+
+  if(howLink){
+  howLink.href = "how-it-works.html?lang=" + currentLang;
+}
 }
 
 const userMenuBtn = document.getElementById("userMenuBtn");
@@ -2731,7 +2812,7 @@ if(userMenuBtn && userMenu){
     userMenu.classList.toggle("open");
   });
 
-  setText("userDashboardLink", t("menuDashboard"));
+setText("userDashboardLink", t("menuDashboard"));
 setText("userAddRecipeLink", t("menuAddRecipe"));
 setText("userFavoritesBtn", "❤️ " + t("menuFavorites"));
 setText("userLogoutBtn", t("menuLogout"));
@@ -2800,3 +2881,126 @@ function openFavoritesPage(){
   recipePage = 1;
   renderRecipes(favorites);
 }
+
+function openHowItWorks(){
+  const modal = document.getElementById("howItWorksModal");
+  if(modal){
+    modal.style.display = "flex";
+  }
+}
+
+function closeHowItWorks(){
+  const modal = document.getElementById("howItWorksModal");
+  if(modal){
+    modal.style.display = "none";
+  }
+
+  localStorage.setItem("niliHowSeen", "1");
+}
+
+window.addEventListener("load", () => {
+  if(!localStorage.getItem("niliHowSeen")){
+    setTimeout(openHowItWorks, 700);
+  }
+});
+
+async function autoDetectLanguageAndShowIntro(){
+  if(localStorage.getItem("niliLangDetected")){
+    return;
+  }
+
+  try{
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+
+    const country = data.country_code;
+
+    const langMap = {
+
+  // Turkish
+  TR: "tr",
+
+  // Russian
+  RU: "ru",
+  KZ: "ru",
+  BY: "ru",
+  KG: "ru",
+  TJ: "ru",
+
+  // French
+  FR: "fr",
+  BE: "fr",
+  MC: "fr",
+  LU: "fr",
+
+  // Spanish
+  ES: "es",
+  MX: "es",
+  AR: "es",
+  CL: "es",
+  CO: "es",
+  PE: "es",
+  UY: "es",
+  PY: "es",
+  BO: "es",
+  EC: "es",
+  VE: "es",
+  CR: "es",
+  PA: "es",
+  DO: "es",
+  GT: "es",
+  HN: "es",
+  SV: "es",
+  NI: "es",
+
+  // Portuguese
+  PT: "pt",
+  BR: "pt",
+
+  // Arabic
+  SA: "ar",
+  AE: "ar",
+  EG: "ar",
+  QA: "ar",
+  KW: "ar",
+  BH: "ar",
+  OM: "ar",
+  JO: "ar",
+  LB: "ar",
+  IQ: "ar",
+  MA: "ar",
+  DZ: "ar",
+  TN: "ar",
+
+  // English fallback countries
+  US: "en",
+  CA: "en",
+  GB: "en",
+  AU: "en",
+  NZ: "en",
+  IE: "en",
+  ZA: "en"
+};
+
+    const detectedLang =
+  langMap[country] || "en";
+
+    setLang(detectedLang);
+
+    localStorage.setItem("niliLang", lang);
+
+    setTimeout(() => {
+      openHowItWorks();
+    }, 500);
+
+  }catch(err){
+    setLang("en");
+    localStorage.setItem("niliLangDetected", "1");
+
+    setTimeout(() => {
+      openHowItWorks();
+    }, 500);
+  }
+}
+
+autoDetectLanguageAndShowIntro();

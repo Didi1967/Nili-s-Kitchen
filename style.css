@@ -2162,4 +2162,62 @@ html[dir="rtl"] .hero-content{
   }
 
 }
+
+.how-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999999;
+  padding:18px;
+}
+
+.how-box{
+  width:100%;
+  max-width:440px;
+  background:white;
+  border-radius:28px;
+  padding:28px;
+  position:relative;
+  box-shadow:0 25px 80px rgba(0,0,0,.25);
+}
+
+.how-close{
+  position:absolute;
+  top:14px;
+  right:14px;
+  border:none;
+  background:#f3f4f6;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.how-box h2{
+  margin:10px 0 18px;
+  font-size:26px;
+}
+
+.how-steps p{
+  margin:10px 0;
+  font-weight:800;
+  color:#374151;
+  line-height:1.45;
+}
+
+.how-start-btn{
+  width:100%;
+  margin-top:18px;
+  height:48px;
+  border:none;
+  border-radius:999px;
+  background:#f97316;
+  color:white;
+  font-weight:900;
+  cursor:pointer;
+}
  
