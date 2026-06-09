@@ -25,11 +25,14 @@
     👤 <span id="userMenuName">User</span>
   </button>
 
-  <div id="userMenuDropdown" class="user-menu-dropdown">
-    <a href="creator-dashboard.html" id="userDashboardLink">Dashboard</a>
-    <a href="creator.html" id="userAddRecipeLink">Add Recipe</a>
-    <button type="button" onclick="logoutUser()">Logout</button>
-  </div>
+ <div id="userMenuDropdown" class="user-menu-dropdown">
+  <a id="userDashboardLink">Dashboard</a>
+<a id="userAddRecipeLink">Add Recipe</a>
+<button id="userFavoritesBtn">❤️ Favorites</button>
+<button type="button" id="userLogoutBtn" onclick="logoutUser()">
+  Logout
+</button>
+</div>
 </div>
   <div class="lang-wrapper" id="langWrapper">
     <button id="langBtn" class="lang-btn" onclick="toggleLangMenu()">

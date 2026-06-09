@@ -1739,6 +1739,67 @@ app.post("/admin/delete-recipe/:id", (req, res) => {
   }
 });
 
+app.post("/user/favorites", (req, res) => {
+  try{
+    const { email, recipe } = req.body;
+
+    if(!email || !recipe || !recipe.id){
+      return res.status(400).json({
+        success:false,
+        error:"email and recipe required"
+      });
+    }
+
+    const data = readFavorites();
+
+    if(!data[email]){
+      data[email] = [];
+    }
+
+    const exists =
+      data[email].some(item => String(item.id) === String(recipe.id));
+
+    if(exists){
+      data[email] =
+        data[email].filter(item => String(item.id) !== String(recipe.id));
+    }else{
+      data[email].push(recipe);
+    }
+
+    writeFavorites(data);
+
+    res.json({
+      success:true,
+      favorites:data[email]
+    });
+
+  }catch(err){
+    console.log("FAVORITES ERROR:", err);
+    res.status(500).json({
+      success:false,
+      error:"Favorites failed"
+    });
+  }
+});
+
+app.get("/user/favorites/:email", (req, res) => {
+  try{
+    const data = readFavorites();
+    const email = req.params.email;
+
+    res.json({
+      success:true,
+      favorites:data[email] || []
+    });
+
+  }catch(err){
+    res.status(500).json({
+      success:false,
+      error:"Favorites load failed"
+    });
+  }
+});
+
 
 function normalizeText(value) {
   return String(value || "")

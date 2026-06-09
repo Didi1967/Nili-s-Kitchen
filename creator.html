@@ -260,14 +260,26 @@
       ></textarea>
     </label>
 
-    <label>
-      <span data-i18n="uploadMedia">Upload food photo or video</span>
-      <input
-        name="media"
-        type="file"
-        accept="image/*,video/*"
-        required
-      >
+   <label>
+  <span data-i18n="uploadMedia">Upload food photo or video</span>
+
+  <label for="recipeMediaInput" class="custom-upload-btn" data-i18n="chooseFile">
+    Choose File
+  </label>
+
+  <span class="selected-file-name" data-i18n="noFileSelected">
+    No file selected
+  </span>
+
+  <input
+    id="recipeMediaInput"
+    name="media"
+    type="file"
+    accept="image/*,video/*"
+    required
+    hidden
+  >
+
     </label>
 
     <div class="creator-actions">
@@ -325,7 +337,9 @@ const creatorTranslations = {
     clear: "Clear",
     submitting: "Submitting recipe for review...",
     submitted: "Recipe submitted for review. Thank you!",
-    submitFailed: "Submit failed."
+    submitFailed: "Submit failed.",
+    chooseFile: "Choose File",
+    noFileSelected: "No file selected",
   },
 
   tr: {
@@ -349,7 +363,9 @@ const creatorTranslations = {
     clear: "Temizle",
     submitting: "Tarif inceleme için gönderiliyor...",
     submitted: "Tarif incelemeye gönderildi. Teşekkürler!",
-    submitFailed: "Gönderim başarısız."
+    submitFailed: "Gönderim başarısız.",
+    chooseFile: "Dosya Seç",
+    noFileSelected: "Dosya seçilmedi",
   },
 
   ru: {
@@ -373,7 +389,10 @@ const creatorTranslations = {
     clear: "Очистить",
     submitting: "Рецепт отправляется на проверку...",
     submitted: "Рецепт отправлен на проверку. Спасибо!",
-    submitFailed: "Не удалось отправить."
+    submitFailed: "Не удалось отправить.",
+    chooseFile: "Выбрать файл",
+    noFileSelected: "Файл не выбран",
+
   },
 
   ar: {
@@ -397,7 +416,9 @@ const creatorTranslations = {
     clear: "مسح",
     submitting: "يتم إرسال الوصفة للمراجعة...",
     submitted: "تم إرسال الوصفة للمراجعة. شكراً لك!",
-    submitFailed: "فشل الإرسال."
+    submitFailed: "فشل الإرسال.",
+    chooseFile: "اختر ملف",
+    noFileSelected: "لم يتم اختيار ملف",
   },
 
   es: {
@@ -421,7 +442,9 @@ const creatorTranslations = {
     clear: "Limpiar",
     submitting: "Enviando receta para revisión...",
     submitted: "Receta enviada para revisión. ¡Gracias!",
-    submitFailed: "Error al enviar."
+    submitFailed: "Error al enviar.",
+    chooseFile: "Seleccionar archivo",
+    noFileSelected: "Ningún archivo seleccionado",
   },
 
   fr: {
@@ -445,7 +468,9 @@ const creatorTranslations = {
     clear: "Effacer",
     submitting: "Envoi de la recette pour vérification...",
     submitted: "Recette envoyée pour vérification. Merci !",
-    submitFailed: "Échec de l’envoi."
+    submitFailed: "Échec de l’envoi.",
+    chooseFile: "Choisir un fichier",
+    noFileSelected: "Aucun fichier sélectionné",
   },
 
   pt: {
@@ -469,7 +494,9 @@ const creatorTranslations = {
     clear: "Limpar",
     submitting: "Enviando receita para revisão...",
     submitted: "Receita enviada para revisão. Obrigado!",
-    submitFailed: "Falha ao enviar."
+    submitFailed: "Falha ao enviar.",
+    chooseFile: "Selecionar arquivo",
+    noFileSelected: "Nenhum arquivo selecionado",
   }
 };
 
@@ -532,6 +559,28 @@ function setPlaceholder(id, text){
 
 
     applyCreatorLanguage();  
+
+    const recipeMediaInput =
+  document.getElementById("recipeMediaInput");
+
+const selectedFileName =
+  document.getElementById("selectedFileName");
+
+if(recipeMediaInput && selectedFileName){
+
+  recipeMediaInput.addEventListener("change", () => {
+
+    if(recipeMediaInput.files.length){
+      selectedFileName.textContent =
+        recipeMediaInput.files[0].name;
+    }else{
+      selectedFileName.textContent =
+        ct("noFileSelected");
+    }
+
+  });
+
+}
 
     creatorForm.addEventListener("submit", async (e) => {
       e.preventDefault();

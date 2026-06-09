@@ -175,6 +175,10 @@ const translations = {
     ingredientDetailsUnavailable: "Ingredient details unavailable",
     timeUnavailable: "Time unavailable",
     serviceTemporaryUnavailable: "Service is temporarily unavailable due to a technical issue. Please try again later.",
+    menuDashboard: "Dashboard",
+    menuAddRecipe: "Add Recipe",
+    menuFavorites: "Favorites",
+    menuLogout: "Logout",
 
 
    categories: {
@@ -259,6 +263,11 @@ const translations = {
     ingredientDetailsUnavailable: "Malzeme detayları mevcut değil",
     timeUnavailable: "Süre bilgisi mevcut değil",
     serviceTemporaryUnavailable: "Teknik bir sorun nedeniyle hizmet şu anda geçici olarak kullanılamıyor. Lütfen daha sonra tekrar deneyiniz.",
+    menuDashboard: "Panel",
+    menuAddRecipe: "Tarif Ekle",
+    menuFavorites: "Favoriler",
+    menuLogout: "Çıkış Yap",
+
 
    categories: {
   vegetables: "Sebzeler",
@@ -341,6 +350,10 @@ const translations = {
     ingredientDetailsUnavailable: "Детали ингредиентов недоступны",
     timeUnavailable: "Время недоступно",
     serviceTemporaryUnavailable:"Сервис временно недоступен из-за технической проблемы. Пожалуйста, попробуйте позже.",
+    menuDashboard: "Панель",
+    menuAddRecipe: "Добавить рецепт",
+    menuFavorites: "Избранное",
+    menuLogout: "Выйти",
 
    categories: {
   vegetables: "Овощи",
@@ -423,7 +436,10 @@ const translations = {
     ingredientDetailsUnavailable: "Détails des ingrédients indisponibles",
     timeUnavailable: "Temps indisponible",
     serviceTemporaryUnavailable:"Le service est temporairement indisponible en raison d’un problème technique. Veuillez réessayer plus tard.",
-    
+    menuDashboard: "Tableau de bord",
+    menuAddRecipe: "Ajouter une recette",
+    menuFavorites: "Favoris",
+    menuLogout: "Déconnexion",
 
 
     categories: {
@@ -507,6 +523,12 @@ const translations = {
     ingredientDetailsUnavailable: "Detalles de ingredientes no disponibles",
     timeUnavailable: "Tiempo no disponible",
     serviceTemporaryUnavailable:"El servicio no está disponible temporalmente debido a un problema técnico. Por favor, inténtelo de nuevo más tarde.",
+    menuDashboard: "Panel",
+    menuAddRecipe: "Agregar receta",
+    menuFavorites: "Favoritos",
+    menuLogout: "Cerrar sesión",
+
+
 
    categories: {
   vegetables: "Verduras",
@@ -589,6 +611,11 @@ const translations = {
     ingredientDetailsUnavailable: "Detalhes dos ingredientes indisponíveis",
     timeUnavailable: "Tempo indisponível",
     serviceTemporaryUnavailable:"O serviço está temporariamente indisponível devido a um problema técnico. Por favor, tente novamente mais tarde.",
+    menuDashboard: "Painel",
+    menuAddRecipe: "Adicionar receita",
+    menuFavorites: "Favoritos",
+    menuLogout: "Sair",
+
 
     categories: {
   vegetables: "Vegetais",
@@ -671,6 +698,10 @@ const translations = {
     ingredientDetailsUnavailable: "تفاصيل المكونات غير متوفرة",
     timeUnavailable: "وقت التحضير غير متوفر",
     serviceTemporaryUnavailable:"الخدمة غير متاحة مؤقتًا بسبب مشكلة تقنية. يرجى المحاولة مرة أخرى لاحقًا.",
+    menuDashboard: "لوحة التحكم",
+    menuAddRecipe: "إضافة وصفة",
+    menuFavorites: "المفضلة",
+    menuLogout: "تسجيل الخروج",
 
     categories: {
   vegetables: "خضروات",
@@ -830,6 +861,10 @@ setText(".manual-panel .panel-title", t("manualTitle"));
   setText("#creatorCardTitle", t("becomeCreator"));
 setText("#creatorCardDesc", t("creatorDesc"));
 setText("#footerNoteText", t("footerNote"));
+setText("userDashboardLink", t("menuDashboard"));
+setText("userAddRecipeLink", t("menuAddRecipe"));
+setText("userFavoritesBtn", "❤️ " + t("menuFavorites"));
+setText("userLogoutBtn", t("menuLogout"));
 
   const title =
   document.getElementById("creatorCardTitle");
@@ -1856,6 +1891,34 @@ window.closeModal = function(){
 
 }
 
+function getFavoritesFile(){
+  return path.join(__dirname, "data", "favorites.json");
+}
+
+function readFavorites(){
+  const file = getFavoritesFile();
+
+  const dir = path.dirname(file);
+  if(!fs.existsSync(dir)){
+    fs.mkdirSync(dir, { recursive: true });
+  }
+
+  if(!fs.existsSync(file)){
+    fs.writeFileSync(file, "{}");
+  }
+
+  return JSON.parse(fs.readFileSync(file, "utf8"));
+}
+
+function writeFavorites(data){
+  const file = getFavoritesFile();
+
+  fs.writeFileSync(
+    file,
+    JSON.stringify(data, null, 2)
+  );
+}
+
 function renderChecklist(){
 
   const tray =
@@ -1959,6 +2022,8 @@ function closeSelectedTray(){
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+
+  loadUserFavorites();
 
   selected = [];
 
@@ -2351,6 +2416,16 @@ window.setLang = function(lang){
 
   applyLanguage();
 
+const dashboardLink = document.getElementById("userDashboardLink");
+const addRecipeLink = document.getElementById("userAddRecipeLink");
+const favoritesBtn = document.getElementById("userFavoritesBtn");
+const logoutBtn = document.getElementById("userLogoutBtn");
+
+if(dashboardLink) dashboardLink.textContent = t("menuDashboard");
+if(addRecipeLink) addRecipeLink.textContent = t("menuAddRecipe");
+if(favoritesBtn) favoritesBtn.textContent = "❤️ " + t("menuFavorites");
+if(logoutBtn) logoutBtn.textContent = t("menuLogout");
+
 if(document.body.classList.contains("show-recipes-page")){
   renderRecipes(currentRecipes);
 }
@@ -2379,6 +2454,39 @@ if(
 
 if(typeof updateCreatorLinks === "function"){
   updateCreatorLinks();
+}
+
+applyLanguage();
+initUserSessionMenu();
+
+if(typeof initUserSessionMenu === "function"){
+  initUserSessionMenu();
+}
+
+if(document.body.classList.contains("show-recipes-page") && currentRecipes.length){
+  renderRecipes(currentRecipes);
+}
+
+if(modal && modal.style.display === "flex"){
+  const id = location.hash.replace("#recipe-", "");
+  if(id){
+    openRecipe(id);
+  }
+}
+
+if(typeof renderChecklist === "function"){
+  renderChecklist();
+}
+
+if(
+  ingredientModal &&
+  ingredientModal.style.display === "flex" &&
+  activeCategoryKey
+){
+  openIngredientModal(
+    activeCategoryKey,
+    CATEGORY_DATA[activeCategoryKey] || []
+  );
 }
 };
 
@@ -2419,17 +2527,51 @@ function saveFavorites(favorites){
 
 function toggleFavorite(recipeId){
 
-  if(!isUserLoggedIn()){
+  const email =
+  localStorage.getItem("creatorEmail") ||
+  localStorage.getItem("niliUserEmail");
+
+if(!email){
   openSignupInvite();
   return;
 }
+
+  if(!isUserLoggedIn()){
+    openSignupInvite();
+    return;
+  }
+
   let favorites = getFavorites();
 
-  if(favorites.includes(recipeId)){
-    favorites = favorites.filter(id => id !== recipeId);
-  }else{
-    favorites.push(recipeId);
+  const recipe =
+    currentRecipes.find(r => String(r.id) === String(recipeId));
+
+  const exists =
+    favorites.some(item => String(item.id) === String(recipeId));
+
+  if(exists){
+    favorites =
+      favorites.filter(item => String(item.id) !== String(recipeId));
+  }else if(recipe){
+    favorites.push(recipe);
   }
+
+  if(recipe){
+
+  fetch("/user/favorites", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email,
+      recipe
+    })
+  }).catch(err =>
+    console.log("FAVORITE SAVE ERROR:", err)
+  );
+
+}
 
   saveFavorites(favorites);
   renderFavoritesUI();
@@ -2440,15 +2582,44 @@ function renderFavoritesUI(){
 
   document.querySelectorAll(".favorite-btn").forEach(btn => {
     const id = btn.dataset.recipeId;
-    const active = favorites.includes(id);
+
+    const active =
+      favorites.some(item => String(item.id) === String(id));
 
     btn.textContent = active ? "❤️" : "🤍";
     btn.classList.toggle("active", active);
   });
 }
 
-function saveCurrentPage(pageName){
-  localStorage.setItem("niliLastPage", pageName);
+async function loadUserFavorites(){
+
+  const email =
+    localStorage.getItem("creatorEmail") ||
+    localStorage.getItem("niliUserEmail");
+
+  if(!email) return;
+
+  try{
+
+    const res =
+      await fetch(
+        `/user/favorites/${encodeURIComponent(email)}`
+      );
+
+    const data =
+      await res.json();
+
+    if(data.success){
+      localStorage.setItem(
+        "niliFavorites",
+        JSON.stringify(data.favorites || [])
+      );
+    }
+
+  }catch(err){
+    console.log("LOAD FAVORITES ERROR:", err);
+  }
+
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -2559,6 +2730,11 @@ if(userMenuBtn && userMenu){
   userMenuBtn.addEventListener("click", () => {
     userMenu.classList.toggle("open");
   });
+
+  setText("userDashboardLink", t("menuDashboard"));
+setText("userAddRecipeLink", t("menuAddRecipe"));
+setText("userFavoritesBtn", "❤️ " + t("menuFavorites"));
+setText("userLogoutBtn", t("menuLogout"));
 }
 
 function logoutUser(){
@@ -2566,13 +2742,24 @@ function logoutUser(){
   localStorage.removeItem("creatorEmail");
   localStorage.removeItem("creatorEmailOrUser");
   localStorage.removeItem("creatorMode");
+  localStorage.removeItem("niliCreatorUsername");
+  localStorage.removeItem("niliCreatorEmail");
   localStorage.removeItem("niliUserEmail");
   localStorage.removeItem("niliUsername");
+  localStorage.removeItem("niliFavorites");
 
-  location.reload();
+  const userMenu = document.getElementById("userMenu");
+  if(userMenu){
+    userMenu.style.display = "none";
+    userMenu.classList.remove("open");
+  }
+
+  location.href = "/?lang=" + currentLang;
 }
 
 initUserSessionMenu();
+
+loadUserFavorites();
 
 function backToHome(){
   history.replaceState(null, "", location.pathname);
@@ -2600,4 +2787,16 @@ function backToHome(){
 function nextRecipePage(){
   recipePage++;
   renderRecipes(currentRecipes);
+}
+
+function openFavoritesPage(){
+  const favorites = getFavorites();
+
+  if(!favorites.length){
+    alert("No favorite recipes yet.");
+    return;
+  }
+
+  recipePage = 1;
+  renderRecipes(favorites);
 }
