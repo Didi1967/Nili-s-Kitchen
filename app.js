@@ -1009,7 +1009,309 @@ joinNiliBtn: "انضم مجانًا",
   nuts_seeds: "مكسرات",
   sweeteners_baking: "مخبوزات"
 }
-  }
+  },
+
+  de: {
+appSubtitle: "KI-Rezeptassistent",
+scanTitle: "Zutaten per Foto scannen",
+scanSubtitle: "Laden Sie ein Foto hoch und lassen Sie die KI die Zutaten erkennen",
+manualTitle: "Zutaten manuell hinzufügen",
+manualPlaceholder: "Zutat hinzufügen",
+categoryTitle: "Zutaten nach Kategorie hinzufügen",
+
+selectedTitle: "Ausgewählte Zutaten",
+selectedDesc: "Überprüfen Sie Ihre Zutaten, bevor Sie Rezepte suchen.",
+confirmIngredients: "Zutaten bestätigen",
+getRecipes: "Rezepte anzeigen",
+clearSelected: "Auswahl löschen",
+emptySelected: "Noch keine Zutaten ausgewählt.",
+
+signup: "Registrieren",
+login: "Anmelden",
+becomeCreator: "Creator werden",
+creatorDesc: "Laden Sie Rezepte hoch und verdienen Sie künftig Belohnungen.",
+creatorLogin: "Creator-Anmeldung",
+creatorLoginDesc: "Weiter zu Ihrer Rezept-Upload-Seite.",
+username: "Benutzername",
+email: "E-Mail-Adresse",
+emailOrUsername: "E-Mail oder Benutzername",
+password: "Passwort",
+show: "Anzeigen",
+hide: "Ausblenden",
+continue: "Weiter",
+
+alertIngredient: "Bitte fügen Sie mindestens eine Zutat hinzu.",
+alertConfirm: "Bitte bestätigen Sie zuerst Ihre Zutaten.",
+alertUsername: "Bitte geben Sie einen Benutzernamen ein.",
+alertEmail: "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+alertEmailOrUser: "Bitte geben Sie Ihre E-Mail-Adresse oder Ihren Benutzernamen ein.",
+alertPassword: "Bitte geben Sie Ihr Passwort ein.",
+
+statusUpload: "Zutatenfoto hochladen",
+statusAdded: "Zutat hinzugefügt",
+statusAnalyzing: "Foto wird analysiert...",
+statusDetected: "Zutaten erkannt",
+statusNoIngredients: "Keine Zutaten gefunden",
+statusAnalyzeFailed: "Analyse fehlgeschlagen",
+
+loadingRecipes: "Rezepte werden geladen...",
+recipesFailed: "Rezepte konnten nicht geladen werden",
+noRecipesFound: "Keine Rezepte gefunden",
+
+usesIngredients: "Verwendet",
+ingredientsWord: "Zutaten",
+
+recipeNotFound: "Rezept nicht gefunden",
+recipeTitleFallback: "Rezept",
+timeMin: "Min",
+ingredientsTitle: "Zutaten",
+instructionsTitle: "Anleitung",
+instructionsUnavailable: "Rezeptanleitung nicht verfügbar.",
+
+heroBadge: "KI-gestützte echte Rezepte",
+heroTitle: "Intelligenter kochen mit dem, was Sie bereits haben",
+heroDesc: "Laden Sie Zutaten hoch, wählen Sie aus, was Sie haben, und entdecken Sie sofort echte Rezepte.",
+
+galleryBtn: "Aus Galerie wählen",
+
+footerNote: "© 2026 Nili's Kitchen AI. Alle Rechte vorbehalten.",
+
+ingredientDetailsUnavailable: "Zutatendetails nicht verfügbar",
+timeUnavailable: "Zeit nicht verfügbar",
+
+serviceTemporaryUnavailable: "Der Dienst ist aufgrund eines technischen Problems vorübergehend nicht verfügbar. Bitte versuchen Sie es später erneut.",
+
+menuDashboard: "Dashboard",
+menuAddRecipe: "Rezept hinzufügen",
+menuFavorites: "Favoriten",
+menuLogout: "Abmelden",
+menuHowItWorks: "So funktioniert es",
+
+howTitle: "👋 So funktioniert Nili's Kitchen",
+howStep1: "1️⃣ Zutaten aus Kategorien auswählen.",
+howStep2: "2️⃣ Weitere Zutaten manuell hinzufügen.",
+howStep3: "3️⃣ Zutaten bestätigen und auf Rezepte anzeigen tippen.",
+howStep4: "4️⃣ Speichern Sie Lieblingsrezepte mit einem kostenlosen Konto.",
+howStep5: "5️⃣ Creator können eigene Rezepte hochladen.",
+howStart: "Jetzt entdecken",
+howMoreInfo: "Mehr über Nili's Kitchen erfahren →",
+
+pleaseWait: "Bitte warten",
+
+loginButton: "Anmelden",
+
+signupTitle: "Erstellen Sie Ihr kostenloses Konto",
+signupDesc: "Speichern Sie Favoriten, synchronisieren Sie Rezepte und erhalten Sie mehr Suchmöglichkeiten.",
+signupContinue: "Weiter",
+continueGuest: "Als Gast fortfahren",
+signupTabText: "Registrieren",
+loginTabText: "Anmelden",
+
+smartScanTitle: "📸 Intelligenter Scan",
+smartScanDesc: "Verwandeln Sie Zutaten in Möglichkeiten",
+
+cookSmarterTitle: "🍳 Clever kochen",
+cookSmarterDesc: "Rezepte aus den Zutaten, die Sie bereits haben",
+
+mobileFeature1Title: "📸 KI-Scan",
+mobileFeature1Desc: "Zutaten fotografieren",
+
+mobileFeature2Title: "🥗 Intelligente Auswahl",
+mobileFeature2Desc: "Nach Kategorie auswählen",
+
+mobileFeature3Title: "❤️ Speichern",
+mobileFeature3Desc: "Favoriten behalten",
+
+joinNiliTitle: "Nili's Kitchen beitreten",
+joinNiliDesc: "Favoriten speichern, Rezepte hochladen und Creator-Funktionen freischalten.",
+joinNiliBtn: "Kostenlos beitreten",
+
+categories: {
+  vegetables: "Gemüse",
+  fruits: "Obst",
+  meat: "Fleisch",
+  seafood: "Meeresfrüchte",
+  dairy_eggs: "Milchprodukte",
+  grains_bakery: "Getreide",
+  legumes: "Hülsenfrüchte",
+  herbs_spices: "Kräuter",
+  oils_fats: "Öle",
+  sauces_condiments: "Saucen",
+  nuts_seeds: "Nüsse",
+  sweeteners_baking: "Backen"
+}
+},
+
+ja: {
+appSubtitle: "AIレシピアシスタント",
+scanTitle: "写真で食材をスキャン",
+scanSubtitle: "写真をアップロードしてAIに食材を認識させましょう",
+manualTitle: "食材を手動で追加",
+manualPlaceholder: "食材を追加",
+categoryTitle: "カテゴリーから食材を追加",
+
+selectedTitle: "選択した食材",
+selectedDesc: "レシピを探す前に食材を確認してください。",
+confirmIngredients: "食材を確認",
+getRecipes: "レシピを見る",
+clearSelected: "選択をクリア",
+emptySelected: "まだ食材が選択されていません。",
+
+signup: "登録",
+login: "ログイン",
+becomeCreator: "クリエイターになる",
+creatorDesc: "レシピを投稿し、将来的に報酬を獲得できます。",
+creatorLogin: "クリエイターログイン",
+creatorLoginDesc: "レシピ投稿ページへ進みます。",
+username: "ユーザー名",
+email: "メールアドレス",
+emailOrUsername: "メールアドレスまたはユーザー名",
+password: "パスワード",
+show: "表示",
+hide: "非表示",
+continue: "続行",
+
+heroBadge: "AIによる本物のレシピ",
+heroTitle: "今ある食材で賢く料理",
+heroDesc: "食材をアップロードし、手元にあるものを選ぶだけで、本物のレシピをすぐに発見できます。",
+
+galleryBtn: "ギャラリーから選択",
+
+menuDashboard: "ダッシュボード",
+menuAddRecipe: "レシピ追加",
+menuFavorites: "お気に入り",
+menuLogout: "ログアウト",
+menuHowItWorks: "使い方",
+
+loginButton: "ログイン",
+
+signupTitle: "無料アカウントを作成",
+signupDesc: "お気に入りを保存し、レシピを同期して、さらに多くの検索を利用できます。",
+signupContinue: "続行",
+continueGuest: "ゲストとして続行",
+signupTabText: "登録",
+loginTabText: "ログイン",
+
+smartScanTitle: "📸 スマートスキャン",
+smartScanDesc: "食材を可能性に変える",
+
+cookSmarterTitle: "🍳 もっと賢く料理",
+cookSmarterDesc: "今ある食材からレシピを発見",
+
+mobileFeature1Title: "📸 AIスキャン",
+mobileFeature1Desc: "食材を撮影",
+
+mobileFeature2Title: "🥗 スマート選択",
+mobileFeature2Desc: "カテゴリーから選択",
+
+mobileFeature3Title: "❤️ 保存",
+mobileFeature3Desc: "お気に入りを保存",
+
+joinNiliTitle: "Nili's Kitchenに参加",
+joinNiliDesc: "お気に入りを保存し、レシピを投稿してクリエイター機能を利用しましょう。",
+joinNiliBtn: "無料で参加",
+
+categories: {
+  vegetables: "野菜",
+  fruits: "果物",
+  meat: "肉",
+  seafood: "魚介類",
+  dairy_eggs: "乳製品",
+  grains_bakery: "穀物",
+  legumes: "豆類",
+  herbs_spices: "ハーブ",
+  oils_fats: "油",
+  sauces_condiments: "ソース",
+  nuts_seeds: "ナッツ",
+  sweeteners_baking: "製菓"
+}
+},
+
+zh: {
+appSubtitle: "AI 食谱助手",
+scanTitle: "通过照片扫描食材",
+scanSubtitle: "上传照片，让 AI 识别食材",
+manualTitle: "手动添加食材",
+manualPlaceholder: "添加食材",
+categoryTitle: "按类别添加食材",
+
+selectedTitle: "已选择的食材",
+selectedDesc: "在查找食谱之前检查您的食材。",
+confirmIngredients: "确认食材",
+getRecipes: "获取食谱",
+clearSelected: "清除选择",
+emptySelected: "尚未选择任何食材。",
+
+signup: "注册",
+login: "登录",
+becomeCreator: "成为创作者",
+creatorDesc: "上传食谱，未来可获得奖励。",
+creatorLogin: "创作者登录",
+creatorLoginDesc: "继续前往您的食谱上传页面。",
+username: "用户名",
+email: "电子邮箱",
+emailOrUsername: "电子邮箱或用户名",
+password: "密码",
+show: "显示",
+hide: "隐藏",
+continue: "继续",
+
+heroBadge: "AI 驱动的真实食谱",
+heroTitle: "利用现有食材更聪明地烹饪",
+heroDesc: "上传食材，选择您拥有的食材，立即发现真实食谱。",
+
+galleryBtn: "从图库选择",
+
+menuDashboard: "控制面板",
+menuAddRecipe: "添加食谱",
+menuFavorites: "收藏",
+menuLogout: "退出登录",
+menuHowItWorks: "使用方法",
+
+loginButton: "登录",
+
+signupTitle: "创建您的免费账户",
+signupDesc: "保存收藏、同步食谱并解锁更多搜索功能。",
+signupContinue: "继续",
+continueGuest: "以访客身份继续",
+signupTabText: "注册",
+loginTabText: "登录",
+
+smartScanTitle: "📸 智能扫描",
+smartScanDesc: "让食材变成无限可能",
+
+cookSmarterTitle: "🍳 更聪明地烹饪",
+cookSmarterDesc: "利用现有食材发现食谱",
+
+mobileFeature1Title: "📸 AI扫描",
+mobileFeature1Desc: "拍摄食材照片",
+
+mobileFeature2Title: "🥗 智能选择",
+mobileFeature2Desc: "按类别选择",
+
+mobileFeature3Title: "❤️ 保存",
+mobileFeature3Desc: "保存收藏",
+
+joinNiliTitle: "加入 Nili's Kitchen",
+joinNiliDesc: "保存收藏、上传食谱并解锁创作者功能。",
+joinNiliBtn: "免费加入",
+
+categories: {
+  vegetables: "蔬菜",
+  fruits: "水果",
+  meat: "肉类",
+  seafood: "海鲜",
+  dairy_eggs: "乳制品",
+  grains_bakery: "谷物",
+  legumes: "豆类",
+  herbs_spices: "香草",
+  oils_fats: "油脂",
+  sauces_condiments: "酱料",
+  nuts_seeds: "坚果",
+  sweeteners_baking: "烘焙"
+}
+}
+
 };
 
 function t(key){
@@ -2759,54 +3061,34 @@ window.setLang = function(lang){
   localStorage.setItem("niliLang", lang);
   localStorage.setItem("lang", lang);
 
-  const btn = document.getElementById("langBtn");
-  const box = document.getElementById("langOptions");
-
   const flagMap = {
-  en: "/flags/en.svg",
-  tr: "/flags/tr.svg",
-  ru: "/flags/ru.svg",
-  fr: "/flags/fr.svg",
-  es: "/flags/es.svg",
-  pt: "/flags/pt.svg",
-  ar: "/flags/ar.svg",
-};
+    en: "/flags/en.svg",
+    tr: "/flags/tr.svg",
+    ru: "/flags/ru.svg",
+    fr: "/flags/fr.svg",
+    es: "/flags/es.svg",
+    pt: "/flags/pt.svg",
+    ar: "/flags/ar.svg",
+    de: "/flags/de.svg",
+    ja: "/flags/ja.svg",
+    zh: "/flags/zh.svg"
+  };
 
-const flag =
-  document.getElementById("langBtnFlag");
+  const flag =
+    document.getElementById("langBtnFlag");
 
-const text =
-  document.getElementById("langBtnText");
+  const text =
+    document.getElementById("langBtnText");
 
-if(flag){
-  flag.src = flagMap[lang];
-}
+  const box =
+    document.getElementById("langOptions");
 
-if(text){
-  text.textContent = lang.toUpperCase();
-}
+  if(flag){
+    flag.src = flagMap[lang] || flagMap.en;
+  }
 
-  if(btn){
-    const flagMap = {
-  en: "/flags/en.svg",
-  tr: "/flags/tr.svg",
-  ru: "/flags/ru.svg",
-  fr: "/flags/fr.svg",
-  es: "/flags/es.svg",
-  pt: "/flags/pt.svg",
-  ar: "/flags/ar.svg"
-};
-
-const flag = document.getElementById("langBtnFlag");
-const text = document.getElementById("langBtnText");
-
-if(flag){
-  flag.src = flagMap[lang];
-}
-
-if(text){
-  text.textContent = lang.toUpperCase();
-}
+  if(text){
+    text.textContent = lang.toUpperCase();
   }
 
   if(box){
@@ -2837,6 +3119,7 @@ if(text){
 
   if(modal && modal.style.display === "flex"){
     const id = location.hash.replace("#recipe-", "");
+
     if(id){
       openRecipe(id);
     }
@@ -2854,16 +3137,17 @@ if(text){
   }
 
   const dashboardLink = document.getElementById("userDashboardLink");
-const addRecipeLink = document.getElementById("userAddRecipeLink");
-const favoritesBtn = document.getElementById("userFavoritesBtn");
-const howLink = document.getElementById("userHowLink");
-const logoutBtn = document.getElementById("userLogoutBtn");
+  const addRecipeLink = document.getElementById("userAddRecipeLink");
+  const favoritesBtn = document.getElementById("userFavoritesBtn");
+  const howLink = document.getElementById("userHowLink");
+  const logoutBtn = document.getElementById("userLogoutBtn");
 
-if(dashboardLink) dashboardLink.textContent = t("menuDashboard");
-if(addRecipeLink) addRecipeLink.textContent = t("menuAddRecipe");
-if(favoritesBtn) favoritesBtn.textContent = "❤️ " + t("menuFavorites");
-if(howLink) howLink.textContent = t("menuHowItWorks");
-if(logoutBtn) logoutBtn.textContent = t("menuLogout");
+  if(dashboardLink) dashboardLink.textContent = t("menuDashboard");
+  if(addRecipeLink) addRecipeLink.textContent = t("menuAddRecipe");
+  if(favoritesBtn) favoritesBtn.textContent = "❤️ " + t("menuFavorites");
+  if(howLink) howLink.textContent = t("menuHowItWorks");
+  if(logoutBtn) logoutBtn.textContent = t("menuLogout");
+
 };
 
 function showUserFriendlyError(source, err){

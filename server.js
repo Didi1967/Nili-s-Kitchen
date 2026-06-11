@@ -35,6 +35,12 @@ app.use(cors({
   credentials: true
 }));
 
+ 
+
+console.log("SMTP HOST:", process.env.SMTP_HOST);
+console.log("SMTP USER:", process.env.SMTP_USER);
+console.log("SMTP PORT:", process.env.SMTP_PORT);
+
 app.use(express.static(__dirname));
 
 app.use(
@@ -2170,6 +2176,40 @@ app.get("/creator-dashboard/:email", (req, res) => {
       error: "Dashboard failed"
     });
   }
+});
+
+app.get("/test-mail", async (req, res) => {
+
+  try {
+
+    const info = await mailer.sendMail({
+      from: process.env.SMTP_FROM || process.env.SMTP_USER,
+      to: "diler1967@gmail.com",
+      subject: "Nili's Kitchen Titan Test",
+      html: `
+        <h2>🎉 Titan Mail Test</h2>
+        <p>Nili's Kitchen mail sistemi çalışıyor.</p>
+      `
+    });
+
+    console.log(info.messageId);
+
+    res.json({
+      success: true,
+      messageId: info.messageId
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+
+  }
+
 });
 
 
