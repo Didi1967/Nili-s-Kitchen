@@ -38,6 +38,11 @@ app.use(cors({
 app.use(express.static(__dirname));
 
 app.use(
+  "/flags",
+  express.static(path.join(__dirname, "flags"))
+);
+
+app.use(
   "/creator-uploads",
   express.static(path.join(__dirname, "creator-uploads"))
 );

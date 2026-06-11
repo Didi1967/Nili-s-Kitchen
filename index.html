@@ -20,52 +20,61 @@
 
   <div class="floating-lang">
 
-    <div id="userMenu" class="user-menu" style="display:none;">
-  <button id="userMenuBtn" class="user-menu-btn">
-    👤 <span id="userMenuName">User</span>
+    <div id="userMenu" class="user-menu">
+  <button id="userMenuBtn" class="user-menu-btn" type="button">
+    👤 <span id="userMenuName">Login</span>
   </button>
 
-<div id="userMenuDropdown" class="user-menu-dropdown">
+  <div id="userMenuDropdown" class="user-menu-dropdown">
+    <a href="creator-dashboard.html" id="userDashboardLink">Dashboard</a>
+    <a href="creator.html" id="userAddRecipeLink">Add Recipe</a>
 
-  <a href="creator-dashboard.html" id="userDashboardLink">
-    Dashboard
-  </a>
+    <button type="button" onclick="openFavoritesPage()" id="userFavoritesBtn">
+      ❤️ Favorites
+    </button>
 
-  <a href="creator.html" id="userAddRecipeLink">
-    Add Recipe
-  </a>
+    <a href="how-it-works.html" id="userHowLink">How It Works</a>
 
-  <button type="button" onclick="openFavoritesPage()"
-          id="userFavoritesBtn">
-    ❤️ Favorites
-  </button>
-
-  <a href="how-it-works.html" id="userHowLink">
-    How It Works
-  </a>
-
-  <button type="button" onclick="logoutUser()"
-          id="userLogoutBtn">
-    Logout
-  </button>
-
-</div>
+    <button type="button" onclick="logoutUser()" id="userLogoutBtn">
+      Logout
+    </button>
+  </div>
 </div>
   <div class="lang-wrapper" id="langWrapper">
     <button id="langBtn" class="lang-btn" onclick="toggleLangMenu()">
-      🌐 EN
-    </button>
+  <img id="langBtnFlag" src="/flags/en.svg">
+  <span id="langBtnText">EN</span>
+</button>
 
     <div id="langOptions" class="lang-options">
-  <button type="button" onclick="setLang('en')">EN</button>
-  <button type="button" onclick="setLang('tr')">TR</button>
-  <button type="button" onclick="setLang('ru')">RU</button>
-  <button type="button" onclick="setLang('fr')">FR</button>
-  <button type="button" onclick="setLang('es')">ES</button>
-  <button type="button" onclick="setLang('pt')">PT</button>
-  <button type="button" onclick="setLang('ar')">AR</button>
+  <button type="button" onclick="setLang('en')">
+    <img src="/flags/en.svg"> EN
+  </button>
+
+  <button type="button" onclick="setLang('tr')">
+    <img src="/flags/tr.svg"> TR
+  </button>
+
+  <button type="button" onclick="setLang('ru')">
+    <img src="/flags/ru.svg"> RU
+  </button>
+
+  <button type="button" onclick="setLang('fr')">
+    <img src="/flags/fr.svg"> FR
+  </button>
+
+  <button type="button" onclick="setLang('es')">
+    <img src="/flags/es.svg"> ES
+  </button>
+
+  <button type="button" onclick="setLang('pt')">
+    <img src="/flags/pt.svg"> PT
+  </button>
+
+  <button type="button" onclick="setLang('ar')">
+    <img src="/flags/ar.svg"> AR
+  </button>
 </div>
-  </div>
 </div>
 </div>
 
@@ -75,6 +84,8 @@
       <div class="nk-brand-card">
   <div class="nk-brand-inner">
     <img src="logo.jpeg" alt="Nili's Kitchen" class="nk-logo">
+
+    
 
     <div class="nk-brand-text">
       <h1 class="nk-title">Nili's Kitchen</h1>
@@ -127,8 +138,13 @@
   </div>
 
         <div class="mobile-only mobile-hero-small">
-          <img src="YEMEK-4.jpeg" alt="">
-        </div>
+  <img src="YEMEK-4.jpeg" alt="">
+
+  <div class="mobile-hero-small-text">
+    <strong id="smartScanTitle">📸 Smart Scan</strong>
+<span id="smartScanDesc">Turn ingredients into possibilities</span>
+  </div>
+</div>
 
        <div class="category-panel">
   <div class="panel-title">Add ingredients by category</div>
@@ -138,7 +154,7 @@
     <button class="category-btn" data-category="fruits" data-icon="🍎">Fruits</button>
     <button class="category-btn" data-category="meat" data-icon="🥩">Meat</button>
     <button class="category-btn" data-category="seafood" data-icon="🐟">Seafood</button>
-    <button class="category-btn" data-category="dairy_eggs" data-icon="🥛">Dairy & Eggs</button>
+    <button class="category-btn"data-category="dairy_eggs"data-icon="🧀">Dairy & Eggs</button>
     <button class="category-btn" data-category="grains_bakery" data-icon="🌾">Grains</button>
     <button class="category-btn" data-category="legumes" data-icon="🫘">Legumes</button>
     <button class="category-btn" data-category="herbs_spices" data-icon="🌿">Herbs</button>
@@ -155,54 +171,51 @@
           </video>
         </div>
 
+        <div class="mobile-only mobile-feature-strip">
+  <div>
+    <strong id="mobileFeature1Title">📸 AI Scan</strong>
+<span id="mobileFeature1Desc">Photo ingredients</span>
+  </div>
+
+  <div>
+    <strong id="mobileFeature2Title">🥗 Smart Picks</strong>
+<span id="mobileFeature2Desc">Choose by category</span>
+  </div>
+
+  <div>
+   <strong id="mobileFeature3Title">❤️ Save</strong>
+<span id="mobileFeature3Desc">Keep favorites</span>
+  </div>
+</div>
+
                <div class="mobile-only mobile-hero-small">
-          <img src="YEMEK-6.jpeg" alt="">
-        </div>
+  <img src="YEMEK-6.jpeg" alt="">
 
-       <div class="creator-card compact-creator-card">
+  <div class="mobile-hero-small-text">
+   <strong id="cookSmarterTitle">🍳 Cook Smarter</strong>
+<span id="cookSmarterDesc">Recipes from what you already have</span>
+  </div>
+</div>
 
-  <div class="creator-tabs">
-    <button
-      type="button"
-      class="creator-tab active"
-      id="signupTab"
-      onclick="setCreatorMode('signup')">
-      Sign up
-    </button>
 
-    <button
-      type="button"
-      class="creator-tab"
-      id="loginTab"
-      onclick="setCreatorMode('login')">
-      Login
-    </button>
+<div class="nk-mini-card">
+
+  <div class="nk-mini-icon">✨</div>
+
+  <div class="nk-mini-content">
+    <h4 id="joinNiliTitle">Join Nili's Kitchen</h4>
+
+    <p id="joinNiliDesc">
+      Save favorites, upload recipes and unlock creator features.
+    </p>
   </div>
 
-  <div class="creator-card-text">
-    <strong id="creatorCardTitle">Upload recipes and earn rewards in the future.</strong>
-  
-  </div>
-
-  <input id="creatorUsernameInput" type="text" placeholder="Username">
-  <input id="creatorEmailInput" type="email" placeholder="Email address">
-
-  <div class="creator-password-wrap">
-    <input id="creatorPasswordInput" type="password" placeholder="Password">
-
-    <button type="button" onclick="toggleCreatorPassword()">
-      Show
-    </button>
-  </div>
-
-  <button
-    type="button"
-    class="creator-continue-btn"
-    onclick="goToCreatorPage()">
-    Continue
+  <button id="joinNiliBtn" onclick="openSignupInvite()">
+    Join Free
   </button>
 
 </div>
+
 
      <div class="site-footer-note">
   <span id="footerNoteText">
@@ -363,39 +376,68 @@ window.setLang = function(lang){
   <div class="signup-invite-box">
     <button class="signup-invite-close" onclick="closeSignupInvite()">×</button>
 
-    <h2>Save your favorite recipes</h2>
+    <h2 id="signupInviteTitle">Create your free account</h2>
 
-    <p>
-      Create a free account to save favorites, access them from any device,
-      and get more recipe searches.
+    <p id="signupInviteDesc">
+      Save favorites, sync recipes, and unlock more searches.
     </p>
 
-    <button class="signup-main-btn" onclick="goToSignup()">
-      Create Free Account
-    </button>
+    <div class="creator-auth-tabs">
+      <button id="signupTab" type="button" class="active" onclick="setCreatorMode('signup')">
+        Sign Up
+      </button>
 
-    <button class="signup-guest-btn" onclick="closeSignupInvite()">
-      Continue as Guest
-    </button>
+      <button id="loginTab" type="button" onclick="setCreatorMode('login')">
+        Login
+      </button>
+    </div>
+
+    <input id="creatorUsernameInput" class="signup-input" placeholder="Username">
+
+    <input id="creatorEmailInput" class="signup-input" placeholder="Email address">
+
+    <div class="creator-password-wrap">
+      <input id="creatorPasswordInput" class="signup-input" type="password" placeholder="Password">
+      <button type="button" onclick="toggleCreatorPassword()">Show</button>
+    </div>
+
+  <button
+  id="signupContinueBtn"
+  class="signup-main-btn"
+  onclick="goToCreatorPage()">
+  Continue
+</button>
+
+<button
+  id="continueGuestBtn"
+  class="signup-guest-btn"
+  onclick="closeSignupInvite()">
+  Continue as Guest
+</button>
   </div>
 </div>
-<div id="howItWorksModal" class="how-modal">
+
+    <div id="howItWorksModal" class="how-modal">
   <div class="how-box">
+
     <button class="how-close" onclick="closeHowItWorks()">×</button>
 
     <h2>👋 How Nili’s Kitchen Works</h2>
 
     <div class="how-steps">
-      <p>1️⃣ Select ingredients from categories.</p>
-      <p>2️⃣ Add extra ingredients manually if you want.</p>
-      <p>3️⃣ Confirm your ingredients and tap Get Recipes.</p>
-      <p>4️⃣ Save your favorite recipes with a free account.</p>
-      <p>5️⃣ Creators can upload their own recipes.</p>
+      ...
     </div>
 
     <button class="how-start-btn" onclick="closeHowItWorks()">
       Start Exploring
     </button>
+
+    <a id="howMoreInfoLink"
+       class="how-more-info-link"
+       href="how-it-works.html">
+      Learn More About Nili's Kitchen →
+    </a>
+
   </div>
 </div>
 </body>

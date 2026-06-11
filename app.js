@@ -34,7 +34,10 @@ const ingredientModalItems = document.getElementById("ingredientModalItems");
 
 const LANG_STORAGE_KEY = "niliKitchenLangV2";
 
-let currentLang = localStorage.getItem("niliLang") || "en";
+let currentLang =
+  localStorage.getItem("niliLang") ||
+  localStorage.getItem("lang") ||
+  "en";
 
 const ingredientTranslationCache = {};
 const ingredientTranslationLoading = {};
@@ -179,15 +182,48 @@ const translations = {
     menuAddRecipe: "Add Recipe",
     menuFavorites: "Favorites",
     menuLogout: "Logout",
-    howTitle: "👋 How Nili's Kitchen Works",
-howStep1: "1️⃣ Select ingredients from categories.",
-howStep2: "2️⃣ Add extra ingredients manually if you want.",
-howStep3: "3️⃣ Confirm your ingredients and tap Get Recipes.",
-howStep4: "4️⃣ Save your favorite recipes with a free account.",
-howStep5: "5️⃣ Creators can upload their own recipes.",
-howStart: "Start Exploring",
+    menuHowItWorks: "How It Works",
 
-menuHowItWorks: "How It Works",
+    howTitle: "👋 How Nili's Kitchen Works",
+    howStep1: "1️⃣ Select ingredients from categories.",
+    howStep2: "2️⃣ Add extra ingredients manually if you want.",
+    howStep3: "3️⃣ Confirm your ingredients and tap Get Recipes.",
+    howStep4: "4️⃣ Save your favorite recipes with a free account.",
+    howStep5: "5️⃣ Creators can upload their own recipes.",
+    howStart: "Start Exploring",
+    howMoreInfo: "Learn More About Nili's Kitchen →",
+
+    loadingRecipes: "Loading recipes...",
+    pleaseWait: "Please wait",
+
+    loginButton: "Login",
+
+    signupTitle: "Create your free account",
+signupDesc: "Save favorites, sync recipes and unlock more searches.",
+signupContinue: "Continue",
+continueGuest: "Continue as Guest",
+signupTabText: "Sign Up",
+loginTabText: "Login",
+
+smartScanTitle: "📸 Smart Scan",
+smartScanDesc: "Turn ingredients into possibilities",
+
+cookSmarterTitle: "🍳 Cook Smarter",
+cookSmarterDesc: "Recipes from what you already have",
+
+mobileFeature1Title: "📸 AI Scan",
+mobileFeature1Desc: "Photo ingredients",
+
+mobileFeature2Title: "🥗 Smart Picks",
+mobileFeature2Desc: "Choose by category",
+
+mobileFeature3Title: "❤️ Save",
+mobileFeature3Desc: "Keep favorites",
+
+joinNiliTitle: "Join Nili's Kitchen",
+joinNiliDesc: "Save favorites, upload recipes and unlock creator features.",
+joinNiliBtn: "Join Free",
+
 
    categories: {
   vegetables: "Vegetables",
@@ -275,16 +311,49 @@ menuHowItWorks: "How It Works",
     menuAddRecipe: "Tarif Ekle",
     menuFavorites: "Favoriler",
     menuLogout: "Çıkış Yap",
+    menuHowItWorks: "Nasıl Kullanılır",
+
+    
     howTitle: "👋 Nili's Kitchen Nasıl Çalışır?",
+    howStep1: "1️⃣ Kategorilerden malzemelerinizi seçin.",
+    howStep2: "2️⃣ İsterseniz ekstra malzemeleri manuel ekleyin.",
+    howStep3: "3️⃣ Malzemeleri onaylayın ve Tarifleri Getir'e basın.",
+    howStep4: "4️⃣ Ücretsiz hesap ile favori tariflerinizi kaydedin.",
+    howStep5: "5️⃣ İçerik üreticileri kendi tariflerini ekleyebilir.",
+    howStart: "Keşfetmeye Başla",
+    howMoreInfo: "Daha Fazla Bilgi ve Açıklama →",
+
+    loadingRecipes: "Tarifler yükleniyor...",
+    pleaseWait: "Lütfen bekleyin",
+
+    loginButton: "Giriş",
+
+    signupTitle: "Ücretsiz hesabını oluştur",
+signupDesc: "Favorileri kaydet, tariflerini senkronize et ve daha fazla arama hakkı kazan.",
+signupContinue: "Devam Et",
+continueGuest: "Misafir Olarak Devam Et",
+signupTabText: "Üye Ol",
+loginTabText: "Giriş Yap",
 
 
-howStep1: "1️⃣ Kategorilerden malzemelerinizi seçin.",
-howStep2: "2️⃣ İsterseniz ekstra malzemeleri manuel ekleyin.",
-howStep3: "3️⃣ Malzemeleri onaylayın ve Tarifleri Getir'e basın.",
-howStep4: "4️⃣ Ücretsiz hesap ile favori tariflerinizi kaydedin.",
-howStep5: "5️⃣ İçerik üreticileri kendi tariflerini ekleyebilir.",
-howStart: "Keşfetmeye Başla",
-menuHowItWorks: "Nasıl Kullanılır",
+ smartScanTitle: "📸 Akıllı Tarama",
+smartScanDesc: "Malzemeleri lezzetli fikirlere dönüştür",
+
+cookSmarterTitle: "🍳 Daha Akıllı Pişir",
+cookSmarterDesc: "Elindeki malzemelerle tarifler keşfet",
+
+mobileFeature1Title: "📸 AI Tarama",
+mobileFeature1Desc: "Malzemelerin fotoğrafını çek",
+
+mobileFeature2Title: "🥗 Akıllı Seçimler",
+mobileFeature2Desc: "Kategoriye göre seç",
+
+mobileFeature3Title: "❤️ Kaydet",
+mobileFeature3Desc: "Favorilerini sakla",
+
+joinNiliTitle: "Nili's Kitchen'a Katıl",
+joinNiliDesc: "Favorileri kaydet, tarif yükle ve içerik üretici özelliklerini aç.",
+joinNiliBtn: "Ücretsiz Katıl",
 
 
    categories: {
@@ -381,6 +450,38 @@ menuHowItWorks: "Nasıl Kullanılır",
     howStep4: "4️⃣ Сохраняйте любимые рецепты с бесплатной учетной записью.",
     howStep5: "5️⃣ Авторы могут добавлять собственные рецепты.",
     howStart: "Начать",
+    howMoreInfo: "Подробнее о Nili's Kitchen →",
+
+    loadingRecipes: "Рецепты загружаются...",
+    pleaseWait: "Пожалуйста, подождите",
+
+    loginButton: "Войти",
+
+    signupTitle: "Создайте бесплатный аккаунт",
+signupDesc: "Сохраняйте избранное, синхронизируйте рецепты и получайте больше поисков.",
+signupContinue: "Продолжить",
+continueGuest: "Продолжить как гость",
+signupTabText: "Регистрация",
+loginTabText: "Вход",
+
+smartScanTitle: "📸 Умное сканирование",
+smartScanDesc: "Превратите ингредиенты в новые идеи",
+
+cookSmarterTitle: "🍳 Готовьте умнее",
+cookSmarterDesc: "Рецепты из того, что уже есть у вас дома",
+
+mobileFeature1Title: "📸 AI Сканирование",
+mobileFeature1Desc: "Сканируйте ингредиенты по фото",
+
+mobileFeature2Title: "🥗 Умный Выбор",
+mobileFeature2Desc: "Выбирайте по категориям",
+
+mobileFeature3Title: "❤️ Сохранить",
+mobileFeature3Desc: "Храните избранное",
+
+joinNiliTitle: "Присоединяйтесь к Nili's Kitchen",
+joinNiliDesc: "Сохраняйте избранное, загружайте рецепты и открывайте возможности автора.",
+joinNiliBtn: "Присоединиться бесплатно",
     
 
    categories: {
@@ -477,6 +578,38 @@ menuHowItWorks: "Nasıl Kullanılır",
     howStep4: "4️⃣ Enregistrez vos recettes préférées avec un compte gratuit.",
     howStep5: "5️⃣ Les créateurs peuvent publier leurs propres recettes.",
     howStart: "Commencer",
+    howMoreInfo: "En savoir plus sur Nili's Kitchen →",
+
+    loadingRecipes: "Chargement des recettes...",
+    pleaseWait: "Veuillez patienter",
+
+    loginButton: "Connexion",
+
+    signupTitle: "Créez votre compte gratuit",
+signupDesc: "Enregistrez vos favoris, synchronisez vos recettes et débloquez plus de recherches.",
+signupContinue: "Continuer",
+continueGuest: "Continuer en tant qu'invité",
+signupTabText: "S'inscrire",
+loginTabText: "Connexion",
+
+smartScanTitle: "📸 Scan Intelligent",
+smartScanDesc: "Transformez vos ingrédients en possibilités",
+
+cookSmarterTitle: "🍳 Cuisinez Plus Malin",
+cookSmarterDesc: "Des recettes avec ce que vous avez déjà",
+
+mobileFeature1Title: "📸 Scan IA",
+mobileFeature1Desc: "Photographiez vos ingrédients",
+
+mobileFeature2Title: "🥗 Choix Intelligents",
+mobileFeature2Desc: "Choisissez par catégorie",
+
+mobileFeature3Title: "❤️ Sauvegarder",
+mobileFeature3Desc: "Conservez vos favoris",
+
+joinNiliTitle: "Rejoignez Nili's Kitchen",
+joinNiliDesc: "Enregistrez vos favoris, publiez des recettes et débloquez les fonctionnalités créateur.",
+joinNiliBtn: "Rejoindre gratuitement",
  
 
 
@@ -574,6 +707,38 @@ menuHowItWorks: "Nasıl Kullanılır",
     howStep4: "4️⃣ Guarda tus recetas favoritas con una cuenta gratuita.",
     howStep5: "5️⃣ Los creadores pueden subir sus propias recetas.",
     howStart: "Comenzar",
+    howMoreInfo: "Más información sobre Nili's Kitchen →",
+
+    loadingRecipes: "Cargando recetas...",
+    pleaseWait: "Por favor espera",
+
+    loginButton: "Ingresar",
+
+    signupTitle: "Crea tu cuenta gratuita",
+signupDesc: "Guarda favoritos, sincroniza recetas y desbloquea más búsquedas.",
+signupContinue: "Continuar",
+continueGuest: "Continuar como invitado",
+signupTabText: "Registrarse",
+loginTabText: "Iniciar sesión",
+
+smartScanTitle: "📸 Escaneo Inteligente",
+smartScanDesc: "Convierte ingredientes en posibilidades",
+
+cookSmarterTitle: "🍳 Cocina Mejor",
+cookSmarterDesc: "Recetas con lo que ya tienes",
+
+mobileFeature1Title: "📸 Escaneo IA",
+mobileFeature1Desc: "Fotografía tus ingredientes",
+
+mobileFeature2Title: "🥗 Selección Inteligente",
+mobileFeature2Desc: "Elige por categoría",
+
+mobileFeature3Title: "❤️ Guardar",
+mobileFeature3Desc: "Guarda tus favoritos",
+
+joinNiliTitle: "Únete a Nili's Kitchen",
+joinNiliDesc: "Guarda favoritos, publica recetas y desbloquea funciones de creador.",
+joinNiliBtn: "Unirse gratis",
 
    categories: {
   vegetables: "Verduras",
@@ -669,6 +834,38 @@ menuHowItWorks: "Nasıl Kullanılır",
     howStep4: "4️⃣ Salve suas receitas favoritas com uma conta gratuita.",
     howStep5: "5️⃣ Criadores podem enviar suas próprias receitas.",
     howStart: "Começar",
+    howMoreInfo: "Mais informações sobre o Nili's Kitchen →",
+
+    loadingRecipes: "Carregando receitas...",
+    pleaseWait: "Por favor, aguarde",
+
+    loginButton: "Entrar",
+
+    signupTitle: "Crie sua conta gratuita",
+signupDesc: "Salve favoritos, sincronize receitas e desbloqueie mais pesquisas.",
+signupContinue: "Continuar",
+continueGuest: "Continuar como visitante",
+signupTabText: "Cadastrar-se",
+loginTabText: "Entrar",
+
+smartScanTitle: "📸 Escaneamento Inteligente",
+smartScanDesc: "Transforme ingredientes em possibilidades",
+
+cookSmarterTitle: "🍳 Cozinhe Melhor",
+cookSmarterDesc: "Receitas com o que você já tem",
+
+mobileFeature1Title: "📸 Escaneamento IA",
+mobileFeature1Desc: "Fotografe seus ingredientes",
+
+mobileFeature2Title: "🥗 Escolhas Inteligentes",
+mobileFeature2Desc: "Escolha por categoria",
+
+mobileFeature3Title: "❤️ Salvar",
+mobileFeature3Desc: "Guarde seus favoritos",
+
+joinNiliTitle: "Junte-se ao Nili's Kitchen",
+joinNiliDesc: "Salve favoritos, publique receitas e desbloqueie recursos de criador.",
+joinNiliBtn: "Participar grátis",
 
 
     categories: {
@@ -765,6 +962,38 @@ menuHowItWorks: "Nasıl Kullanılır",
     howStep4: "4️⃣ احفظ وصفاتك المفضلة بحساب مجاني.",
     howStep5: "5️⃣ يمكن للمنشئين إضافة وصفاتهم الخاصة.",
     howStart: "ابدأ الاستكشاف",
+    howMoreInfo: "مزيد من المعلومات حول Nili's Kitchen →",
+
+    loadingRecipes: "جارٍ تحميل الوصفات...",
+    pleaseWait: "يرجى الانتظار",
+
+    loginButton: "تسجيل الدخول",
+
+    signupTitle: "أنشئ حسابك المجاني",
+signupDesc: "احفظ المفضلة، وقم بمزامنة الوصفات، واحصل على المزيد من عمليات البحث.",
+signupContinue: "متابعة",
+continueGuest: "المتابعة كضيف",
+signupTabText: "إنشاء حساب",
+loginTabText: "تسجيل الدخول",
+
+smartScanTitle: "📸 مسح ذكي",
+smartScanDesc: "حوّل المكونات إلى أفكار ووصفات",
+
+cookSmarterTitle: "🍳 اطبخ بذكاء",
+cookSmarterDesc: "وصفات باستخدام ما لديك بالفعل",
+
+mobileFeature1Title: "📸 مسح بالذكاء الاصطناعي",
+mobileFeature1Desc: "صوّر المكونات",
+
+mobileFeature2Title: "🥗 اختيارات ذكية",
+mobileFeature2Desc: "اختر حسب الفئة",
+
+mobileFeature3Title: "❤️ حفظ",
+mobileFeature3Desc: "احتفظ بالمفضلة",
+
+joinNiliTitle: "انضم إلى Nili's Kitchen",
+joinNiliDesc: "احفظ المفضلة، وارفع الوصفات، وافتح ميزات صانع المحتوى.",
+joinNiliBtn: "انضم مجانًا",
 
     categories: {
   vegetables: "خضروات",
@@ -937,7 +1166,35 @@ setText("howStep4", t("howStep4"));
 setText("howStep5", t("howStep5"));
 setText("howStartBtn", t("howStart"));
 
+setText("#signupInviteTitle", t("signupTitle"));
+setText("#signupInviteDesc", t("signupDesc"));
+
+setText("#signupTab", t("signupTabText"));
+setText("#loginTab", t("loginTabText"));
+
+setText("#signupContinueBtn", t("signupContinue"));
+setText("#continueGuestBtn", t("continueGuest"));
+
 setText("userHowLink", t("menuHowItWorks"));
+
+setText("howMoreInfoLink", t("howMoreInfo"));
+
+setText("smartScanTitle", t("smartScanTitle"));
+setText("smartScanDesc", t("smartScanDesc"));
+
+setText("cookSmarterTitle", t("cookSmarterTitle"));
+setText("cookSmarterDesc", t("cookSmarterDesc"));
+
+setText("mobileFeature1Title", t("mobileFeature1Title"));
+setText("mobileFeature1Desc", t("mobileFeature1Desc"));
+setText("mobileFeature2Title", t("mobileFeature2Title"));
+setText("mobileFeature2Desc", t("mobileFeature2Desc"));
+setText("mobileFeature3Title", t("mobileFeature3Title"));
+setText("mobileFeature3Desc", t("mobileFeature3Desc"));
+
+setText("#joinNiliTitle", t("joinNiliTitle"));
+setText("#joinNiliDesc", t("joinNiliDesc"));
+setText("#joinNiliBtn", t("joinNiliBtn"));
 
   const title =
   document.getElementById("creatorCardTitle");
@@ -1038,6 +1295,13 @@ icon
   : label;
 
   });
+
+  if(
+  typeof setCreatorMode === "function" &&
+  !document.getElementById("signupInviteModal")?.style.display.includes("flex")
+){
+  setCreatorMode(window.creatorMode || "signup");
+}
 
 }
 
@@ -1498,13 +1762,18 @@ function continueSelectingIngredients(){
 
   document.body.classList.add("show-recipes-page");
 
+ const floatingLang = document.querySelector(".floating-lang");
+if(floatingLang){
+  floatingLang.style.display = "none";
+} 
+
 result.style.display = "grid";
 result.style.visibility = "visible";
 result.style.opacity = "1";
 result.innerHTML = `
-  <div class="loading-recipes-box">
-    <strong>${t("loadingRecipes")}</strong>
-    <span>Please wait...</span>
+  <div class="loading-recipes">
+    <h2>${t("loadingRecipes")}</h2>
+    <p>${t("pleaseWait")}</p>
   </div>
 `;
 
@@ -1712,6 +1981,14 @@ function renderRecipes(data){
   }
 
   document.body.classList.add("show-recipes-page");
+  document.body.classList.add("hide-mobile-top-menu");
+
+  if(window.innerWidth <= 980){
+  const floatingLang = document.querySelector(".floating-lang");
+  if(floatingLang){
+    floatingLang.style.display = "none";
+  }
+}
 
   result.style.display = "grid";
   result.style.visibility = "visible";
@@ -2137,6 +2414,9 @@ window.setCreatorMode = function(mode){
   const usernameInput = document.getElementById("creatorUsernameInput");
   const emailInput = document.getElementById("creatorEmailInput");
 
+  const passwordInput =
+document.getElementById("creatorPasswordInput");
+
   if(signupTab){
     signupTab.classList.toggle("active", mode === "signup");
   }
@@ -2175,6 +2455,11 @@ window.setCreatorMode = function(mode){
       ? t("email")
       : t("emailOrUsername");
   }
+
+  if(passwordInput){
+  passwordInput.placeholder =
+  creatorText("password", "Password");
+}
 
 };
 
@@ -2468,13 +2753,60 @@ window.toggleLangMenu = function(){
 };
 
 window.setLang = function(lang){
+
   currentLang = lang;
+
+  localStorage.setItem("niliLang", lang);
+  localStorage.setItem("lang", lang);
 
   const btn = document.getElementById("langBtn");
   const box = document.getElementById("langOptions");
 
+  const flagMap = {
+  en: "/flags/en.svg",
+  tr: "/flags/tr.svg",
+  ru: "/flags/ru.svg",
+  fr: "/flags/fr.svg",
+  es: "/flags/es.svg",
+  pt: "/flags/pt.svg",
+  ar: "/flags/ar.svg",
+};
+
+const flag =
+  document.getElementById("langBtnFlag");
+
+const text =
+  document.getElementById("langBtnText");
+
+if(flag){
+  flag.src = flagMap[lang];
+}
+
+if(text){
+  text.textContent = lang.toUpperCase();
+}
+
   if(btn){
-    btn.innerHTML = "🌐 " + lang.toUpperCase();
+    const flagMap = {
+  en: "/flags/en.svg",
+  tr: "/flags/tr.svg",
+  ru: "/flags/ru.svg",
+  fr: "/flags/fr.svg",
+  es: "/flags/es.svg",
+  pt: "/flags/pt.svg",
+  ar: "/flags/ar.svg"
+};
+
+const flag = document.getElementById("langBtnFlag");
+const text = document.getElementById("langBtnText");
+
+if(flag){
+  flag.src = flagMap[lang];
+}
+
+if(text){
+  text.textContent = lang.toUpperCase();
+}
   }
 
   if(box){
@@ -2483,87 +2815,55 @@ window.setLang = function(lang){
 
   applyLanguage();
 
+  if(typeof initUserSessionMenu === "function"){
+    initUserSessionMenu();
+  }
+
+  if(typeof updateCreatorLinks === "function"){
+    updateCreatorLinks();
+  }
+
   if(typeof renderChecklist === "function"){
     renderChecklist();
   }
 
-  applyLanguage();
+  if(
+    document.body.classList.contains("show-recipes-page") &&
+    Array.isArray(currentRecipes) &&
+    currentRecipes.length
+  ){
+    renderRecipes(currentRecipes);
+  }
 
-const dashboardLink = document.getElementById("userDashboardLink");
+  if(modal && modal.style.display === "flex"){
+    const id = location.hash.replace("#recipe-", "");
+    if(id){
+      openRecipe(id);
+    }
+  }
+
+  if(
+    ingredientModal &&
+    ingredientModal.style.display === "flex" &&
+    activeCategoryKey
+  ){
+    openIngredientModal(
+      activeCategoryKey,
+      CATEGORY_DATA[activeCategoryKey] || []
+    );
+  }
+
+  const dashboardLink = document.getElementById("userDashboardLink");
 const addRecipeLink = document.getElementById("userAddRecipeLink");
 const favoritesBtn = document.getElementById("userFavoritesBtn");
+const howLink = document.getElementById("userHowLink");
 const logoutBtn = document.getElementById("userLogoutBtn");
-
-const howLink = document.getElementById("userHowLink"); 
-if(howLink) howLink.textContent = t("menuHowItWorks");
 
 if(dashboardLink) dashboardLink.textContent = t("menuDashboard");
 if(addRecipeLink) addRecipeLink.textContent = t("menuAddRecipe");
 if(favoritesBtn) favoritesBtn.textContent = "❤️ " + t("menuFavorites");
+if(howLink) howLink.textContent = t("menuHowItWorks");
 if(logoutBtn) logoutBtn.textContent = t("menuLogout");
-
-if(document.body.classList.contains("show-recipes-page")){
-  renderRecipes(currentRecipes);
-}
-
-if(modal && modal.style.display === "flex"){
-  const id = location.hash.replace("#recipe-", "");
-  if(id){
-    openRecipe(id);
-  }
-}
-
-if(typeof renderChecklist === "function"){
-  renderChecklist();
-}
-
-if(
-  ingredientModal &&
-  ingredientModal.style.display === "flex" &&
-  activeCategoryKey
-){
-  openIngredientModal(
-    activeCategoryKey,
-    CATEGORY_DATA[activeCategoryKey] || []
-  );
-}
-
-if(typeof updateCreatorLinks === "function"){
-  updateCreatorLinks();
-}
-
-applyLanguage();
-initUserSessionMenu();
-
-if(typeof initUserSessionMenu === "function"){
-  initUserSessionMenu();
-}
-
-if(document.body.classList.contains("show-recipes-page") && currentRecipes.length){
-  renderRecipes(currentRecipes);
-}
-
-if(modal && modal.style.display === "flex"){
-  const id = location.hash.replace("#recipe-", "");
-  if(id){
-    openRecipe(id);
-  }
-}
-
-if(typeof renderChecklist === "function"){
-  renderChecklist();
-}
-
-if(
-  ingredientModal &&
-  ingredientModal.style.display === "flex" &&
-  activeCategoryKey
-){
-  openIngredientModal(
-    activeCategoryKey,
-    CATEGORY_DATA[activeCategoryKey] || []
-  );
-}
 };
 
 function showUserFriendlyError(source, err){
@@ -2728,9 +3028,16 @@ function isUserLoggedIn(){
 
 function openSignupInvite(){
   const modal = document.getElementById("signupInviteModal");
+
   if(modal){
     modal.style.display = "flex";
   }
+
+  if(typeof setCreatorMode === "function"){
+    setCreatorMode(window.creatorMode || "signup");
+  }
+
+  translateSignupPopup();
 }
 
 function closeSignupInvite(){
@@ -2780,12 +3087,14 @@ function initUserSessionMenu(){
 
   if(!userMenu || !userMenuName) return;
 
-  if(username || email){
-    userMenu.style.display = "block";
-    userMenuName.textContent = username || email;
-  }else{
-    userMenu.style.display = "none";
-  }
+  userMenu.style.display = "block";
+
+if(username || email){
+  userMenuName.textContent = username || email;
+}else{
+  userMenuName.textContent = t("loginButton") || "Login";
+  userMenu.classList.remove("open");
+}
 
   const dashLink = document.getElementById("userDashboardLink");
   const addLink = document.getElementById("userAddRecipeLink");
@@ -2809,14 +3118,28 @@ const userMenu = document.getElementById("userMenu");
 
 if(userMenuBtn && userMenu){
   userMenuBtn.addEventListener("click", () => {
-    userMenu.classList.toggle("open");
+
+    if(isUserLoggedIn()){
+      userMenu.classList.toggle("open");
+    }else{
+      openSignupInvite();
+     }
+
   });
+
+  if(!isUserLoggedIn()){
+  const userMenuName = document.getElementById("userMenuName");
+  if(userMenuName){
+    userMenuName.textContent = t("loginButton");
+  }
+}
+}
 
 setText("userDashboardLink", t("menuDashboard"));
 setText("userAddRecipeLink", t("menuAddRecipe"));
 setText("userFavoritesBtn", "❤️ " + t("menuFavorites"));
 setText("userLogoutBtn", t("menuLogout"));
-}
+
 
 function logoutUser(){
   localStorage.removeItem("creatorUsername");
@@ -2846,22 +3169,21 @@ function backToHome(){
   history.replaceState(null, "", location.pathname);
 
   document.body.classList.remove("show-recipes-page");
+  document.body.classList.remove("hide-mobile-top-menu");
 
   const hero = document.querySelector(".hero");
   if(hero){
     hero.style.display = "";
   }
 
-  const oldActions =
-    document.getElementById("recipeResultActions");
-
-  if(oldActions){
-    oldActions.remove();
-  }
-
   if(result){
     result.innerHTML = "";
     result.style.display = "none";
+  }
+
+  const actions = document.getElementById("recipeResultActions");
+  if(actions){
+    actions.remove();
   }
 }
 
@@ -2883,10 +3205,15 @@ function openFavoritesPage(){
 }
 
 function openHowItWorks(){
-  const modal = document.getElementById("howItWorksModal");
-  if(modal){
-    modal.style.display = "flex";
-  }
+  applyLanguage();
+
+  const moreInfoLink =
+  document.getElementById("howMoreInfoLink");
+
+if(moreInfoLink){
+  moreInfoLink.href =
+    "how-it-works.html?lang=" + currentLang;
+}
 }
 
 function closeHowItWorks(){
@@ -2905,7 +3232,16 @@ window.addEventListener("load", () => {
 });
 
 async function autoDetectLanguageAndShowIntro(){
+
+  console.log("AUTO LANG STARTED");
+
   if(localStorage.getItem("niliLangDetected")){
+    console.log("STOP: niliLangDetected exists");
+    return;
+  }
+
+  if(localStorage.getItem("niliLang")){
+    console.log("STOP: niliLang exists", localStorage.getItem("niliLang"));
     return;
   }
 
@@ -2915,23 +3251,47 @@ async function autoDetectLanguageAndShowIntro(){
 
     const country = data.country_code;
 
-    const langMap = {
+    console.log("IP COUNTRY:", country);
 
+    const langMap = {
   // Turkish
   TR: "tr",
+  CY: "tr",
 
-  // Russian
+  // Russian / CIS
   RU: "ru",
   KZ: "ru",
   BY: "ru",
   KG: "ru",
   TJ: "ru",
+  UZ: "ru",
+  AM: "ru",
+  AZ: "ru",
+  GE: "ru",
+  MD: "ru",
+  TM: "ru",
 
   // French
   FR: "fr",
   BE: "fr",
+  CH: "fr",
   MC: "fr",
   LU: "fr",
+  CA: "fr",
+  MA: "fr",
+  DZ: "fr",
+  TN: "fr",
+  SN: "fr",
+  CI: "fr",
+  CM: "fr",
+  CD: "fr",
+  CG: "fr",
+  GA: "fr",
+  ML: "fr",
+  NE: "fr",
+  BF: "fr",
+  BJ: "fr",
+  TG: "fr",
 
   // Spanish
   ES: "es",
@@ -2952,10 +3312,16 @@ async function autoDetectLanguageAndShowIntro(){
   HN: "es",
   SV: "es",
   NI: "es",
+  CU: "es",
+  PR: "es",
 
   // Portuguese
   PT: "pt",
   BR: "pt",
+  AO: "pt",
+  MZ: "pt",
+  CV: "pt",
+  GW: "pt",
 
   // Arabic
   SA: "ar",
@@ -2968,39 +3334,66 @@ async function autoDetectLanguageAndShowIntro(){
   JO: "ar",
   LB: "ar",
   IQ: "ar",
+  SY: "ar",
+  YE: "ar",
+  PS: "ar",
   MA: "ar",
   DZ: "ar",
   TN: "ar",
+  LY: "ar",
+  SD: "ar",
 
   // English fallback countries
   US: "en",
-  CA: "en",
   GB: "en",
+  IE: "en",
   AU: "en",
   NZ: "en",
-  IE: "en",
-  ZA: "en"
+  ZA: "en",
+  IN: "en",
+  PK: "en",
+  NG: "en",
+  KE: "en",
+  GH: "en",
+  SG: "en",
+  MY: "en",
+  PH: "en"
 };
 
     const detectedLang =
   langMap[country] || "en";
 
-    setLang(detectedLang);
+setLang(detectedLang);
 
-    localStorage.setItem("niliLang", lang);
+localStorage.setItem("niliLangDetected", "1");
 
-    setTimeout(() => {
-      openHowItWorks();
-    }, 500);
+setTimeout(() => {
+  openHowItWorks();
+}, 500);
 
   }catch(err){
-    setLang("en");
-    localStorage.setItem("niliLangDetected", "1");
-
-    setTimeout(() => {
-      openHowItWorks();
-    }, 500);
+    console.log("AUTO LANG ERROR:", err);
   }
 }
 
-autoDetectLanguageAndShowIntro();
+translateSignupPopup();
+document.addEventListener("DOMContentLoaded", () => {
+  autoDetectLanguageAndShowIntro();
+}
+);
+
+function translateSignupPopup(){
+  setText("signupInviteTitle", t("signupTitle"));
+  setText("signupInviteDesc", t("signupDesc"));
+
+  setText("signupTab", t("signupTabText"));
+  setText("loginTab", t("loginTabText"));
+
+  setText("signupContinueBtn", t("signupContinue"));
+  setText("continueGuestBtn", t("continueGuest"));
+
+  const userMenuName = document.getElementById("userMenuName");
+  if(userMenuName && !isUserLoggedIn()){
+    userMenuName.textContent = t("loginButton");
+  }
+}

@@ -2220,4 +2220,389 @@ html[dir="rtl"] .hero-content{
   font-weight:900;
   cursor:pointer;
 }
- 
+
+.lang-options{
+  width:92px !important;
+  min-width:92px !important;
+  max-width:92px !important;
+}
+
+.lang-options button{
+  width:100% !important;
+  padding:9px 10px !important;
+  font-size:13px !important;
+  text-align:left !important;
+  white-space:nowrap !important;
+}
+
+.lang-options{
+  width:94px !important;
+  min-width:94px !important;
+  max-width:94px !important;
+}
+
+.lang-options button{
+  display:flex !important;
+  align-items:center !important;
+  gap:7px !important;
+  width:100% !important;
+  padding:9px 10px !important;
+  font-size:13px !important;
+  font-weight:900 !important;
+  text-align:left !important;
+  white-space:nowrap !important;
+}
+.lang-options button img{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-right:7px;
+}
+
+.lang-options button{
+  display:flex !important;
+  align-items:center !important;
+  gap:6px !important;
+}
+
+.lang-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.lang-btn img{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+
+.lang-options button{
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+}
+
+.lang-options button img{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.how-more-info-link{
+  display:block;
+  text-align:center;
+  margin-top:14px;
+  color:#9a3412;
+  font-weight:900;
+  text-decoration:none;
+}
+
+.how-more-info-link:hover{
+  text-decoration:underline;
+}
+
+@media(max-width:980px){
+  body.hide-mobile-top-menu .floating-lang{
+    display:none !important;
+  }
+}
+
+.signup-invite-modal{
+  z-index:9999999 !important;
+}
+
+.signup-invite-box{
+  z-index:10000000 !important;
+  position:relative !important;
+}
+
+.signup-input{
+  width:100%;
+  height:46px;
+  border:1px solid #eadfce;
+  border-radius:14px;
+  padding:0 14px;
+  margin-top:10px;
+  font-size:14px;
+  font-weight:800;
+  outline:none;
+  background:#fffaf3;
+  color:#182234;
+}
+
+.creator-auth-tabs{
+  display:flex;
+  gap:8px;
+  margin:16px 0 8px;
+  background:#f3f4f6;
+  padding:5px;
+  border-radius:999px;
+}
+
+.creator-auth-tabs button{
+  flex:1;
+  border:none;
+  border-radius:999px;
+  padding:9px 10px;
+  font-weight:900;
+  cursor:pointer;
+  background:transparent;
+  color:#6b7280;
+}
+
+.creator-auth-tabs button.active{
+  background:white;
+  color:#f97316;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.creator-password-wrap{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.creator-password-wrap .signup-input{
+  flex:1;
+}
+
+.creator-password-wrap button{
+  margin-top:10px;
+  height:46px;
+  border:none;
+  border-radius:14px;
+  padding:0 12px;
+  background:#f3f4f6;
+  color:#374151;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.signup-invite-box{
+  max-width:430px;
+}
+
+ .signup-invite-box{
+  width:min(92vw,430px);
+  border-radius:24px;
+  padding:24px;
+  background:#fff;
+  box-shadow:0 25px 60px rgba(0,0,0,.18);
+}
+
+.signup-main-btn{
+  width:100%;
+  height:48px;
+  border:none;
+  border-radius:14px;
+  background:#f97316;
+  color:#fff;
+  font-weight:900;
+  font-size:15px;
+  cursor:pointer;
+  margin-top:14px;
+}
+
+.signup-main-btn:hover{
+  transform:translateY(-1px);
+}
+
+.signup-guest-btn{
+  width:100%;
+  height:44px;
+  border:none;
+  border-radius:14px;
+  background:#f3f4f6;
+  color:#374151;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+#signupInviteTitle{
+  margin-bottom:8px;
+  text-align:center;
+}
+
+#signupInviteDesc{
+  text-align:center;
+  color:#6b7280;
+  line-height:1.5;
+  margin-bottom:14px;
+}
+
+.nk-mini-card{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:12px 0 18px;
+  padding:14px;
+  border-radius:18px;
+  background:#fff;
+  border:1px solid #f0e4d5;
+  box-shadow:0 8px 24px rgba(0,0,0,.05);
+}
+
+.nk-mini-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:#f97316;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  flex-shrink:0;
+}
+
+.nk-mini-content{
+  flex:1;
+}
+
+.nk-mini-content h4{
+  margin:0;
+  font-size:14px;
+  font-weight:900;
+  color:#182234;
+}
+
+.nk-mini-content p{
+  margin:4px 0 0;
+  font-size:11px;
+  line-height:1.4;
+  color:#6b7280;
+}
+
+.nk-mini-card button{
+  border:none;
+  background:#f97316;
+  color:white;
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:11px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+#categoryGrid .category-btn{
+  min-height:30px !important;
+  font-size:13px !important;
+  font-weight:900 !important;
+  padding:10px 8px !important;
+  border-radius:15px !important;
+}
+
+#categoryGrid{
+  gap:10px !important;
+}
+
+@media(max-width:768px){
+  .mobile-hero-small img{
+    width:100% !important;
+    height:auto !important;
+    object-fit:contain !important;
+  }
+
+  .mobile-hero-small{
+    height:auto !important;
+  }
+
+  @media(max-width:768px){
+  .mobile-hero-small img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+  }
+}
+}
+
+.mobile-tip-card{
+  display:none;
+}
+
+.mobile-feature-strip{
+  display:none;
+}
+
+@media(max-width:768px){
+  .mobile-feature-strip{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin:14px 0;
+  }
+
+  .mobile-feature-strip div{
+    background:linear-gradient(135deg,#fff7ed,#ffffff);
+    border:1px solid #eadfce;
+    border-radius:16px;
+    padding:10px 8px;
+    text-align:center;
+    box-shadow:0 8px 18px rgba(0,0,0,.05);
+  }
+
+  .mobile-feature-strip strong{
+    display:block;
+    font-size:12px;
+    color:#182234;
+    margin-bottom:4px;
+  }
+
+  .mobile-feature-strip span{
+    display:block;
+    font-size:10px;
+    color:#6b7280;
+    font-weight:800;
+    line-height:1.25;
+  }
+}
+
+.mobile-hero-small{
+  aspect-ratio:1/1 !important;
+}
+
+.mobile-hero-small{
+  position:relative;
+  overflow:hidden;
+}
+
+.mobile-hero-small-text{
+  position:absolute;
+  left:16px;
+  right:16px;
+  bottom:16px;
+  z-index:2;
+  color:white;
+}
+
+.mobile-hero-small::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,.65),
+    rgba(0,0,0,.15),
+    transparent
+  );
+}
+
+.mobile-hero-small-text strong{
+  display:block;
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:4px;
+}
+
+.mobile-hero-small-text span{
+  display:block;
+  font-size:13px;
+  line-height:1.4;
+  font-weight:600;
+}
