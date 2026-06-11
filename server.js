@@ -1316,7 +1316,19 @@ function getRecipeStatusMail(type, lang, recipeTitle) {
       ar: {
         subject: "تم نشر وصفتك",
         text: `شكرًا لمشاركة وصفتك مع Nili’s Kitchen. تمت مراجعة وصفتك "${recipeTitle}" ونشرها. يمكن أن تظهر الآن في نتائج البحث.`
-      }
+      },
+      de: {
+  subject: "Ihr Rezept wurde veröffentlicht",
+  text: `Vielen Dank, dass Sie Ihr Rezept mit Nili's Kitchen geteilt haben. Ihr Rezept "${recipeTitle}" wurde geprüft und veröffentlicht. Es kann nun in den Suchergebnissen für Rezepte erscheinen.`
+},
+ja: {
+  subject: "あなたのレシピが公開されました",
+  text: `Nili's Kitchen にレシピをご投稿いただきありがとうございます。あなたのレシピ「${recipeTitle}」は審査を通過し、公開されました。これからレシピ検索結果に表示される可能性があります。`
+},
+zh: {
+  subject: "您的食谱已发布",
+  text: `感谢您与 Nili's Kitchen 分享您的食谱。您的食谱“${recipeTitle}”已通过审核并成功发布。现在它可以出现在食谱搜索结果中。`
+},
     },
 
     rejected: {
@@ -1347,7 +1359,20 @@ function getRecipeStatusMail(type, lang, recipeTitle) {
       ar: {
         subject: "تحديث بخصوص وصفتك",
         text: `شكرًا لمشاركة وصفتك مع Nili’s Kitchen. بعد المراجعة، لا يمكننا نشر وصفتك "${recipeTitle}" في الوقت الحالي. يمكنك تعديلها وإرسالها مرة أخرى.`
-      }
+      },
+      de: {
+  subject: "Aktualisierung zu Ihrer Rezept-Einreichung",
+  text: `Vielen Dank, dass Sie Ihr Rezept mit Nili's Kitchen geteilt haben. Nach der Prüfung können wir "${recipeTitle}" derzeit leider nicht veröffentlichen. Sie können es gerne verbessern und erneut einreichen.`
+},
+ja: {
+  subject: "レシピ投稿に関するお知らせ",
+  text: `Nili's Kitchen にレシピをご投稿いただきありがとうございます。審査の結果、現在のところ「${recipeTitle}」を公開することができません。内容を改善して再度ご投稿いただき、再申請することができます。`
+},
+zh: {
+  subject: "关于您的食谱投稿的更新",
+  text: `感谢您与 Nili's Kitchen 分享您的食谱。经过审核，我们目前无法发布“${recipeTitle}”。欢迎您对其进行改进后再次提交。`
+},
+      
     }
   };
 
@@ -1469,17 +1494,50 @@ users.find(user =>
       );
 
       await sendMailSafe({
-        to: emailOrUser,
-        subject:"Welcome to Nili's Kitchen Creator Program",
-        text:`Hi ${username}, your creator account was created successfully.`,
-        html:`
-          <h2>Welcome to Nili's Kitchen!</h2>
-          <p>Hi ${username},</p>
-          <p>Your creator account was created successfully.</p>
-          <p>You can now submit your recipes for review.</p>
-        `
-      });
+  to: cleanEmailOrUser,
+  subject: "🎉 Welcome to Nili's Kitchen Creator Program",
+  html: `
+  <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;padding:20px;">
+    
+    <h1 style="color:#f97316;">
+      Welcome to Nili's Kitchen 🍳
+    </h1>
 
+    <p>Hello <strong>${cleanUsername}</strong>,</p>
+
+    <p>
+      Your creator account has been successfully created.
+    </p>
+
+    <p>
+      You can now upload recipes, build your creator profile,
+      and share your cooking ideas with food lovers around the world.
+    </p>
+
+    <div style="margin:30px 0;">
+      <a href="https://niliskitchen.com/creator.html"
+         style="
+         background:#f97316;
+         color:white;
+         padding:12px 20px;
+         text-decoration:none;
+         border-radius:8px;
+         font-weight:bold;">
+         Upload Your First Recipe
+      </a>
+    </div>
+
+    <p>
+      We are excited to have you in our creator community.
+    </p>
+
+    <p>
+      — Nili's Kitchen Team
+    </p>
+
+  </div>
+  `
+});
       return res.json({
   success:true,
   username: cleanUsername,
