@@ -213,16 +213,15 @@ cookSmarterDesc: "Recipes from what you already have",
 
 mobileFeature1Title: "📸 AI Scan",
 mobileFeature1Desc: "Photo ingredients",
-
 mobileFeature2Title: "🥗 Smart Picks",
 mobileFeature2Desc: "Choose by category",
-
 mobileFeature3Title: "❤️ Save",
 mobileFeature3Desc: "Keep favorites",
 
 joinNiliTitle: "Join Nili's Kitchen",
 joinNiliDesc: "Save favorites, upload recipes and unlock creator features.",
 joinNiliBtn: "Join Free",
+
 
 
    categories: {
@@ -343,16 +342,14 @@ cookSmarterTitle: "🍳 Daha Akıllı Pişir",
 cookSmarterDesc: "Elindeki malzemelerle tarifler keşfet",
 
 mobileFeature1Title: "📸 AI Tarama",
-mobileFeature1Desc: "Malzemelerin fotoğrafını çek",
-
+mobileFeature1Desc: "Malzemeleri fotoğrafla tanı",
 mobileFeature2Title: "🥗 Akıllı Seçimler",
 mobileFeature2Desc: "Kategoriye göre seç",
-
 mobileFeature3Title: "❤️ Kaydet",
-mobileFeature3Desc: "Favorilerini sakla",
+mobileFeature3Desc: "Favorileri sakla",
 
-joinNiliTitle: "Nili's Kitchen'a Katıl",
-joinNiliDesc: "Favorileri kaydet, tarif yükle ve içerik üretici özelliklerini aç.",
+joinNiliTitle: "Nili's Kitchen’a Katıl",
+joinNiliDesc: "Favorilerini kaydet, tarif yükle ve creator özelliklerini aç.",
 joinNiliBtn: "Ücretsiz Katıl",
 
 
@@ -471,16 +468,14 @@ cookSmarterTitle: "🍳 Готовьте умнее",
 cookSmarterDesc: "Рецепты из того, что уже есть у вас дома",
 
 mobileFeature1Title: "📸 AI Сканирование",
-mobileFeature1Desc: "Сканируйте ингредиенты по фото",
-
-mobileFeature2Title: "🥗 Умный Выбор",
-mobileFeature2Desc: "Выбирайте по категориям",
-
+mobileFeature1Desc: "Распознайте ингредиенты по фото",
+mobileFeature2Title: "🥗 Умный выбор",
+mobileFeature2Desc: "Выбор по категории",
 mobileFeature3Title: "❤️ Сохранить",
-mobileFeature3Desc: "Храните избранное",
+mobileFeature3Desc: "Сохраняйте избранное",
 
 joinNiliTitle: "Присоединяйтесь к Nili's Kitchen",
-joinNiliDesc: "Сохраняйте избранное, загружайте рецепты и открывайте возможности автора.",
+joinNiliDesc: "Сохраняйте избранное и добавляйте рецепты.",
 joinNiliBtn: "Присоединиться бесплатно",
     
 
@@ -599,16 +594,14 @@ cookSmarterTitle: "🍳 Cuisinez Plus Malin",
 cookSmarterDesc: "Des recettes avec ce que vous avez déjà",
 
 mobileFeature1Title: "📸 Scan IA",
-mobileFeature1Desc: "Photographiez vos ingrédients",
-
+mobileFeature1Desc: "Identifier les ingrédients par photo",
 mobileFeature2Title: "🥗 Choix Intelligents",
-mobileFeature2Desc: "Choisissez par catégorie",
-
-mobileFeature3Title: "❤️ Sauvegarder",
-mobileFeature3Desc: "Conservez vos favoris",
+mobileFeature2Desc: "Choisir par catégorie",
+mobileFeature3Title: "❤️ Enregistrer",
+mobileFeature3Desc: "Conserver les favoris",
 
 joinNiliTitle: "Rejoignez Nili's Kitchen",
-joinNiliDesc: "Enregistrez vos favoris, publiez des recettes et débloquez les fonctionnalités créateur.",
+joinNiliDesc: "Enregistrez vos favoris et ajoutez des recettes.",
 joinNiliBtn: "Rejoindre gratuitement",
  
 
@@ -728,13 +721,11 @@ cookSmarterTitle: "🍳 Cocina Mejor",
 cookSmarterDesc: "Recetas con lo que ya tienes",
 
 mobileFeature1Title: "📸 Escaneo IA",
-mobileFeature1Desc: "Fotografía tus ingredientes",
-
-mobileFeature2Title: "🥗 Selección Inteligente",
+mobileFeature1Desc: "Reconoce ingredientes por foto",
+mobileFeature2Title: "🥗 Selecciones Inteligentes",
 mobileFeature2Desc: "Elige por categoría",
-
 mobileFeature3Title: "❤️ Guardar",
-mobileFeature3Desc: "Guarda tus favoritos",
+mobileFeature3Desc: "Mantén tus favoritos",
 
 joinNiliTitle: "Únete a Nili's Kitchen",
 joinNiliDesc: "Guarda favoritos, publica recetas y desbloquea funciones de creador.",
@@ -854,12 +845,10 @@ smartScanDesc: "Transforme ingredientes em possibilidades",
 cookSmarterTitle: "🍳 Cozinhe Melhor",
 cookSmarterDesc: "Receitas com o que você já tem",
 
-mobileFeature1Title: "📸 Escaneamento IA",
-mobileFeature1Desc: "Fotografe seus ingredientes",
-
+mobileFeature1Title: "📸 Digitalização IA",
+mobileFeature1Desc: "Reconheça ingredientes por foto",
 mobileFeature2Title: "🥗 Escolhas Inteligentes",
 mobileFeature2Desc: "Escolha por categoria",
-
 mobileFeature3Title: "❤️ Salvar",
 mobileFeature3Desc: "Guarde seus favoritos",
 
@@ -983,11 +972,9 @@ cookSmarterTitle: "🍳 اطبخ بذكاء",
 cookSmarterDesc: "وصفات باستخدام ما لديك بالفعل",
 
 mobileFeature1Title: "📸 مسح بالذكاء الاصطناعي",
-mobileFeature1Desc: "صوّر المكونات",
-
+mobileFeature1Desc: "التعرف على المكونات من الصورة",
 mobileFeature2Title: "🥗 اختيارات ذكية",
 mobileFeature2Desc: "اختر حسب الفئة",
-
 mobileFeature3Title: "❤️ حفظ",
 mobileFeature3Desc: "احتفظ بالمفضلة",
 
@@ -1012,119 +999,117 @@ joinNiliBtn: "انضم مجانًا",
   },
 
   de: {
-appSubtitle: "KI-Rezeptassistent",
-scanTitle: "Zutaten per Foto scannen",
-scanSubtitle: "Laden Sie ein Foto hoch und lassen Sie die KI die Zutaten erkennen",
-manualTitle: "Zutaten manuell hinzufügen",
-manualPlaceholder: "Zutat hinzufügen",
-categoryTitle: "Zutaten nach Kategorie hinzufügen",
+  appSubtitle: "KI-Rezeptassistent",
+  scanTitle: "Zutaten per Foto scannen",
+  scanSubtitle: "Lade ein Foto hoch und lasse die KI Zutaten erkennen",
+  manualTitle: "Zutaten manuell hinzufügen",
+  manualPlaceholder: "Zutat hinzufügen",
+  categoryTitle: "Zutaten nach Kategorie hinzufügen",
 
-selectedTitle: "Ausgewählte Zutaten",
-selectedDesc: "Überprüfen Sie Ihre Zutaten, bevor Sie Rezepte suchen.",
-confirmIngredients: "Zutaten bestätigen",
-getRecipes: "Rezepte anzeigen",
-clearSelected: "Auswahl löschen",
-emptySelected: "Noch keine Zutaten ausgewählt.",
+  selectedTitle: "Ausgewählte Zutaten",
+  selectedDesc: "Überprüfe deine Zutaten, bevor du Rezepte suchst.",
+  confirmIngredients: "Zutaten bestätigen",
+  getRecipes: "Rezepte anzeigen",
+  clearSelected: "Auswahl löschen",
+  emptySelected: "Noch keine Zutaten ausgewählt.",
 
-signup: "Registrieren",
-login: "Anmelden",
-becomeCreator: "Creator werden",
-creatorDesc: "Laden Sie Rezepte hoch und verdienen Sie künftig Belohnungen.",
-creatorLogin: "Creator-Anmeldung",
-creatorLoginDesc: "Weiter zu Ihrer Rezept-Upload-Seite.",
-username: "Benutzername",
-email: "E-Mail-Adresse",
-emailOrUsername: "E-Mail oder Benutzername",
-password: "Passwort",
-show: "Anzeigen",
-hide: "Ausblenden",
-continue: "Weiter",
+  signup: "Registrieren",
+  login: "Anmelden",
+  becomeCreator: "Creator werden",
+  creatorDesc: "Rezepte hochladen und künftig Belohnungen erhalten.",
+  creatorLogin: "Creator-Anmeldung",
+  creatorLoginDesc: "Weiter zur Rezept-Upload-Seite.",
+  username: "Benutzername",
+  email: "E-Mail-Adresse",
+  emailOrUsername: "E-Mail oder Benutzername",
+  password: "Passwort",
+  show: "Anzeigen",
+  hide: "Ausblenden",
+  continue: "Weiter",
 
-alertIngredient: "Bitte fügen Sie mindestens eine Zutat hinzu.",
-alertConfirm: "Bitte bestätigen Sie zuerst Ihre Zutaten.",
-alertUsername: "Bitte geben Sie einen Benutzernamen ein.",
-alertEmail: "Bitte geben Sie Ihre E-Mail-Adresse ein.",
-alertEmailOrUser: "Bitte geben Sie Ihre E-Mail-Adresse oder Ihren Benutzernamen ein.",
-alertPassword: "Bitte geben Sie Ihr Passwort ein.",
+  alertIngredient: "Bitte mindestens eine Zutat hinzufügen.",
+  alertConfirm: "Bitte zuerst Zutaten bestätigen.",
+  alertUsername: "Bitte Benutzernamen eingeben.",
+  alertEmail: "Bitte E-Mail eingeben.",
+  alertEmailOrUser: "Bitte E-Mail oder Benutzernamen eingeben.",
+  alertPassword: "Bitte Passwort eingeben.",
 
-statusUpload: "Zutatenfoto hochladen",
-statusAdded: "Zutat hinzugefügt",
-statusAnalyzing: "Foto wird analysiert...",
-statusDetected: "Zutaten erkannt",
-statusNoIngredients: "Keine Zutaten gefunden",
-statusAnalyzeFailed: "Analyse fehlgeschlagen",
+  statusUpload: "Zutatenfoto hochladen",
+  statusAdded: "Zutat hinzugefügt",
+  statusAnalyzing: "Foto wird analysiert...",
+  statusDetected: "Zutaten erkannt",
+  statusNoIngredients: "Keine Zutaten gefunden",
+  statusAnalyzeFailed: "Analyse fehlgeschlagen",
 
-loadingRecipes: "Rezepte werden geladen...",
-recipesFailed: "Rezepte konnten nicht geladen werden",
-noRecipesFound: "Keine Rezepte gefunden",
+  loadingRecipes: "Rezepte werden geladen...",
+  recipesFailed: "Rezepte konnten nicht geladen werden",
+  noRecipesFound: "Keine Rezepte gefunden",
 
-usesIngredients: "Verwendet",
-ingredientsWord: "Zutaten",
+  usesIngredients: "Verwendet",
+  ingredientsWord: "Zutaten",
 
-recipeNotFound: "Rezept nicht gefunden",
-recipeTitleFallback: "Rezept",
-timeMin: "Min",
-ingredientsTitle: "Zutaten",
-instructionsTitle: "Anleitung",
-instructionsUnavailable: "Rezeptanleitung nicht verfügbar.",
+  recipeNotFound: "Rezept nicht gefunden",
+  recipeTitleFallback: "Rezept",
+  timeMin: "Min",
+  ingredientsTitle: "Zutaten",
+  instructionsTitle: "Anleitung",
+  instructionsUnavailable: "Rezeptanleitung nicht verfügbar.",
 
-heroBadge: "KI-gestützte echte Rezepte",
-heroTitle: "Intelligenter kochen mit dem, was Sie bereits haben",
-heroDesc: "Laden Sie Zutaten hoch, wählen Sie aus, was Sie haben, und entdecken Sie sofort echte Rezepte.",
+  heroBadge: "KI-gestützte echte Rezepte",
+  heroTitle: "Koche intelligenter mit dem, was du bereits hast",
+  heroDesc: "Lade Zutaten hoch, wähle aus was du hast und entdecke sofort echte Rezepte.",
 
-galleryBtn: "Aus Galerie wählen",
+  galleryBtn: "Aus Galerie wählen",
 
-footerNote: "© 2026 Nili's Kitchen AI. Alle Rechte vorbehalten.",
+  footerNote: "© 2026 Nili's Kitchen AI. Alle Rechte vorbehalten.",
 
-ingredientDetailsUnavailable: "Zutatendetails nicht verfügbar",
-timeUnavailable: "Zeit nicht verfügbar",
+  ingredientDetailsUnavailable: "Zutatendetails nicht verfügbar",
+  timeUnavailable: "Zeit nicht verfügbar",
+  serviceTemporaryUnavailable: "Der Dienst ist vorübergehend nicht verfügbar. Bitte später erneut versuchen.",
 
-serviceTemporaryUnavailable: "Der Dienst ist aufgrund eines technischen Problems vorübergehend nicht verfügbar. Bitte versuchen Sie es später erneut.",
+  menuDashboard: "Dashboard",
+  menuAddRecipe: "Rezept hinzufügen",
+  menuFavorites: "Favoriten",
+  menuLogout: "Abmelden",
+  menuHowItWorks: "So funktioniert es",
 
-menuDashboard: "Dashboard",
-menuAddRecipe: "Rezept hinzufügen",
-menuFavorites: "Favoriten",
-menuLogout: "Abmelden",
-menuHowItWorks: "So funktioniert es",
+  howTitle: "👋 So funktioniert Nili's Kitchen",
+  howStep1: "1️⃣ Zutaten aus Kategorien auswählen.",
+  howStep2: "2️⃣ Weitere Zutaten manuell hinzufügen.",
+  howStep3: "3️⃣ Zutaten bestätigen und auf Rezepte tippen.",
+  howStep4: "4️⃣ Lieblingsrezepte mit kostenlosem Konto speichern.",
+  howStep5: "5️⃣ Creator können eigene Rezepte hochladen.",
+  howStart: "Jetzt entdecken",
+  howMoreInfo: "Mehr über Nili's Kitchen erfahren →",
 
-howTitle: "👋 So funktioniert Nili's Kitchen",
-howStep1: "1️⃣ Zutaten aus Kategorien auswählen.",
-howStep2: "2️⃣ Weitere Zutaten manuell hinzufügen.",
-howStep3: "3️⃣ Zutaten bestätigen und auf Rezepte anzeigen tippen.",
-howStep4: "4️⃣ Speichern Sie Lieblingsrezepte mit einem kostenlosen Konto.",
-howStep5: "5️⃣ Creator können eigene Rezepte hochladen.",
-howStart: "Jetzt entdecken",
-howMoreInfo: "Mehr über Nili's Kitchen erfahren →",
+  pleaseWait: "Bitte warten",
 
-pleaseWait: "Bitte warten",
+  loginButton: "Anmelden",
 
-loginButton: "Anmelden",
+  signupTitle: "Kostenloses Konto erstellen",
+  signupDesc: "Favoriten speichern, Rezepte synchronisieren und mehr Suchen freischalten.",
+  signupContinue: "Weiter",
+  continueGuest: "Als Gast fortfahren",
+  signupTabText: "Registrieren",
+  loginTabText: "Anmelden",
 
-signupTitle: "Erstellen Sie Ihr kostenloses Konto",
-signupDesc: "Speichern Sie Favoriten, synchronisieren Sie Rezepte und erhalten Sie mehr Suchmöglichkeiten.",
-signupContinue: "Weiter",
-continueGuest: "Als Gast fortfahren",
-signupTabText: "Registrieren",
-loginTabText: "Anmelden",
+  smartScanTitle: "📸 Intelligenter Scan",
+  smartScanDesc: "Zutaten in Möglichkeiten verwandeln",
 
-smartScanTitle: "📸 Intelligenter Scan",
-smartScanDesc: "Verwandeln Sie Zutaten in Möglichkeiten",
+  cookSmarterTitle: "🍳 Intelligenter kochen",
+  cookSmarterDesc: "Rezepte aus den Zutaten, die du bereits hast",
 
-cookSmarterTitle: "🍳 Clever kochen",
-cookSmarterDesc: "Rezepte aus den Zutaten, die Sie bereits haben",
+  mobileFeature1Title: "📸 KI-Scan",
+  mobileFeature1Desc: "Zutaten per Foto erkennen",
+  mobileFeature2Title: "🥗 Intelligente Auswahl",
+  mobileFeature2Desc: "Nach Kategorie auswählen",
+  mobileFeature3Title: "❤️ Speichern",
+  mobileFeature3Desc: "Favoriten behalten",
 
-mobileFeature1Title: "📸 KI-Scan",
-mobileFeature1Desc: "Zutaten fotografieren",
+  joinNiliTitle: "Nili's Kitchen beitreten",
+  joinNiliDesc: "Favoriten speichern, Rezepte hochladen und Creator-Funktionen freischalten.",
+  joinNiliBtn: "Kostenlos beitreten",
 
-mobileFeature2Title: "🥗 Intelligente Auswahl",
-mobileFeature2Desc: "Nach Kategorie auswählen",
-
-mobileFeature3Title: "❤️ Speichern",
-mobileFeature3Desc: "Favoriten behalten",
-
-joinNiliTitle: "Nili's Kitchen beitreten",
-joinNiliDesc: "Favoriten speichern, Rezepte hochladen und Creator-Funktionen freischalten.",
-joinNiliBtn: "Kostenlos beitreten",
 
 categories: {
   vegetables: "Gemüse",
@@ -1142,174 +1127,261 @@ categories: {
 }
 },
 
+
 ja: {
-appSubtitle: "AIレシピアシスタント",
-scanTitle: "写真で食材をスキャン",
-scanSubtitle: "写真をアップロードしてAIに食材を認識させましょう",
-manualTitle: "食材を手動で追加",
-manualPlaceholder: "食材を追加",
-categoryTitle: "カテゴリーから食材を追加",
+  appSubtitle: "AIレシピアシスタント",
+  scanTitle: "写真で食材をスキャン",
+  scanSubtitle: "写真をアップロードしてAIに食材を認識させましょう",
+  manualTitle: "食材を手動で追加",
+  manualPlaceholder: "食材を追加",
+  categoryTitle: "カテゴリから食材を追加",
 
-selectedTitle: "選択した食材",
-selectedDesc: "レシピを探す前に食材を確認してください。",
-confirmIngredients: "食材を確認",
-getRecipes: "レシピを見る",
-clearSelected: "選択をクリア",
-emptySelected: "まだ食材が選択されていません。",
+  selectedTitle: "選択した食材",
+  selectedDesc: "レシピを探す前に食材を確認してください。",
+  confirmIngredients: "食材を確認",
+  getRecipes: "レシピを見る",
+  clearSelected: "選択をクリア",
+  emptySelected: "まだ食材が選択されていません。",
 
-signup: "登録",
-login: "ログイン",
-becomeCreator: "クリエイターになる",
-creatorDesc: "レシピを投稿し、将来的に報酬を獲得できます。",
-creatorLogin: "クリエイターログイン",
-creatorLoginDesc: "レシピ投稿ページへ進みます。",
-username: "ユーザー名",
-email: "メールアドレス",
-emailOrUsername: "メールアドレスまたはユーザー名",
-password: "パスワード",
-show: "表示",
-hide: "非表示",
-continue: "続行",
+  signup: "登録",
+  login: "ログイン",
+  becomeCreator: "クリエイターになる",
+  creatorDesc: "レシピを投稿し、将来的に報酬を獲得できます。",
+  creatorLogin: "クリエイターログイン",
+  creatorLoginDesc: "レシピ投稿ページへ進みます。",
+  username: "ユーザー名",
+  email: "メールアドレス",
+  emailOrUsername: "メールまたはユーザー名",
+  password: "パスワード",
+  show: "表示",
+  hide: "非表示",
+  continue: "続ける",
 
-heroBadge: "AIによる本物のレシピ",
-heroTitle: "今ある食材で賢く料理",
-heroDesc: "食材をアップロードし、手元にあるものを選ぶだけで、本物のレシピをすぐに発見できます。",
+  alertIngredient: "少なくとも1つの食材を追加してください。",
+  alertConfirm: "まず食材を確認してください。",
+  alertUsername: "ユーザー名を入力してください。",
+  alertEmail: "メールアドレスを入力してください。",
+  alertEmailOrUser: "メールまたはユーザー名を入力してください。",
+  alertPassword: "パスワードを入力してください。",
 
-galleryBtn: "ギャラリーから選択",
+  statusUpload: "食材の写真をアップロード",
+  statusAdded: "食材を追加しました",
+  statusAnalyzing: "写真を分析中...",
+  statusDetected: "食材を検出しました",
+  statusNoIngredients: "食材が見つかりません",
+  statusAnalyzeFailed: "分析に失敗しました",
 
-menuDashboard: "ダッシュボード",
-menuAddRecipe: "レシピ追加",
-menuFavorites: "お気に入り",
-menuLogout: "ログアウト",
-menuHowItWorks: "使い方",
+  loadingRecipes: "レシピを読み込み中...",
+  recipesFailed: "レシピの取得に失敗しました",
+  noRecipesFound: "レシピが見つかりません",
 
-loginButton: "ログイン",
+  usesIngredients: "使用",
+  ingredientsWord: "食材",
 
-signupTitle: "無料アカウントを作成",
-signupDesc: "お気に入りを保存し、レシピを同期して、さらに多くの検索を利用できます。",
-signupContinue: "続行",
-continueGuest: "ゲストとして続行",
-signupTabText: "登録",
-loginTabText: "ログイン",
+  recipeNotFound: "レシピが見つかりません",
+  recipeTitleFallback: "レシピ",
+  timeMin: "分",
+  ingredientsTitle: "材料",
+  instructionsTitle: "作り方",
+  instructionsUnavailable: "レシピの説明は利用できません。",
 
-smartScanTitle: "📸 スマートスキャン",
-smartScanDesc: "食材を可能性に変える",
+  heroBadge: "AIによる本物のレシピ",
+  heroTitle: "今ある食材で賢く料理しよう",
+  heroDesc: "食材をアップロードし、持っているものを選ぶだけで本物のレシピをすぐ発見。",
 
-cookSmarterTitle: "🍳 もっと賢く料理",
-cookSmarterDesc: "今ある食材からレシピを発見",
+  galleryBtn: "ギャラリーから選択",
 
-mobileFeature1Title: "📸 AIスキャン",
-mobileFeature1Desc: "食材を撮影",
+  footerNote: "© 2026 Nili's Kitchen AI. 無断転載を禁じます。",
 
-mobileFeature2Title: "🥗 スマート選択",
-mobileFeature2Desc: "カテゴリーから選択",
+  ingredientDetailsUnavailable: "食材の詳細は利用できません",
+  timeUnavailable: "時間情報なし",
+  serviceTemporaryUnavailable: "技術的な問題によりサービスは一時的に利用できません。後ほどお試しください。",
 
-mobileFeature3Title: "❤️ 保存",
-mobileFeature3Desc: "お気に入りを保存",
+  menuDashboard: "ダッシュボード",
+  menuAddRecipe: "レシピ追加",
+  menuFavorites: "お気に入り",
+  menuLogout: "ログアウト",
+  menuHowItWorks: "使い方",
 
-joinNiliTitle: "Nili's Kitchenに参加",
-joinNiliDesc: "お気に入りを保存し、レシピを投稿してクリエイター機能を利用しましょう。",
-joinNiliBtn: "無料で参加",
+  howTitle: "👋 Nili's Kitchen の使い方",
+  howStep1: "1️⃣ カテゴリから食材を選択。",
+  howStep2: "2️⃣ 必要なら手動で食材を追加。",
+  howStep3: "3️⃣ 食材を確認してレシピを取得。",
+  howStep4: "4️⃣ 無料アカウントでお気に入りを保存。",
+  howStep5: "5️⃣ クリエイターは独自のレシピを投稿可能。",
+  howStart: "始める",
+  howMoreInfo: "Nili's Kitchenについて詳しく →",
 
-categories: {
-  vegetables: "野菜",
-  fruits: "果物",
-  meat: "肉",
-  seafood: "魚介類",
-  dairy_eggs: "乳製品",
-  grains_bakery: "穀物",
-  legumes: "豆類",
-  herbs_spices: "ハーブ",
-  oils_fats: "油",
-  sauces_condiments: "ソース",
-  nuts_seeds: "ナッツ",
-  sweeteners_baking: "製菓"
-}
+  pleaseWait: "お待ちください",
+
+  loginButton: "ログイン",
+
+  signupTitle: "無料アカウントを作成",
+  signupDesc: "お気に入りを保存し、レシピを同期してさらに多くの検索を利用できます。",
+  signupContinue: "続ける",
+  continueGuest: "ゲストとして続行",
+  signupTabText: "登録",
+  loginTabText: "ログイン",
+
+  smartScanTitle: "📸 スマートスキャン",
+  smartScanDesc: "食材を可能性に変える",
+
+  cookSmarterTitle: "🍳 もっと賢く料理",
+  cookSmarterDesc: "今ある食材からレシピを発見",
+
+  mobileFeature1Title: "📸 AIスキャン",
+  mobileFeature1Desc: "写真から食材を認識",
+  mobileFeature2Title: "🥗 スマート選択",
+  mobileFeature2Desc: "カテゴリ別に選択",
+  mobileFeature3Title: "❤️ 保存",
+  mobileFeature3Desc: "お気に入りを保存",
+
+  joinNiliTitle: "Nili's Kitchenに参加",
+  joinNiliDesc: "お気に入りを保存し、レシピを投稿してクリエイター機能を利用できます。",
+  joinNiliBtn: "無料で参加",
+
+  categories: {
+    vegetables: "野菜",
+    fruits: "果物",
+    meat: "肉",
+    seafood: "魚介類",
+    dairy_eggs: "乳製品",
+    grains_bakery: "穀物",
+    legumes: "豆類",
+    herbs_spices: "ハーブ",
+    oils_fats: "油脂",
+    sauces_condiments: "ソース",
+    nuts_seeds: "ナッツ",
+    sweeteners_baking: "ベーキング"
+  }
 },
 
 zh: {
-appSubtitle: "AI 食谱助手",
-scanTitle: "通过照片扫描食材",
-scanSubtitle: "上传照片，让 AI 识别食材",
-manualTitle: "手动添加食材",
-manualPlaceholder: "添加食材",
-categoryTitle: "按类别添加食材",
+  appSubtitle: "AI 食谱助手",
+  scanTitle: "通过照片扫描食材",
+  scanSubtitle: "上传照片，让 AI 识别食材",
+  manualTitle: "手动添加食材",
+  manualPlaceholder: "添加食材",
+  categoryTitle: "按类别添加食材",
 
-selectedTitle: "已选择的食材",
-selectedDesc: "在查找食谱之前检查您的食材。",
-confirmIngredients: "确认食材",
-getRecipes: "获取食谱",
-clearSelected: "清除选择",
-emptySelected: "尚未选择任何食材。",
+  selectedTitle: "已选择的食材",
+  selectedDesc: "在查找食谱之前检查您的食材。",
+  confirmIngredients: "确认食材",
+  getRecipes: "获取食谱",
+  clearSelected: "清除已选",
+  emptySelected: "尚未选择任何食材。",
 
-signup: "注册",
-login: "登录",
-becomeCreator: "成为创作者",
-creatorDesc: "上传食谱，未来可获得奖励。",
-creatorLogin: "创作者登录",
-creatorLoginDesc: "继续前往您的食谱上传页面。",
-username: "用户名",
-email: "电子邮箱",
-emailOrUsername: "电子邮箱或用户名",
-password: "密码",
-show: "显示",
-hide: "隐藏",
-continue: "继续",
+  signup: "注册",
+  login: "登录",
+  becomeCreator: "成为创作者",
+  creatorDesc: "上传食谱，并在未来获得奖励。",
+  creatorLogin: "创作者登录",
+  creatorLoginDesc: "继续前往食谱上传页面。",
+  username: "用户名",
+  email: "电子邮箱",
+  emailOrUsername: "邮箱或用户名",
+  password: "密码",
+  show: "显示",
+  hide: "隐藏",
+  continue: "继续",
 
-heroBadge: "AI 驱动的真实食谱",
-heroTitle: "利用现有食材更聪明地烹饪",
-heroDesc: "上传食材，选择您拥有的食材，立即发现真实食谱。",
+  alertIngredient: "请至少添加一种食材。",
+  alertConfirm: "请先确认食材。",
+  alertUsername: "请输入用户名。",
+  alertEmail: "请输入电子邮箱。",
+  alertEmailOrUser: "请输入邮箱或用户名。",
+  alertPassword: "请输入密码。",
 
-galleryBtn: "从图库选择",
+  statusUpload: "上传食材照片",
+  statusAdded: "食材已添加",
+  statusAnalyzing: "正在分析照片...",
+  statusDetected: "已识别食材",
+  statusNoIngredients: "未找到食材",
+  statusAnalyzeFailed: "分析失败",
 
-menuDashboard: "控制面板",
-menuAddRecipe: "添加食谱",
-menuFavorites: "收藏",
-menuLogout: "退出登录",
-menuHowItWorks: "使用方法",
+  loadingRecipes: "正在加载食谱...",
+  recipesFailed: "获取食谱失败",
+  noRecipesFound: "未找到食谱",
 
-loginButton: "登录",
+  usesIngredients: "使用",
+  ingredientsWord: "种食材",
 
-signupTitle: "创建您的免费账户",
-signupDesc: "保存收藏、同步食谱并解锁更多搜索功能。",
-signupContinue: "继续",
-continueGuest: "以访客身份继续",
-signupTabText: "注册",
-loginTabText: "登录",
+  recipeNotFound: "未找到食谱",
+  recipeTitleFallback: "食谱",
+  timeMin: "分钟",
+  ingredientsTitle: "食材",
+  instructionsTitle: "制作步骤",
+  instructionsUnavailable: "暂无食谱说明。",
 
-smartScanTitle: "📸 智能扫描",
-smartScanDesc: "让食材变成无限可能",
+  heroBadge: "AI 驱动的真实食谱",
+  heroTitle: "利用现有食材更聪明地烹饪",
+  heroDesc: "上传食材，选择您拥有的食材，即可立即发现真实食谱。",
 
-cookSmarterTitle: "🍳 更聪明地烹饪",
-cookSmarterDesc: "利用现有食材发现食谱",
+  galleryBtn: "从图库选择",
 
-mobileFeature1Title: "📸 AI扫描",
-mobileFeature1Desc: "拍摄食材照片",
+  footerNote: "© 2026 Nili's Kitchen AI. 版权所有。",
 
-mobileFeature2Title: "🥗 智能选择",
-mobileFeature2Desc: "按类别选择",
+  ingredientDetailsUnavailable: "暂无食材详情",
+  timeUnavailable: "暂无时间信息",
+  serviceTemporaryUnavailable: "由于技术问题，服务暂时不可用。请稍后再试。",
 
-mobileFeature3Title: "❤️ 保存",
-mobileFeature3Desc: "保存收藏",
+  menuDashboard: "控制面板",
+  menuAddRecipe: "添加食谱",
+  menuFavorites: "收藏夹",
+  menuLogout: "退出登录",
+  menuHowItWorks: "使用说明",
 
-joinNiliTitle: "加入 Nili's Kitchen",
-joinNiliDesc: "保存收藏、上传食谱并解锁创作者功能。",
-joinNiliBtn: "免费加入",
+  howTitle: "👋 Nili's Kitchen 使用指南",
+  howStep1: "1️⃣ 从分类中选择食材。",
+  howStep2: "2️⃣ 如有需要，手动添加更多食材。",
+  howStep3: "3️⃣ 确认食材并点击获取食谱。",
+  howStep4: "4️⃣ 使用免费账户保存您喜欢的食谱。",
+  howStep5: "5️⃣ 创作者可以上传自己的食谱。",
+  howStart: "开始探索",
+  howMoreInfo: "了解更多关于 Nili's Kitchen →",
 
-categories: {
-  vegetables: "蔬菜",
-  fruits: "水果",
-  meat: "肉类",
-  seafood: "海鲜",
-  dairy_eggs: "乳制品",
-  grains_bakery: "谷物",
-  legumes: "豆类",
-  herbs_spices: "香草",
-  oils_fats: "油脂",
-  sauces_condiments: "酱料",
-  nuts_seeds: "坚果",
-  sweeteners_baking: "烘焙"
-}
+  pleaseWait: "请稍候",
+
+  loginButton: "登录",
+
+  signupTitle: "创建免费账户",
+  signupDesc: "保存收藏、同步食谱并解锁更多搜索功能。",
+  signupContinue: "继续",
+  continueGuest: "以游客身份继续",
+  signupTabText: "注册",
+  loginTabText: "登录",
+
+  smartScanTitle: "📸 智能扫描",
+  smartScanDesc: "让食材变成无限可能",
+
+  cookSmarterTitle: "🍳 更聪明地烹饪",
+  cookSmarterDesc: "利用现有食材发现食谱",
+
+  mobileFeature1Title: "📸 AI 扫描",
+  mobileFeature1Desc: "通过照片识别食材",
+  mobileFeature2Title: "🥗 智能推荐",
+  mobileFeature2Desc: "按类别选择",
+  mobileFeature3Title: "❤️ 保存",
+  mobileFeature3Desc: "保存收藏内容",
+
+  joinNiliTitle: "加入 Nili's Kitchen",
+  joinNiliDesc: "保存收藏、上传食谱并解锁创作者功能。",
+  joinNiliBtn: "免费加入",
+
+  categories: {
+    vegetables: "蔬菜",
+    fruits: "水果",
+    meat: "肉类",
+    seafood: "海鲜",
+    dairy_eggs: "乳制品",
+    grains_bakery: "谷物",
+    legumes: "豆类",
+    herbs_spices: "香草与香料",
+    oils_fats: "油脂",
+    sauces_condiments: "酱料",
+    nuts_seeds: "坚果与种子",
+    sweeteners_baking: "烘焙与甜味剂"
+  }
 }
 
 };
@@ -1385,11 +1457,9 @@ async function translateSelectedIngredients(){
 
 }
 
-function setText(selector, text){
-  const el = document.querySelector(selector);
-  if(el){
-    el.textContent = text;
-  }
+function setText(id, value){
+  const el = document.getElementById(id);
+  if(el) el.textContent = value;
 }
 
 function setPlaceholder(selector, text){
@@ -1427,10 +1497,10 @@ document.querySelectorAll(".hero-desc-text").forEach(el => {
   el.textContent = t("heroDesc");
 });
 
-  setText("#appSubtitle", t("appSubtitle"));
+setText("appSubtitle", t("appSubtitle"));
 
-setText("#scanTitle", t("scanTitle"));
-setText("#statusText", t("scanSubtitle"));
+setText("scanTitle", t("scanTitle"));
+setText("statusText", t("scanSubtitle"));
 
 const galleryBtnText = document.getElementById("galleryBtnText");
 
@@ -1439,22 +1509,26 @@ if(galleryBtnText){
 }
 
 setText(".manual-panel .panel-title", t("manualTitle"));
-  setPlaceholder("#manualInput", t("manualPlaceholder"));
+setPlaceholder("#manualInput", t("manualPlaceholder"));
 
-  setText(".category-panel .panel-title", t("categoryTitle"));
+  
 
-  setText(".selected-tray-header h2", t("selectedTitle"));
-  setText(".selected-tray-header p", t("selectedDesc"));
-  setText(".tray-confirm span", t("confirmIngredients"));
-  setText("#trayGetRecipesBtn", t("getRecipes"));
-  setText(".selected-clear-bottom", t("clearSelected"));
+setText(".selected-tray-header h2", t("selectedTitle"));
+setText(".selected-tray-header p", t("selectedDesc"));
+setText(".tray-confirm span", t("confirmIngredients"));
+setText("#trayGetRecipesBtn", t("getRecipes"));
+setText(".selected-clear-bottom", t("clearSelected"));
 
-  setText("#signupTab", t("signup"));
-  setText("#loginTab", t("login"));
+setText("#signupTab", t("signup"));
+setText("#loginTab", t("login"));
 
-  setText("#creatorCardTitle", t("becomeCreator"));
+ 
+setText("categoryTitle", t("categoryTitle"));
+ 
+
+setText("#creatorCardTitle", t("becomeCreator"));
 setText("#creatorCardDesc", t("creatorDesc"));
-setText("#footerNoteText", t("footerNote"));
+setText("footerNoteText", t("footerNote"));
 setText("userDashboardLink", t("menuDashboard"));
 setText("userAddRecipeLink", t("menuAddRecipe"));
 setText("userFavoritesBtn", "❤️ " + t("menuFavorites"));
@@ -1489,14 +1563,17 @@ setText("cookSmarterDesc", t("cookSmarterDesc"));
 
 setText("mobileFeature1Title", t("mobileFeature1Title"));
 setText("mobileFeature1Desc", t("mobileFeature1Desc"));
+
 setText("mobileFeature2Title", t("mobileFeature2Title"));
 setText("mobileFeature2Desc", t("mobileFeature2Desc"));
+
 setText("mobileFeature3Title", t("mobileFeature3Title"));
 setText("mobileFeature3Desc", t("mobileFeature3Desc"));
 
-setText("#joinNiliTitle", t("joinNiliTitle"));
-setText("#joinNiliDesc", t("joinNiliDesc"));
-setText("#joinNiliBtn", t("joinNiliBtn"));
+setText("joinNiliTitle", t("joinNiliTitle"));
+setText("joinNiliDesc", t("joinNiliDesc"));
+setText("joinNiliBtn", t("joinNiliBtn"));
+
 
   const title =
   document.getElementById("creatorCardTitle");
@@ -1523,6 +1600,10 @@ setText("#joinNiliBtn", t("joinNiliBtn"));
     }
 
   }
+
+  if(!isUserLoggedIn()){
+  setText("userMenuName", t("loginButton"));
+}
 
   const usernameInput =
   document.getElementById("creatorUsernameInput");
@@ -1587,9 +1668,8 @@ shortCategoryLabels[key] ||
 key;
 
 label =
-label
-  .replace(/_/g, " ")
-  .replace(/\b\w/g, c => c.toUpperCase());
+String(label)
+  .replace(/_/g, " ");
 
 btn.innerHTML =
 icon
@@ -1604,7 +1684,7 @@ icon
 ){
   setCreatorMode(window.creatorMode || "signup");
 }
-
+applyLanguage();
 }
 
 function saveState(){
@@ -2702,6 +2782,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
 });
 
+function updateUserMenuText(){
+  setText("userDashboardLink", t("menuDashboard"));
+  setText("userAddRecipeLink", t("menuAddRecipe"));
+  setText("userFavoritesBtn", "❤️ " + t("menuFavorites"));
+  setText("userHowLink", t("menuHowItWorks"));
+  setText("userLogoutBtn", t("menuLogout"));
+}
+
 
 let creatorMode = "signup";
 
@@ -2777,6 +2865,12 @@ function updateCreatorLinks(){
     });
 }
 
+currentLang =
+  localStorage.getItem("niliLang") ||
+  localStorage.getItem("lang") ||
+  currentLang ||
+  "en";
+
 if(langSelectEl){
 
   langSelectEl.value = currentLang;
@@ -2785,8 +2879,8 @@ if(langSelectEl){
 
     currentLang = langSelectEl.value;
 
-    localStorage.setItem("niliLang", String(currentLang));
-    localStorage.setItem("lang", String(currentLang));
+    localStorage.setItem("niliLang", currentLang);
+    localStorage.setItem("lang", currentLang);
 
     console.log("APP selected currentLang:", currentLang);
     console.log("APP localStorage niliLang:", localStorage.getItem("niliLang"));
@@ -3016,9 +3110,15 @@ window.toggleCreatorPassword = function(){
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  currentLang = "en";
+  const selectedLangOnLoad =
+  document.getElementById("langSelect")?.value || "en";
 
-  applyLanguage("en");
+currentLang = selectedLangOnLoad;
+
+localStorage.setItem("niliLang", currentLang);
+localStorage.setItem("lang", currentLang);
+
+applyLanguage();
 
   const signupTab =
   document.getElementById("signupTab");
@@ -3041,9 +3141,26 @@ document.addEventListener("DOMContentLoaded", () => {
     continueBtn.onclick = () => window.goToCreatorPage();
   }
 
+  const selectOnLoad =
+  document.getElementById("langSelect");
+
+if(selectOnLoad){
+  currentLang = selectOnLoad.value || "en";
+  localStorage.setItem("niliLang", currentLang);
+  localStorage.setItem("lang", currentLang);
+}
+
+ 
+
   if (window.setCreatorMode) {
     window.setCreatorMode("signup");
   }
+
+  
+
+if(langSelectEl){
+  langSelectEl.value = currentLang;
+}
 
 });
 
@@ -3095,7 +3212,7 @@ window.setLang = function(lang){
     box.classList.remove("open");
   }
 
-  applyLanguage();
+   
 
   if(typeof initUserSessionMenu === "function"){
     initUserSessionMenu();
@@ -3411,7 +3528,7 @@ if(userMenuBtn && userMenu){
 
   });
 
-  if(!isUserLoggedIn()){
+ if(!isUserLoggedIn()){
   const userMenuName = document.getElementById("userMenuName");
   if(userMenuName){
     userMenuName.textContent = t("loginButton");
@@ -3530,8 +3647,19 @@ async function autoDetectLanguageAndShowIntro(){
   }
 
   try{
-    const res = await fetch("https://ipapi.co/json/");
-    const data = await res.json();
+  const controller = new AbortController();
+
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, 2500);
+
+  const res = await fetch("https://ipapi.co/json/", {
+    signal: controller.signal
+  });
+
+  clearTimeout(timeoutId);
+
+  const data = await res.json();
 
     const country = data.country_code;
 
@@ -3627,6 +3755,18 @@ async function autoDetectLanguageAndShowIntro(){
   LY: "ar",
   SD: "ar",
 
+  // German
+  DE: "de",
+  AT: "de",
+
+  // Japanese
+  JP: "ja",
+
+  // Chinese
+  CN: "zh",
+  TW: "zh",
+  HK: "zh",
+
   // English fallback countries
   US: "en",
   GB: "en",
@@ -3656,8 +3796,10 @@ setTimeout(() => {
 }, 500);
 
   }catch(err){
-    console.log("AUTO LANG ERROR:", err);
-  }
+  console.log("AUTO LANG ERROR:", err.message);
+
+  localStorage.setItem("niliLangDetected", "1");
+}
 }
 
 translateSignupPopup();

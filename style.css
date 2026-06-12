@@ -152,7 +152,7 @@ html,body{width:100%;min-height:100%;font-family:Arial,sans-serif;background:var
 
   .category-grid button,
   .category-btn{
-    min-height:25px;
+    min-height:22px;
     padding:5px 9px;
     font-size:10.5px;
   }
@@ -2473,15 +2473,15 @@ html[dir="rtl"] .hero-content{
 }
 
 #categoryGrid .category-btn{
-  min-height:36px !important;
-  font-size:14px !important;
+  min-height:28px !important;
+  font-size:12px !important;
   font-weight:900 !important;
-  padding:10px 8px !important;
+  padding:8px 6px !important;
   border-radius:15px !important;
 }
 
 #categoryGrid{
-  gap:10px !important;
+  gap:8px !important;
 }
 
 @media(max-width:768px){
@@ -2618,4 +2618,100 @@ html[dir="rtl"] .hero-content{
     margin-bottom:0 !important;
     padding-bottom:0 !important;
   }
+}
+
+
+.join-area{
+  margin-top:5px;
+  padding:0;
+  box-sizing:border-box;
+}
+
+.nk-mini-card{
+  width:100%;
+  max-width:520px;
+  margin:0 auto 14px auto;
+}
+
+.site-footer-note{
+  width:100%;
+  clear:both;
+  display:block;
+  padding:10px 12px;
+  box-sizing:border-box;
+  text-align:center;
+  font-size:12px;
+  background:#fffaf3;
+}
+
+#joinNiliBtn{
+  width:120px !important;
+  min-width:120px !important;
+  max-width:120px !important;
+
+  min-height:48px !important;
+
+  background:#ef6a1a !important;
+  color:#fff !important;
+
+  border:none !important;
+  border-radius:14px !important;
+
+  font-size:12px !important;
+  font-weight:700 !important;
+  line-height:1.15 !important;
+
+  white-space:normal !important;
+  text-align:center !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  padding:6px 8px !important;
+  box-sizing:border-box !important;
+}
+
+#joinNiliBtn{
+  flex:0 0 120px !important;
+}
+
+.nk-mini-content{
+  min-width:0 !important;
+  flex:1 1 auto !important;
+}
+
+.nk-mini-card{
+  display:flex !important;
+  align-items:center !important;
+  gap:12px !important;
+}
+
+.nk-mini-icon{
+  flex:0 0 34px !important;
+}
+
+#joinNiliTitle,
+#joinNiliDesc{
+  margin-right:8px !important;
+}
+
+.floating-lang{
+  direction:ltr !important;
+  flex-direction:row !important;
+}
+
+.floating-lang .user-menu{
+  order:1 !important;
+  direction:ltr !important;
+}
+
+.floating-lang .lang-wrapper{
+  order:2 !important;
+  direction:ltr !important;
+}
+
+.floating-lang .user-menu-dropdown,
+.floating-lang .lang-options{
+  direction:ltr !important;
 }

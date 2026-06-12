@@ -911,33 +911,39 @@ console.log("RECIPE TRANSLATE LANG:", lang);
 
 if(lang !== "en"){
 
-  for(const recipe of finalRecipes){
+  await Promise.all(
+    finalRecipes.map(async (recipe) => {
 
-    recipe.title =
-    await translateText(recipe.title, lang);
+      try{
 
-    recipe.instructions =
-    await translateText(recipe.instructions, lang);
+        recipe.title =
+          await translateText(recipe.title || "", lang);
 
-    if(Array.isArray(recipe.usedIngredients)){
+        recipe.ingredientsText =
+          await translateText(recipe.ingredientsText || "", lang);
 
-      for(const ing of recipe.usedIngredients){
-
-        if(ing.name){
-          ing.name =
-          await translateText(ing.name, lang);
+        if(Array.isArray(recipe.usedIngredients)){
+          recipe.usedIngredients = await Promise.all(
+            recipe.usedIngredients.map(async (ing) => {
+              return {
+                ...ing,
+                name: ing.name
+                  ? await translateText(ing.name, lang)
+                  : ing.name,
+                original: ing.original
+                  ? await translateText(ing.original, lang)
+                  : ing.original
+              };
+            })
+          );
         }
 
-        if(ing.original){
-          ing.original =
-          await translateText(ing.original, lang);
-        }
-
+      }catch(e){
+        console.log("RECIPE TRANSLATION FAILED:", e.message);
       }
 
-    }
-
-  }
+    })
+  );
 
 }
 
@@ -2152,6 +2158,16 @@ app.post("/normalize-ingredients", async (req, res) => {
     return res.status(500).json({
       error: "Ingredient normalization failed"
     });
+  }
+});
+
+const transporter = nodemailer.createTransport({
+  host: process.env.EMAIL_HOST,
+  port: Number(process.env.EMAIL_PORT || 465),
+  secure: Number(process.env.EMAIL_PORT || 465) === 465,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
   }
 });
 

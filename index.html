@@ -161,7 +161,7 @@
 </div>
 
        <div class="category-panel">
-  <div class="panel-title">Add ingredients by category</div>
+  <div class="panel-title" id="categoryTitle">Add ingredients by category</div>
 
   <div class="category-grid" id="categoryGrid">
     <button class="category-btn" data-category="vegetables" data-icon="🥦">Vegetables</button>
@@ -211,27 +211,29 @@
   </div>
 </div>
 
+  <div class="join-area">
 
-<div class="nk-mini-card">
+  <div class="nk-mini-card">
 
-  <div class="nk-mini-icon">✨</div>
+    <div class="nk-mini-icon">✨</div>
 
-  <div class="nk-mini-content">
-    <h4 id="joinNiliTitle">Join Nili's Kitchen</h4>
+    <div class="nk-mini-content">
+      <h4 id="joinNiliTitle">Join Nili's Kitchen</h4>
 
-    <p id="joinNiliDesc">
-      Save favorites, upload recipes and unlock creator features.
-    </p>
+      <p id="joinNiliDesc">
+        Save favorites, upload recipes and unlock creator features.
+      </p>
+    </div>
+
+    <button id="joinNiliBtn" onclick="openSignupInvite()">
+      Join Free
+    </button>
+
   </div>
-
-  <button id="joinNiliBtn" onclick="openSignupInvite()">
-    Join Free
-  </button>
 
 </div>
 
-
-     <div class="site-footer-note">
+<div class="site-footer-note">
   <span id="footerNoteText">
     © 2026 Nili's Kitchen AI. All rights reserved.
   </span>
