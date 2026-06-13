@@ -34,10 +34,31 @@ const ingredientModalItems = document.getElementById("ingredientModalItems");
 
 const LANG_STORAGE_KEY = "niliKitchenLangV2";
 
+function getSavedLang(){
+  return (
+    localStorage.getItem("niliLang") ||
+    localStorage.getItem("lang") ||
+    localStorage.getItem("niliKitchenLangV2") ||
+    "en"
+  );
+}
+
+function saveLang(lang){
+  localStorage.setItem("niliLang", lang);
+  localStorage.setItem("lang", lang);
+  localStorage.setItem("niliKitchenLangV2", lang);
+}
+
+const urlLang =
+  new URLSearchParams(window.location.search).get("lang");
+
 let currentLang =
-  localStorage.getItem("niliLang") ||
-  localStorage.getItem("lang") ||
-  "en";
+  getSavedLang();
+
+if(urlLang && urlLang !== "en"){
+  currentLang = urlLang;
+  saveLang(currentLang);
+}
 
 const ingredientTranslationCache = {};
 const ingredientTranslationLoading = {};
@@ -1497,12 +1518,31 @@ function setPlaceholder(selector, text){
 function applyLanguage(){
 
   console.log("APPLY LANGUAGE:", currentLang);
+
+  const langDropdown =
+  document.getElementById("langSelect");
+
+if(langDropdown){
+  langDropdown.value = currentLang;
+}
   
   console.log(
   "HERO FOUND:",
   document.querySelectorAll(".hero-title-text").length,
   t("heroTitle")
 );
+
+const langBtnText = document.getElementById("langBtnText");
+const langBtnFlag = document.getElementById("langBtnFlag");
+
+if(langBtnText){
+  langBtnText.textContent = currentLang.toUpperCase();
+}
+
+if(langBtnFlag){
+  langBtnFlag.src = `/flags/${currentLang}.svg`;
+  langBtnFlag.style.visibility = "visible";
+}
 
   document.documentElement.lang =
   currentLang;
@@ -1705,12 +1745,12 @@ icon
 
   });
 
- if(
+ /*if(
   typeof setCreatorMode === "function" &&
   !document.getElementById("signupInviteModal")?.style.display.includes("flex")
 ){
   setCreatorMode(window.creatorMode || "signup");
-}
+}*/
 
 }
 
@@ -2892,11 +2932,32 @@ function updateCreatorLinks(){
     });
 }
 
-currentLang =
-  localStorage.getItem("niliLang") ||
-  localStorage.getItem("lang") ||
-  currentLang ||
-  "en";
+function updateAllLinks(){
+
+  document.querySelectorAll("a[href]").forEach(a => {
+
+    const href = a.getAttribute("href");
+
+    if(
+      !href ||
+      href.startsWith("#") ||
+      href.startsWith("http") ||
+      href.startsWith("mailto:") ||
+      href.startsWith("tel:")
+    ){
+      return;
+    }
+
+    const cleanHref = href.split("?")[0];
+
+    a.setAttribute(
+      "href",
+      cleanHref + "?lang=" + currentLang
+    );
+
+  });
+
+}
 
 if(langSelectEl){
 
@@ -2909,12 +2970,10 @@ if(langSelectEl){
     localStorage.setItem("niliLang", currentLang);
     localStorage.setItem("lang", currentLang);
 
-    console.log("APP selected currentLang:", currentLang);
-    console.log("APP localStorage niliLang:", localStorage.getItem("niliLang"));
-    console.log("APP localStorage lang:", localStorage.getItem("lang"));
-
     applyLanguage();
     updateCreatorLinks();
+
+    updateAllLinks();
 
     if(typeof renderChecklist === "function"){
       renderChecklist();
@@ -2935,8 +2994,10 @@ if(langSelectEl){
 
   applyLanguage();
   updateCreatorLinks();
+  updateAllLinks();
 
 }
+
 
 /* =========================
    CREATOR AUTH FINAL FIX
@@ -3095,7 +3156,13 @@ window.goToCreatorPage = async function(){
     localStorage.setItem("creatorEmail", data.email || emailOrUser);
     localStorage.setItem("creatorEmailOrUser", data.email || emailOrUser);
 
-    window.location.href = `${window.location.origin}/?lang=${currentLang}`;
+    const savedLang =
+  localStorage.getItem("niliLang") ||
+  localStorage.getItem("lang") ||
+  currentLang ||
+  "en";
+
+window.location.href = `${window.location.origin}/?lang=${savedLang}`;
 
   }catch(err){
 
@@ -3137,15 +3204,13 @@ window.toggleCreatorPassword = function(){
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const selectedLangOnLoad =
-  document.getElementById("langSelect")?.value || "en";
+  currentLang = getSavedLang();
 
-currentLang = selectedLangOnLoad;
+  if(langSelectEl){
+    langSelectEl.value = currentLang;
+  }
 
-localStorage.setItem("niliLang", currentLang);
-localStorage.setItem("lang", currentLang);
-
-applyLanguage();
+  applyLanguage();
 
   const signupTab =
   document.getElementById("signupTab");
@@ -3168,22 +3233,9 @@ applyLanguage();
     continueBtn.onclick = () => window.goToCreatorPage();
   }
 
-  const selectOnLoad =
-  document.getElementById("langSelect");
-
-if(selectOnLoad){
-  currentLang = selectOnLoad.value || "en";
-  localStorage.setItem("niliLang", currentLang);
-  localStorage.setItem("lang", currentLang);
-}
-
- 
-
   if (window.setCreatorMode) {
     window.setCreatorMode("signup");
   }
-
-  
 
 if(langSelectEl){
   langSelectEl.value = currentLang;
@@ -3588,7 +3640,16 @@ function logoutUser(){
     userMenu.classList.remove("open");
   }
 
-  location.href = "/?lang=" + currentLang;
+  const savedLang =
+  localStorage.getItem("niliLang") ||
+  localStorage.getItem("lang") ||
+  "en";
+
+location.href = "/?lang=" + savedLang;
+
+console.log("RETURN LANG:", localStorage.getItem("niliLang"));
+console.log("RETURN LANG2:", localStorage.getItem("lang"));
+console.log("CURRENT LANG:", currentLang);
 }
 
 initUserSessionMenu();
@@ -3670,10 +3731,10 @@ async function autoDetectLanguageAndShowIntro(){
     return;
   }
 
-  if(localStorage.getItem("niliLang")){
+  /*if(localStorage.getItem("niliLang")){
     console.log("STOP: niliLang exists", localStorage.getItem("niliLang"));
     return;
-  }
+  }*/
 
   try{
   const controller = new AbortController();
@@ -3827,6 +3888,8 @@ setTimeout(() => {
   }catch(err){
   console.log("AUTO LANG ERROR:", err.message);
 
+  setLang("tr");
+
   localStorage.setItem("niliLangDetected", "1");
 }
 }
@@ -3852,3 +3915,19 @@ function translateSignupPopup(){
     userMenuName.textContent = t("loginButton");
   }
 }
+
+window.addEventListener("pageshow", () => {
+  currentLang =
+    localStorage.getItem("niliLang") ||
+    localStorage.getItem("lang") ||
+    currentLang ||
+    "en";
+
+  if(langSelectEl){
+    langSelectEl.value = currentLang;
+  }
+
+  applyLanguage();
+  updateCreatorLinks();
+  updateAllLinks();
+});

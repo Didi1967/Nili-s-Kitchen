@@ -168,8 +168,10 @@ const currentLang =
   localStorage.getItem("lang") ||
   "en";
 
-localStorage.setItem("niliLang", currentLang);
-localStorage.setItem("lang", currentLang);
+if(urlLang){
+  localStorage.setItem("niliLang", urlLang);
+  localStorage.setItem("lang", urlLang);
+}  
 
 const howTexts = {
   en: {
@@ -605,8 +607,15 @@ setText("creatorStep3Text", ht("creatorStep3Text"));
 setText("pointsTitle", ht("pointsTitle"));
 setText("pointsText", ht("pointsText"));
 
+const savedLang =
+  localStorage.getItem("niliLang") ||
+  localStorage.getItem("lang") ||
+  currentLang ||
+  "en";
+
 document.getElementById("backHomeLink").href =
-  "/?lang=" + currentLang;
+  "/?lang=" + savedLang;
+  
 </script>
 
 </body>
