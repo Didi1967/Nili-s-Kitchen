@@ -2715,3 +2715,137 @@ html[dir="rtl"] .hero-content{
 .floating-lang .lang-options{
   direction:ltr !important;
 }
+
+@media(max-width:600px){
+
+  .user-menu-dropdown{
+    position:absolute !important;
+    right:0 !important;
+    left:auto !important;
+    top:calc(100% + 8px) !important;
+    width:190px !important;
+    max-width:calc(100vw - 24px) !important;
+    transform:none !important;
+  }
+
+  .lang-options{
+    position:absolute !important;
+    right:0 !important;
+    left:auto !important;
+    top:calc(100% + 8px) !important;
+    width:120px !important;
+    max-width:calc(100vw - 24px) !important;
+    transform:none !important;
+  }
+
+}
+
+@media(max-width:600px){
+
+  #langOptions{
+    width:55px !important;
+    min-width:55px !important;
+    max-width:55px !important;
+    padding:5px !important;
+    box-sizing:border-box !important;
+  }
+
+  #langOptions button{
+    font-size:10px !important;
+    padding:3px 5px !important;
+    gap:4px !important;
+  }
+
+  #langOptions img{
+    width:10px !important;
+    height:10px !important;
+  }
+
+  #userMenuDropdown{
+    width:85px !important;
+    min-width:85px !important;
+    max-width:85px !important;
+    padding:5px !important;
+    box-sizing:border-box !important;
+  }
+
+  #userMenuDropdown a,
+  #userMenuDropdown button{
+    font-size:10px !important;
+    padding:5px 8px !important;
+    white-space:nowrap !important;
+  }
+}
+
+  #userMenuDropdown{
+
+  /* SAĞ-SOL */
+  right:auto !important;
+  left:8 !important;
+
+  /* YUKARI-AŞAĞI */
+  top:100% !important;
+  margin-top:6px !important;
+
+  /* BOYUT */
+  width:130px !important;
+  min-width:130px !important;
+  max-width:130px !important;
+
+  /* İÇ BOŞLUK */
+  padding:5px !important;
+
+  /* KÖŞE */
+  border-radius:14px !important;
+
+  /* GÖLGE */
+  box-shadow:0 10px 25px rgba(0,0,0,.15) !important;
+}
+
+#userMenuDropdown a,
+#userMenuDropdown button{
+
+  font-size:12px !important;
+  padding:8px 12px !important;
+
+}
+
+#langOptions{
+
+  /* SAĞ-SOL */
+  right:0 !important;
+  left:auto !important;
+
+  /* YUKARI-AŞAĞI */
+  top:100% !important;
+  margin-top:6px !important;
+
+  /* BOYUT */
+  width:64px !important;
+  min-width:64px !important;
+  max-width:64px !important;
+
+  /* İÇ BOŞLUK */
+  padding:3px !important;
+
+  /* KÖŞE */
+  border-radius:14px !important;
+
+  /* GÖLGE */
+  box-shadow:0 10px 25px rgba(0,0,0,.15) !important;
+}
+
+#langOptions button{
+
+  font-size:10px !important;
+  padding:5px 6px !important;
+  gap:4px !important;
+
+}
+
+#langOptions img{
+
+  width:14px !important;
+  height:14px !important;
+
+}

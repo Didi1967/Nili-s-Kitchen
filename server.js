@@ -922,6 +922,9 @@ if(lang !== "en"){
         recipe.ingredientsText =
           await translateText(recipe.ingredientsText || "", lang);
 
+        recipe.instructions =
+        await translateText(recipe.instructions || "", lang);  
+
         if(Array.isArray(recipe.usedIngredients)){
           recipe.usedIngredients = await Promise.all(
             recipe.usedIngredients.map(async (ing) => {
@@ -2251,42 +2254,6 @@ app.get("/creator-dashboard/:email", (req, res) => {
     });
   }
 });
-
-app.get("/test-mail", async (req, res) => {
-
-  try {
-
-    const info = await mailer.sendMail({
-      from: process.env.SMTP_FROM || process.env.SMTP_USER,
-      to: "diler1967@gmail.com",
-      subject: "Nili's Kitchen Titan Test",
-      html: `
-        <h2>🎉 Titan Mail Test</h2>
-        <p>Nili's Kitchen mail sistemi çalışıyor.</p>
-      `
-    });
-
-    console.log(info.messageId);
-
-    res.json({
-      success: true,
-      messageId: info.messageId
-    });
-
-  } catch (err) {
-
-    console.error(err);
-
-    res.status(500).json({
-      success: false,
-      error: err.message
-    });
-
-  }
-
-});
-
-
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on http://0.0.0.0:${PORT}`);
 });

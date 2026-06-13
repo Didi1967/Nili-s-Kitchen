@@ -222,6 +222,8 @@ joinNiliTitle: "Join Nili's Kitchen",
 joinNiliDesc: "Save favorites, upload recipes and unlock creator features.",
 joinNiliBtn: "Join Free",
 
+continueSelecting: "+ Continue selecting ingredients",
+
 
 
    categories: {
@@ -352,6 +354,8 @@ joinNiliTitle: "Nili's Kitchen’a Katıl",
 joinNiliDesc: "Favorilerini kaydet, tarif yükle ve creator özelliklerini aç.",
 joinNiliBtn: "Ücretsiz Katıl",
 
+continueSelecting: "+ Malzeme seçmeye devam et",
+
 
    categories: {
   vegetables: "Sebzeler",
@@ -477,6 +481,8 @@ mobileFeature3Desc: "Сохраняйте избранное",
 joinNiliTitle: "Присоединяйтесь к Nili's Kitchen",
 joinNiliDesc: "Сохраняйте избранное и добавляйте рецепты.",
 joinNiliBtn: "Присоединиться бесплатно",
+
+continueSelecting: "+ Продолжить выбор ингредиентов",
     
 
    categories: {
@@ -603,6 +609,8 @@ mobileFeature3Desc: "Conserver les favoris",
 joinNiliTitle: "Rejoignez Nili's Kitchen",
 joinNiliDesc: "Enregistrez vos favoris et ajoutez des recettes.",
 joinNiliBtn: "Rejoindre gratuitement",
+
+continueSelecting: "+ Continuer à choisir des ingrédients",
  
 
 
@@ -731,6 +739,8 @@ joinNiliTitle: "Únete a Nili's Kitchen",
 joinNiliDesc: "Guarda favoritos, publica recetas y desbloquea funciones de creador.",
 joinNiliBtn: "Unirse gratis",
 
+continueSelecting: "+ Continuar seleccionando ingredientes",
+
    categories: {
   vegetables: "Verduras",
   fruits: "Frutas",
@@ -855,6 +865,8 @@ mobileFeature3Desc: "Guarde seus favoritos",
 joinNiliTitle: "Junte-se ao Nili's Kitchen",
 joinNiliDesc: "Salve favoritos, publique receitas e desbloqueie recursos de criador.",
 joinNiliBtn: "Participar grátis",
+
+continueSelecting: "+ Continuar selecionando ingredientes",
 
 
     categories: {
@@ -981,6 +993,8 @@ mobileFeature3Desc: "احتفظ بالمفضلة",
 joinNiliTitle: "انضم إلى Nili's Kitchen",
 joinNiliDesc: "احفظ المفضلة، وارفع الوصفات، وافتح ميزات صانع المحتوى.",
 joinNiliBtn: "انضم مجانًا",
+
+continueSelecting: "+ اختر المزيد من المكونات",
 
     categories: {
   vegetables: "خضروات",
@@ -1109,6 +1123,8 @@ joinNiliBtn: "انضم مجانًا",
   joinNiliTitle: "Nili's Kitchen beitreten",
   joinNiliDesc: "Favoriten speichern, Rezepte hochladen und Creator-Funktionen freischalten.",
   joinNiliBtn: "Kostenlos beitreten",
+
+  continueSelecting: "+ Zutaten weiter auswählen",
 
 
 categories: {
@@ -1240,6 +1256,8 @@ ja: {
   joinNiliDesc: "お気に入りを保存し、レシピを投稿してクリエイター機能を利用できます。",
   joinNiliBtn: "無料で参加",
 
+  continueSelecting: "+ 食材の選択を続ける",
+
   categories: {
     vegetables: "野菜",
     fruits: "果物",
@@ -1368,6 +1386,8 @@ zh: {
   joinNiliDesc: "保存收藏、上传食谱并解锁创作者功能。",
   joinNiliBtn: "免费加入",
 
+  continueSelecting: "+ 继续选择食材",
+
   categories: {
     vegetables: "蔬菜",
     fruits: "水果",
@@ -1462,6 +1482,11 @@ function setText(id, value){
   if(el) el.textContent = value;
 }
 
+function setTextSelector(selector, value){
+  const el = document.querySelector(selector);
+  if(el) el.textContent = value;
+}
+
 function setPlaceholder(selector, text){
   const el = document.querySelector(selector);
   if(el){
@@ -1513,11 +1538,13 @@ setPlaceholder("#manualInput", t("manualPlaceholder"));
 
   
 
-setText(".selected-tray-header h2", t("selectedTitle"));
-setText(".selected-tray-header p", t("selectedDesc"));
-setText(".tray-confirm span", t("confirmIngredients"));
-setText("#trayGetRecipesBtn", t("getRecipes"));
-setText(".selected-clear-bottom", t("clearSelected"));
+setTextSelector(".selected-tray-header h2", t("selectedTitle"));
+setTextSelector(".selected-tray-header p", t("selectedDesc"));
+setTextSelector(".tray-confirm span", t("confirmIngredients"));
+setTextSelector("#trayGetRecipesBtn", t("getRecipes"));
+setTextSelector(".selected-clear-bottom", t("clearSelected"));
+
+setTextSelector(".continue-selecting-btn", t("continueSelecting"));
 
 setText("#signupTab", t("signup"));
 setText("#loginTab", t("login"));
@@ -1678,13 +1705,13 @@ icon
 
   });
 
-  if(
+ if(
   typeof setCreatorMode === "function" &&
   !document.getElementById("signupInviteModal")?.style.display.includes("flex")
 ){
   setCreatorMode(window.creatorMode || "signup");
 }
-applyLanguage();
+
 }
 
 function saveState(){
@@ -3212,11 +3239,13 @@ window.setLang = function(lang){
     box.classList.remove("open");
   }
 
-   
+   applyLanguage();
 
   if(typeof initUserSessionMenu === "function"){
     initUserSessionMenu();
   }
+
+  applyLanguage();
 
   if(typeof updateCreatorLinks === "function"){
     updateCreatorLinks();
