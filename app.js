@@ -63,7 +63,78 @@ if(urlLang && urlLang !== "en"){
 const ingredientTranslationCache = {};
 const ingredientTranslationLoading = {};
 
+const ingredientFiles = [
+  "vegetables.json",
+  "fruits.json",
+  "meat.json",
+  "seafood.json",
+  "dairy_eggs.json",
+  "grains_bakery.json",
+  "legumes.json",
+  "herbs_spices.json",
+  "oils_fats.json",
+  "sauces_condiments.json",
+  "nuts_seeds.json",
+  "sweeteners_baking.json"
+];
+
+window.allIngredients = [];
+window.categoryIngredients = {};
+
+async function loadAllIngredients(){
+
+  window.allIngredients = [];
+  window.categoryIngredients = {};
+
+  for(const file of ingredientFiles){
+
+    try{
+      const res = await fetch(`/ingredients/${file}`);
+
+      if(!res.ok){
+        console.log("Ingredient file not found:", file);
+        continue;
+      }
+
+      const items = await res.json();
+
+      if(!Array.isArray(items)){
+        console.log("Invalid ingredient file:", file);
+        continue;
+      }
+
+      items.forEach(item => {
+
+        window.allIngredients.push(item);
+
+        const cat = item.category || "unknown";
+
+        if(!window.categoryIngredients[cat]){
+          window.categoryIngredients[cat] = [];
+        }
+
+        window.categoryIngredients[cat].push(item);
+
+      });
+
+    }catch(err){
+      console.log("Ingredient load error:", file, err.message);
+    }
+  }
+
+  console.log("TOTAL INGREDIENTS LOADED:", window.allIngredients.length);
+  console.log("CATEGORIES:", Object.keys(window.categoryIngredients));
+}
+
 function getAllCategoryIngredients(){
+
+  if(window.allIngredients && window.allIngredients.length){
+
+    return window.allIngredients.map(item =>
+      item.name?.en || item.id
+    );
+
+  }
 
   if(window.NilisIngredients){
 
@@ -84,6 +155,21 @@ function getAllCategoryIngredients(){
 }
 
 function getIngredientLabel(item){
+
+  if(typeof item === "object"){
+    return item.name?.[currentLang] || item.name?.en || item.id;
+  }
+
+  const found =
+    window.allIngredients?.find(x =>
+      x.id === item ||
+      x.name?.en === item
+    );
+
+  if(found){
+    return found.name?.[currentLang] || found.name?.en || found.id;
+  }
+
   if(currentLang === "en") return item;
 
   return ingredientTranslationCache[currentLang]?.[item] || item;
@@ -2027,26 +2113,34 @@ async function openIngredientModal(categoryKey, items){
   if(!ingredientModal || !ingredientModalItems) return;
 
   activeCategoryKey = categoryKey;
+let safeItems =
+  Array.isArray(items) && items.length
+    ? items
+    : [];
 
-  let safeItems =
-    Array.isArray(items) && items.length
-      ? items
-      : [];
+if(!safeItems.length){
 
-  if(!safeItems.length && window.NilisIngredients){
+  safeItems =
+    window.categoryIngredients?.[categoryKey] ||
+    [];
 
-    safeItems = Object.values(window.NilisIngredients.ingredients || {})
-      .filter(item => item.category === categoryKey)
-      .map(item => item.id);
+}
 
-  }
+if(!safeItems.length && window.NilisIngredients){
 
-  if(!safeItems.length){
+  safeItems = Object.values(window.NilisIngredients.ingredients || {})
+    .filter(item => item.category === categoryKey);
 
-    safeItems =
-      CATEGORY_DATA[categoryKey] || [];
+}
 
-  }
+ if(!safeItems.length){
+
+  safeItems =
+    window.categoryIngredients?.[categoryKey] ||
+    CATEGORY_DATA[categoryKey] ||
+    [];
+
+}
 
  if(ingredientModalTitle){
 
@@ -2078,29 +2172,39 @@ async function openIngredientModal(categoryKey, items){
   }
 
   ingredientModalItems.innerHTML =
-    safeItems.map((item, index) => {
+  safeItems.map((item, index) => {
 
-      const label =
-        window.NilisIngredients?.ingredients?.[item]?.name?.[currentLang] ||
-        window.NilisIngredients?.ingredients?.[item]?.name?.en ||
-        item;
+    const itemObj =
+      typeof item === "object"
+        ? item
+        : window.allIngredients?.find(x =>
+            x.id === item || x.name?.en === item
+          );
 
-      const isSelected =
-  selected.includes(item);
+    const value =
+      itemObj?.id || item;
 
-return `
-  <button
-    class="modal-ingredient-btn ${isSelected ? "active" : ""}"
-    type="button"
-    data-value="${item}"
-    data-index="${index}"
-  >
-    <span>${label}</span>
-    <strong class="ingredient-mark">${isSelected ? "✓" : "+"}</strong>
-  </button>
-`;
+    const label =
+      itemObj
+        ? getIngredientLabel(itemObj)
+        : getIngredientLabel(item);
 
-    }).join("");
+    const isSelected =
+      selected.includes(value);
+
+    return `
+      <button
+        class="modal-ingredient-btn ${isSelected ? "active" : ""}"
+        type="button"
+        data-value="${value}"
+        data-index="${index}"
+      >
+        <span>${label}</span>
+        <strong class="ingredient-mark">${isSelected ? "✓" : "+"}</strong>
+      </button>
+    `;
+
+  }).join("");
 
   ingredientModal.style.display = "flex";
 
@@ -2128,18 +2232,18 @@ document
 
     let items = [];
 
-if(window.NilisIngredients){
+if(window.categoryIngredients?.[key]?.length){
+
+  items = window.categoryIngredients[key];
+
+}else if(window.NilisIngredients){
 
   items = Object.values(window.NilisIngredients.ingredients || {})
-    .filter(item => item.category === key)
-    .map(item => item.id);
+    .filter(item => item.category === key);
 
-}
+}else{
 
-if(!items.length){
-
-  items =
-  CATEGORY_DATA[key] || [];
+  items = CATEGORY_DATA[key] || [];
 
 }
 
@@ -3911,7 +4015,10 @@ setLang(
 translateSignupPopup();
 document.addEventListener("DOMContentLoaded", () => {
   autoDetectLanguageAndShowIntro();
+
+  loadAllIngredients();
 }
+
 );
 
 function translateSignupPopup(){
