@@ -2048,12 +2048,21 @@ async function openIngredientModal(categoryKey, items){
 
   }
 
-  if(ingredientModalTitle){
-    ingredientModalTitle.innerText =
-      translations[currentLang]?.categories?.[categoryKey] ||
-      translations.en.categories?.[categoryKey] ||
-      categoryKey;
-  }
+ if(ingredientModalTitle){
+
+  const categoryLabel =
+    translations[currentLang]?.categories?.[categoryKey] ||
+    translations.en.categories?.[categoryKey] ||
+    categoryKey;
+
+  const categoryIcon =
+    document.querySelector(
+      `.category-btn[data-category="${categoryKey}"]`
+    )?.dataset.icon || "";
+
+  ingredientModalTitle.innerHTML =
+    `${categoryIcon} ${categoryLabel}`;
+}
 
   if(!safeItems.length){
 
@@ -3726,15 +3735,10 @@ async function autoDetectLanguageAndShowIntro(){
 
   console.log("AUTO LANG STARTED");
 
-  if(localStorage.getItem("niliLangDetected")){
-    console.log("STOP: niliLangDetected exists");
-    return;
-  }
-
-  /*if(localStorage.getItem("niliLang")){
-    console.log("STOP: niliLang exists", localStorage.getItem("niliLang"));
-    return;
-  }*/
+ if(localStorage.getItem("niliLangManual") === "1"){
+  console.log("STOP: manual language selected");
+  return;
+}
 
   try{
   const controller = new AbortController();
@@ -3888,9 +3892,19 @@ setTimeout(() => {
   }catch(err){
   console.log("AUTO LANG ERROR:", err.message);
 
-  setLang("tr");
+  const browserLang =
+  (navigator.language || "en").slice(0, 2);
 
-  localStorage.setItem("niliLangDetected", "1");
+const supported =
+  ["en","tr","ru","fr","es","pt","ar","de","ja","zh"];
+
+setLang(
+  supported.includes(browserLang)
+    ? browserLang
+    : "en"
+);
+
+  localStorage.setItem("niliLangManual", "1");
 }
 }
 

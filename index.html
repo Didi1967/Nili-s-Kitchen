@@ -295,22 +295,24 @@
     </div>
   </div>
 
-  <div id="ingredientModal" class="ingredient-modal">
-    <div class="ingredient-modal-content">
+<div id="ingredientModal" class="ingredient-modal">
+  <div class="ingredient-modal-content">
 
-     <button
-  type="button"
-  class="ingredient-modal-close done-close"
-  onclick="closeIngredientModal()">
-  ✓ 
-</button>
-
+    <div class="ingredient-modal-header">
       <h2 id="ingredientModalTitle">Ingredients</h2>
 
-      <div id="ingredientModalItems"></div>
-
+      <button
+        type="button"
+        class="ingredient-modal-close done-close"
+        onclick="closeIngredientModal()">
+        +
+      </button>
     </div>
+
+    <div id="ingredientModalItems"></div>
+
   </div>
+</div>
 
   <main class="content" id="content">
     <section class="hero" id="hero">

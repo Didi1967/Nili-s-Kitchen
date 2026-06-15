@@ -2849,3 +2849,23 @@ html[dir="rtl"] .hero-content{
   height:14px !important;
 
 }
+
+.ingredient-modal-header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0 12px;
+}
+
+#ingredientModalTitle{
+  font-size:22px;
+  font-weight:900;
+  color:#e67e22;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
