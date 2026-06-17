@@ -37,16 +37,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Asiago",
-      "de": "Asiago",
-      "zh": "阿西亚戈",
-      "ja": "アジアーゴ",
-      "tr": "Asiago",
-      "ru": "Asiago",
-      "ar": "Asiago",
-      "es": "Asiago",
-      "pt": "Asiago",
-      "fr": "Asiago"
+      "en": "Asiago"
     },
     "aliases": [
       "Asiago",
@@ -125,16 +116,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Buffalo Milk",
-      "de": "Büffelmilch",
-      "zh": "水牛奶",
-      "ja": "バッファローミルク",
-      "tr": "Buffalo Milk",
-      "ru": "Buffalo Milk",
-      "ar": "Buffalo Milk",
-      "es": "Buffalo Milk",
-      "pt": "Buffalo Milk",
-      "fr": "Buffalo Milk"
+      "en": "Buffalo Milk"
     },
     "aliases": [
       "Buffalo Milk",
@@ -147,16 +129,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Burrata",
-      "de": "Burrata",
-      "zh": "布拉塔奶酪",
-      "ja": "ブッラータ",
-      "tr": "Burrata",
-      "ru": "Burrata",
-      "ar": "Burrata",
-      "es": "Burrata",
-      "pt": "Burrata",
-      "fr": "Burrata"
+      "en": "Burrata"
     },
     "aliases": [
       "Burrata",
@@ -266,16 +239,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Century Egg",
-      "de": "Jahrhundert-Ei",
-      "zh": "皮蛋",
-      "ja": "ピータン",
-      "tr": "Century Egg",
-      "ru": "Century Egg",
-      "ar": "Century Egg",
-      "es": "Century Egg",
-      "pt": "Century Egg",
-      "fr": "Century Egg"
+      "en": "Century Egg"
     },
     "aliases": [
       "Century Egg",
@@ -321,16 +285,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Chevre",
-      "de": "Ziegekäse",
-      "zh": "山羊奶酪",
-      "ja": "シェーブル",
-      "tr": "Chevre",
-      "ru": "Chevre",
-      "ar": "Chevre",
-      "es": "Chevre",
-      "pt": "Chevre",
-      "fr": "Chevre"
+      "en": "Chevre"
     },
     "aliases": [
       "Chevre",
@@ -444,16 +399,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Colby Cheese",
-      "de": "Colby-Käse",
-      "zh": "科尔比奶酪",
-      "ja": "コルビー チーズ",
-      "tr": "Colby Cheese",
-      "ru": "Colby Cheese",
-      "ar": "Colby Cheese",
-      "es": "Colby Cheese",
-      "pt": "Colby Cheese",
-      "fr": "Colby Cheese"
+      "en": "Colby Cheese"
     },
     "aliases": [
       "Colby Cheese",
@@ -466,16 +412,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Comte",
-      "de": "Comté",
-      "zh": "孔泰奶酪",
-      "ja": "コンテ",
-      "tr": "Comte",
-      "ru": "Comte",
-      "ar": "Comte",
-      "es": "Comte",
-      "pt": "Comte",
-      "fr": "Comte"
+      "en": "Comte"
     },
     "aliases": [
       "Comte",
@@ -521,16 +458,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Cotija Cheese",
-      "de": "Cotija Käse",
-      "zh": "科提哈奶酪",
-      "ja": "コティハチーズ",
-      "tr": "Cotija Cheese",
-      "ru": "Cotija Cheese",
-      "ar": "Cotija Cheese",
-      "es": "Cotija Cheese",
-      "pt": "Cotija Cheese",
-      "fr": "Cotija Cheese"
+      "en": "Cotija Cheese"
     },
     "aliases": [
       "Cotija Cheese",
@@ -710,16 +638,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Edam",
-      "de": "Edam",
-      "zh": "爱达姆奶酪",
-      "ja": "エダムチーズ",
-      "tr": "Edam",
-      "ru": "Edam",
-      "ar": "Edam",
-      "es": "Edam",
-      "pt": "Edam",
-      "fr": "Edam"
+      "en": "Edam"
     },
     "aliases": [
       "Edam",
@@ -798,16 +717,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Egg Whites",
-      "de": "Eiweiß",
-      "zh": "蛋白",
-      "ja": "卵白",
-      "tr": "Egg Whites",
-      "ru": "Egg Whites",
-      "ar": "Egg Whites",
-      "es": "Egg Whites",
-      "pt": "Egg Whites",
-      "fr": "Egg Whites"
+      "en": "Egg Whites"
     },
     "aliases": [
       "Egg Whites",
@@ -854,16 +764,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Egg Yolks",
-      "de": "Eidotter",
-      "zh": "蛋黄",
-      "ja": "卵黄",
-      "tr": "Egg Yolks",
-      "ru": "Egg Yolks",
-      "ar": "Egg Yolks",
-      "es": "Egg Yolks",
-      "pt": "Egg Yolks",
-      "fr": "Egg Yolks"
+      "en": "Egg Yolks"
     },
     "aliases": [
       "Egg Yolks",
@@ -876,16 +777,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Emmental",
-      "de": "Emmental",
-      "zh": "埃门塔尔奶酪",
-      "ja": "エメンタールチーズ",
-      "tr": "Emmental",
-      "ru": "Emmental",
-      "ar": "Emmental",
-      "es": "Emmental",
-      "pt": "Emmental",
-      "fr": "Emmental"
+      "en": "Emmental"
     },
     "aliases": [
       "Emmental",
@@ -931,16 +823,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Farmer Cheese",
-      "de": "Bauernkäse",
-      "zh": "农奶酪",
-      "ja": "ファーマーチーズ",
-      "tr": "Farmer Cheese",
-      "ru": "Farmer Cheese",
-      "ar": "Farmer Cheese",
-      "es": "Farmer Cheese",
-      "pt": "Farmer Cheese",
-      "fr": "Farmer Cheese"
+      "en": "Farmer Cheese"
     },
     "aliases": [
       "Farmer Cheese",
@@ -986,16 +869,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Feta Cheese",
-      "de": "Feta-Käse",
-      "zh": "菲达奶酪",
-      "ja": "フェタチーズ",
-      "tr": "Feta Cheese",
-      "ru": "Feta Cheese",
-      "ar": "Feta Cheese",
-      "es": "Feta Cheese",
-      "pt": "Feta Cheese",
-      "fr": "Feta Cheese"
+      "en": "Feta Cheese"
     },
     "aliases": [
       "Feta Cheese",
@@ -1008,16 +882,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Fontina",
-      "de": "Fontina",
-      "zh": "丰蒂纳",
-      "ja": "フォンティーナ",
-      "tr": "Fontina",
-      "ru": "Fontina",
-      "ar": "Fontina",
-      "es": "Fontina",
-      "pt": "Fontina",
-      "fr": "Fontina"
+      "en": "Fontina"
     },
     "aliases": [
       "Fontina",
@@ -1029,16 +894,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Fresh Ricotta",
-      "de": "Frische Ricotta",
-      "zh": "新鲜里科塔奶酪",
-      "ja": "フレッシュリコッタ",
-      "tr": "Fresh Ricotta",
-      "ru": "Fresh Ricotta",
-      "ar": "Fresh Ricotta",
-      "es": "Fresh Ricotta",
-      "pt": "Fresh Ricotta",
-      "fr": "Fresh Ricotta"
+      "en": "Fresh Ricotta"
     },
     "aliases": [
       "Fresh Ricotta",
@@ -1051,16 +907,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Fromage Blanc",
-      "de": "Quark",
-      "zh": "奶酪",
-      "ja": "フロマージュ・ブラン",
-      "tr": "Fromage Blanc",
-      "ru": "Fromage Blanc",
-      "ar": "Fromage Blanc",
-      "es": "Fromage Blanc",
-      "pt": "Fromage Blanc",
-      "fr": "Fromage Blanc"
+      "en": "Fromage Blanc"
     },
     "aliases": [
       "Fromage Blanc",
@@ -1174,16 +1021,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Goose Egg",
-      "de": "Gänseei",
-      "zh": "鹅蛋",
-      "ja": "ガチョウの卵",
-      "tr": "Goose Egg",
-      "ru": "Goose Egg",
-      "ar": "Goose Egg",
-      "es": "Goose Egg",
-      "pt": "Goose Egg",
-      "fr": "Goose Egg"
+      "en": "Goose Egg"
     },
     "aliases": [
       "Goose Egg",
@@ -1196,16 +1034,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Gorgonzola",
-      "de": "Gorgonzola",
-      "zh": "歌尔根佐拉",
-      "ja": "ゴルゴンゾーラ",
-      "tr": "Gorgonzola",
-      "ru": "Gorgonzola",
-      "ar": "Gorgonzola",
-      "es": "Gorgonzola",
-      "pt": "Gorgonzola",
-      "fr": "Gorgonzola"
+      "en": "Gorgonzola"
     },
     "aliases": [
       "Gorgonzola",
@@ -1250,16 +1079,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Grana Padano",
-      "de": "Grana Padano",
-      "zh": "格拉纳帕达诺",
-      "ja": "グラナ・パダーノ",
-      "tr": "Grana Padano",
-      "ru": "Grana Padano",
-      "ar": "Grana Padano",
-      "es": "Grana Padano",
-      "pt": "Grana Padano",
-      "fr": "Grana Padano"
+      "en": "Grana Padano"
     },
     "aliases": [
       "Grana Padano",
@@ -1306,16 +1126,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Gruyere",
-      "de": "Gruyère",
-      "zh": "格鲁耶尔奶酪",
-      "ja": "グリュイエール",
-      "tr": "Gruyere",
-      "ru": "Gruyere",
-      "ar": "Gruyere",
-      "es": "Gruyere",
-      "pt": "Gruyere",
-      "fr": "Gruyere"
+      "en": "Gruyere"
     },
     "aliases": [
       "Gruyere",
@@ -1360,16 +1171,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Havarti",
-      "de": "Havarti",
-      "zh": "哈瓦蒂奶酪",
-      "ja": "ハバルティ",
-      "tr": "Havarti",
-      "ru": "Havarti",
-      "ar": "Havarti",
-      "es": "Havarti",
-      "pt": "Havarti",
-      "fr": "Havarti"
+      "en": "Havarti"
     },
     "aliases": [
       "Havarti",
@@ -1481,16 +1283,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Manchego",
-      "de": "Manchego",
-      "zh": "曼切戈",
-      "ja": "マンチェゴ",
-      "tr": "Manchego",
-      "ru": "Manchego",
-      "ar": "Manchego",
-      "es": "Manchego",
-      "pt": "Manchego",
-      "fr": "Manchego"
+      "en": "Manchego"
     },
     "aliases": [
       "Manchego",
@@ -1667,16 +1460,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Muenster Cheese",
-      "de": "Münster Käse",
-      "zh": "门斯特奶酪",
-      "ja": "ミューンスター チーズ",
-      "tr": "Muenster Cheese",
-      "ru": "Muenster Cheese",
-      "ar": "Muenster Cheese",
-      "es": "Muenster Cheese",
-      "pt": "Muenster Cheese",
-      "fr": "Muenster Cheese"
+      "en": "Muenster Cheese"
     },
     "aliases": [
       "Muenster Cheese",
@@ -1723,16 +1507,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Oaxaca Cheese",
-      "de": "Oaxaca-Käse",
-      "zh": "瓦哈卡奶酪",
-      "ja": "オアハカチーズ",
-      "tr": "Oaxaca Cheese",
-      "ru": "Oaxaca Cheese",
-      "ar": "Oaxaca Cheese",
-      "es": "Oaxaca Cheese",
-      "pt": "Oaxaca Cheese",
-      "fr": "Oaxaca Cheese"
+      "en": "Oaxaca Cheese"
     },
     "aliases": [
       "Oaxaca Cheese",
@@ -1811,16 +1586,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Parmigiano Reggiano",
-      "de": "Parmigiano Reggiano",
-      "zh": "帕尔马干酪",
-      "ja": "パルミジャーノ・レッジャーノ",
-      "tr": "Parmigiano Reggiano",
-      "ru": "Parmigiano Reggiano",
-      "ar": "Parmigiano Reggiano",
-      "es": "Parmigiano Reggiano",
-      "pt": "Parmigiano Reggiano",
-      "fr": "Parmigiano Reggiano"
+      "en": "Parmigiano Reggiano"
     },
     "aliases": [
       "Parmigiano Reggiano",
@@ -1866,16 +1632,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Pecorino Romano",
-      "de": "Pecorino Romano",
-      "zh": "佩科里诺·罗马诺",
-      "ja": "ペコリーノ・ロマーノ",
-      "tr": "Pecorino Romano",
-      "ru": "Pecorino Romano",
-      "ar": "Pecorino Romano",
-      "es": "Pecorino Romano",
-      "pt": "Pecorino Romano",
-      "fr": "Pecorino Romano"
+      "en": "Pecorino Romano"
     },
     "aliases": [
       "Pecorino Romano",
@@ -1922,16 +1679,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Powdered Milk",
-      "de": "Pulverisierte Milch",
-      "zh": "奶粉",
-      "ja": "粉ミルク",
-      "tr": "Powdered Milk",
-      "ru": "Powdered Milk",
-      "ar": "Powdered Milk",
-      "es": "Powdered Milk",
-      "pt": "Powdered Milk",
-      "fr": "Powdered Milk"
+      "en": "Powdered Milk"
     },
     "aliases": [
       "Powdered Milk",
@@ -2011,16 +1759,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Quark",
-      "de": "Quark",
-      "zh": "凝乳",
-      "ja": "クワルク",
-      "tr": "Quark",
-      "ru": "Quark",
-      "ar": "Quark",
-      "es": "Quark",
-      "pt": "Quark",
-      "fr": "Quark"
+      "en": "Quark"
     },
     "aliases": [
       "Quark",
@@ -2032,16 +1771,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Queso Fresco",
-      "de": "Queso Fresco",
-      "zh": "新鲜奶酪",
-      "ja": "ケソ・フレスコ",
-      "tr": "Queso Fresco",
-      "ru": "Queso Fresco",
-      "ar": "Queso Fresco",
-      "es": "Queso Fresco",
-      "pt": "Queso Fresco",
-      "fr": "Queso Fresco"
+      "en": "Queso Fresco"
     },
     "aliases": [
       "Queso Fresco",
@@ -2054,16 +1784,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Raclette",
-      "de": "Raclette",
-      "zh": "瑞士奶酪火锅",
-      "ja": "ラクレット",
-      "tr": "Raclette",
-      "ru": "Raclette",
-      "ar": "Raclette",
-      "es": "Raclette",
-      "pt": "Raclette",
-      "fr": "Raclette"
+      "en": "Raclette"
     },
     "aliases": [
       "Raclette",
@@ -2108,16 +1829,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Ricotta Salata",
-      "de": "Ricotta Salata",
-      "zh": "咸里科塔奶酪",
-      "ja": "リコッタサラータ",
-      "tr": "Ricotta Salata",
-      "ru": "Ricotta Salata",
-      "ar": "Ricotta Salata",
-      "es": "Ricotta Salata",
-      "pt": "Ricotta Salata",
-      "fr": "Ricotta Salata"
+      "en": "Ricotta Salata"
     },
     "aliases": [
       "Ricotta Salata",
@@ -2130,16 +1842,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Roquefort",
-      "de": "Roquefort",
-      "zh": "罗克福奶酪",
-      "ja": "ロックフォール",
-      "tr": "Roquefort",
-      "ru": "Roquefort",
-      "ar": "Roquefort",
-      "es": "Roquefort",
-      "pt": "Roquefort",
-      "fr": "Roquefort"
+      "en": "Roquefort"
     },
     "aliases": [
       "Roquefort",
@@ -2151,16 +1854,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Salted Egg",
-      "de": "Salz-Ei",
-      "zh": "咸蛋",
-      "ja": "塩漬け卵",
-      "tr": "Salted Egg",
-      "ru": "Salted Egg",
-      "ar": "Salted Egg",
-      "es": "Salted Egg",
-      "pt": "Salted Egg",
-      "fr": "Salted Egg"
+      "en": "Salted Egg"
     },
     "aliases": [
       "Salted Egg",
@@ -2173,16 +1867,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Scamorza",
-      "de": "Scamorza",
-      "zh": "斯卡默扎奶酪",
-      "ja": "スカモルツァ",
-      "tr": "Scamorza",
-      "ru": "Scamorza",
-      "ar": "Scamorza",
-      "es": "Scamorza",
-      "pt": "Scamorza",
-      "fr": "Scamorza"
+      "en": "Scamorza"
     },
     "aliases": [
       "Scamorza",
@@ -2194,16 +1879,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Sheep Milk",
-      "de": "Schafsmilch",
-      "zh": "羊奶",
-      "ja": "羊のミルク",
-      "tr": "Sheep Milk",
-      "ru": "Sheep Milk",
-      "ar": "Sheep Milk",
-      "es": "Sheep Milk",
-      "pt": "Sheep Milk",
-      "fr": "Sheep Milk"
+      "en": "Sheep Milk"
     },
     "aliases": [
       "Sheep Milk",
@@ -2250,16 +1926,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Skyr",
-      "de": "Skyr",
-      "zh": "斯基尔乳酪",
-      "ja": "スキール",
-      "tr": "Skyr",
-      "ru": "Skyr",
-      "ar": "Skyr",
-      "es": "Skyr",
-      "pt": "Skyr",
-      "fr": "Skyr"
+      "en": "Skyr"
     },
     "aliases": [
       "Skyr",
@@ -2271,16 +1938,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Smoked Gouda",
-      "de": "Geräucherter Gouda",
-      "zh": "烟熏高达奶酪",
-      "ja": "スモークゴーダ",
-      "tr": "Smoked Gouda",
-      "ru": "Smoked Gouda",
-      "ar": "Smoked Gouda",
-      "es": "Smoked Gouda",
-      "pt": "Smoked Gouda",
-      "fr": "Smoked Gouda"
+      "en": "Smoked Gouda"
     },
     "aliases": [
       "Smoked Gouda",
@@ -2361,16 +2019,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Stilton",
-      "de": "Stilton",
-      "zh": "斯蒂尔顿奶酪",
-      "ja": "スティルトン",
-      "tr": "Stilton",
-      "ru": "Stilton",
-      "ar": "Stilton",
-      "es": "Stilton",
-      "pt": "Stilton",
-      "fr": "Stilton"
+      "en": "Stilton"
     },
     "aliases": [
       "Stilton",
@@ -2382,16 +2031,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Stracciatella Cheese",
-      "de": "Stracciatella Käse",
-      "zh": "斯特拉奇雅天使奶酪",
-      "ja": "ストラッチャテッラチーズ",
-      "tr": "Stracciatella Cheese",
-      "ru": "Stracciatella Cheese",
-      "ar": "Stracciatella Cheese",
-      "es": "Stracciatella Cheese",
-      "pt": "Stracciatella Cheese",
-      "fr": "Stracciatella Cheese"
+      "en": "Stracciatella Cheese"
     },
     "aliases": [
       "Stracciatella Cheese",
@@ -2438,16 +2078,7 @@
     "category": "dairy_eggs",
     "subcategory": "general",
     "name": {
-      "en": "Taleggio",
-      "de": "Taleggio",
-      "zh": "塔勒吉奥奶酪",
-      "ja": "タレッジョ",
-      "tr": "Taleggio",
-      "ru": "Taleggio",
-      "ar": "Taleggio",
-      "es": "Taleggio",
-      "pt": "Taleggio",
-      "fr": "Taleggio"
+      "en": "Taleggio"
     },
     "aliases": [
       "Taleggio",

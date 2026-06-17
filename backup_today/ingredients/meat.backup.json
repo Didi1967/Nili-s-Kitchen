@@ -4,16 +4,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Andouille Sausage",
-      "de": "Andouille Wurst",
-      "zh": "安杜伊香肠",
-      "ja": "アンドゥイユソーセージ",
-      "tr": "Andouille Sausage",
-      "ru": "Andouille Sausage",
-      "ar": "Andouille Sausage",
-      "es": "Andouille Sausage",
-      "pt": "Andouille Sausage",
-      "fr": "Andouille Sausage"
+      "en": "Andouille Sausage"
     },
     "aliases": [
       "Andouille Sausage",
@@ -57,16 +48,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Bottom Round",
-      "de": "Rinderuntere Runde",
-      "zh": "牛腩底部",
-      "ja": "牛肩肉",
-      "tr": "Beef Bottom Round",
-      "ru": "Beef Bottom Round",
-      "ar": "Beef Bottom Round",
-      "es": "Beef Bottom Round",
-      "pt": "Beef Bottom Round",
-      "fr": "Beef Bottom Round"
+      "en": "Beef Bottom Round"
     },
     "aliases": [
       "Beef Bottom Round",
@@ -113,16 +95,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Cheek",
-      "de": "Rinderschmorfbraten",
-      "zh": "牛颊肉",
-      "ja": "牛頬肉",
-      "tr": "Beef Cheek",
-      "ru": "Beef Cheek",
-      "ar": "Beef Cheek",
-      "es": "Beef Cheek",
-      "pt": "Beef Cheek",
-      "fr": "Beef Cheek"
+      "en": "Beef Cheek"
     },
     "aliases": [
       "Beef Cheek",
@@ -135,16 +108,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Chuck Eye Steak",
-      "de": "Rinder Chuck Eye Steak",
-      "zh": "牛肩胛眼肉排",
-      "ja": "ビーフチャックアイステーキ",
-      "tr": "Beef Chuck Eye Steak",
-      "ru": "Beef Chuck Eye Steak",
-      "ar": "Beef Chuck Eye Steak",
-      "es": "Beef Chuck Eye Steak",
-      "pt": "Beef Chuck Eye Steak",
-      "fr": "Beef Chuck Eye Steak"
+      "en": "Beef Chuck Eye Steak"
     },
     "aliases": [
       "Beef Chuck Eye Steak",
@@ -157,16 +121,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Chuck Roast",
-      "de": "Rinderschulterbraten",
-      "zh": "牛肩肉炖块",
-      "ja": "ビーフチャックロースト",
-      "tr": "Beef Chuck Roast",
-      "ru": "Beef Chuck Roast",
-      "ar": "Beef Chuck Roast",
-      "es": "Beef Chuck Roast",
-      "pt": "Beef Chuck Roast",
-      "fr": "Beef Chuck Roast"
+      "en": "Beef Chuck Roast"
     },
     "aliases": [
       "Beef Chuck Roast",
@@ -213,16 +168,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Eye Round",
-      "de": "Rinderaugenrundstück",
-      "zh": "牛眼肉",
-      "ja": "ビーフアイラウンド",
-      "tr": "Beef Eye Round",
-      "ru": "Beef Eye Round",
-      "ar": "Beef Eye Round",
-      "es": "Beef Eye Round",
-      "pt": "Beef Eye Round",
-      "fr": "Beef Eye Round"
+      "en": "Beef Eye Round"
     },
     "aliases": [
       "Beef Eye Round",
@@ -235,16 +181,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Flank",
-      "de": "Rinderflanke",
-      "zh": "牛腩",
-      "ja": "牛バラ肉",
-      "tr": "Beef Flank",
-      "ru": "Beef Flank",
-      "ar": "Beef Flank",
-      "es": "Beef Flank",
-      "pt": "Beef Flank",
-      "fr": "Beef Flank"
+      "en": "Beef Flank"
     },
     "aliases": [
       "Beef Flank",
@@ -257,16 +194,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Hanger Steak",
-      "de": "Rinderhüftsteak",
-      "zh": "牛肉悬垂肉",
-      "ja": "ビーフ・ハンガーステーキ",
-      "tr": "Beef Hanger Steak",
-      "ru": "Beef Hanger Steak",
-      "ar": "Beef Hanger Steak",
-      "es": "Beef Hanger Steak",
-      "pt": "Beef Hanger Steak",
-      "fr": "Beef Hanger Steak"
+      "en": "Beef Hanger Steak"
     },
     "aliases": [
       "Beef Hanger Steak",
@@ -279,16 +207,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Heart",
-      "de": "Rinderherz",
-      "zh": "牛心",
-      "ja": "牛心",
-      "tr": "Beef Heart",
-      "ru": "Beef Heart",
-      "ar": "Beef Heart",
-      "es": "Beef Heart",
-      "pt": "Beef Heart",
-      "fr": "Beef Heart"
+      "en": "Beef Heart"
     },
     "aliases": [
       "Beef Heart",
@@ -301,16 +220,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Kidney",
-      "de": "Rindernieren",
-      "zh": "牛肾",
-      "ja": "牛の腎臓",
-      "tr": "Beef Kidney",
-      "ru": "Beef Kidney",
-      "ar": "Beef Kidney",
-      "es": "Beef Kidney",
-      "pt": "Beef Kidney",
-      "fr": "Beef Kidney"
+      "en": "Beef Kidney"
     },
     "aliases": [
       "Beef Kidney",
@@ -323,16 +233,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Liver",
-      "de": "Rinderleber",
-      "zh": "牛肝",
-      "ja": "牛レバー",
-      "tr": "Beef Liver",
-      "ru": "Beef Liver",
-      "ar": "Beef Liver",
-      "es": "Beef Liver",
-      "pt": "Beef Liver",
-      "fr": "Beef Liver"
+      "en": "Beef Liver"
     },
     "aliases": [
       "Beef Liver",
@@ -345,16 +246,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Marrow Bone",
-      "de": "Rinderknochenmark",
-      "zh": "牛骨髓",
-      "ja": "牛骨髄",
-      "tr": "Beef Marrow Bone",
-      "ru": "Beef Marrow Bone",
-      "ar": "Beef Marrow Bone",
-      "es": "Beef Marrow Bone",
-      "pt": "Beef Marrow Bone",
-      "fr": "Beef Marrow Bone"
+      "en": "Beef Marrow Bone"
     },
     "aliases": [
       "Beef Marrow Bone",
@@ -367,16 +259,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Oxtail",
-      "de": "Rinderschwänze",
-      "zh": "牛尾",
-      "ja": "ビーフオックステール",
-      "tr": "Beef Oxtail",
-      "ru": "Beef Oxtail",
-      "ar": "Beef Oxtail",
-      "es": "Beef Oxtail",
-      "pt": "Beef Oxtail",
-      "fr": "Beef Oxtail"
+      "en": "Beef Oxtail"
     },
     "aliases": [
       "Beef Oxtail",
@@ -389,16 +272,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Plate",
-      "de": "Rinderbrust",
-      "zh": "牛肉盘",
-      "ja": "ビーフプレート",
-      "tr": "Beef Plate",
-      "ru": "Beef Plate",
-      "ar": "Beef Plate",
-      "es": "Beef Plate",
-      "pt": "Beef Plate",
-      "fr": "Beef Plate"
+      "en": "Beef Plate"
     },
     "aliases": [
       "Beef Plate",
@@ -411,16 +285,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Ribeye Cap",
-      "de": "Rinder Ribeye Deckel",
-      "zh": "牛肉肋眼帽",
-      "ja": "ビーフリブアイキャップ",
-      "tr": "Beef Ribeye Cap",
-      "ru": "Beef Ribeye Cap",
-      "ar": "Beef Ribeye Cap",
-      "es": "Beef Ribeye Cap",
-      "pt": "Beef Ribeye Cap",
-      "fr": "Beef Ribeye Cap"
+      "en": "Beef Ribeye Cap"
     },
     "aliases": [
       "Beef Ribeye Cap",
@@ -501,16 +366,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Short Rib",
-      "de": "Rinderrippe",
-      "zh": "牛小排",
-      "ja": "ビーフショートリブ",
-      "tr": "Beef Short Rib",
-      "ru": "Beef Short Rib",
-      "ar": "Beef Short Rib",
-      "es": "Beef Short Rib",
-      "pt": "Beef Short Rib",
-      "fr": "Beef Short Rib"
+      "en": "Beef Short Rib"
     },
     "aliases": [
       "Beef Short Rib",
@@ -523,16 +379,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Skirt Steak",
-      "de": "Rinderflanke",
-      "zh": "牛腹肉排",
-      "ja": "牛サーロインステーキ",
-      "tr": "Beef Skirt Steak",
-      "ru": "Beef Skirt Steak",
-      "ar": "Beef Skirt Steak",
-      "es": "Beef Skirt Steak",
-      "pt": "Beef Skirt Steak",
-      "fr": "Beef Skirt Steak"
+      "en": "Beef Skirt Steak"
     },
     "aliases": [
       "Beef Skirt Steak",
@@ -613,16 +460,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Tongue",
-      "de": "Rinderzunge",
-      "zh": "牛舌",
-      "ja": "牛タン",
-      "tr": "Beef Tongue",
-      "ru": "Beef Tongue",
-      "ar": "Beef Tongue",
-      "es": "Beef Tongue",
-      "pt": "Beef Tongue",
-      "fr": "Beef Tongue"
+      "en": "Beef Tongue"
     },
     "aliases": [
       "Beef Tongue",
@@ -635,16 +473,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Top Sirloin",
-      "de": "Rinder-Hüftsteak",
-      "zh": "牛肉上臀肉",
-      "ja": "牛肉トップサーロイン",
-      "tr": "Beef Top Sirloin",
-      "ru": "Beef Top Sirloin",
-      "ar": "Beef Top Sirloin",
-      "es": "Beef Top Sirloin",
-      "pt": "Beef Top Sirloin",
-      "fr": "Beef Top Sirloin"
+      "en": "Beef Top Sirloin"
     },
     "aliases": [
       "Beef Top Sirloin",
@@ -657,16 +486,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Beef Tri Tip",
-      "de": "Rinder Tri Tip",
-      "zh": "牛三角肉",
-      "ja": "ビーフ トライティップ",
-      "tr": "Beef Tri Tip",
-      "ru": "Beef Tri Tip",
-      "ar": "Beef Tri Tip",
-      "es": "Beef Tri Tip",
-      "pt": "Beef Tri Tip",
-      "fr": "Beef Tri Tip"
+      "en": "Beef Tri Tip"
     },
     "aliases": [
       "Beef Tri Tip",
@@ -679,16 +499,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Bison Steak",
-      "de": "Bisonsteak",
-      "zh": "野牛牛排",
-      "ja": "バイソンステーキ",
-      "tr": "Bison Steak",
-      "ru": "Bison Steak",
-      "ar": "Bison Steak",
-      "es": "Bison Steak",
-      "pt": "Bison Steak",
-      "fr": "Bison Steak"
+      "en": "Bison Steak"
     },
     "aliases": [
       "Bison Steak",
@@ -701,16 +512,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Bratwurst",
-      "de": "Bratwurst",
-      "zh": "香肠",
-      "ja": "ブラートヴルスト",
-      "tr": "Bratwurst",
-      "ru": "Bratwurst",
-      "ar": "Bratwurst",
-      "es": "Bratwurst",
-      "pt": "Bratwurst",
-      "fr": "Bratwurst"
+      "en": "Bratwurst"
     },
     "aliases": [
       "Bratwurst",
@@ -722,16 +524,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Bresaola",
-      "de": "Bresaola",
-      "zh": "风干牛肉",
-      "ja": "ブレザオラ",
-      "tr": "Bresaola",
-      "ru": "Bresaola",
-      "ar": "Bresaola",
-      "es": "Bresaola",
-      "pt": "Bresaola",
-      "fr": "Bresaola"
+      "en": "Bresaola"
     },
     "aliases": [
       "Bresaola",
@@ -811,16 +604,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Chicken Feet",
-      "de": "Hühnerfüße",
-      "zh": "鸡爪",
-      "ja": "鶏の足",
-      "tr": "Chicken Feet",
-      "ru": "Chicken Feet",
-      "ar": "Chicken Feet",
-      "es": "Chicken Feet",
-      "pt": "Chicken Feet",
-      "fr": "Chicken Feet"
+      "en": "Chicken Feet"
     },
     "aliases": [
       "Chicken Feet",
@@ -833,16 +617,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Chicken Giblets",
-      "de": "Hähncheninnereien",
-      "zh": "鸡肫",
-      "ja": "鶏のレバー",
-      "tr": "Chicken Giblets",
-      "ru": "Chicken Giblets",
-      "ar": "Chicken Giblets",
-      "es": "Chicken Giblets",
-      "pt": "Chicken Giblets",
-      "fr": "Chicken Giblets"
+      "en": "Chicken Giblets"
     },
     "aliases": [
       "Chicken Giblets",
@@ -855,16 +630,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Chicken Gizzard",
-      "de": "Hühnermagen",
-      "zh": "鸡肫",
-      "ja": "鶏の砂肝",
-      "tr": "Chicken Gizzard",
-      "ru": "Chicken Gizzard",
-      "ar": "Chicken Gizzard",
-      "es": "Chicken Gizzard",
-      "pt": "Chicken Gizzard",
-      "fr": "Chicken Gizzard"
+      "en": "Chicken Gizzard"
     },
     "aliases": [
       "Chicken Gizzard",
@@ -877,16 +643,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Chicken Heart",
-      "de": "Hühnerherz",
-      "zh": "鸡心",
-      "ja": "鶏ハツ",
-      "tr": "Chicken Heart",
-      "ru": "Chicken Heart",
-      "ar": "Chicken Heart",
-      "es": "Chicken Heart",
-      "pt": "Chicken Heart",
-      "fr": "Chicken Heart"
+      "en": "Chicken Heart"
     },
     "aliases": [
       "Chicken Heart",
@@ -899,16 +656,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Chicken Leg Quarter",
-      "de": "Hühnchenkeule",
-      "zh": "鸡腿四分之一",
-      "ja": "鶏もも肉",
-      "tr": "Chicken Leg Quarter",
-      "ru": "Chicken Leg Quarter",
-      "ar": "Chicken Leg Quarter",
-      "es": "Chicken Leg Quarter",
-      "pt": "Chicken Leg Quarter",
-      "fr": "Chicken Leg Quarter"
+      "en": "Chicken Leg Quarter"
     },
     "aliases": [
       "Chicken Leg Quarter",
@@ -955,16 +703,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Chicken Tenderloin",
-      "de": "Hähnchenbrustfilet",
-      "zh": "鸡肉嫩腰肉",
-      "ja": "鶏のささみ",
-      "tr": "Chicken Tenderloin",
-      "ru": "Chicken Tenderloin",
-      "ar": "Chicken Tenderloin",
-      "es": "Chicken Tenderloin",
-      "pt": "Chicken Tenderloin",
-      "fr": "Chicken Tenderloin"
+      "en": "Chicken Tenderloin"
     },
     "aliases": [
       "Chicken Tenderloin",
@@ -1074,16 +813,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Chorizo Sausage",
-      "de": "Chorizowurst",
-      "zh": "香肠",
-      "ja": "チョリソーソーセージ",
-      "tr": "Chorizo Sausage",
-      "ru": "Chorizo Sausage",
-      "ar": "Chorizo Sausage",
-      "es": "Chorizo Sausage",
-      "pt": "Chorizo Sausage",
-      "fr": "Chorizo Sausage"
+      "en": "Chorizo Sausage"
     },
     "aliases": [
       "Chorizo Sausage",
@@ -1096,16 +826,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Coppa",
-      "de": "Coppa",
-      "zh": "意大利干腌肉",
-      "ja": "コッパ",
-      "tr": "Coppa",
-      "ru": "Coppa",
-      "ar": "Coppa",
-      "es": "Coppa",
-      "pt": "Coppa",
-      "fr": "Coppa"
+      "en": "Coppa"
     },
     "aliases": [
       "Coppa",
@@ -1124,7 +845,7 @@
       "es": "Corned Res",
       "pt": "Corned Carne bovina",
       "fr": "Corned Bœuf",
-      "de": "Schweinefleisch",
+      "de": "Corned Beef",
       "zh": "咸牛肉",
       "ja": "コーンビーフ"
     },
@@ -1151,16 +872,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Cornish Hen",
-      "de": "Küken aus Cornwall",
-      "zh": "康沃尔鸡",
-      "ja": "コーニッシュハンター",
-      "tr": "Cornish Hen",
-      "ru": "Cornish Hen",
-      "ar": "Cornish Hen",
-      "es": "Cornish Hen",
-      "pt": "Cornish Hen",
-      "fr": "Cornish Hen"
+      "en": "Cornish Hen"
     },
     "aliases": [
       "Cornish Hen",
@@ -1204,16 +916,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Duck Breast",
-      "de": "Entenbrust",
-      "zh": "鸭胸肉",
-      "ja": "鴨の胸肉",
-      "tr": "Duck Breast",
-      "ru": "Duck Breast",
-      "ar": "Duck Breast",
-      "es": "Duck Breast",
-      "pt": "Duck Breast",
-      "fr": "Duck Breast"
+      "en": "Duck Breast"
     },
     "aliases": [
       "Duck Breast",
@@ -1226,16 +929,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Duck Confit",
-      "de": "Entenconfit",
-      "zh": "鸭肉酱",
-      "ja": "ダック・コンフィ",
-      "tr": "Duck Confit",
-      "ru": "Duck Confit",
-      "ar": "Duck Confit",
-      "es": "Duck Confit",
-      "pt": "Duck Confit",
-      "fr": "Duck Confit"
+      "en": "Duck Confit"
     },
     "aliases": [
       "Duck Confit",
@@ -1248,16 +942,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Duck Leg",
-      "de": "Entenbeine",
-      "zh": "鸭腿",
-      "ja": "鴨の脚",
-      "tr": "Duck Leg",
-      "ru": "Duck Leg",
-      "ar": "Duck Leg",
-      "es": "Duck Leg",
-      "pt": "Duck Leg",
-      "fr": "Duck Leg"
+      "en": "Duck Leg"
     },
     "aliases": [
       "Duck Leg",
@@ -1270,16 +955,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Duck Liver",
-      "de": "Entenleber",
-      "zh": "鸭肝",
-      "ja": "鴨肝",
-      "tr": "Duck Liver",
-      "ru": "Duck Liver",
-      "ar": "Duck Liver",
-      "es": "Duck Liver",
-      "pt": "Duck Liver",
-      "fr": "Duck Liver"
+      "en": "Duck Liver"
     },
     "aliases": [
       "Duck Liver",
@@ -1292,16 +968,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Elk Steak",
-      "de": "Elchsteak",
-      "zh": "驼鹿牛排",
-      "ja": "エルクステーキ",
-      "tr": "Elk Steak",
-      "ru": "Elk Steak",
-      "ar": "Elk Steak",
-      "es": "Elk Steak",
-      "pt": "Elk Steak",
-      "fr": "Elk Steak"
+      "en": "Elk Steak"
     },
     "aliases": [
       "Elk Steak",
@@ -1314,16 +981,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Goat Leg",
-      "de": "Ziegebein",
-      "zh": "山羊腿",
-      "ja": "ヤギの足",
-      "tr": "Goat Leg",
-      "ru": "Goat Leg",
-      "ar": "Goat Leg",
-      "es": "Goat Leg",
-      "pt": "Goat Leg",
-      "fr": "Goat Leg"
+      "en": "Goat Leg"
     },
     "aliases": [
       "Goat Leg",
@@ -1336,16 +994,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Goat Rib",
-      "de": "Ziegenrippe",
-      "zh": "山羊肋排",
-      "ja": "ヤギのリブ",
-      "tr": "Goat Rib",
-      "ru": "Goat Rib",
-      "ar": "Goat Rib",
-      "es": "Goat Rib",
-      "pt": "Goat Rib",
-      "fr": "Goat Rib"
+      "en": "Goat Rib"
     },
     "aliases": [
       "Goat Rib",
@@ -1358,16 +1007,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Goat Shoulder",
-      "de": "Ziegen Schulter",
-      "zh": "山羊肩肉",
-      "ja": "山羊の肩肉",
-      "tr": "Goat Shoulder",
-      "ru": "Goat Shoulder",
-      "ar": "Goat Shoulder",
-      "es": "Goat Shoulder",
-      "pt": "Goat Shoulder",
-      "fr": "Goat Shoulder"
+      "en": "Goat Shoulder"
     },
     "aliases": [
       "Goat Shoulder",
@@ -1411,16 +1051,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Goose Breast",
-      "de": "Gänsebrust",
-      "zh": "鹅胸肉",
-      "ja": "ガチョウの胸肉",
-      "tr": "Goose Breast",
-      "ru": "Goose Breast",
-      "ar": "Goose Breast",
-      "es": "Goose Breast",
-      "pt": "Goose Breast",
-      "fr": "Goose Breast"
+      "en": "Goose Breast"
     },
     "aliases": [
       "Goose Breast",
@@ -1433,16 +1064,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Goose Leg",
-      "de": "Gansbein",
-      "zh": "鹅腿",
-      "ja": "ガチョウの足",
-      "tr": "Goose Leg",
-      "ru": "Goose Leg",
-      "ar": "Goose Leg",
-      "es": "Goose Leg",
-      "pt": "Goose Leg",
-      "fr": "Goose Leg"
+      "en": "Goose Leg"
     },
     "aliases": [
       "Goose Leg",
@@ -1622,16 +1244,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Guanciale",
-      "de": "Guanciale",
-      "zh": "颊肉",
-      "ja": "グアンチャーレ",
-      "tr": "Guanciale",
-      "ru": "Guanciale",
-      "ar": "Guanciale",
-      "es": "Guanciale",
-      "pt": "Guanciale",
-      "fr": "Guanciale"
+      "en": "Guanciale"
     },
     "aliases": [
       "Guanciale",
@@ -1643,16 +1256,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Guinea Fowl",
-      "de": "Eurega-Schaufel",
-      "zh": "鑽石鵝",
-      "ja": "ギニアファウル",
-      "tr": "Guinea Fowl",
-      "ru": "Guinea Fowl",
-      "ar": "Guinea Fowl",
-      "es": "Guinea Fowl",
-      "pt": "Guinea Fowl",
-      "fr": "Guinea Fowl"
+      "en": "Guinea Fowl"
     },
     "aliases": [
       "Guinea Fowl",
@@ -1696,16 +1300,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Ham Hock",
-      "de": "Schinkenkeule",
-      "zh": "火腿骨",
-      "ja": "ハムホック",
-      "tr": "Ham Hock",
-      "ru": "Ham Hock",
-      "ar": "Ham Hock",
-      "es": "Ham Hock",
-      "pt": "Ham Hock",
-      "fr": "Ham Hock"
+      "en": "Ham Hock"
     },
     "aliases": [
       "Ham Hock",
@@ -1781,16 +1376,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Italian Sausage",
-      "de": "Italienische Wurst",
-      "zh": "意大利香肠",
-      "ja": "イタリアンソーセージ",
-      "tr": "Italian Sausage",
-      "ru": "Italian Sausage",
-      "ar": "Italian Sausage",
-      "es": "Italian Sausage",
-      "pt": "Italian Sausage",
-      "fr": "Italian Sausage"
+      "en": "Italian Sausage"
     },
     "aliases": [
       "Italian Sausage",
@@ -1866,16 +1452,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Kielbasa",
-      "de": "Kielbasa",
-      "zh": "香肠",
-      "ja": "キルバサ",
-      "tr": "Kielbasa",
-      "ru": "Kielbasa",
-      "ar": "Kielbasa",
-      "es": "Kielbasa",
-      "pt": "Kielbasa",
-      "fr": "Kielbasa"
+      "en": "Kielbasa"
     },
     "aliases": [
       "Kielbasa",
@@ -1887,16 +1464,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Lamb Breast",
-      "de": "Lammbrust",
-      "zh": "羊胸肉",
-      "ja": "ラムブレスト",
-      "tr": "Lamb Breast",
-      "ru": "Lamb Breast",
-      "ar": "Lamb Breast",
-      "es": "Lamb Breast",
-      "pt": "Lamb Breast",
-      "fr": "Lamb Breast"
+      "en": "Lamb Breast"
     },
     "aliases": [
       "Lamb Breast",
@@ -1943,16 +1511,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Lamb Heart",
-      "de": "Lammherz",
-      "zh": "羊心",
-      "ja": "ラムハート",
-      "tr": "Lamb Heart",
-      "ru": "Lamb Heart",
-      "ar": "Lamb Heart",
-      "es": "Lamb Heart",
-      "pt": "Lamb Heart",
-      "fr": "Lamb Heart"
+      "en": "Lamb Heart"
     },
     "aliases": [
       "Lamb Heart",
@@ -1999,16 +1558,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Lamb Leg Steak",
-      "de": "Lammkeulensteak",
-      "zh": "羊腿排",
-      "ja": "ラムレッグステーキ",
-      "tr": "Lamb Leg Steak",
-      "ru": "Lamb Leg Steak",
-      "ar": "Lamb Leg Steak",
-      "es": "Lamb Leg Steak",
-      "pt": "Lamb Leg Steak",
-      "fr": "Lamb Leg Steak"
+      "en": "Lamb Leg Steak"
     },
     "aliases": [
       "Lamb Leg Steak",
@@ -2021,16 +1571,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Lamb Liver",
-      "de": "Lammleber",
-      "zh": "羊肝",
-      "ja": "ラムレバー",
-      "tr": "Lamb Liver",
-      "ru": "Lamb Liver",
-      "ar": "Lamb Liver",
-      "es": "Lamb Liver",
-      "pt": "Lamb Liver",
-      "fr": "Lamb Liver"
+      "en": "Lamb Liver"
     },
     "aliases": [
       "Lamb Liver",
@@ -2043,16 +1584,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Lamb Loin Chop",
-      "de": "Lammrückensteak",
-      "zh": "羊腰肉排",
-      "ja": "ラムロインチョップ",
-      "tr": "Lamb Loin Chop",
-      "ru": "Lamb Loin Chop",
-      "ar": "Lamb Loin Chop",
-      "es": "Lamb Loin Chop",
-      "pt": "Lamb Loin Chop",
-      "fr": "Lamb Loin Chop"
+      "en": "Lamb Loin Chop"
     },
     "aliases": [
       "Lamb Loin Chop",
@@ -2065,16 +1597,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Lamb Neck",
-      "de": "Lammhals",
-      "zh": "羊颈肉",
-      "ja": "ラムネック",
-      "tr": "Lamb Neck",
-      "ru": "Lamb Neck",
-      "ar": "Lamb Neck",
-      "es": "Lamb Neck",
-      "pt": "Lamb Neck",
-      "fr": "Lamb Neck"
+      "en": "Lamb Neck"
     },
     "aliases": [
       "Lamb Neck",
@@ -2087,16 +1610,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Lamb Rib Chop",
-      "de": "Lammkotelett",
-      "zh": "羊排",
-      "ja": "ラムリブチョップ",
-      "tr": "Lamb Rib Chop",
-      "ru": "Lamb Rib Chop",
-      "ar": "Lamb Rib Chop",
-      "es": "Lamb Rib Chop",
-      "pt": "Lamb Rib Chop",
-      "fr": "Lamb Rib Chop"
+      "en": "Lamb Rib Chop"
     },
     "aliases": [
       "Lamb Rib Chop",
@@ -2177,16 +1691,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Lamb Shoulder",
-      "de": "Lammsschulter",
-      "zh": "羊肩肉",
-      "ja": "ラム肩肉",
-      "tr": "Lamb Shoulder",
-      "ru": "Lamb Shoulder",
-      "ar": "Lamb Shoulder",
-      "es": "Lamb Shoulder",
-      "pt": "Lamb Shoulder",
-      "fr": "Lamb Shoulder"
+      "en": "Lamb Shoulder"
     },
     "aliases": [
       "Lamb Shoulder",
@@ -2261,16 +1766,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Merguez",
-      "de": "Merguez",
-      "zh": "梅尔盖兹香肠",
-      "ja": "メルゲーズ",
-      "tr": "Merguez",
-      "ru": "Merguez",
-      "ar": "Merguez",
-      "es": "Merguez",
-      "pt": "Merguez",
-      "fr": "Merguez"
+      "en": "Merguez"
     },
     "aliases": [
       "Merguez",
@@ -2313,16 +1809,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Mutton Shoulder",
-      "de": "Lamm-Schulter",
-      "zh": "羊肩肉",
-      "ja": "羊肉肩肉",
-      "tr": "Mutton Shoulder",
-      "ru": "Mutton Shoulder",
-      "ar": "Mutton Shoulder",
-      "es": "Mutton Shoulder",
-      "pt": "Mutton Shoulder",
-      "fr": "Mutton Shoulder"
+      "en": "Mutton Shoulder"
     },
     "aliases": [
       "Mutton Shoulder",
@@ -2366,16 +1853,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pancetta",
-      "de": "Pancetta",
-      "zh": "意大利咸肉",
-      "ja": "パンチェッタ",
-      "tr": "Pancetta",
-      "ru": "Pancetta",
-      "ar": "Pancetta",
-      "es": "Pancetta",
-      "pt": "Pancetta",
-      "fr": "Pancetta"
+      "en": "Pancetta"
     },
     "aliases": [
       "Pancetta",
@@ -2449,16 +1927,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pheasant",
-      "de": "Fasan",
-      "zh": "野鸡",
-      "ja": "キジ",
-      "tr": "Pheasant",
-      "ru": "Pheasant",
-      "ar": "Pheasant",
-      "es": "Pheasant",
-      "pt": "Pheasant",
-      "fr": "Pheasant"
+      "en": "Pheasant"
     },
     "aliases": [
       "Pheasant",
@@ -2470,16 +1939,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pork Baby Back Rib",
-      "de": "Schweinebauchrippchen",
-      "zh": "猪小排",
-      "ja": "豚のベイビー・バック・リブ",
-      "tr": "Pork Baby Back Rib",
-      "ru": "Pork Baby Back Rib",
-      "ar": "Pork Baby Back Rib",
-      "es": "Pork Baby Back Rib",
-      "pt": "Pork Baby Back Rib",
-      "fr": "Pork Baby Back Rib"
+      "en": "Pork Baby Back Rib"
     },
     "aliases": [
       "Pork Baby Back Rib",
@@ -2526,16 +1986,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pork Butt",
-      "de": "Schweinenacken",
-      "zh": "猪肩肉",
-      "ja": "豚の肩肉",
-      "tr": "Pork Butt",
-      "ru": "Pork Butt",
-      "ar": "Pork Butt",
-      "es": "Pork Butt",
-      "pt": "Pork Butt",
-      "fr": "Pork Butt"
+      "en": "Pork Butt"
     },
     "aliases": [
       "Pork Butt",
@@ -2548,16 +1999,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pork Cheek",
-      "de": "Schweinebacke",
-      "zh": "猪脸颊肉",
-      "ja": "豚頬肉",
-      "tr": "Pork Cheek",
-      "ru": "Pork Cheek",
-      "ar": "Pork Cheek",
-      "es": "Pork Cheek",
-      "pt": "Pork Cheek",
-      "fr": "Pork Cheek"
+      "en": "Pork Cheek"
     },
     "aliases": [
       "Pork Cheek",
@@ -2604,16 +2046,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pork Hock",
-      "de": "Schweinehaxe",
-      "zh": "猪蹄",
-      "ja": "豚足",
-      "tr": "Pork Hock",
-      "ru": "Pork Hock",
-      "ar": "Pork Hock",
-      "es": "Pork Hock",
-      "pt": "Pork Hock",
-      "fr": "Pork Hock"
+      "en": "Pork Hock"
     },
     "aliases": [
       "Pork Hock",
@@ -2626,16 +2059,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pork Jowl",
-      "de": "Schweinebacke",
-      "zh": "猪颈肉",
-      "ja": "豚バラ肉",
-      "tr": "Pork Jowl",
-      "ru": "Pork Jowl",
-      "ar": "Pork Jowl",
-      "es": "Pork Jowl",
-      "pt": "Pork Jowl",
-      "fr": "Pork Jowl"
+      "en": "Pork Jowl"
     },
     "aliases": [
       "Pork Jowl",
@@ -2648,16 +2072,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pork Kidney",
-      "de": "Schweinenierchen",
-      "zh": "猪肾",
-      "ja": "豚の腎臓",
-      "tr": "Pork Kidney",
-      "ru": "Pork Kidney",
-      "ar": "Pork Kidney",
-      "es": "Pork Kidney",
-      "pt": "Pork Kidney",
-      "fr": "Pork Kidney"
+      "en": "Pork Kidney"
     },
     "aliases": [
       "Pork Kidney",
@@ -2670,16 +2085,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pork Liver",
-      "de": "Schweineleber",
-      "zh": "猪肝",
-      "ja": "豚レバー",
-      "tr": "Pork Liver",
-      "ru": "Pork Liver",
-      "ar": "Pork Liver",
-      "es": "Pork Liver",
-      "pt": "Pork Liver",
-      "fr": "Pork Liver"
+      "en": "Pork Liver"
     },
     "aliases": [
       "Pork Liver",
@@ -2692,16 +2098,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pork Loin",
-      "de": "Schweinefilet",
-      "zh": "猪 loin",
-      "ja": "豚ロース",
-      "tr": "Pork Loin",
-      "ru": "Pork Loin",
-      "ar": "Pork Loin",
-      "es": "Pork Loin",
-      "pt": "Pork Loin",
-      "fr": "Pork Loin"
+      "en": "Pork Loin"
     },
     "aliases": [
       "Pork Loin",
@@ -2714,16 +2111,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pork Rib Chop",
-      "de": "Schweinerippchen",
-      "zh": "猪肋排几块",
-      "ja": "豚リブチョップ",
-      "tr": "Pork Rib Chop",
-      "ru": "Pork Rib Chop",
-      "ar": "Pork Rib Chop",
-      "es": "Pork Rib Chop",
-      "pt": "Pork Rib Chop",
-      "fr": "Pork Rib Chop"
+      "en": "Pork Rib Chop"
     },
     "aliases": [
       "Pork Rib Chop",
@@ -2736,16 +2124,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pork Shoulder",
-      "de": "Schweineschulter",
-      "zh": "猪肩肉",
-      "ja": "豚の肩肉",
-      "tr": "Pork Shoulder",
-      "ru": "Pork Shoulder",
-      "ar": "Pork Shoulder",
-      "es": "Pork Shoulder",
-      "pt": "Pork Shoulder",
-      "fr": "Pork Shoulder"
+      "en": "Pork Shoulder"
     },
     "aliases": [
       "Pork Shoulder",
@@ -2758,16 +2137,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pork Skin",
-      "de": "Schweinehaut",
-      "zh": "猪皮",
-      "ja": "豚皮",
-      "tr": "Pork Skin",
-      "ru": "Pork Skin",
-      "ar": "Pork Skin",
-      "es": "Pork Skin",
-      "pt": "Pork Skin",
-      "fr": "Pork Skin"
+      "en": "Pork Skin"
     },
     "aliases": [
       "Pork Skin",
@@ -2780,16 +2150,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Pork Spare Rib",
-      "de": "Schweinerippchen",
-      "zh": "猪肋排",
-      "ja": "豚スペアリブ",
-      "tr": "Pork Spare Rib",
-      "ru": "Pork Spare Rib",
-      "ar": "Pork Spare Rib",
-      "es": "Pork Spare Rib",
-      "pt": "Pork Spare Rib",
-      "fr": "Pork Spare Rib"
+      "en": "Pork Spare Rib"
     },
     "aliases": [
       "Pork Spare Rib",
@@ -3053,16 +2414,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Smoked Ham",
-      "de": "Geräucherter Schinken",
-      "zh": "烟熏火腿",
-      "ja": "スモークハム",
-      "tr": "Smoked Ham",
-      "ru": "Smoked Ham",
-      "ar": "Smoked Ham",
-      "es": "Smoked Ham",
-      "pt": "Smoked Ham",
-      "fr": "Smoked Ham"
+      "en": "Smoked Ham"
     },
     "aliases": [
       "Smoked Ham",
@@ -3075,16 +2427,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Soppressata",
-      "de": "Soppressata",
-      "zh": "意大利香肠",
-      "ja": "ソプレッサータ",
-      "tr": "Soppressata",
-      "ru": "Soppressata",
-      "ar": "Soppressata",
-      "es": "Soppressata",
-      "pt": "Soppressata",
-      "fr": "Soppressata"
+      "en": "Soppressata"
     },
     "aliases": [
       "Soppressata",
@@ -3191,16 +2534,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Turkey Leg",
-      "de": "Truthahnbeinschenkeln",
-      "zh": "火鸡腿",
-      "ja": "ターキー レッグ",
-      "tr": "Turkey Leg",
-      "ru": "Turkey Leg",
-      "ar": "Turkey Leg",
-      "es": "Turkey Leg",
-      "pt": "Turkey Leg",
-      "fr": "Turkey Leg"
+      "en": "Turkey Leg"
     },
     "aliases": [
       "Turkey Leg",
@@ -3213,16 +2547,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Turkey Tenderloin",
-      "de": "Putenfilet",
-      "zh": "火鸡里脊",
-      "ja": "七面鳥のテンダーロイン",
-      "tr": "Turkey Tenderloin",
-      "ru": "Turkey Tenderloin",
-      "ar": "Turkey Tenderloin",
-      "es": "Turkey Tenderloin",
-      "pt": "Turkey Tenderloin",
-      "fr": "Turkey Tenderloin"
+      "en": "Turkey Tenderloin"
     },
     "aliases": [
       "Turkey Tenderloin",
@@ -3235,16 +2560,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Turkey Thigh",
-      "de": "Truthahnkeule",
-      "zh": "火鸡腿",
-      "ja": "七面鳥のもも肉",
-      "tr": "Turkey Thigh",
-      "ru": "Turkey Thigh",
-      "ar": "Turkey Thigh",
-      "es": "Turkey Thigh",
-      "pt": "Turkey Thigh",
-      "fr": "Turkey Thigh"
+      "en": "Turkey Thigh"
     },
     "aliases": [
       "Turkey Thigh",
@@ -3288,16 +2604,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Veal Breast",
-      "de": "Kalbsbrust",
-      "zh": "小牛胸肉",
-      "ja": "子牛の胸肉",
-      "tr": "Veal Breast",
-      "ru": "Veal Breast",
-      "ar": "Veal Breast",
-      "es": "Veal Breast",
-      "pt": "Veal Breast",
-      "fr": "Veal Breast"
+      "en": "Veal Breast"
     },
     "aliases": [
       "Veal Breast",
@@ -3310,16 +2617,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Veal Cutlet",
-      "de": "Kalbsschnitzel",
-      "zh": "小牛肉排",
-      "ja": "仔牛カツレツ",
-      "tr": "Veal Cutlet",
-      "ru": "Veal Cutlet",
-      "ar": "Veal Cutlet",
-      "es": "Veal Cutlet",
-      "pt": "Veal Cutlet",
-      "fr": "Veal Cutlet"
+      "en": "Veal Cutlet"
     },
     "aliases": [
       "Veal Cutlet",
@@ -3332,16 +2630,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Veal Shank",
-      "de": "Kalbshaxe",
-      "zh": "小牛膝",
-      "ja": "子牛のスネ肉",
-      "tr": "Veal Shank",
-      "ru": "Veal Shank",
-      "ar": "Veal Shank",
-      "es": "Veal Shank",
-      "pt": "Veal Shank",
-      "fr": "Veal Shank"
+      "en": "Veal Shank"
     },
     "aliases": [
       "Veal Shank",
@@ -3354,16 +2643,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Veal Sweetbreads",
-      "de": "Kalbsbries",
-      "zh": "小牛胰脏",
-      "ja": "子牛の胸腺",
-      "tr": "Veal Sweetbreads",
-      "ru": "Veal Sweetbreads",
-      "ar": "Veal Sweetbreads",
-      "es": "Veal Sweetbreads",
-      "pt": "Veal Sweetbreads",
-      "fr": "Veal Sweetbreads"
+      "en": "Veal Sweetbreads"
     },
     "aliases": [
       "Veal Sweetbreads",
@@ -3407,16 +2687,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Venison Loin",
-      "de": "Rehfilet",
-      "zh": "鹿肉腰 loin",
-      "ja": "鹿肉ロイン",
-      "tr": "Venison Loin",
-      "ru": "Venison Loin",
-      "ar": "Venison Loin",
-      "es": "Venison Loin",
-      "pt": "Venison Loin",
-      "fr": "Venison Loin"
+      "en": "Venison Loin"
     },
     "aliases": [
       "Venison Loin",
@@ -3429,16 +2700,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Venison Shoulder",
-      "de": "Rehschulter",
-      "zh": "羚羊肩肉",
-      "ja": "鹿肉の肩",
-      "tr": "Venison Shoulder",
-      "ru": "Venison Shoulder",
-      "ar": "Venison Shoulder",
-      "es": "Venison Shoulder",
-      "pt": "Venison Shoulder",
-      "fr": "Venison Shoulder"
+      "en": "Venison Shoulder"
     },
     "aliases": [
       "Venison Shoulder",
@@ -3517,16 +2779,7 @@
     "category": "meat",
     "subcategory": "general",
     "name": {
-      "en": "Wild Boar",
-      "de": "Wildschwein",
-      "zh": "野猪",
-      "ja": "イノシシ",
-      "tr": "Wild Boar",
-      "ru": "Wild Boar",
-      "ar": "Wild Boar",
-      "es": "Wild Boar",
-      "pt": "Wild Boar",
-      "fr": "Wild Boar"
+      "en": "Wild Boar"
     },
     "aliases": [
       "Wild Boar",

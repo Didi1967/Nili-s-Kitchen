@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R7WVN8WCPT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-R7WVN8WCPT');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nili's Kitchen AI</title>
+  <link rel="stylesheet" href="/style.css?v=3000">
+</head>
+
+<body>
+
+  <div class="floating-lang">
+
+    <div id="userMenu" class="user-menu">
+  <button id="userMenuBtn" class="user-menu-btn" type="button">
+    👤 <span id="userMenuName">Login</span>
+  </button>
+
+  <div id="userMenuDropdown" class="user-menu-dropdown">
+    <a href="creator-dashboard.html" id="userDashboardLink">Dashboard</a>
+    <a href="creator.html" id="userAddRecipeLink">Add Recipe</a>
+
+    <button type="button" onclick="openFavoritesPage()" id="userFavoritesBtn">
+      ❤️ Favorites
+    </button>
+
+    <a href="how-it-works.html" id="userHowLink">How It Works</a>
+
+    <button type="button" onclick="logoutUser()" id="userLogoutBtn">
+      Logout
+    </button>
+  </div>
+</div>
+  <div class="lang-wrapper" id="langWrapper">
+    <button id="langBtn" class="lang-btn" onclick="toggleLangMenu()">
+  <img id="langBtnFlag" style="visibility:hidden">
+<span id="langBtnText"></span>
+</button>
+
+    <div id="langOptions" class="lang-options">
+
+  <button type="button" onclick="setLang('en')">
+    <img src="/flags/en.svg"> EN
+  </button>
+
+  <button type="button" onclick="setLang('tr')">
+    <img src="/flags/tr.svg"> TR
+  </button>
+
+  <button type="button" onclick="setLang('ru')">
+    <img src="/flags/ru.svg"> RU
+  </button>
+
+  <button onclick="setLang('de')">
+  <img src="flags/de.svg"> DE
+</button>
+
+  <button type="button" onclick="setLang('fr')">
+    <img src="/flags/fr.svg"> FR
+  </button>
+
+  <button type="button" onclick="setLang('es')">
+    <img src="/flags/es.svg"> ES
+  </button>
+
+  <button type="button" onclick="setLang('pt')">
+    <img src="/flags/pt.svg"> PT
+  </button>
+
+  <button type="button" onclick="setLang('ar')">
+    <img src="/flags/ar.svg"> AR
+  </button>
+
+ <button onclick="setLang('ja')">
+  <img src="flags/ja.svg"> JA
+</button>
+
+<button onclick="setLang('zh')">
+  <img src="flags/zh.svg"> ZH
+</button>
+
+</div>
+</div>
+</div>
+
+  <aside id="sidebar">
+    <div class="sidebar-shell">
+
+      <div class="nk-brand-card">
+  <div class="nk-brand-inner">
+    <img src="logo.jpeg" alt="Nili's Kitchen" class="nk-logo">
+
+    
+
+    <div class="nk-brand-text">
+      <h1 class="nk-title">Nili's Kitchen</h1>
+      <p class="nk-subtitle" id="appSubtitle">AI Recipe Assistant</p>
+    </div>
+  </div>
+</div>
+
+      <div class="mobile-only mobile-hero-big">
+  <img src="YEMEK-2.webp" alt="">
+
+  <div class="mobile-hero-text">
+    <span class="hero-badge-text">AI Powered Real Recipes</span>
+    <h1 class="hero-title-text">Cook smarter with what you already have</h1>
+    <p class="hero-desc-text">Upload ingredients...</p>
+  </div>
+</div>
+
+     <div class="sidebar-main">
+
+  <button
+    type="button"
+    class="upload-card"
+    onclick="document.getElementById('photo').click()"
+  >
+    <div class="upload-card-text">
+      <strong id="scanTitle">Scan ingredients by photo</strong>
+      <span id="statusText">Take a photo and let AI detect ingredients</span>
+    </div>
+
+    <div
+  class="gallery-mini-btn"
+  id="galleryBtnText"
+  onclick="event.stopPropagation(); document.getElementById('photoGallery').click();"
+>
+  🖼️ Choose from gallery
+</div>
+
+    <div class="analyze-progress">
+      <div id="bar"></div>
+    </div>
+  </button>
+
+  <input type="file" id="photo" hidden accept="image/*" capture="environment">
+  <input type="file" id="photoGallery" hidden accept="image/*">
+
+  <div class="manual">
+    <input id="manualInput" placeholder="Add ingredient">
+    <button type="button" onclick="addManual()">+</button>
+  </div>
+
+        <div class="mobile-only mobile-hero-small">
+  <img src="YEMEK-4.webp"loading="lazy" alt="">
+
+  <div class="mobile-hero-small-text">
+    <strong id="smartScanTitle">📸 Smart Scan</strong>
+<span id="smartScanDesc">Turn ingredients into possibilities</span>
+  </div>
+</div>
+
+       <div class="category-panel">
+  <div class="panel-title" id="categoryTitle">Add ingredients by category</div>
+
+  <div class="category-grid" id="categoryGrid">
+    <button class="category-btn" data-category="vegetables" data-icon="🥦">Vegetables</button>
+    <button class="category-btn" data-category="fruits" data-icon="🍎">Fruits</button>
+    <button class="category-btn" data-category="meat" data-icon="🥩">Meat</button>
+    <button class="category-btn" data-category="seafood" data-icon="🐟">Seafood</button>
+    <button class="category-btn"data-category="dairy_eggs"data-icon="🧀">Dairy & Eggs</button>
+    <button class="category-btn" data-category="grains_bakery" data-icon="🌾">Grains</button>
+    <button class="category-btn" data-category="legumes" data-icon="🫘">Legumes</button>
+    <button class="category-btn" data-category="herbs_spices" data-icon="🌿">Herbs</button>
+    <button class="category-btn" data-category="oils_fats" data-icon="🫒">Oils</button>
+    <button class="category-btn" data-category="sauces_condiments" data-icon="🥫">Sauces</button>
+    <button class="category-btn" data-category="nuts_seeds" data-icon="🥜">Nuts</button>
+    <button class="category-btn" data-category="sweeteners_baking" data-icon="🍯">Baking</button>
+  </div>
+</div>
+
+        <div class="ad-media-box">
+          <video autoplay muted loop playsinline controls>
+            <source src="./ad-video.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="mobile-only mobile-feature-strip">
+  <div>
+    <strong id="mobileFeature1Title">📸 AI Scan</strong>
+<span id="mobileFeature1Desc">Photo ingredients</span>
+  </div>
+
+  <div>
+    <strong id="mobileFeature2Title">🥗 Smart Picks</strong>
+<span id="mobileFeature2Desc">Choose by category</span>
+  </div>
+
+  <div>
+   <strong id="mobileFeature3Title">❤️ Save</strong>
+<span id="mobileFeature3Desc">Keep favorites</span>
+  </div>
+</div>
+
+               <div class="mobile-only mobile-hero-small">
+  <img src="YEMEK-6.webp"loading="lazy" alt="">
+
+  <div class="mobile-hero-small-text">
+   <strong id="cookSmarterTitle">🍳 Cook Smarter</strong>
+<span id="cookSmarterDesc">Recipes from what you already have</span>
+  </div>
+</div>
+
+  <div class="join-area">
+
+  <div class="nk-mini-card">
+
+    <div class="nk-mini-icon">✨</div>
+
+    <div class="nk-mini-content">
+      <h4 id="joinNiliTitle">Join Nili's Kitchen</h4>
+
+      <p id="joinNiliDesc">
+        Save favorites, upload recipes and unlock creator features.
+      </p>
+    </div>
+
+    <button id="joinNiliBtn" onclick="openSignupInvite()">
+      Join Free
+    </button>
+
+  </div>
+
+</div>
+
+<div class="site-footer-note">
+  <span id="footerNoteText">
+    © 2026 Nili's Kitchen AI. All rights reserved.
+  </span>
+</div>
+
+  </aside>
+
+  <div id="selectedTray" class="selected-tray-modal">
+    <div class="selected-tray-box">
+
+      <div class="selected-tray-header">
+        <div>
+          <h2>Selected ingredients</h2>
+        </div>
+
+        <div id="selectedIngredientList" class="selected-ingredient-list"></div>
+
+        <div class="selected-tray-header-actions">
+
+  <button
+    type="button"
+    class="continue-selecting-btn"
+    onclick="closeSelectedTray()">
+    + Continue selecting ingredients
+  </button>
+
+</div>
+      </div>
+
+      <div id="selectedTrayItems"></div>
+       
+      <div class="selected-tray-bottom">
+
+  <div class="tray-bottom-row">
+
+    <label class="tray-confirm">
+      <input type="checkbox" id="confirmCheck">
+      <span>Confirm ingredients</span>
+    </label>
+
+    <button
+      type="button"
+      class="selected-clear-bottom"
+      onclick="clearSelectedIngredients()">
+      Clear selected
+    </button>
+
+  </div>
+
+  <button
+    type="button"
+    id="trayGetRecipesBtn"
+    onclick="confirmAndGetRecipes()">
+    Get Recipes
+  </button>
+
+</div>
+
+    </div>
+  </div>
+
+<div id="ingredientModal" class="ingredient-modal">
+  <div class="ingredient-modal-content">
+
+    <div class="ingredient-modal-header">
+      <h2 id="ingredientModalTitle">Ingredients</h2>
+
+      <button
+        type="button"
+        class="ingredient-modal-close done-close"
+        onclick="closeIngredientModal()">
+        +
+      </button>
+    </div>
+
+    <div id="ingredientModalItems"></div>
+
+  </div>
+</div>
+
+  <main class="content" id="content">
+    <section class="hero" id="hero">
+      <div class="hero-bg">
+
+        <div class="hero-main-card">
+          <img src="YEMEK-2.webp"class="hero-main-img">
+
+          <div class="hero-dark"></div>
+
+          <div class="hero-content">
+<span id="heroBadgeText" class="hero-badge-text">AI Powered Real Recipes</span>
+<h1 id="heroTitleText" class="hero-title-text">Cook smarter with what you already have</h1>
+<p id="heroDescText" class="hero-desc-text">Upload ingredients...</p>
+          </div>
+        </div>
+
+        <div class="hero-side-images">
+          <img src="YEMEK-4.webp"loading="lazy">
+          <img src="YEMEK-6.webp"loading="lazy">
+        </div>
+
+      </div>
+    </section>
+
+    <div class="grid" id="result"></div>
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+
+      <div class="close" onclick="closeModal()">
+        ×
+      </div>
+
+      <div id="modalBody"></div>
+
+    </div>
+  </div>
+
+<script src="ingredient.js" defer></script>
+  <script src="app.js" defer></script>
+
+  <script>
+window.toggleLangMenu = function(){
+  const box = document.getElementById("langOptions");
+  if(box){
+    box.classList.toggle("open");
+  }
+};
+
+window.setLang = function(lang){
+  window.currentLang = lang;
+  currentLang = lang;
+
+  localStorage.setItem("niliKitchenLangV2", lang);
+
+  const btn = document.getElementById("langBtn");
+  const box = document.getElementById("langOptions");
+
+  if(btn){
+    btn.innerHTML = "🌐 " + lang.toUpperCase();
+  }
+
+  if(box){
+    box.classList.remove("open");
+  }
+
+  if(typeof applyLanguage === "function"){
+    applyLanguage();
+  }
+
+  if(typeof renderChecklist === "function"){
+    renderChecklist();
+  }
+};
+</script>
+<div id="signupInviteModal" class="signup-invite-modal">
+  <div class="signup-invite-box">
+    <button class="signup-invite-close" onclick="closeSignupInvite()">×</button>
+
+    <h2 id="signupInviteTitle">Create your free account</h2>
+
+    <p id="signupInviteDesc">
+      Save favorites, sync recipes, and unlock more searches.
+    </p>
+
+    <div class="creator-auth-tabs">
+      <button id="signupTab" type="button" class="active" onclick="setCreatorMode('signup')">
+        Sign Up
+      </button>
+
+      <button id="loginTab" type="button" onclick="setCreatorMode('login')">
+        Login
+      </button>
+    </div>
+
+    <input id="creatorUsernameInput" class="signup-input" placeholder="Username">
+
+    <input id="creatorEmailInput" class="signup-input" placeholder="Email address">
+
+    <div class="creator-password-wrap">
+      <input id="creatorPasswordInput" class="signup-input" type="password" placeholder="Password">
+      <button type="button" onclick="toggleCreatorPassword()">Show</button>
+    </div>
+
+  <button
+  id="signupContinueBtn"
+  class="signup-main-btn"
+  onclick="goToCreatorPage()">
+  Continue
+</button>
+
+<button
+  id="continueGuestBtn"
+  class="signup-guest-btn"
+  onclick="closeSignupInvite()">
+  Continue as Guest
+</button>
+  </div>
+</div>
+
+    <div id="howItWorksModal" class="how-modal">
+  <div class="how-box">
+
+    <button class="how-close" onclick="closeHowItWorks()">×</button>
+
+    <h2>👋 How Nili’s Kitchen Works</h2>
+
+    <div class="how-steps">
+      ...
+    </div>
+
+    <button class="how-start-btn" onclick="closeHowItWorks()">
+      Start Exploring
+    </button>
+
+    <a id="howMoreInfoLink"
+       class="how-more-info-link"
+       href="how-it-works.html">
+      Learn More About Nili's Kitchen →
+    </a>
+
+  </div>
+</div>
+</body>
+</html>

@@ -4,10 +4,6 @@ let activeCategoryKey = null;
 
 let recipePage = 1;
 const recipesPerPage = 6;
-
-let lastRecipeIngredients = [];
-let activeRecipeId = null;
-let isRecipeLangRefreshing = false;
  
 
 window.API_BASE =
@@ -2316,8 +2312,6 @@ function continueSelectingIngredients(){
 
   console.log("GET RECIPES START", ingredientsForRecipe);
 
-  lastRecipeIngredients = [...ingredientsForRecipe];
-
   if(
     !ingredientsForRecipe ||
     !ingredientsForRecipe.length
@@ -2717,8 +2711,6 @@ if(favBtn){
 }
 
 function openRecipe(id){
-
-  activeRecipeId = id;
 
   const recipe =
   currentRecipes.find(
@@ -3429,24 +3421,12 @@ window.setLang = function(lang){
   }
 
   if(
-  document.body.classList.contains("show-recipes-page") &&
-  lastRecipeIngredients.length &&
-  !isRecipeLangRefreshing
-){
-  isRecipeLangRefreshing = true;
-
-  const oldRecipeId = activeRecipeId;
-
-  getRecipesFromIngredients(lastRecipeIngredients)
-    .then(() => {
-      if(oldRecipeId && modal && modal.style.display === "flex"){
-        openRecipe(oldRecipeId);
-      }
-    })
-    .finally(() => {
-      isRecipeLangRefreshing = false;
-    });
-}
+    document.body.classList.contains("show-recipes-page") &&
+    Array.isArray(currentRecipes) &&
+    currentRecipes.length
+  ){
+    renderRecipes(currentRecipes);
+  }
 
   if(modal && modal.style.display === "flex"){
     const id = location.hash.replace("#recipe-", "");

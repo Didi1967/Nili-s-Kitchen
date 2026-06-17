@@ -71,16 +71,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Arctic Char",
-      "de": "Arktischer Saibling",
-      "zh": "北极红点鲑",
-      "ja": "アークティックシャー",
-      "tr": "Arctic Char",
-      "ru": "Arctic Char",
-      "ar": "Arctic Char",
-      "es": "Arctic Char",
-      "pt": "Arctic Char",
-      "fr": "Arctic Char"
+      "en": "Arctic Char"
     },
     "aliases": [
       "Arctic Char",
@@ -93,16 +84,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Baby Octopus",
-      "de": "Baby-Oktopus",
-      "zh": "小章鱼",
-      "ja": "赤ちゃんタコ",
-      "tr": "Baby Octopus",
-      "ru": "Baby Octopus",
-      "ar": "Baby Octopus",
-      "es": "Baby Octopus",
-      "pt": "Baby Octopus",
-      "fr": "Baby Octopus"
+      "en": "Baby Octopus"
     },
     "aliases": [
       "Baby Octopus",
@@ -115,16 +97,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Barramundi",
-      "de": "Barramundi",
-      "zh": "巴朗曼迪鱼",
-      "ja": "バラマンディ",
-      "tr": "Barramundi",
-      "ru": "Barramundi",
-      "ar": "Barramundi",
-      "es": "Barramundi",
-      "pt": "Barramundi",
-      "fr": "Barramundi"
+      "en": "Barramundi"
     },
     "aliases": [
       "Barramundi",
@@ -136,16 +109,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Bay Scallop",
-      "de": "Buchtmannmuscheln",
-      "zh": "湾扇贝",
-      "ja": "湾内ホタテ",
-      "tr": "Bay Scallop",
-      "ru": "Bay Scallop",
-      "ar": "Bay Scallop",
-      "es": "Bay Scallop",
-      "pt": "Bay Scallop",
-      "fr": "Bay Scallop"
+      "en": "Bay Scallop"
     },
     "aliases": [
       "Bay Scallop",
@@ -158,16 +122,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Black Cod",
-      "de": "Schwarzer Kabeljau",
-      "zh": "黑鳕鱼",
-      "ja": "黒鱈",
-      "tr": "Black Cod",
-      "ru": "Black Cod",
-      "ar": "Black Cod",
-      "es": "Black Cod",
-      "pt": "Black Cod",
-      "fr": "Black Cod"
+      "en": "Black Cod"
     },
     "aliases": [
       "Black Cod",
@@ -180,16 +135,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Blue Crab",
-      "de": "Blaue Krabbe",
-      "zh": "蓝蟹",
-      "ja": "青蟹",
-      "tr": "Blue Crab",
-      "ru": "Blue Crab",
-      "ar": "Blue Crab",
-      "es": "Blue Crab",
-      "pt": "Blue Crab",
-      "fr": "Blue Crab"
+      "en": "Blue Crab"
     },
     "aliases": [
       "Blue Crab",
@@ -202,16 +148,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Bottarga",
-      "de": "Bottarga",
-      "zh": "鱼子酱",
-      "ja": "ボッタルガ",
-      "tr": "Bottarga",
-      "ru": "Bottarga",
-      "ar": "Bottarga",
-      "es": "Bottarga",
-      "pt": "Bottarga",
-      "fr": "Bottarga"
+      "en": "Bottarga"
     },
     "aliases": [
       "Bottarga",
@@ -223,16 +160,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Branzino",
-      "de": "Branzino",
-      "zh": "鲈鱼",
-      "ja": "ブランジーノ",
-      "tr": "Branzino",
-      "ru": "Branzino",
-      "ar": "Branzino",
-      "es": "Branzino",
-      "pt": "Branzino",
-      "fr": "Branzino"
+      "en": "Branzino"
     },
     "aliases": [
       "Branzino",
@@ -244,16 +172,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Brook Trout",
-      "de": "Bachforelle",
-      "zh": "溪鳟",
-      "ja": "ブルックトラウト",
-      "tr": "Brook Trout",
-      "ru": "Brook Trout",
-      "ar": "Brook Trout",
-      "es": "Brook Trout",
-      "pt": "Brook Trout",
-      "fr": "Brook Trout"
+      "en": "Brook Trout"
     },
     "aliases": [
       "Brook Trout",
@@ -299,16 +218,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Calamari Rings",
-      "de": "Calamari-Ringe",
-      "zh": "鱿鱼圈",
-      "ja": "イカリング",
-      "tr": "Calamari Rings",
-      "ru": "Calamari Rings",
-      "ar": "Calamari Rings",
-      "es": "Calamari Rings",
-      "pt": "Calamari Rings",
-      "fr": "Calamari Rings"
+      "en": "Calamari Rings"
     },
     "aliases": [
       "Calamari Rings",
@@ -419,16 +329,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Catfish",
-      "de": "Wels",
-      "zh": "鲶鱼",
-      "ja": "ナマズ",
-      "tr": "Catfish",
-      "ru": "Catfish",
-      "ar": "Catfish",
-      "es": "Catfish",
-      "pt": "Catfish",
-      "fr": "Catfish"
+      "en": "Catfish"
     },
     "aliases": [
       "Catfish",
@@ -538,16 +439,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Cod Roe",
-      "de": "Kabeljau-Rogen",
-      "zh": "鳕鱼子",
-      "ja": "たらこ",
-      "tr": "Cod Roe",
-      "ru": "Cod Roe",
-      "ar": "Cod Roe",
-      "es": "Cod Roe",
-      "pt": "Cod Roe",
-      "fr": "Cod Roe"
+      "en": "Cod Roe"
     },
     "aliases": [
       "Cod Roe",
@@ -560,16 +452,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Conger Eel",
-      "de": "Conger-Eel",
-      "zh": "海鳗",
-      "ja": "アナゴ",
-      "tr": "Conger Eel",
-      "ru": "Conger Eel",
-      "ar": "Conger Eel",
-      "es": "Conger Eel",
-      "pt": "Conger Eel",
-      "fr": "Conger Eel"
+      "en": "Conger Eel"
     },
     "aliases": [
       "Conger Eel",
@@ -615,16 +498,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Crab Meat",
-      "de": "Krabbenfleisch",
-      "zh": "蟹肉",
-      "ja": "カニ肉",
-      "tr": "Crab Meat",
-      "ru": "Crab Meat",
-      "ar": "Crab Meat",
-      "es": "Crab Meat",
-      "pt": "Crab Meat",
-      "fr": "Crab Meat"
+      "en": "Crab Meat"
     },
     "aliases": [
       "Crab Meat",
@@ -637,16 +511,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Crawfish",
-      "de": "Krebse",
-      "zh": "小龙虾",
-      "ja": "ザリガニ",
-      "tr": "Crawfish",
-      "ru": "Crawfish",
-      "ar": "Crawfish",
-      "es": "Crawfish",
-      "pt": "Crawfish",
-      "fr": "Crawfish"
+      "en": "Crawfish"
     },
     "aliases": [
       "Crawfish",
@@ -691,16 +556,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Cuttlefish",
-      "de": "Tintenfisch",
-      "zh": "魷魚",
-      "ja": "イカ",
-      "tr": "Cuttlefish",
-      "ru": "Cuttlefish",
-      "ar": "Cuttlefish",
-      "es": "Cuttlefish",
-      "pt": "Cuttlefish",
-      "fr": "Cuttlefish"
+      "en": "Cuttlefish"
     },
     "aliases": [
       "Cuttlefish",
@@ -712,16 +568,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Dover Sole",
-      "de": "Butterfisch",
-      "zh": "多佛鲽鱼",
-      "ja": "ドーバーソール",
-      "tr": "Dover Sole",
-      "ru": "Dover Sole",
-      "ar": "Dover Sole",
-      "es": "Dover Sole",
-      "pt": "Dover Sole",
-      "fr": "Dover Sole"
+      "en": "Dover Sole"
     },
     "aliases": [
       "Dover Sole",
@@ -734,16 +581,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Dried Scallop",
-      "de": "Getrocknete Jakobsmuscheln",
-      "zh": "干贝",
-      "ja": "干しホタテ",
-      "tr": "Dried Scallop",
-      "ru": "Dried Scallop",
-      "ar": "Dried Scallop",
-      "es": "Dried Scallop",
-      "pt": "Dried Scallop",
-      "fr": "Dried Scallop"
+      "en": "Dried Scallop"
     },
     "aliases": [
       "Dried Scallop",
@@ -756,16 +594,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Dried Shrimp",
-      "de": "Getrocknete Garnelen",
-      "zh": "干虾",
-      "ja": "干しエビ",
-      "tr": "Dried Shrimp",
-      "ru": "Dried Shrimp",
-      "ar": "Dried Shrimp",
-      "es": "Dried Shrimp",
-      "pt": "Dried Shrimp",
-      "fr": "Dried Shrimp"
+      "en": "Dried Shrimp"
     },
     "aliases": [
       "Dried Shrimp",
@@ -778,16 +607,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Dungeness Crab",
-      "de": "Dungeness-Krabbe",
-      "zh": "阿拉斯加蓝蟹",
-      "ja": "ダンジネスクラブ",
-      "tr": "Dungeness Crab",
-      "ru": "Dungeness Crab",
-      "ar": "Dungeness Crab",
-      "es": "Dungeness Crab",
-      "pt": "Dungeness Crab",
-      "fr": "Dungeness Crab"
+      "en": "Dungeness Crab"
     },
     "aliases": [
       "Dungeness Crab",
@@ -800,16 +620,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Eel",
-      "de": "Aal",
-      "zh": "鳗鱼",
-      "ja": "鰻",
-      "tr": "Eel",
-      "ru": "Eel",
-      "ar": "Eel",
-      "es": "Eel",
-      "pt": "Eel",
-      "fr": "Eel"
+      "en": "Eel"
     },
     "aliases": [
       "Eel",
@@ -922,16 +733,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Flying Fish Roe",
-      "de": "Fliegender Fisch-Rogen",
-      "zh": "飞鱼卵",
-      "ja": "飛び魚の卵",
-      "tr": "Flying Fish Roe",
-      "ru": "Flying Fish Roe",
-      "ar": "Flying Fish Roe",
-      "es": "Flying Fish Roe",
-      "pt": "Flying Fish Roe",
-      "fr": "Flying Fish Roe"
+      "en": "Flying Fish Roe"
     },
     "aliases": [
       "Flying Fish Roe",
@@ -944,16 +746,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Fresh Anchovy",
-      "de": "Frische Sardellen",
-      "zh": "新鲜凤尾鱼",
-      "ja": "新鮮なアンチョビ",
-      "tr": "Fresh Anchovy",
-      "ru": "Fresh Anchovy",
-      "ar": "Fresh Anchovy",
-      "es": "Fresh Anchovy",
-      "pt": "Fresh Anchovy",
-      "fr": "Fresh Anchovy"
+      "en": "Fresh Anchovy"
     },
     "aliases": [
       "Fresh Anchovy",
@@ -966,16 +759,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Geoduck",
-      "de": "Geoduck",
-      "zh": "大蛤蜊",
-      "ja": "アメリカハマグリ",
-      "tr": "Geoduck",
-      "ru": "Geoduck",
-      "ar": "Geoduck",
-      "es": "Geoduck",
-      "pt": "Geoduck",
-      "fr": "Geoduck"
+      "en": "Geoduck"
     },
     "aliases": [
       "Geoduck",
@@ -987,16 +771,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Green Mussel",
-      "de": "Grüne Muschel",
-      "zh": "青口贝",
-      "ja": "グリーンムール貝",
-      "tr": "Green Mussel",
-      "ru": "Green Mussel",
-      "ar": "Green Mussel",
-      "es": "Green Mussel",
-      "pt": "Green Mussel",
-      "fr": "Green Mussel"
+      "en": "Green Mussel"
     },
     "aliases": [
       "Green Mussel",
@@ -1075,16 +850,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Hake",
-      "de": "Heilbutt",
-      "zh": "黑线鳕",
-      "ja": "ハケ",
-      "tr": "Hake",
-      "ru": "Hake",
-      "ar": "Hake",
-      "es": "Hake",
-      "pt": "Hake",
-      "fr": "Hake"
+      "en": "Hake"
     },
     "aliases": [
       "Hake",
@@ -1129,16 +895,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Halibut Cheek",
-      "de": "Heilbuttbacke",
-      "zh": "比目鱼颊肉",
-      "ja": "ヒラメのほほ肉",
-      "tr": "Halibut Cheek",
-      "ru": "Halibut Cheek",
-      "ar": "Halibut Cheek",
-      "es": "Halibut Cheek",
-      "pt": "Halibut Cheek",
-      "fr": "Halibut Cheek"
+      "en": "Halibut Cheek"
     },
     "aliases": [
       "Halibut Cheek",
@@ -1184,16 +941,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "John Dory",
-      "de": "John Dory",
-      "zh": "约翰多利鱼",
-      "ja": "ジョンドリィ",
-      "tr": "John Dory",
-      "ru": "John Dory",
-      "ar": "John Dory",
-      "es": "John Dory",
-      "pt": "John Dory",
-      "fr": "John Dory"
+      "en": "John Dory"
     },
     "aliases": [
       "John Dory",
@@ -1206,16 +954,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "King Crab",
-      "de": "Königskrabbe",
-      "zh": "帝王蟹",
-      "ja": "タラバガニ",
-      "tr": "King Crab",
-      "ru": "King Crab",
-      "ar": "King Crab",
-      "es": "King Crab",
-      "pt": "King Crab",
-      "fr": "King Crab"
+      "en": "King Crab"
     },
     "aliases": [
       "King Crab",
@@ -1228,16 +967,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "King Mackerel",
-      "de": "Königsmakrele",
-      "zh": "鲐鱼",
-      "ja": "サバ科のキングサバ",
-      "tr": "King Mackerel",
-      "ru": "King Mackerel",
-      "ar": "King Mackerel",
-      "es": "King Mackerel",
-      "pt": "King Mackerel",
-      "fr": "King Mackerel"
+      "en": "King Mackerel"
     },
     "aliases": [
       "King Mackerel",
@@ -1284,16 +1014,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Kumamoto Oyster",
-      "de": "Kumamoto-Austern",
-      "zh": "熊本生蚝",
-      "ja": "熊本牡蠣",
-      "tr": "Kumamoto Oyster",
-      "ru": "Kumamoto Oyster",
-      "ar": "Kumamoto Oyster",
-      "es": "Kumamoto Oyster",
-      "pt": "Kumamoto Oyster",
-      "fr": "Kumamoto Oyster"
+      "en": "Kumamoto Oyster"
     },
     "aliases": [
       "Kumamoto Oyster",
@@ -1306,16 +1027,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Lake Trout",
-      "de": "Seeforelle",
-      "zh": "湖鳟",
-      "ja": "湖トラウト",
-      "tr": "Lake Trout",
-      "ru": "Lake Trout",
-      "ar": "Lake Trout",
-      "es": "Lake Trout",
-      "pt": "Lake Trout",
-      "fr": "Lake Trout"
+      "en": "Lake Trout"
     },
     "aliases": [
       "Lake Trout",
@@ -1328,16 +1040,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Langoustine",
-      "de": "Languste",
-      "zh": "龙虾",
-      "ja": "ロブスターの一種",
-      "tr": "Langoustine",
-      "ru": "Langoustine",
-      "ar": "Langoustine",
-      "es": "Langoustine",
-      "pt": "Langoustine",
-      "fr": "Langoustine"
+      "en": "Langoustine"
     },
     "aliases": [
       "Langoustine",
@@ -1349,16 +1052,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Lingcod",
-      "de": "Lingcod",
-      "zh": "灵鳟",
-      "ja": "リンコッド",
-      "tr": "Lingcod",
-      "ru": "Lingcod",
-      "ar": "Lingcod",
-      "es": "Lingcod",
-      "pt": "Lingcod",
-      "fr": "Lingcod"
+      "en": "Lingcod"
     },
     "aliases": [
       "Lingcod",
@@ -1370,16 +1064,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Littleneck Clam",
-      "de": "Littleneck-Muschel",
-      "zh": "小蛤蜊",
-      "ja": "リトルネッククラム",
-      "tr": "Littleneck Clam",
-      "ru": "Littleneck Clam",
-      "ar": "Littleneck Clam",
-      "es": "Littleneck Clam",
-      "pt": "Littleneck Clam",
-      "fr": "Littleneck Clam"
+      "en": "Littleneck Clam"
     },
     "aliases": [
       "Littleneck Clam",
@@ -1425,16 +1110,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Lobster Tail",
-      "de": "Hummerschwanz",
-      "zh": "龙虾尾",
-      "ja": "ロブスターの尾",
-      "tr": "Lobster Tail",
-      "ru": "Lobster Tail",
-      "ar": "Lobster Tail",
-      "es": "Lobster Tail",
-      "pt": "Lobster Tail",
-      "fr": "Lobster Tail"
+      "en": "Lobster Tail"
     },
     "aliases": [
       "Lobster Tail",
@@ -1480,16 +1156,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Mahi Mahi",
-      "de": "Mahi Mahi",
-      "zh": "马希马希",
-      "ja": "マヒマヒ",
-      "tr": "Mahi Mahi",
-      "ru": "Mahi Mahi",
-      "ar": "Mahi Mahi",
-      "es": "Mahi Mahi",
-      "pt": "Mahi Mahi",
-      "fr": "Mahi Mahi"
+      "en": "Mahi Mahi"
     },
     "aliases": [
       "Mahi Mahi",
@@ -1502,16 +1169,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Manila Clam",
-      "de": "Manila-Muschel",
-      "zh": "马尼拉蛤蜊",
-      "ja": "マニラガイ",
-      "tr": "Manila Clam",
-      "ru": "Manila Clam",
-      "ar": "Manila Clam",
-      "es": "Manila Clam",
-      "pt": "Manila Clam",
-      "fr": "Manila Clam"
+      "en": "Manila Clam"
     },
     "aliases": [
       "Manila Clam",
@@ -1524,16 +1182,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Marlin",
-      "de": "Marlin",
-      "zh": "马林鱼",
-      "ja": "マグロ",
-      "tr": "Marlin",
-      "ru": "Marlin",
-      "ar": "Marlin",
-      "es": "Marlin",
-      "pt": "Marlin",
-      "fr": "Marlin"
+      "en": "Marlin"
     },
     "aliases": [
       "Marlin",
@@ -1545,16 +1194,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Monkfish",
-      "de": "Seeteufel",
-      "zh": "monkfish",
-      "ja": "アンコウ",
-      "tr": "Monkfish",
-      "ru": "Monkfish",
-      "ar": "Monkfish",
-      "es": "Monkfish",
-      "pt": "Monkfish",
-      "fr": "Monkfish"
+      "en": "Monkfish"
     },
     "aliases": [
       "Monkfish",
@@ -1630,16 +1270,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Octopus Tentacle",
-      "de": "Oktopusarm",
-      "zh": "章鱼触手",
-      "ja": "タコの足",
-      "tr": "Octopus Tentacle",
-      "ru": "Octopus Tentacle",
-      "ar": "Octopus Tentacle",
-      "es": "Octopus Tentacle",
-      "pt": "Octopus Tentacle",
-      "fr": "Octopus Tentacle"
+      "en": "Octopus Tentacle"
     },
     "aliases": [
       "Octopus Tentacle",
@@ -1652,16 +1283,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Opah",
-      "de": "Opah",
-      "zh": "洋滑口鱼",
-      "ja": "オパフ",
-      "tr": "Opah",
-      "ru": "Opah",
-      "ar": "Opah",
-      "es": "Opah",
-      "pt": "Opah",
-      "fr": "Opah"
+      "en": "Opah"
     },
     "aliases": [
       "Opah",
@@ -1706,16 +1328,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Plaice",
-      "de": "Scholle",
-      "zh": "比目鱼",
-      "ja": "ヒラメ",
-      "tr": "Plaice",
-      "ru": "Plaice",
-      "ar": "Plaice",
-      "es": "Plaice",
-      "pt": "Plaice",
-      "fr": "Plaice"
+      "en": "Plaice"
     },
     "aliases": [
       "Plaice",
@@ -1792,16 +1405,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Razor Clam",
-      "de": "Razor-Clam",
-      "zh": "刀蛏",
-      "ja": "アサリ",
-      "tr": "Razor Clam",
-      "ru": "Razor Clam",
-      "ar": "Razor Clam",
-      "es": "Razor Clam",
-      "pt": "Razor Clam",
-      "fr": "Razor Clam"
+      "en": "Razor Clam"
     },
     "aliases": [
       "Razor Clam",
@@ -1814,16 +1418,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Red Snapper",
-      "de": "Rotbarsch",
-      "zh": "红鲷鱼",
-      "ja": "赤いスナッパー",
-      "tr": "Red Snapper",
-      "ru": "Red Snapper",
-      "ar": "Red Snapper",
-      "es": "Red Snapper",
-      "pt": "Red Snapper",
-      "fr": "Red Snapper"
+      "en": "Red Snapper"
     },
     "aliases": [
       "Red Snapper",
@@ -1836,16 +1431,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Rock Shrimp",
-      "de": "Steinshrimps",
-      "zh": "岩虾",
-      "ja": "ロックシュリンプ",
-      "tr": "Rock Shrimp",
-      "ru": "Rock Shrimp",
-      "ar": "Rock Shrimp",
-      "es": "Rock Shrimp",
-      "pt": "Rock Shrimp",
-      "fr": "Rock Shrimp"
+      "en": "Rock Shrimp"
     },
     "aliases": [
       "Rock Shrimp",
@@ -1858,16 +1444,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Rockfish",
-      "de": "Steinbutt",
-      "zh": "石斑鱼",
-      "ja": "ロックフィッシュ",
-      "tr": "Rockfish",
-      "ru": "Rockfish",
-      "ar": "Rockfish",
-      "es": "Rockfish",
-      "pt": "Rockfish",
-      "fr": "Rockfish"
+      "en": "Rockfish"
     },
     "aliases": [
       "Rockfish",
@@ -1879,16 +1456,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Sablefish",
-      "de": "Sabléfisch",
-      "zh": "黑线鳕",
-      "ja": "サバフグ",
-      "tr": "Sablefish",
-      "ru": "Sablefish",
-      "ar": "Sablefish",
-      "es": "Sablefish",
-      "pt": "Sablefish",
-      "fr": "Sablefish"
+      "en": "Sablefish"
     },
     "aliases": [
       "Sablefish",
@@ -1932,16 +1500,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Salmon Roe",
-      "de": "Lachskaviar",
-      "zh": "鲑鱼子",
-      "ja": "サーモンの卵",
-      "tr": "Salmon Roe",
-      "ru": "Salmon Roe",
-      "ar": "Salmon Roe",
-      "es": "Salmon Roe",
-      "pt": "Salmon Roe",
-      "fr": "Salmon Roe"
+      "en": "Salmon Roe"
     },
     "aliases": [
       "Salmon Roe",
@@ -1954,16 +1513,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Salt Cod",
-      "de": "Stockfisch",
-      "zh": "咸鳕鱼",
-      "ja": "塩干しタラ",
-      "tr": "Salt Cod",
-      "ru": "Salt Cod",
-      "ar": "Salt Cod",
-      "es": "Salt Cod",
-      "pt": "Salt Cod",
-      "fr": "Salt Cod"
+      "en": "Salt Cod"
     },
     "aliases": [
       "Salt Cod",
@@ -2076,16 +1626,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Sea Scallop",
-      "de": "Meeresschnecke",
-      "zh": "海扇贝",
-      "ja": "ホタテ貝",
-      "tr": "Sea Scallop",
-      "ru": "Sea Scallop",
-      "ar": "Sea Scallop",
-      "es": "Sea Scallop",
-      "pt": "Sea Scallop",
-      "fr": "Sea Scallop"
+      "en": "Sea Scallop"
     },
     "aliases": [
       "Sea Scallop",
@@ -2098,16 +1639,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Sea Urchin",
-      "de": "Seeigel",
-      "zh": "海胆",
-      "ja": "ウニ",
-      "tr": "Sea Urchin",
-      "ru": "Sea Urchin",
-      "ar": "Sea Urchin",
-      "es": "Sea Urchin",
-      "pt": "Sea Urchin",
-      "fr": "Sea Urchin"
+      "en": "Sea Urchin"
     },
     "aliases": [
       "Sea Urchin",
@@ -2154,16 +1686,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Skate Wing",
-      "de": "Stekgflügel",
-      "zh": "鳐鱼翅",
-      "ja": "エイの翅",
-      "tr": "Skate Wing",
-      "ru": "Skate Wing",
-      "ar": "Skate Wing",
-      "es": "Skate Wing",
-      "pt": "Skate Wing",
-      "fr": "Skate Wing"
+      "en": "Skate Wing"
     },
     "aliases": [
       "Skate Wing",
@@ -2176,16 +1699,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Smelt",
-      "de": "Schmelzen",
-      "zh": "熏鱼",
-      "ja": "ニシン",
-      "tr": "Smelt",
-      "ru": "Smelt",
-      "ar": "Smelt",
-      "es": "Smelt",
-      "pt": "Smelt",
-      "fr": "Smelt"
+      "en": "Smelt"
     },
     "aliases": [
       "Smelt",
@@ -2297,16 +1811,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Snow Crab",
-      "de": "Schneekrabbe",
-      "zh": "雪蟹",
-      "ja": "ズワイガニ",
-      "tr": "Snow Crab",
-      "ru": "Snow Crab",
-      "ar": "Snow Crab",
-      "es": "Snow Crab",
-      "pt": "Snow Crab",
-      "fr": "Snow Crab"
+      "en": "Snow Crab"
     },
     "aliases": [
       "Snow Crab",
@@ -2319,16 +1824,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Soft Shell Crab",
-      "de": "Weichschalenkrabbe",
-      "zh": "软壳蟹",
-      "ja": "ソフトシェルクラブ",
-      "tr": "Soft Shell Crab",
-      "ru": "Soft Shell Crab",
-      "ar": "Soft Shell Crab",
-      "es": "Soft Shell Crab",
-      "pt": "Soft Shell Crab",
-      "fr": "Soft Shell Crab"
+      "en": "Soft Shell Crab"
     },
     "aliases": [
       "Soft Shell Crab",
@@ -2374,16 +1870,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Spanish Mackerel",
-      "de": "Spanische Makrele",
-      "zh": "西班牙鲭鱼",
-      "ja": "スペインサバ",
-      "tr": "Spanish Mackerel",
-      "ru": "Spanish Mackerel",
-      "ar": "Spanish Mackerel",
-      "es": "Spanish Mackerel",
-      "pt": "Spanish Mackerel",
-      "fr": "Spanish Mackerel"
+      "en": "Spanish Mackerel"
     },
     "aliases": [
       "Spanish Mackerel",
@@ -2396,16 +1883,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Spot Prawn",
-      "de": "Spotgarnele",
-      "zh": "星虾",
-      "ja": "オニエビ",
-      "tr": "Spot Prawn",
-      "ru": "Spot Prawn",
-      "ar": "Spot Prawn",
-      "es": "Spot Prawn",
-      "pt": "Spot Prawn",
-      "fr": "Spot Prawn"
+      "en": "Spot Prawn"
     },
     "aliases": [
       "Spot Prawn",
@@ -2450,16 +1928,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Squid Tube",
-      "de": "Tintenfischtube",
-      "zh": "鱿鱼管",
-      "ja": "イカの管",
-      "tr": "Squid Tube",
-      "ru": "Squid Tube",
-      "ar": "Squid Tube",
-      "es": "Squid Tube",
-      "pt": "Squid Tube",
-      "fr": "Squid Tube"
+      "en": "Squid Tube"
     },
     "aliases": [
       "Squid Tube",
@@ -2472,16 +1941,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Steelhead Trout",
-      "de": "Stödlachs",
-      "zh": "虹鳟鱼",
-      "ja": "スチールヘッドトラウト",
-      "tr": "Steelhead Trout",
-      "ru": "Steelhead Trout",
-      "ar": "Steelhead Trout",
-      "es": "Steelhead Trout",
-      "pt": "Steelhead Trout",
-      "fr": "Steelhead Trout"
+      "en": "Steelhead Trout"
     },
     "aliases": [
       "Steelhead Trout",
@@ -2494,16 +1954,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Striped Bass",
-      "de": "Streifenbarsch",
-      "zh": "条纹鲈鱼",
-      "ja": "スズキ",
-      "tr": "Striped Bass",
-      "ru": "Striped Bass",
-      "ar": "Striped Bass",
-      "es": "Striped Bass",
-      "pt": "Striped Bass",
-      "fr": "Striped Bass"
+      "en": "Striped Bass"
     },
     "aliases": [
       "Striped Bass",
@@ -2549,16 +2000,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Swordfish",
-      "de": "Schwertfisch",
-      "zh": "剑鱼",
-      "ja": "メカジキ",
-      "tr": "Swordfish",
-      "ru": "Swordfish",
-      "ar": "Swordfish",
-      "es": "Swordfish",
-      "pt": "Swordfish",
-      "fr": "Swordfish"
+      "en": "Swordfish"
     },
     "aliases": [
       "Swordfish",
@@ -2570,16 +2012,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Tiger Prawn",
-      "de": "Tiger Garnele",
-      "zh": "虎虾",
-      "ja": "タイガープロウン",
-      "tr": "Tiger Prawn",
-      "ru": "Tiger Prawn",
-      "ar": "Tiger Prawn",
-      "es": "Tiger Prawn",
-      "pt": "Tiger Prawn",
-      "fr": "Tiger Prawn"
+      "en": "Tiger Prawn"
     },
     "aliases": [
       "Tiger Prawn",
@@ -2625,16 +2058,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Tilefish",
-      "de": "Schnapper",
-      "zh": "瓷鱼",
-      "ja": "タイルフィッシュ",
-      "tr": "Tilefish",
-      "ru": "Tilefish",
-      "ar": "Tilefish",
-      "es": "Tilefish",
-      "pt": "Tilefish",
-      "fr": "Tilefish"
+      "en": "Tilefish"
     },
     "aliases": [
       "Tilefish",
@@ -2711,16 +2135,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Turbot",
-      "de": "Scholle",
-      "zh": "大比目鱼",
-      "ja": "カレイ",
-      "tr": "Turbot",
-      "ru": "Turbot",
-      "ar": "Turbot",
-      "es": "Turbot",
-      "pt": "Turbot",
-      "fr": "Turbot"
+      "en": "Turbot"
     },
     "aliases": [
       "Turbot",
@@ -2732,16 +2147,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Unagi",
-      "de": "Aal",
-      "zh": "鳗鱼",
-      "ja": "うなぎ",
-      "tr": "Unagi",
-      "ru": "Unagi",
-      "ar": "Unagi",
-      "es": "Unagi",
-      "pt": "Unagi",
-      "fr": "Unagi"
+      "en": "Unagi"
     },
     "aliases": [
       "Unagi",
@@ -2753,16 +2159,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Wahoo",
-      "de": "Wahoo",
-      "zh": "华胡",
-      "ja": "ワフー",
-      "tr": "Wahoo",
-      "ru": "Wahoo",
-      "ar": "Wahoo",
-      "es": "Wahoo",
-      "pt": "Wahoo",
-      "fr": "Wahoo"
+      "en": "Wahoo"
     },
     "aliases": [
       "Wahoo",
@@ -2774,16 +2171,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Whitebait",
-      "de": "Weißfisch",
-      "zh": "银鱼",
-      "ja": "しらす",
-      "tr": "Whitebait",
-      "ru": "Whitebait",
-      "ar": "Whitebait",
-      "es": "Whitebait",
-      "pt": "Whitebait",
-      "fr": "Whitebait"
+      "en": "Whitebait"
     },
     "aliases": [
       "Whitebait",
@@ -2795,16 +2183,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Whiting",
-      "de": "Sandaal",
-      "zh": "鳕鱼",
-      "ja": "ホワイトイング",
-      "tr": "Whiting",
-      "ru": "Whiting",
-      "ar": "Whiting",
-      "es": "Whiting",
-      "pt": "Whiting",
-      "fr": "Whiting"
+      "en": "Whiting"
     },
     "aliases": [
       "Whiting",
@@ -2816,16 +2195,7 @@
     "category": "seafood",
     "subcategory": "general",
     "name": {
-      "en": "Yellowtail Snapper",
-      "de": "Gelbschwanz-Schnapper",
-      "zh": "黄尾鲷",
-      "ja": "ハマキリ",
-      "tr": "Yellowtail Snapper",
-      "ru": "Yellowtail Snapper",
-      "ar": "Yellowtail Snapper",
-      "es": "Yellowtail Snapper",
-      "pt": "Yellowtail Snapper",
-      "fr": "Yellowtail Snapper"
+      "en": "Yellowtail Snapper"
     },
     "aliases": [
       "Yellowtail Snapper",

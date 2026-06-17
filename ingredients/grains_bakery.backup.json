@@ -396,16 +396,7 @@
     "category": "grains_bakery",
     "subcategory": "general",
     "name": {
-      "en": "Buckwheat Groats",
-      "de": "Buchweizengrütze",
-      "zh": "荞麦粒",
-      "ja": "そばの実",
-      "tr": "Buckwheat Groats",
-      "ru": "Buckwheat Groats",
-      "ar": "Buckwheat Groats",
-      "es": "Buckwheat Groats",
-      "pt": "Buckwheat Groats",
-      "fr": "Buckwheat Groats"
+      "en": "Buckwheat Groats"
     },
     "aliases": [
       "Buckwheat Groats",
@@ -1016,16 +1007,7 @@
     "category": "grains_bakery",
     "subcategory": "general",
     "name": {
-      "en": "Hulled Barley",
-      "de": "Entspelzte Gerste",
-      "zh": "剥壳大麦",
-      "ja": "はだか大麦",
-      "tr": "Hulled Barley",
-      "ru": "Hulled Barley",
-      "ar": "Hulled Barley",
-      "es": "Hulled Barley",
-      "pt": "Hulled Barley",
-      "fr": "Hulled Barley"
+      "en": "Hulled Barley"
     },
     "aliases": [
       "Hulled Barley",
@@ -1070,16 +1052,7 @@
     "category": "grains_bakery",
     "subcategory": "general",
     "name": {
-      "en": "Kasha",
-      "de": "Buchweizen",
-      "zh": "卡莎",
-      "ja": "カシャ",
-      "tr": "Kasha",
-      "ru": "Kasha",
-      "ar": "Kasha",
-      "es": "Kasha",
-      "pt": "Kasha",
-      "fr": "Kasha"
+      "en": "Kasha"
     },
     "aliases": [
       "Kasha",
@@ -1420,16 +1393,7 @@
     "category": "grains_bakery",
     "subcategory": "general",
     "name": {
-      "en": "Pearled Barley",
-      "de": "Gerstenkern",
-      "zh": "大麦珠",
-      "ja": "真珠大麦",
-      "tr": "Pearled Barley",
-      "ru": "Pearled Barley",
-      "ar": "Pearled Barley",
-      "es": "Pearled Barley",
-      "pt": "Pearled Barley",
-      "fr": "Pearled Barley"
+      "en": "Pearled Barley"
     },
     "aliases": [
       "Pearled Barley",
@@ -1906,16 +1870,7 @@
     "category": "grains_bakery",
     "subcategory": "general",
     "name": {
-      "en": "Rye Berries",
-      "de": "Roggenbeeren",
-      "zh": "黑麦粒",
-      "ja": "ライ麦の実",
-      "tr": "Rye Berries",
-      "ru": "Rye Berries",
-      "ar": "Rye Berries",
-      "es": "Rye Berries",
-      "pt": "Rye Berries",
-      "fr": "Rye Berries"
+      "en": "Rye Berries"
     },
     "aliases": [
       "Rye Berries",
@@ -2096,16 +2051,7 @@
     "category": "grains_bakery",
     "subcategory": "general",
     "name": {
-      "en": "Spelt Berries",
-      "de": "Dinkelbeeren",
-      "zh": "小麦浆果",
-      "ja": "スペルト小麦ベリー",
-      "tr": "Spelt Berries",
-      "ru": "Spelt Berries",
-      "ar": "Spelt Berries",
-      "es": "Spelt Berries",
-      "pt": "Spelt Berries",
-      "fr": "Spelt Berries"
+      "en": "Spelt Berries"
     },
     "aliases": [
       "Spelt Berries",
@@ -2284,16 +2230,7 @@
     "category": "grains_bakery",
     "subcategory": "general",
     "name": {
-      "en": "Wheat Berries",
-      "de": "Weizenbeeren",
-      "zh": "小麦粒",
-      "ja": "小麦の実",
-      "tr": "Wheat Berries",
-      "ru": "Wheat Berries",
-      "ar": "Wheat Berries",
-      "es": "Wheat Berries",
-      "pt": "Wheat Berries",
-      "fr": "Wheat Berries"
+      "en": "Wheat Berries"
     },
     "aliases": [
       "Wheat Berries",
