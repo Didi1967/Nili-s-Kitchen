@@ -2870,3 +2870,61 @@ html[dir="rtl"] .hero-content{
   gap:8px;
 }
 
+@media (max-width: 768px){
+
+  .selected-tray-modal{
+    padding: 10px !important;
+  }
+
+  .selected-tray-box{
+    width: 86vw !important;
+    max-width: 86vw !important;
+    aspect-ratio: auto !important;
+    height: auto !important;
+    max-height: 72vh !important;
+    border-radius: 22px !important;
+  }
+
+  .selected-tray-header{
+    padding: 16px 16px 14px !important;
+    gap: 10px !important;
+  }
+
+  .selected-tray-header h2{
+    font-size: 22px !important;
+    line-height: 1.1 !important;
+  }
+
+  .continue-selecting-btn{
+    width: 128px !important;
+    min-width: 128px !important;
+    padding: 10px 8px !important;
+    font-size: 13px !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+    text-align: center !important;
+    border-radius: 18px !important;
+  }
+
+  #selectedTrayItems{
+    padding: 16px !important;
+    max-height: 28vh !important;
+  }
+
+  .selected-chip{
+    height: 30px !important;
+    font-size: 11px !important;
+    padding: 0 10px !important;
+  }
+
+  .selected-tray-bottom{
+    padding: 12px 14px 14px !important;
+  }
+
+  #trayGetRecipesBtn{
+    height: 48px !important;
+    font-size: 18px !important;
+    border-radius: 18px !important;
+  }
+}
+
