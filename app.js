@@ -35,6 +35,8 @@ const langSelect = document.getElementById("langSelect");
 const ingredientModal = document.getElementById("ingredientModal");
 const ingredientModalTitle = document.getElementById("ingredientModalTitle");
 const ingredientModalItems = document.getElementById("ingredientModalItems");
+const ingredientModalSearch = document.getElementById("ingredientModalSearch");
+const ingredientSearchEmpty = document.getElementById("ingredientSearchEmpty");
 
 const LANG_STORAGE_KEY = "niliKitchenLangV2";
 
@@ -59,7 +61,7 @@ const urlLang =
 let currentLang =
   getSavedLang();
 
-if(urlLang && urlLang !== "en"){
+if(urlLang){
   currentLang = urlLang;
   saveLang(currentLang);
 }
@@ -282,6 +284,15 @@ const translations = {
     heroBadge: "AI Powered Real Recipes",
     heroTitle: "Cook smarter with what you already have",
     heroDesc: "Upload ingredients, select what you have, and discover real recipes instantly.",
+    heroKicker: "A brighter, more refined way to turn everyday ingredients into beautiful meals.",
+    heroPrimaryBtn: "Scan Ingredients",
+    heroSecondaryBtn: "Join Free",
+    heroStrip1Label: "Smart Scan",
+    heroStrip1Text: "Photo-powered ingredient detection",
+    heroStrip2Label: "Real Recipes",
+    heroStrip2Text: "From APIs and creator submissions",
+    heroStrip3Label: "Multi-Language",
+    heroStrip3Text: "Cook in the language you prefer",
     galleryBtn: "Choose from gallery",
     becomeCreator: "Become a creator",
     creatorDesc: "Upload recipes and earn rewards in the future.",
@@ -412,6 +423,15 @@ continueSelecting: "+ Continue selecting ingredients",
     heroBadge: "Yapay Zeka Destekli Gerçek Tarifler",
     heroTitle: "Elindeki malzemelerle daha akıllı yemek pişir",
     heroDesc: "Malzemeleri yükle, elindekileri seç ve gerçek tarifleri anında keşfet.",
+    heroKicker: "Günlük malzemeleri güzel yemeklere dönüştürmenin daha aydınlık ve daha rafine bir yolu.",
+    heroPrimaryBtn: "Malzemeleri Tara",
+    heroSecondaryBtn: "Ücretsiz Katıl",
+    heroStrip1Label: "Akıllı Tarama",
+    heroStrip1Text: "Fotoğrafla çalışan malzeme algılama",
+    heroStrip2Label: "Gerçek Tarifler",
+    heroStrip2Text: "API'lerden ve creator tariflerinden",
+    heroStrip3Label: "Çok Dilli",
+    heroStrip3Text: "İstediğin dilde yemek pişir",
     galleryBtn: "Galeriden seç",
     becomeCreator: "Tarif üreticisi ol",
     creatorDesc: "Tariflerini yükle, ileride ödüller kazan.",
@@ -542,6 +562,15 @@ continueSelecting: "+ Malzeme seçmeye devam et",
     heroBadge: "Реальные рецепты с поддержкой ИИ",
     heroTitle: "Готовьте умнее из того, что уже есть дома",
     heroDesc: "Загрузите ингредиенты, выберите то, что у вас есть, и мгновенно находите реальные рецепты.",
+    heroKicker: "Более светлый и изящный способ превращать обычные ингредиенты в красивые блюда.",
+    heroPrimaryBtn: "Сканировать ингредиенты",
+    heroSecondaryBtn: "Присоединиться бесплатно",
+    heroStrip1Label: "Умное сканирование",
+    heroStrip1Text: "Распознавание ингредиентов по фото",
+    heroStrip2Label: "Настоящие рецепты",
+    heroStrip2Text: "Из API и рецептов авторов",
+    heroStrip3Label: "Много языков",
+    heroStrip3Text: "Готовьте на удобном вам языке",
     galleryBtn: "Выбрать из галереи",
     becomeCreator: "Стать автором",
     creatorDesc: "Загружайте рецепты и получайте награды в будущем.",
@@ -670,6 +699,15 @@ continueSelecting: "+ Продолжить выбор ингредиентов",
     heroBadge: "De vraies recettes avec l’IA",
     heroTitle: "Cuisinez plus intelligemment avec ce que vous avez déjà",
     heroDesc: "Téléchargez vos ingrédients, sélectionnez ce que vous avez et découvrez instantanément de vraies recettes.",
+    heroKicker: "Une façon plus lumineuse et plus raffinée de transformer des ingrédients du quotidien en beaux plats.",
+    heroPrimaryBtn: "Scanner les ingrédients",
+    heroSecondaryBtn: "Rejoindre gratuitement",
+    heroStrip1Label: "Scan intelligent",
+    heroStrip1Text: "Détection des ingrédients par photo",
+    heroStrip2Label: "Vraies recettes",
+    heroStrip2Text: "Depuis les API et les créateurs",
+    heroStrip3Label: "Multilingue",
+    heroStrip3Text: "Cuisinez dans la langue de votre choix",
     galleryBtn: "Choisir dans la galerie",
     becomeCreator: "Devenir créateur",
     creatorDesc: "Ajoutez vos recettes et gagnez des récompenses plus tard.",
@@ -799,6 +837,15 @@ continueSelecting: "+ Continuer à choisir des ingrédients",
     heroBadge: "Recetas reales con IA",
     heroTitle: "Cocina de forma más inteligente con lo que ya tienes",
     heroDesc: "Sube tus ingredientes, selecciona lo que tienes y descubre recetas reales al instante.",
+    heroKicker: "Una forma más luminosa y refinada de convertir ingredientes cotidianos en platos hermosos.",
+    heroPrimaryBtn: "Escanear ingredientes",
+    heroSecondaryBtn: "Unirse gratis",
+    heroStrip1Label: "Escaneo inteligente",
+    heroStrip1Text: "Detección de ingredientes por foto",
+    heroStrip2Label: "Recetas reales",
+    heroStrip2Text: "De APIs y recetas de creadores",
+    heroStrip3Label: "Multilenguaje",
+    heroStrip3Text: "Cocina en el idioma que prefieras",
     galleryBtn: "Elegir de la galería",
     becomeCreator: "Ser creador",
     creatorDesc: "Sube tus recetas y gana recompensas en el futuro.",
@@ -926,6 +973,15 @@ continueSelecting: "+ Continuar seleccionando ingredientes",
     heroBadge: "Receitas reais com IA",
     heroTitle: "Cozinhe de forma mais inteligente com o que você já tem",
     heroDesc: "Envie seus ingredientes, selecione o que você tem e descubra receitas reais instantaneamente.",
+    heroKicker: "Uma maneira mais leve e refinada de transformar ingredientes do dia a dia em pratos bonitos.",
+    heroPrimaryBtn: "Escanear ingredientes",
+    heroSecondaryBtn: "Participar grátis",
+    heroStrip1Label: "Escaneamento inteligente",
+    heroStrip1Text: "Detecção de ingredientes por foto",
+    heroStrip2Label: "Receitas reais",
+    heroStrip2Text: "De APIs e receitas de criadores",
+    heroStrip3Label: "Multilíngue",
+    heroStrip3Text: "Cozinhe no idioma que preferir",
     galleryBtn: "Elegir de la galería",
     becomeCreator: "Torne-se criador",
     creatorDesc: "Envie suas receitas e ganhe recompensas no futuro.",
@@ -1054,6 +1110,15 @@ continueSelecting: "+ Continuar selecionando ingredientes",
     heroBadge: "وصفات حقيقية مدعومة بالذكاء الاصطناعي",
     heroTitle: "اطبخ بذكاء أكبر بما لديك بالفعل",
     heroDesc: "حمّل المكونات، واختر ما لديك، واكتشف وصفات حقيقية فورًا.",
+    heroKicker: "طريقة أكثر إشراقًا ورقيًا لتحويل المكونات اليومية إلى أطباق جميلة.",
+    heroPrimaryBtn: "امسح المكونات",
+    heroSecondaryBtn: "انضم مجانًا",
+    heroStrip1Label: "مسح ذكي",
+    heroStrip1Text: "اكتشاف المكونات بالصور",
+    heroStrip2Label: "وصفات حقيقية",
+    heroStrip2Text: "من واجهات API ووصفات المبدعين",
+    heroStrip3Label: "متعدد اللغات",
+    heroStrip3Text: "اطبخ باللغة التي تفضلها",
     galleryBtn: "اختر من المعرض",
     becomeCreator: "كن منشئ وصفات",
     creatorDesc: "ارفع وصفاتك واحصل على مكافآت مستقبلًا.",
@@ -1183,6 +1248,15 @@ continueSelecting: "+ اختر المزيد من المكونات",
   heroBadge: "KI-gestützte echte Rezepte",
   heroTitle: "Koche intelligenter mit dem, was du bereits hast",
   heroDesc: "Lade Zutaten hoch, wähle aus was du hast und entdecke sofort echte Rezepte.",
+  heroKicker: "Ein hellerer und raffinierterer Weg, alltägliche Zutaten in schöne Gerichte zu verwandeln.",
+  heroPrimaryBtn: "Zutaten scannen",
+  heroSecondaryBtn: "Kostenlos beitreten",
+  heroStrip1Label: "Smarter Scan",
+  heroStrip1Text: "Foto-basierte Zutaten-Erkennung",
+  heroStrip2Label: "Echte Rezepte",
+  heroStrip2Text: "Aus APIs und von Creators",
+  heroStrip3Label: "Mehrsprachig",
+  heroStrip3Text: "Koche in deiner bevorzugten Sprache",
 
   galleryBtn: "Aus Galerie wählen",
 
@@ -1315,6 +1389,15 @@ ja: {
   heroBadge: "AIによる本物のレシピ",
   heroTitle: "今ある食材で賢く料理しよう",
   heroDesc: "食材をアップロードし、持っているものを選ぶだけで本物のレシピをすぐ発見。",
+  heroKicker: "毎日の食材を美しい料理に変える、より明るく洗練された方法。",
+  heroPrimaryBtn: "食材をスキャン",
+  heroSecondaryBtn: "無料で参加",
+  heroStrip1Label: "スマートスキャン",
+  heroStrip1Text: "写真で食材を検出",
+  heroStrip2Label: "本物のレシピ",
+  heroStrip2Text: "APIとクリエイター投稿から",
+  heroStrip3Label: "多言語対応",
+  heroStrip3Text: "好きな言語で料理できます",
 
   galleryBtn: "ギャラリーから選択",
 
@@ -1445,6 +1528,15 @@ zh: {
   heroBadge: "AI 驱动的真实食谱",
   heroTitle: "利用现有食材更聪明地烹饪",
   heroDesc: "上传食材，选择您拥有的食材，即可立即发现真实食谱。",
+  heroKicker: "一种更明亮、更精致的方式，把日常食材变成漂亮的菜肴。",
+  heroPrimaryBtn: "扫描食材",
+  heroSecondaryBtn: "免费加入",
+  heroStrip1Label: "智能扫描",
+  heroStrip1Text: "通过照片识别食材",
+  heroStrip2Label: "真实食谱",
+  heroStrip2Text: "来自 API 和创作者投稿",
+  heroStrip3Label: "多语言",
+  heroStrip3Text: "用你喜欢的语言烹饪",
 
   galleryBtn: "从图库选择",
 
@@ -1651,6 +1743,16 @@ document.querySelectorAll(".hero-title-text").forEach(el => {
 document.querySelectorAll(".hero-desc-text").forEach(el => {
   el.textContent = t("heroDesc");
 });
+
+setText("heroKickerText", t("heroKicker"));
+setText("heroPrimaryBtn", t("heroPrimaryBtn"));
+setText("heroSecondaryBtn", t("heroSecondaryBtn"));
+setText("heroStrip1Label", t("heroStrip1Label"));
+setText("heroStrip1Text", t("heroStrip1Text"));
+setText("heroStrip2Label", t("heroStrip2Label"));
+setText("heroStrip2Text", t("heroStrip2Text"));
+setText("heroStrip3Label", t("heroStrip3Label"));
+setText("heroStrip3Text", t("heroStrip3Text"));
 
 setText("appSubtitle", t("appSubtitle"));
 
@@ -1916,43 +2018,160 @@ window.clearIngredients = function(){
 
 };
 
-window.addManual = function(){
+const manualSuggestions = document.getElementById("manualSuggestions");
 
-  const value =
-  manualInput.value
-  .trim()
-  .toLowerCase();
+function normalizeIngredientLookup(value){
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase()
+    .trim();
+}
 
-  if(!value) return;
+function ingredientSearchValues(item){
+  const names = item && typeof item.name === "object"
+    ? Object.values(item.name)
+    : [item?.name];
+  const aliases = Array.isArray(item?.aliases) ? item.aliases : [];
+  return [item?.id, ...names, ...aliases].filter(Boolean);
+}
 
-  const item = window.NilisIngredients
-  ? window.NilisIngredients.resolveIngredient(value)
-  : { id:value };
+function findManualIngredientMatches(query){
+  const needle = normalizeIngredientLookup(query);
+  if(!needle || !Array.isArray(window.allIngredients)) return [];
 
-addIngredient(item.id);
+  return window.allIngredients
+    .map(item => {
+      const values = ingredientSearchValues(item);
+      const normalized = values.map(normalizeIngredientLookup);
+      const exact = normalized.includes(needle);
+      const starts = normalized.some(value => value.startsWith(needle));
+      const contains = normalized.some(value => value.includes(needle));
+      return { item, exact, starts, contains };
+    })
+    .filter(match => match.exact || match.starts || match.contains)
+    .sort((a,b) => Number(b.exact) - Number(a.exact) || Number(b.starts) - Number(a.starts))
+    .slice(0,7)
+    .map(match => match.item);
+}
 
+function closeManualSuggestions(){
+  if(!manualSuggestions) return;
+  manualSuggestions.innerHTML = "";
+  manualSuggestions.classList.remove("open");
+}
+
+function chooseManualSuggestion(item){
+  if(!manualInput || !item) return;
+  manualInput.value = getIngredientLabel(item);
+  manualInput.dataset.ingredientId = item.id;
+  closeManualSuggestions();
+}
+
+function renderManualSuggestions(){
+  if(!manualInput || !manualSuggestions) return;
+  const matches = findManualIngredientMatches(manualInput.value);
+  manualSuggestions.innerHTML = "";
+
+  if(!matches.length){
+    manualSuggestions.classList.remove("open");
+    return;
+  }
+
+  matches.forEach(item => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "manual-suggestion-item";
+    button.setAttribute("role", "option");
+    const icon = document.createElement("span");
+    icon.className = "manual-suggestion-icon";
+    icon.textContent = "✦";
+
+    const label = document.createElement("span");
+    label.className = "manual-suggestion-label";
+    label.textContent = getIngredientLabel(item);
+
+    button.append(icon, label);
+    button.addEventListener("mousedown", event => {
+      event.preventDefault();
+      chooseManualSuggestion(item);
+    });
+    manualSuggestions.appendChild(button);
+  });
+
+  manualSuggestions.classList.add("open");
+}
+
+async function normalizeUnknownIngredient(value){
+  try{
+    const response = await fetch(`${window.API_BASE}/normalize-ingredients`, {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify({ ingredients:[value], lang:currentLang })
+    });
+    const data = await response.json();
+    const normalized = data?.ingredients?.[0]?.canonicalEn;
+    return String(normalized || value).trim().toLowerCase();
+  }catch(error){
+    console.warn("Manual ingredient normalization failed:", error);
+    return String(value).trim().toLowerCase();
+  }
+}
+
+window.addManual = async function(){
+  const rawValue = manualInput?.value.trim();
+  if(!rawValue) return;
+
+  let ingredientId = manualInput.dataset.ingredientId || "";
+
+  if(!ingredientId){
+    const exactMatch = findManualIngredientMatches(rawValue)
+      .find(item => ingredientSearchValues(item)
+        .some(value => normalizeIngredientLookup(value) === normalizeIngredientLookup(rawValue)));
+    ingredientId = exactMatch?.id || await normalizeUnknownIngredient(rawValue);
+  }
+
+  addIngredient(ingredientId);
   manualInput.value = "";
+  delete manualInput.dataset.ingredientId;
+  closeManualSuggestions();
 
   if(statusText){
     statusText.innerText = t("statusAdded");
   }
-
 };
 
 if(manualInput){
-
-  manualInput.addEventListener("keydown", e => {
-
-    if(e.key === "Enter"){
-
-      e.preventDefault();
-
-      window.addManual();
-
-    }
-
+  manualInput.addEventListener("input", () => {
+    delete manualInput.dataset.ingredientId;
+    renderManualSuggestions();
   });
 
+  manualInput.addEventListener("keydown", e => {
+    if(e.key === "Escape"){
+      closeManualSuggestions();
+      return;
+    }
+
+    if(e.key === "Tab" && manualSuggestions?.classList.contains("open")){
+      const firstMatch = findManualIngredientMatches(manualInput.value)[0];
+      if(firstMatch) chooseManualSuggestion(firstMatch);
+      return;
+    }
+
+    if(e.key === "Enter"){
+      e.preventDefault();
+      const firstMatch = findManualIngredientMatches(manualInput.value)[0];
+      if(firstMatch && !manualInput.dataset.ingredientId){
+        chooseManualSuggestion(firstMatch);
+      }
+      window.addManual();
+    }
+  });
+
+  document.addEventListener("click", event => {
+    if(!event.target.closest(".manual-input-wrap")) closeManualSuggestions();
+  });
 }
 
 function resetUploadStatus(){
@@ -2196,19 +2415,43 @@ if(!safeItems.length && window.NilisIngredients){
     const isSelected =
       selected.includes(value);
 
-    return `
-      <button
-        class="modal-ingredient-btn ${isSelected ? "active" : ""}"
-        type="button"
-        data-value="${value}"
-        data-index="${index}"
-      >
-        <span>${label}</span>
-        <strong class="ingredient-mark">${isSelected ? "✓" : "+"}</strong>
-      </button>
-    `;
+   return `
+  <button
+    class="modal-ingredient-btn ${isSelected ? "active" : ""}"
+    type="button"
+    data-value="${value}"
+    data-index="${index}"
+  >
+    <span>${label}</span>
+    <strong class="ingredient-mark">${isSelected ? "✓" : "+"}</strong>
+  </button>
+`;
 
   }).join("");
+
+  const searchCopy = {
+    en:["Search ingredients","No ingredients found."],
+    tr:["Malzeme ara","Malzeme bulunamadı."],
+    de:["Zutaten suchen","Keine Zutaten gefunden."],
+    fr:["Rechercher un ingrédient","Aucun ingrédient trouvé."],
+    es:["Buscar ingredientes","No se encontraron ingredientes."],
+    pt:["Buscar ingredientes","Nenhum ingrediente encontrado."],
+    ru:["Поиск ингредиентов","Ингредиенты не найдены."],
+    ar:["ابحث عن المكونات","لم يتم العثور على مكونات."],
+    ja:["食材を検索","食材が見つかりません。"],
+    zh:["搜索食材","未找到食材。"]
+  };
+  const localizedSearch = searchCopy[currentLang] || searchCopy.en;
+
+  if(ingredientModalSearch){
+    ingredientModalSearch.value = "";
+    ingredientModalSearch.placeholder = localizedSearch[0];
+  }
+
+  if(ingredientSearchEmpty){
+    ingredientSearchEmpty.textContent = localizedSearch[1];
+    ingredientSearchEmpty.classList.remove("show");
+  }
 
   ingredientModal.style.display = "flex";
 
@@ -2330,10 +2573,33 @@ function continueSelectingIngredients(){
 
   document.body.classList.add("show-recipes-page");
 
- const floatingLang = document.querySelector(".floating-lang");
-if(floatingLang){
+const floatingLang = document.querySelector(".floating-lang");
+if(floatingLang && window.innerWidth <= 980){
   floatingLang.style.display = "none";
-} 
+}
+
+function filterIngredientModalItems(){
+  if(!ingredientModalSearch || !ingredientModalItems) return;
+  const query = normalizeIngredientLookup(ingredientModalSearch.value);
+  let visibleCount = 0;
+
+  ingredientModalItems
+    .querySelectorAll(".modal-ingredient-btn")
+    .forEach(button => {
+      const label = normalizeIngredientLookup(button.textContent);
+      const visible = !query || label.includes(query);
+      button.hidden = !visible;
+      if(visible) visibleCount++;
+    });
+
+  if(ingredientSearchEmpty){
+    ingredientSearchEmpty.classList.toggle("show", visibleCount === 0);
+  }
+}
+
+if(ingredientModalSearch){
+  ingredientModalSearch.addEventListener("input", filterIngredientModalItems);
+}
 
 result.style.display = "grid";
 result.style.visibility = "visible";
@@ -2531,6 +2797,163 @@ async function confirmAndGetRecipes(){
 }
 
 
+function getAllRecipeIngredients(recipe){
+  const source =
+    Array.isArray(recipe.extendedIngredients) && recipe.extendedIngredients.length
+      ? recipe.extendedIngredients
+      : [
+          ...(Array.isArray(recipe.usedIngredients) ? recipe.usedIngredients : []),
+          ...(Array.isArray(recipe.missedIngredients) ? recipe.missedIngredients : [])
+        ];
+
+  const seen = new Set();
+
+  return source.filter(item => {
+    const label = String(
+      item?.original || item?.originalName || item?.name || item || ""
+    ).trim();
+    const key = label.toLocaleLowerCase();
+
+    if(!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function updateRecipePageHeader(visibleCount){
+  const copyByLang = {
+    en:["CURATED FOR YOUR KITCHEN","Recipes worth cooking","personal selections"],
+    tr:["MUTFAĞIN İÇİN ÖZENLE SEÇİLDİ","Pişirmeye değer tarifler","kişisel tarif seçimi"],
+    de:["FÜR DEINE KÜCHE AUSGEWÄHLT","Rezepte, die sich lohnen","persönliche Empfehlungen"],
+    fr:["SÉLECTIONNÉ POUR VOTRE CUISINE","Des recettes à cuisiner","sélections personnalisées"],
+    es:["SELECCIONADO PARA TU COCINA","Recetas que vale la pena cocinar","selecciones personales"],
+    pt:["SELECIONADO PARA SUA COZINHA","Receitas que valem a pena","seleções pessoais"],
+    ru:["ПОДОБРАНО ДЛЯ ВАШЕЙ КУХНИ","Рецепты, которые стоит приготовить","персональных рецептов"]
+  };
+  const copy = copyByLang[currentLang] || copyByLang.en;
+  const eyebrow = document.getElementById("recipePageEyebrow");
+  const title = document.getElementById("recipePageTitle");
+  const summary = document.getElementById("recipePageSummary");
+
+  if(eyebrow) eyebrow.textContent = copy[0];
+  if(title) title.textContent = copy[1];
+  if(summary) summary.textContent = `${visibleCount} ${copy[2]}`;
+}
+
+const worldSearchCopy = {
+  en:{open:"Explore world cuisines",eyebrow:"WORLD CUISINES",title:"What would you like to cook?",intro:"Search by dish name, choose a cuisine, or select a category.",dish:"Dish name",placeholder:"Pizza, ramen, baklava...",find:"Find recipes",cuisine:"Choose a cuisine",category:"Category",required:"Enter a dish name or choose an option.",loading:"Searching our recipe collection...",empty:"No recipes found. Try another search.",error:"Recipes could not be loaded. Please try again."},
+  tr:{open:"Dünya mutfaklarını keşfet",eyebrow:"DÜNYA MUTFAKLARI",title:"Ne pişirmek istersin?",intro:"Yemek adıyla ara, bir ülke mutfağı veya kategori seç.",dish:"Yemek adı",placeholder:"Pizza, ramen, baklava...",find:"Tarifleri bul",cuisine:"Bir mutfak seç",category:"Kategori",required:"Yemek adı yaz veya bir seçenek belirle.",loading:"Tarif arşivimiz taranıyor...",empty:"Tarif bulunamadı. Başka bir arama deneyin.",error:"Tarifler yüklenemedi. Lütfen tekrar deneyin."},
+  de:{open:"Weltküchen entdecken",eyebrow:"KÜCHEN DER WELT",title:"Was möchten Sie kochen?",intro:"Nach Gericht suchen oder Küche und Kategorie wählen.",dish:"Gericht",placeholder:"Pizza, Ramen, Baklava...",find:"Rezepte finden",cuisine:"Küche wählen",category:"Kategorie",required:"Gericht eingeben oder Option wählen.",loading:"Rezeptsammlung wird durchsucht...",empty:"Keine Rezepte gefunden.",error:"Rezepte konnten nicht geladen werden."},
+  fr:{open:"Explorer les cuisines du monde",eyebrow:"CUISINES DU MONDE",title:"Que souhaitez-vous cuisiner ?",intro:"Recherchez un plat ou choisissez une cuisine et une catégorie.",dish:"Nom du plat",placeholder:"Pizza, ramen, baklava...",find:"Trouver des recettes",cuisine:"Choisir une cuisine",category:"Catégorie",required:"Saisissez un plat ou choisissez une option.",loading:"Recherche dans nos recettes...",empty:"Aucune recette trouvée.",error:"Impossible de charger les recettes."},
+  es:{open:"Explorar cocinas del mundo",eyebrow:"COCINAS DEL MUNDO",title:"¿Qué te gustaría cocinar?",intro:"Busca un plato o elige cocina y categoría.",dish:"Nombre del plato",placeholder:"Pizza, ramen, baklava...",find:"Buscar recetas",cuisine:"Elegir cocina",category:"Categoría",required:"Escribe un plato o elige una opción.",loading:"Buscando en nuestras recetas...",empty:"No se encontraron recetas.",error:"No se pudieron cargar las recetas."},
+  pt:{open:"Explorar cozinhas do mundo",eyebrow:"COZINHAS DO MUNDO",title:"O que gostaria de cozinhar?",intro:"Pesquise um prato ou escolha cozinha e categoria.",dish:"Nome do prato",placeholder:"Pizza, ramen, baklava...",find:"Encontrar receitas",cuisine:"Escolher cozinha",category:"Categoria",required:"Digite um prato ou escolha uma opção.",loading:"Pesquisando nossas receitas...",empty:"Nenhuma receita encontrada.",error:"Não foi possível carregar as receitas."},
+  ru:{open:"Кухни мира",eyebrow:"КУХНИ МИРА",title:"Что вы хотите приготовить?",intro:"Найдите блюдо или выберите кухню и категорию.",dish:"Название блюда",placeholder:"Пицца, рамен, баклава...",find:"Найти рецепты",cuisine:"Выберите кухню",category:"Категория",required:"Введите блюдо или выберите вариант.",loading:"Ищем в коллекции рецептов...",empty:"Рецепты не найдены.",error:"Не удалось загрузить рецепты."},
+  ar:{open:"استكشف مطابخ العالم",eyebrow:"مطابخ العالم",title:"ماذا تريد أن تطبخ؟",intro:"ابحث باسم الطبق أو اختر المطبخ والفئة.",dish:"اسم الطبق",placeholder:"بيتزا، رامن، بقلاوة...",find:"ابحث عن وصفات",cuisine:"اختر المطبخ",category:"الفئة",required:"اكتب اسم طبق أو اختر خياراً.",loading:"جارٍ البحث في مجموعة الوصفات...",empty:"لم يتم العثور على وصفات.",error:"تعذر تحميل الوصفات."}
+};
+
+const worldCuisines = [
+  ["turkey","Türkiye"],["italy","İtalya"],["mexico","Meksika"],["india","Hindistan"],["china","Çin"],
+  ["japan","Japonya"],["france","Fransa"],["greece","Yunanistan"],["usa","ABD"],["thailand","Tayland"]
+];
+const worldCuisineEnglish = {turkey:"Turkey",italy:"Italy",mexico:"Mexico",india:"India",china:"China",japan:"Japan",france:"France",greece:"Greece",usa:"USA",thailand:"Thailand"};
+const worldCategories = ["main course","side dish","dessert","appetizer","salad","soup","breakfast","pasta","seafood"];
+let selectedWorldCuisine = "";
+let selectedWorldCategory = "";
+
+function getWorldSearchCopy(){
+  return worldSearchCopy[currentLang] || worldSearchCopy.en;
+}
+
+function applyWorldSearchLanguage(){
+  const copy = getWorldSearchCopy();
+  const values = {worldSearchOpenText:copy.open,worldSearchEyebrow:copy.eyebrow,worldSearchTitle:copy.title,worldSearchIntro:copy.intro,worldQueryLabel:copy.dish,worldSearchSubmit:copy.find,worldCuisineLabel:copy.cuisine,worldCategoryLabel:copy.category};
+  Object.entries(values).forEach(([id,value]) => { const node=document.getElementById(id); if(node) node.textContent=value; });
+  const query=document.getElementById("worldRecipeQuery");
+  if(query) query.placeholder=copy.placeholder;
+  document.querySelectorAll("[data-world-open-label]").forEach(node => { node.textContent=copy.open; });
+  renderWorldSearchOptions();
+}
+
+function renderWorldSearchOptions(){
+  const cuisineBox=document.getElementById("worldCuisineOptions");
+  const categoryBox=document.getElementById("worldCategoryOptions");
+  if(cuisineBox){
+    cuisineBox.innerHTML=worldCuisines.map(([id,trLabel]) => `<button type="button" class="world-option ${selectedWorldCuisine===id?"selected":""}" data-world-cuisine="${id}">${currentLang==="tr"?trLabel:worldCuisineEnglish[id]}</button>`).join("");
+  }
+  if(categoryBox){
+    categoryBox.innerHTML=worldCategories.map(value => `<button type="button" class="world-category-option ${selectedWorldCategory===value?"selected":""}" data-world-category="${value}">${value}</button>`).join("");
+  }
+}
+
+function openWorldSearch(cuisine=""){
+  const params=new URLSearchParams({lang:currentLang || "en"});
+  if(cuisine) params.set("cuisine",cuisine);
+  window.location.href=`world-cuisines.html?${params.toString()}`;
+}
+
+function closeWorldSearch(){
+  const modal=document.getElementById("worldSearchModal");
+  if(!modal) return;
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden","true");
+  document.body.classList.remove("world-search-active");
+}
+
+async function searchWorldRecipes(){
+  const copy=getWorldSearchCopy();
+  const query=document.getElementById("worldRecipeQuery")?.value.trim() || "";
+  const status=document.getElementById("worldSearchStatus");
+  const submit=document.getElementById("worldSearchSubmit");
+  if(!query && !selectedWorldCuisine && !selectedWorldCategory){ if(status) status.textContent=copy.required; return; }
+  if(status) status.textContent=copy.loading;
+  if(submit) submit.disabled=true;
+  try{
+    const response=await fetch(`${window.API_BASE}/discover-recipes`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query,cuisine:selectedWorldCuisine,category:selectedWorldCategory,lang:currentLang,limit:24})});
+    const payload=await response.json();
+    if(!response.ok) throw new Error(payload.error || "Search failed");
+    if(!Array.isArray(payload.recipes) || !payload.recipes.length){ if(status) status.textContent=copy.empty; return; }
+    recipePage=1;
+    lastRecipeIngredients=[];
+    closeWorldSearch();
+    renderRecipes(payload.recipes);
+  }catch(error){
+    console.error("WORLD RECIPE SEARCH ERROR:",error);
+    if(status) status.textContent=copy.error;
+  }finally{
+    if(submit) submit.disabled=false;
+  }
+}
+
+document.addEventListener("click", event => {
+  const cuisine=event.target.closest("[data-world-cuisine]");
+  const category=event.target.closest("[data-world-category]");
+  if(cuisine){ selectedWorldCuisine=selectedWorldCuisine===cuisine.dataset.worldCuisine?"":cuisine.dataset.worldCuisine; renderWorldSearchOptions(); }
+  if(category){ selectedWorldCategory=selectedWorldCategory===category.dataset.worldCategory?"":category.dataset.worldCategory; renderWorldSearchOptions(); }
+  if(event.target.id==="worldSearchModal") closeWorldSearch();
+});
+
+document.addEventListener("keydown", event => {
+  if(event.key==="Escape" && document.getElementById("worldSearchModal")?.classList.contains("open")) closeWorldSearch();
+  if(event.key==="Enter" && event.target.id==="worldRecipeQuery") searchWorldRecipes();
+});
+
+document.addEventListener("DOMContentLoaded", applyWorldSearchLanguage);
+
+function placeMobileWorldSearch(){
+  const bar=document.querySelector(".mobile-world-search-bar");
+  const mobileHero=document.querySelector(".mobile-hero-big");
+  const content=document.getElementById("content");
+  if(!bar) return;
+  if(window.innerWidth<=980 && mobileHero && bar.nextElementSibling!==mobileHero){
+    mobileHero.parentElement.insertBefore(bar,mobileHero);
+  }else if(window.innerWidth>980 && content && bar.parentElement!==content){
+    content.prepend(bar);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", placeMobileWorldSearch);
+window.addEventListener("resize", placeMobileWorldSearch);
+
 function renderRecipes(data){
 
   currentRecipes = data;
@@ -2562,36 +2985,38 @@ function renderRecipes(data){
   result.style.visibility = "visible";
   result.style.opacity = "1";
 
- const startIndex =
-  (recipePage - 1) * recipesPerPage;
+const visibleRecipes = data;
 
-const endIndex =
-  startIndex + recipesPerPage;
+updateRecipePageHeader(visibleRecipes.length);
 
-const visibleRecipes =
-  data.slice(startIndex, endIndex);
-
-const totalPages =
-  Math.ceil(data.length / recipesPerPage);
+const totalPages = 1;
 
   result.innerHTML =
     visibleRecipes.map(recipe => {
 
-      const usedCount =
-        Array.isArray(recipe.usedIngredients) && recipe.usedIngredients.length
-          ? recipe.usedIngredients.length
-          : recipe.usedIngredientCount || recipe.usedCount || 0;
+      const allIngredients = getAllRecipeIngredients(recipe);
+      const usedCount = allIngredients.length ||
+        recipe.usedIngredientCount || recipe.usedCount || 0;
 
       const usedList =
-        recipe.usedIngredients && recipe.usedIngredients.length
-          ? recipe.usedIngredients
-              .slice(0,4)
-              .map(item => `<span>${item.original || item.name || item}</span>`)
+        allIngredients.length
+          ? allIngredients
+              .map(item => `<span>${item.original || item.originalName || item.name || item}</span>`)
               .join("")
           : `<span>${t("ingredientDetailsUnavailable")}</span>`;
 
+      const instructionPreview =
+        getInstructionText(recipe) || t("instructionsUnavailable");
+
+      const previewText =
+        instructionPreview.length > 150
+          ? instructionPreview.slice(0, 150).trim() + "..."
+          : instructionPreview;
+
       return `
         <div class="card recipe-card" data-recipe-id="${recipe.id}">
+
+          <h3 class="recipe-card-title">${recipe.title || t("recipeTitleFallback")}</h3>
 
           <div class="recipe-card-image-wrap">
 
@@ -2612,23 +3037,35 @@ const totalPages =
 
           <div class="card-body recipe-card-body">
 
-            <h3>${recipe.title || t("recipeTitleFallback")}</h3>
+            ${recipe.source ? `<span class="recipe-source-badge">${recipe.source === "edamam-live" ? "Edamam" : recipe.source === "themealdb" ? "TheMealDB" : "Spoonacular"}</span>` : ""}
 
-            <p class="time recipe-time">
+            <div class="recipe-card-meta">
+              <span class="recipe-meta-pill recipe-time">
               ${
                 recipe.readyInMinutes
                   ? `⏱ ${recipe.timeEstimated ? "~" : ""}${recipe.readyInMinutes} ${t("timeMin")}`
                   : `⏱ ${recipe.timeLabel || t("timeUnavailable") || "Time unavailable"}`
               }
-            </p>
+              </span>
 
-            <div class="ingredients-count">
-              🥗 ${t("usesIngredients")} ${usedCount} ${t("ingredientsWord")}
+              <span class="recipe-meta-pill ingredients-count">
+                🥗 ${t("usesIngredients")} ${usedCount} ${t("ingredientsWord")}
+              </span>
+
+              ${
+                recipe.servings
+                  ? `<span class="recipe-meta-pill recipe-servings">👥 ${recipe.servings}</span>`
+                  : ""
+              }
             </div>
 
             <div class="ingredients recipe-ingredients">
               ${usedList}
             </div>
+
+            <p class="recipe-preview">
+              🍳 ${previewText}
+            </p>
 
           </div>
 
@@ -2716,6 +3153,21 @@ if(favBtn){
 
 }
 
+const persistentSidebar = document.getElementById("sidebar");
+if(persistentSidebar){
+  persistentSidebar.addEventListener("click", event => {
+    if(!document.body.classList.contains("show-recipes-page")) return;
+
+    const actionable = event.target.closest(
+      ".upload-card, .category-btn, .manual button, #manualInput, #joinNiliBtn"
+    );
+
+    if(actionable){
+      backToHome();
+    }
+  }, true);
+}
+
 function openRecipe(id){
 
   activeRecipeId = id;
@@ -2736,69 +3188,140 @@ function openRecipe(id){
 
   }
 
+  const allIngredients = getAllRecipeIngredients(recipe);
   const ingredientHtml =
-  recipe.usedIngredients && recipe.usedIngredients.length
-  ? recipe.usedIngredients
-      .map(item => `
-        <span>
-          ${item.original || item.name || item}
-        </span>
-      `).join("")
-  : `<span>${t("ingredientDetailsUnavailable")}</span>`;
+    allIngredients.length
+      ? allIngredients.map(item => `
+          <li class="recipe-detail-ingredient">
+            <span class="recipe-detail-bullet">🥄</span>
+            <span>${item.original || item.originalName || item.name || item}</span>
+          </li>
+        `).join("")
+      : `<li class="recipe-detail-ingredient">
+             <span class="recipe-detail-bullet">🥄</span>
+             <span>${t("ingredientDetailsUnavailable")}</span>
+         </li>`;
+
+  const instructionSteps = getInstructionSteps(recipe);
+
+  const instructionsHtml = instructionSteps.length
+    ? instructionSteps
+        .map((step, index) => `
+          <li class="recipe-detail-step">
+            <span class="recipe-step-number">${index + 1}</span>
+            <span>${step}</span>
+          </li>
+        `).join("")
+    : `<li class="recipe-detail-step">
+         <span class="recipe-step-number">•</span>
+         <span>${t("instructionsUnavailable")}</span>
+       </li>`;
+
+  const servingsValue =
+    recipe.servings ||
+    recipe.yields ||
+    recipe.aggregateLikes && recipe.servings ? recipe.servings : "";
 
   modalBody.innerHTML = `
+    <div class="recipe-detail-sticky">
+      <h1>${recipe.title || "Recipe"}</h1>
 
-    <img
-      src="${
-        recipe.image ||
-        "https://img.spoonacular.com/recipes/716429-556x370.jpg"
-      }"
-      style="
-        width:100%;
-        max-height:340px;
-        object-fit:cover;
-        border-radius:24px;
-        margin-bottom:24px;
-      "
-    >
-
-    <h1>
-      ${recipe.title || "Recipe"}
-    </h1>
-
-    <p class="time">
-  ${
-    recipe.readyInMinutes
-      ? `⏱ ${recipe.readyInMinutes} min`
-      : `⏱ ${recipe.timeLabel || "Time unavailable"}`
-  }
-</p>
-
-    <h2>
-  ${t("ingredientsTitle")}
-</h2>
-
-    <div class="ingredients">
-      ${ingredientHtml}
+      <div class="recipe-detail-hero">
+        <img
+          src="${
+            recipe.image ||
+            "https://img.spoonacular.com/recipes/716429-556x370.jpg"
+          }"
+          alt="${recipe.title || "Recipe"}"
+        >
+      </div>
     </div>
 
-    <br>
+    <div class="recipe-detail-content">
+      <div class="recipe-detail-meta">
+        <span class="recipe-detail-pill">
+          ⏱ ${
+            recipe.readyInMinutes
+              ? `${recipe.readyInMinutes} ${t("timeMin")}`
+              : `${recipe.timeLabel || t("timeUnavailable") || "Time unavailable"}`
+          }
+        </span>
+        ${
+          servingsValue
+            ? `<span class="recipe-detail-pill">👥 ${servingsValue}</span>`
+            : ""
+        }
+      </div>
 
-    <h2>
-  ${t("instructionsTitle")}
-</h2>
+      <h2>🥗 ${t("ingredientsTitle")}</h2>
+      <ul class="recipe-detail-ingredients">
+        ${ingredientHtml}
+      </ul>
 
-    <p style="line-height:1.8;">
-      ${
-        recipe.instructions ||
-        t("instructionsUnavailable")
-      }
-    </p>
-
+      <h2>👨‍🍳 ${t("instructionsTitle")}</h2>
+      <ol class="recipe-detail-steps">
+        ${instructionsHtml}
+      </ol>
+    </div>
   `;
 
   modal.style.display = "flex";
 
+  const modalContent = modal.querySelector(".modal-content");
+  if(modalContent) modalContent.scrollTop = 0;
+  if(modalBody) modalBody.scrollTop = 0;
+
+  requestAnimationFrame(() => {
+    if(modalContent) modalContent.scrollTop = 0;
+    if(modalBody) modalBody.scrollTop = 0;
+  });
+
+}
+
+function getInstructionText(recipe){
+  if(Array.isArray(recipe.analyzedInstructions) && recipe.analyzedInstructions.length){
+    const steps = recipe.analyzedInstructions
+      .flatMap(block => Array.isArray(block.steps) ? block.steps : [])
+      .map(step => step?.step)
+      .filter(Boolean);
+
+    if(steps.length){
+      return steps.join(" ");
+    }
+  }
+
+  if(typeof recipe.instructions === "string" && recipe.instructions.trim()){
+    return recipe.instructions
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  return "";
+}
+
+function getInstructionSteps(recipe){
+  if(Array.isArray(recipe.analyzedInstructions) && recipe.analyzedInstructions.length){
+    const steps = recipe.analyzedInstructions
+      .flatMap(block => Array.isArray(block.steps) ? block.steps : [])
+      .map(step => step?.step)
+      .filter(Boolean);
+
+    if(steps.length){
+      return steps;
+    }
+  }
+
+  const plainText = getInstructionText(recipe);
+  if(!plainText){
+    return [];
+  }
+
+  return plainText
+    .split(/(?<=[.!?])\s+/)
+    .map(step => step.trim())
+    .filter(Boolean)
+    .slice(0, 8);
 }
 
 window.closeModal = function(){
@@ -3424,6 +3947,10 @@ window.setLang = function(lang){
     updateCreatorLinks();
   }
 
+  if(typeof updateAllLinks === "function"){
+    updateAllLinks();
+  }
+
   if(typeof renderChecklist === "function"){
     renderChecklist();
   }
@@ -3480,6 +4007,15 @@ window.setLang = function(lang){
   if(logoutBtn) logoutBtn.textContent = t("menuLogout");
 
 };
+
+document.querySelectorAll(".hero-strip-button").forEach(link => {
+  link.addEventListener("click", event => {
+    event.preventDefault();
+    saveLang(currentLang);
+    window.location.href =
+      "how-it-works.html?lang=" + encodeURIComponent(currentLang);
+  });
+});
 
 function showUserFriendlyError(source, err){
 
@@ -3813,7 +4349,16 @@ function backToHome(){
 
 function nextRecipePage(){
   recipePage++;
+  document.body.classList.add("show-recipes-page");
+  document.body.classList.add("hide-mobile-top-menu");
   renderRecipes(currentRecipes);
+
+  const sidebar = document.getElementById("sidebar");
+  if(sidebar && window.innerWidth > 980){
+    sidebar.style.setProperty("display", "block", "important");
+    sidebar.style.setProperty("visibility", "visible", "important");
+    sidebar.style.setProperty("opacity", "1", "important");
+  }
 }
 
 function openFavoritesPage(){

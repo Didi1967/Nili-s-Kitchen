@@ -1,5 +1,32 @@
 [
   {
+    "id": "ajwain_seeds",
+    "category": "herbs_spices",
+    "subcategory": "general",
+    "name": {
+      "en": "Ajwain Seeds",
+      "tr": "Ajwain tohumu",
+      "ru": "семена ажгона",
+      "ar": "بذور الأجوين",
+      "es": "semillas de ajwain",
+      "pt": "sementes de ajwain",
+      "fr": "graines d’ajwain",
+      "de": "Ajowan-Samen",
+      "zh": "印度藏茴香籽",
+      "ja": "アジョワンシード"
+    },
+    "aliases": [
+      "Ajwain Seeds",
+      "ajwain_seeds",
+      "ajwain seeds",
+      "Ajwain tohumu",
+      "семена ажгона",
+      "semillas de ajwain",
+      "graines d’ajwain",
+      "بذور الأجوين"
+    ]
+  },
+  {
     "id": "allspice",
     "category": "herbs_spices",
     "subcategory": "general",
@@ -30,6 +57,33 @@
       "allspice tempero",
       "Allspice توابل",
       "Allspice especia"
+    ]
+  },
+  {
+    "id": "asafoetida_powder",
+    "category": "herbs_spices",
+    "subcategory": "general",
+    "name": {
+      "en": "Asafoetida Powder",
+      "tr": "Asafetida tozu",
+      "ru": "порошок асафетиды",
+      "ar": "مسحوق الحلتيت",
+      "es": "asafétida en polvo",
+      "pt": "asafoetida em pó",
+      "fr": "asafoetida en poudre",
+      "de": "Asantpulver",
+      "zh": "阿魏粉",
+      "ja": "ヒングパウダー"
+    },
+    "aliases": [
+      "Asafoetida Powder",
+      "asafoetida_powder",
+      "asafoetida powder",
+      "Asafetida tozu",
+      "порошок асафетиды",
+      "asafétida en polvo",
+      "asafoetida en poudre",
+      "مسحوق الحلتيت"
     ]
   },
   {
@@ -659,6 +713,31 @@
     ]
   },
   {
+    "id": "epazote",
+    "category": "herbs_spices",
+    "subcategory": "general",
+    "name": {
+      "en": "Epazote",
+      "tr": "Epazote otu",
+      "ru": "эпазот",
+      "ar": "إيبازوت",
+      "es": "epazote",
+      "pt": "epazote",
+      "fr": "épazote",
+      "de": "Epazote",
+      "zh": "土荆芥",
+      "ja": "エパソーテ"
+    },
+    "aliases": [
+      "Epazote",
+      "epazote",
+      "Epazote otu",
+      "эпазот",
+      "épazote",
+      "إيبازوت"
+    ]
+  },
+  {
     "id": "fennel_seed",
     "category": "herbs_spices",
     "subcategory": "general",
@@ -1154,6 +1233,33 @@
       "moutarde graine",
       "Mostaza Semilla",
       "Hardal Tohumu"
+    ]
+  },
+  {
+    "id": "nigella_seeds",
+    "category": "herbs_spices",
+    "subcategory": "general",
+    "name": {
+      "en": "Nigella Seeds",
+      "tr": "Çörek otu",
+      "ru": "семена нигеллы",
+      "ar": "حبة البركة",
+      "es": "semillas de nigella",
+      "pt": "sementes de nigella",
+      "fr": "graines de nigelle",
+      "de": "Schwarzkümmel",
+      "zh": "黑种草籽",
+      "ja": "ニゲラシード"
+    },
+    "aliases": [
+      "Nigella Seeds",
+      "nigella_seeds",
+      "nigella seeds",
+      "Çörek otu",
+      "семена нигеллы",
+      "semillas de nigella",
+      "graines de nigelle",
+      "حبة البركة"
     ]
   },
   {

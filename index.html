@@ -13,7 +13,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nili's Kitchen AI</title>
-  <link rel="stylesheet" href="/style.css?v=3000">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=3094">
 </head>
 
 <body>
@@ -92,12 +95,14 @@
 </div>
 </div>
 
-  <aside id="sidebar">
+  <aside id="sidebar" class="sidebar-unified">
     <div class="sidebar-shell">
 
       <div class="nk-brand-card">
   <div class="nk-brand-inner">
-    <img src="logo.jpeg" alt="Nili's Kitchen" class="nk-logo">
+    <div class="nk-logo-shell">
+      <img src="logo.jpeg" alt="Nili's Kitchen" class="nk-logo">
+    </div>
 
     
 
@@ -147,7 +152,10 @@
   <input type="file" id="photoGallery" hidden accept="image/*">
 
   <div class="manual">
-    <input id="manualInput" placeholder="Add ingredient">
+    <div class="manual-input-wrap">
+      <input id="manualInput" placeholder="Add ingredient" autocomplete="off">
+      <div id="manualSuggestions" class="manual-suggestions" role="listbox"></div>
+    </div>
     <button type="button" onclick="addManual()">+</button>
   </div>
 
@@ -239,31 +247,29 @@
   </span>
 </div>
 
+  </div>
+    </div>
   </aside>
 
   <div id="selectedTray" class="selected-tray-modal">
     <div class="selected-tray-box">
 
       <div class="selected-tray-header">
-        <div>
-          <h2>Selected ingredients</h2>
-        </div>
+  <div>
+    <h2>Selected ingredients</h2>
+  </div>
 
-        <div id="selectedIngredientList" class="selected-ingredient-list"></div>
-
-        <div class="selected-tray-header-actions">
-
-  <button
-    type="button"
-    class="continue-selecting-btn"
-    onclick="closeSelectedTray()">
-    + Continue selecting ingredients
-  </button>
-
+  <div class="selected-tray-header-actions">
+    <button
+      type="button"
+      class="continue-selecting-btn"
+      onclick="closeSelectedTray()">
+      + Continue selecting ingredients
+    </button>
+  </div>
 </div>
-      </div>
 
-      <div id="selectedTrayItems"></div>
+<div id="selectedTrayItems"></div>
        
       <div class="selected-tray-bottom">
 
@@ -309,24 +315,88 @@
       </button>
     </div>
 
+    <div class="ingredient-modal-search-wrap">
+      <span class="ingredient-search-icon">⌕</span>
+      <input
+        id="ingredientModalSearch"
+        type="search"
+        autocomplete="off"
+        placeholder="Search ingredients"
+      >
+    </div>
+
+    <p id="ingredientSearchEmpty" class="ingredient-search-empty">No ingredients found.</p>
+
     <div id="ingredientModalItems"></div>
 
   </div>
 </div>
 
   <main class="content" id="content">
+    <div class="mobile-world-search-bar">
+      <button class="mobile-world-search-open" type="button" onclick="openWorldSearch()">
+        <span class="world-search-open-icon">◎</span>
+        <span data-world-open-label>Explore world cuisines</span>
+      </button>
+      <div class="mobile-world-flags" aria-label="World cuisines">
+        <button type="button" onclick="openWorldSearch('turkey')" aria-label="Türkiye"><img src="https://flagcdn.com/w40/tr.png" alt="Türkiye"></button>
+        <button type="button" onclick="openWorldSearch('italy')" aria-label="Italia"><img src="https://flagcdn.com/w40/it.png" alt="Italia"></button>
+        <button type="button" onclick="openWorldSearch('mexico')" aria-label="Mexico"><img src="https://flagcdn.com/w40/mx.png" alt="Mexico"></button>
+        <button type="button" onclick="openWorldSearch('india')" aria-label="India"><img src="https://flagcdn.com/w40/in.png" alt="India"></button>
+        <button type="button" onclick="openWorldSearch('china')" aria-label="China"><img src="https://flagcdn.com/w40/cn.png" alt="China"></button>
+        <button type="button" onclick="openWorldSearch('japan')" aria-label="Japan"><img src="https://flagcdn.com/w40/jp.png" alt="Japan"></button>
+        <button type="button" onclick="openWorldSearch('france')" aria-label="France"><img src="https://flagcdn.com/w40/fr.png" alt="France"></button>
+        <button type="button" onclick="openWorldSearch('greece')" aria-label="Greece"><img src="https://flagcdn.com/w40/gr.png" alt="Greece"></button>
+        <button type="button" onclick="openWorldSearch('usa')" aria-label="USA"><img src="https://flagcdn.com/w40/us.png" alt="USA"></button>
+        <button type="button" onclick="openWorldSearch('thailand')" aria-label="Thailand"><img src="https://flagcdn.com/w40/th.png" alt="Thailand"></button>
+      </div>
+    </div>
     <section class="hero" id="hero">
       <div class="hero-bg">
 
         <div class="hero-main-card">
+          <div class="world-search-launcher">
+            <button class="world-search-open" type="button" onclick="openWorldSearch()">
+              <span class="world-search-open-icon">◎</span>
+              <span id="worldSearchOpenText" data-world-open-label>Explore world cuisines</span>
+            </button>
+            <div class="world-flag-row" aria-label="World cuisines">
+              <button type="button" onclick="openWorldSearch('turkey')" aria-label="Türkiye"><img src="https://flagcdn.com/w40/tr.png" alt="Türkiye"></button>
+              <button type="button" onclick="openWorldSearch('italy')" aria-label="Italia"><img src="https://flagcdn.com/w40/it.png" alt="Italia"></button>
+              <button type="button" onclick="openWorldSearch('mexico')" aria-label="Mexico"><img src="https://flagcdn.com/w40/mx.png" alt="Mexico"></button>
+              <button type="button" onclick="openWorldSearch('india')" aria-label="India"><img src="https://flagcdn.com/w40/in.png" alt="India"></button>
+              <button type="button" onclick="openWorldSearch('china')" aria-label="China"><img src="https://flagcdn.com/w40/cn.png" alt="China"></button>
+              <button type="button" onclick="openWorldSearch('japan')" aria-label="Japan"><img src="https://flagcdn.com/w40/jp.png" alt="Japan"></button>
+              <button type="button" onclick="openWorldSearch('france')" aria-label="France"><img src="https://flagcdn.com/w40/fr.png" alt="France"></button>
+              <button type="button" onclick="openWorldSearch('greece')" aria-label="Greece"><img src="https://flagcdn.com/w40/gr.png" alt="Greece"></button>
+              <button type="button" onclick="openWorldSearch('usa')" aria-label="USA"><img src="https://flagcdn.com/w40/us.png" alt="USA"></button>
+              <button type="button" onclick="openWorldSearch('thailand')" aria-label="Thailand"><img src="https://flagcdn.com/w40/th.png" alt="Thailand"></button>
+            </div>
+          </div>
           <img src="YEMEK-2.webp"class="hero-main-img">
 
           <div class="hero-dark"></div>
 
           <div class="hero-content">
 <span id="heroBadgeText" class="hero-badge-text">AI Powered Real Recipes</span>
+<p id="heroKickerText" class="hero-kicker">A brighter, more refined way to turn everyday ingredients into beautiful meals.</p>
 <h1 id="heroTitleText" class="hero-title-text">Cook smarter with what you already have</h1>
 <p id="heroDescText" class="hero-desc-text">Upload ingredients...</p>
+          </div>
+
+          <div class="hero-floating-strip">
+            <a class="hero-strip-item hero-strip-button" href="how-it-works.html">
+              <span id="heroStrip1Label" class="hero-strip-label">Smart Scan</span>
+              <strong id="heroStrip1Text">Photo-powered ingredient detection</strong>
+            </a>
+            <a class="hero-strip-item hero-strip-button" href="how-it-works.html">
+              <span id="heroStrip2Label" class="hero-strip-label">Real Recipes</span>
+              <strong id="heroStrip2Text">From APIs and creator submissions</strong>
+            </a>
+            <a class="hero-strip-item hero-strip-button" href="how-it-works.html">
+              <span id="heroStrip3Label" class="hero-strip-label">Multi-Language</span>
+              <strong id="heroStrip3Text">Cook in the language you prefer</strong>
+            </a>
           </div>
         </div>
 
@@ -338,8 +408,41 @@
       </div>
     </section>
 
+    <section id="recipePageHeader" class="recipe-page-header" aria-label="Recipe results">
+      <div class="recipe-page-heading">
+        <span id="recipePageEyebrow">CURATED FOR YOUR KITCHEN</span>
+        <h2 id="recipePageTitle">Recipes worth cooking</h2>
+      </div>
+      <div class="recipe-page-summary">
+        <span class="recipe-summary-mark">✦</span>
+        <span id="recipePageSummary">6 personal selections</span>
+      </div>
+    </section>
+
     <div class="grid" id="result"></div>
   </main>
+
+  <div id="worldSearchModal" class="world-search-modal" aria-hidden="true">
+    <div class="world-search-panel" role="dialog" aria-modal="true" aria-labelledby="worldSearchTitle">
+      <button class="world-search-close" type="button" onclick="closeWorldSearch()" aria-label="Close">×</button>
+      <span id="worldSearchEyebrow" class="world-search-eyebrow">WORLD CUISINES</span>
+      <h2 id="worldSearchTitle">What would you like to cook?</h2>
+      <p id="worldSearchIntro">Search by dish name, choose a cuisine, or select a category.</p>
+
+      <label id="worldQueryLabel" class="world-search-label" for="worldRecipeQuery">Dish name</label>
+      <div class="world-query-row">
+        <input id="worldRecipeQuery" type="search" autocomplete="off" placeholder="Pizza, ramen, baklava...">
+        <button id="worldSearchSubmit" type="button" onclick="searchWorldRecipes()">Find recipes</button>
+      </div>
+
+      <span id="worldCuisineLabel" class="world-search-label">Choose a cuisine</span>
+      <div id="worldCuisineOptions" class="world-option-grid"></div>
+
+      <span id="worldCategoryLabel" class="world-search-label">Category</span>
+      <div id="worldCategoryOptions" class="world-category-grid"></div>
+      <p id="worldSearchStatus" class="world-search-status" aria-live="polite"></p>
+    </div>
+  </div>
 
   <div class="modal" id="modal">
     <div class="modal-content">
@@ -353,8 +456,7 @@
     </div>
   </div>
 
-<script src="ingredient.js" defer></script>
-  <script src="app.js" defer></script>
+  <script src="app.js?v=3094" defer></script>
 
   <script>
 window.toggleLangMenu = function(){
@@ -383,6 +485,10 @@ window.setLang = function(lang){
 
   if(typeof applyLanguage === "function"){
     applyLanguage();
+  }
+
+  if(typeof applyWorldSearchLanguage === "function"){
+    applyWorldSearchLanguage();
   }
 
   if(typeof renderChecklist === "function"){

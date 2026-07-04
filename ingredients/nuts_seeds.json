@@ -65,6 +65,33 @@
     ]
   },
   {
+    "id": "black_sesame_seeds",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Black Sesame Seeds",
+      "tr": "Siyah susam",
+      "ru": "черный кунжут",
+      "ar": "بذور السمسم الأسود",
+      "es": "semillas de sésamo negro",
+      "pt": "sementes de gergelim preto",
+      "fr": "graines de sésame noir",
+      "de": "schwarzer Sesam",
+      "zh": "黑芝麻",
+      "ja": "黒ごま"
+    },
+    "aliases": [
+      "Black Sesame Seeds",
+      "black_sesame_seeds",
+      "black sesame seeds",
+      "Siyah susam",
+      "черный кунжут",
+      "semillas de sésamo negro",
+      "graines de sésame noir",
+      "بذور السمسم الأسود"
+    ]
+  },
+  {
     "id": "brazil_nut",
     "category": "nuts_seeds",
     "subcategory": "general",
@@ -96,6 +123,59 @@
       "brazil nut kuruyemişi",
       "brazil nut مكسرات أو بذور",
       "Brazil Nut"
+    ]
+  },
+  {
+    "id": "brown_flaxseed",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Brown Flaxseed",
+      "tr": "Kahverengi keten tohumu",
+      "ru": "коричневое льняное семя",
+      "ar": "بذور الكتان البنية",
+      "es": "linaza marrón",
+      "pt": "linhaça marrom",
+      "fr": "graines de lin brun",
+      "de": "braune Leinsamen",
+      "zh": "棕色亚麻籽",
+      "ja": "ブラウンフラックスシード"
+    },
+    "aliases": [
+      "Brown Flaxseed",
+      "brown_flaxseed",
+      "brown flaxseed",
+      "Kahverengi keten tohumu",
+      "коричневое льняное семя",
+      "linaza marrón",
+      "graines de lin brun",
+      "بذور الكتان البنية"
+    ]
+  },
+  {
+    "id": "candlenuts",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Candlenuts",
+      "tr": "Kukui cevizi",
+      "ru": "орехи кукуи",
+      "ar": "جوز الشموع",
+      "es": "nueces de vela",
+      "pt": "noz-de-candela",
+      "fr": "noix de bancoul",
+      "de": "Kemirinüsse",
+      "zh": "石栗",
+      "ja": "キャンドルナッツ"
+    },
+    "aliases": [
+      "Candlenuts",
+      "candlenuts",
+      "Kukui cevizi",
+      "орехи кукуи",
+      "nueces de vela",
+      "noix de bancoul",
+      "جوز الشموع"
     ]
   },
   {
@@ -330,6 +410,33 @@
     ]
   },
   {
+    "id": "hemp_hearts",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Hemp Hearts",
+      "tr": "Kenevir içi",
+      "ru": "ядра конопли",
+      "ar": "قلوب القنب",
+      "es": "corazones de cáñamo",
+      "pt": "corações de cânhamo",
+      "fr": "cœurs de chanvre",
+      "de": "Hanfsamen geschält",
+      "zh": "火麻仁",
+      "ja": "ヘンプハーツ"
+    },
+    "aliases": [
+      "Hemp Hearts",
+      "hemp_hearts",
+      "hemp hearts",
+      "Kenevir içi",
+      "ядра конопли",
+      "corazones de cáñamo",
+      "cœurs de chanvre",
+      "قلوب القنب"
+    ]
+  },
+  {
     "id": "hemp_seed",
     "category": "nuts_seeds",
     "subcategory": "general",
@@ -364,6 +471,33 @@
     ]
   },
   {
+    "id": "lotus_seeds",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Lotus Seeds",
+      "tr": "Lotus tohumu",
+      "ru": "семена лотоса",
+      "ar": "بذور اللوتس",
+      "es": "semillas de loto",
+      "pt": "sementes de lótus",
+      "fr": "graines de lotus",
+      "de": "Lotussamen",
+      "zh": "莲子",
+      "ja": "蓮の実"
+    },
+    "aliases": [
+      "Lotus Seeds",
+      "lotus_seeds",
+      "lotus seeds",
+      "Lotus tohumu",
+      "семена лотоса",
+      "semillas de loto",
+      "graines de lotus",
+      "بذور اللوتس"
+    ]
+  },
+  {
     "id": "macadamia",
     "category": "nuts_seeds",
     "subcategory": "general",
@@ -394,6 +528,33 @@
       "Macadamia kuruyemişi",
       "macadamia kuruyemişi",
       "Macadamia noix ou graine"
+    ]
+  },
+  {
+    "id": "melon_seeds",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Melon Seeds",
+      "tr": "Kavun çekirdeği",
+      "ru": "семена дыни",
+      "ar": "بذور الشمام",
+      "es": "semillas de melón",
+      "pt": "sementes de melão",
+      "fr": "graines de melon",
+      "de": "Melonenkerne",
+      "zh": "甜瓜籽",
+      "ja": "メロンシード"
+    },
+    "aliases": [
+      "Melon Seeds",
+      "melon_seeds",
+      "melon seeds",
+      "Kavun çekirdeği",
+      "семена дыни",
+      "semillas de melón",
+      "graines de melon",
+      "بذور الشمام"
     ]
   },
   {
@@ -563,6 +724,33 @@
     ]
   },
   {
+    "id": "pine_nuts",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Pine Nuts",
+      "tr": "Çam fıstığı",
+      "ru": "кедровые орехи",
+      "ar": "صنوبر",
+      "es": "piñones",
+      "pt": "pinhões",
+      "fr": "pignons de pin",
+      "de": "Pinienkerne",
+      "zh": "松子",
+      "ja": "松の実"
+    },
+    "aliases": [
+      "Pine Nuts",
+      "pine_nuts",
+      "pine nuts",
+      "Çam fıstığı",
+      "кедровые орехи",
+      "piñones",
+      "pignons de pin",
+      "صنوبر"
+    ]
+  },
+  {
     "id": "pistachio",
     "category": "nuts_seeds",
     "subcategory": "general",
@@ -590,6 +778,33 @@
       "Фисташка",
       "фисташка",
       "pistachio"
+    ]
+  },
+  {
+    "id": "poppy_seeds",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Poppy Seeds",
+      "tr": "Haşhaş tohumu",
+      "ru": "семена мака",
+      "ar": "بذور الخشخاش",
+      "es": "semillas de amapola",
+      "pt": "sementes de papoula",
+      "fr": "graines de pavot",
+      "de": "Mohnsamen",
+      "zh": "罂粟籽",
+      "ja": "ポピーシード"
+    },
+    "aliases": [
+      "Poppy Seeds",
+      "poppy_seeds",
+      "poppy seeds",
+      "Haşhaş tohumu",
+      "семена мака",
+      "semillas de amapola",
+      "graines de pavot",
+      "بذور الخشخاش"
     ]
   },
   {
@@ -624,6 +839,60 @@
       "Pumpkin Graine",
       "pumpkin tohumu",
       "Pumpkin Semilla"
+    ]
+  },
+  {
+    "id": "pumpkin_seed_kernels",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Pumpkin Seed Kernels",
+      "tr": "Kabak çekirdeği içi",
+      "ru": "ядра тыквенных семечек",
+      "ar": "لب بذور اليقطين",
+      "es": "pepitas de calabaza",
+      "pt": "sementes de abóbora sem casca",
+      "fr": "graines de courge décortiquées",
+      "de": "Kürbiskerne",
+      "zh": "南瓜籽仁",
+      "ja": "かぼちゃの種"
+    },
+    "aliases": [
+      "Pumpkin Seed Kernels",
+      "pumpkin_seed_kernels",
+      "pumpkin seed kernels",
+      "Kabak çekirdeği içi",
+      "ядра тыквенных семечек",
+      "pepitas de calabaza",
+      "graines de courge décortiquées",
+      "لب بذور اليقطين"
+    ]
+  },
+  {
+    "id": "sacha_inchi_seeds",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Sacha Inchi Seeds",
+      "tr": "Sacha inchi tohumu",
+      "ru": "семена сача инчи",
+      "ar": "بذور ساشا إنشي",
+      "es": "semillas de sacha inchi",
+      "pt": "sementes de sacha inchi",
+      "fr": "graines de sacha inchi",
+      "de": "Sacha-Inchi-Samen",
+      "zh": "印加花生籽",
+      "ja": "サチャインチシード"
+    },
+    "aliases": [
+      "Sacha Inchi Seeds",
+      "sacha_inchi_seeds",
+      "sacha inchi seeds",
+      "Sacha inchi tohumu",
+      "семена сача инчи",
+      "semillas de sacha inchi",
+      "graines de sacha inchi",
+      "بذور ساشا إنشي"
     ]
   },
   {
@@ -695,6 +964,33 @@
     ]
   },
   {
+    "id": "sunflower_seed_kernels",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Sunflower Seed Kernels",
+      "tr": "Ay çekirdeği içi",
+      "ru": "ядра подсолнечника",
+      "ar": "لب بذور عباد الشمس",
+      "es": "semillas de girasol peladas",
+      "pt": "sementes de girassol sem casca",
+      "fr": "graines de tournesol décortiquées",
+      "de": "Sonnenblumenkerne",
+      "zh": "葵花籽仁",
+      "ja": "ひまわりの種"
+    },
+    "aliases": [
+      "Sunflower Seed Kernels",
+      "sunflower_seed_kernels",
+      "sunflower seed kernels",
+      "Ay çekirdeği içi",
+      "ядра подсолнечника",
+      "semillas de girasol peladas",
+      "graines de tournesol décortiquées",
+      "لب بذور عباد الشمس"
+    ]
+  },
+  {
     "id": "trail_mix",
     "category": "nuts_seeds",
     "subcategory": "general",
@@ -758,6 +1054,33 @@
       "noix",
       "Ceviz",
       "walnut"
+    ]
+  },
+  {
+    "id": "white_chia_seeds",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "White Chia Seeds",
+      "tr": "Beyaz chia tohumu",
+      "ru": "белые семена чиа",
+      "ar": "بذور الشيا البيضاء",
+      "es": "semillas de chía blancas",
+      "pt": "sementes de chia branca",
+      "fr": "graines de chia blanches",
+      "de": "weiße Chiasamen",
+      "zh": "白奇亚籽",
+      "ja": "ホワイトチアシード"
+    },
+    "aliases": [
+      "White Chia Seeds",
+      "white_chia_seeds",
+      "white chia seeds",
+      "Beyaz chia tohumu",
+      "белые семена чиа",
+      "semillas de chía blancas",
+      "graines de chia blanches",
+      "بذور الشيا البيضاء"
     ]
   }
 ]

@@ -1,5 +1,32 @@
 [
   {
+    "id": "almond_oil",
+    "category": "oils_fats",
+    "subcategory": "general",
+    "name": {
+      "en": "Almond Oil",
+      "tr": "Badem yağı",
+      "ru": "миндальное масло",
+      "ar": "زيت اللوز",
+      "es": "aceite de almendra",
+      "pt": "óleo de amêndoa",
+      "fr": "huile d’amande",
+      "de": "Mandelöl",
+      "zh": "杏仁油",
+      "ja": "アーモンドオイル"
+    },
+    "aliases": [
+      "Almond Oil",
+      "almond_oil",
+      "almond oil",
+      "Badem yağı",
+      "миндальное масло",
+      "aceite de almendra",
+      "huile d’amande",
+      "زيت اللوز"
+    ]
+  },
+  {
     "id": "avocado_oil",
     "category": "oils_fats",
     "subcategory": "general",
@@ -304,6 +331,33 @@
     ]
   },
   {
+    "id": "hazelnut_oil",
+    "category": "oils_fats",
+    "subcategory": "general",
+    "name": {
+      "en": "Hazelnut Oil",
+      "tr": "Fındık yağı",
+      "ru": "масло фундука",
+      "ar": "زيت البندق",
+      "es": "aceite de avellana",
+      "pt": "óleo de avelã",
+      "fr": "huile de noisette",
+      "de": "Haselnussöl",
+      "zh": "榛子油",
+      "ja": "ヘーゼルナッツオイル"
+    },
+    "aliases": [
+      "Hazelnut Oil",
+      "hazelnut_oil",
+      "hazelnut oil",
+      "Fındık yağı",
+      "масло фундука",
+      "aceite de avellana",
+      "huile de noisette",
+      "زيت البندق"
+    ]
+  },
+  {
     "id": "lard",
     "category": "oils_fats",
     "subcategory": "general",
@@ -334,6 +388,33 @@
       "lard óleo",
       "Lard óleo",
       "lard yağı"
+    ]
+  },
+  {
+    "id": "mustard_oil",
+    "category": "oils_fats",
+    "subcategory": "general",
+    "name": {
+      "en": "Mustard Oil",
+      "tr": "Hardal yağı",
+      "ru": "горчичное масло",
+      "ar": "زيت الخردل",
+      "es": "aceite de mostaza",
+      "pt": "óleo de mostarda",
+      "fr": "huile de moutarde",
+      "de": "Senföl",
+      "zh": "芥末油",
+      "ja": "マスタードオイル"
+    },
+    "aliases": [
+      "Mustard Oil",
+      "mustard_oil",
+      "mustard oil",
+      "Hardal yağı",
+      "горчичное масло",
+      "aceite de mostaza",
+      "huile de moutarde",
+      "زيت الخردل"
     ]
   },
   {
@@ -400,6 +481,33 @@
       "amendoim óleo",
       "Cacahuète Huile",
       "cacahuète huile"
+    ]
+  },
+  {
+    "id": "rice_bran_oil",
+    "category": "oils_fats",
+    "subcategory": "general",
+    "name": {
+      "en": "Rice Bran Oil",
+      "tr": "Pirinç kepeği yağı",
+      "ru": "масло рисовых отрубей",
+      "ar": "زيت نخالة الأرز",
+      "es": "aceite de salvado de arroz",
+      "pt": "óleo de farelo de arroz",
+      "fr": "huile de son de riz",
+      "de": "Reiskleieöl",
+      "zh": "米糠油",
+      "ja": "米ぬか油"
+    },
+    "aliases": [
+      "Rice Bran Oil",
+      "rice_bran_oil",
+      "rice bran oil",
+      "Pirinç kepeği yağı",
+      "масло рисовых отрубей",
+      "aceite de salvado de arroz",
+      "huile de son de riz",
+      "زيت نخالة الأرز"
     ]
   },
   {

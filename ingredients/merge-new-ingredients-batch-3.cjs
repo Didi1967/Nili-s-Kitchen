@@ -7,7 +7,7 @@ const CATEGORY_FILES = [
 ];
 
 const baseDir = __dirname;
-const batchPath = path.join(baseDir, 'new-ingredients-batch-2.json');
+const batchPath = path.join(baseDir, 'new-ingredients-batch-3.json');
 
 if(!fs.existsSync(batchPath)){
   console.error('Missing file:', batchPath);

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>World Cuisines | Nili's Kitchen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Manrope:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3093">
+  <link rel="stylesheet" href="world-cuisines.css?v=27">
+</head>
+<body>
+  <div class="wc-page-tools">
+    <a id="backHome" class="wc-back" href="index.html">← <span>Home kitchen</span></a>
+    <div class="wc-language"><button id="languageButton" type="button">TR</button><div id="languageMenu" class="wc-language-menu"></div></div>
+  </div>
+
+  <aside id="sidebar" class="sidebar-unified world-sidebar">
+    <div class="sidebar-shell">
+      <div class="nk-brand-card">
+        <div class="nk-brand-inner">
+          <div class="nk-logo-shell"><img src="logo.jpeg" alt="Nili's Kitchen" class="nk-logo"></div>
+          <div class="nk-brand-text"><h1 class="nk-title">Nili's Kitchen</h1><p class="nk-subtitle" id="brandSub">World Cuisine Collection</p></div>
+        </div>
+      </div>
+
+      <div class="sidebar-main">
+        <button type="button" class="upload-card" id="worldScanButton">
+          <div class="upload-card-text"><strong id="worldScanTitle">Scan ingredients by photo</strong><span id="worldScanDesc">Take a photo and let AI detect ingredients</span></div>
+          <div class="gallery-mini-btn" id="worldGalleryButton">🖼️ <span id="worldGalleryText">Choose from gallery</span></div>
+          <div class="analyze-progress"><div id="worldScanBar"></div></div>
+        </button>
+        <input type="file" id="worldPhoto" hidden accept="image/*" capture="environment">
+        <input type="file" id="worldPhotoGallery" hidden accept="image/*">
+
+        <div class="manual">
+          <div class="manual-input-wrap"><input id="worldManualInput" placeholder="Search a dish" autocomplete="off"></div>
+          <button id="worldManualButton" type="button">+</button>
+        </div>
+
+        <div class="category-panel world-country-panel">
+          <div class="panel-title" id="cuisineTitle">World cuisines</div>
+          <div class="category-grid" id="worldSidebarCuisineList"></div>
+          <section class="wc-type-dock">
+            <div><span id="typeEyebrow" class="wc-eyebrow">WHAT TO COOK</span><h2 id="typeTitle">Dish types</h2></div>
+            <div id="typeList" class="wc-type-list"></div>
+          </section>
+        </div>
+
+        <div class="ad-media-box"><video autoplay muted loop playsinline controls><source src="./ad-video.mp4" type="video/mp4"></video></div>
+
+        <div class="join-area"><div class="nk-mini-card"><div class="nk-mini-icon">✨</div><div class="nk-mini-content"><h4 id="worldJoinTitle">Join Nili's Kitchen</h4><p id="worldJoinDesc">Save favorites, upload recipes and unlock creator features.</p></div><button id="worldJoinButton" type="button">Join Free</button></div></div>
+        <div class="site-footer-note"><span id="worldFooter">© 2026 Nili's Kitchen AI. All rights reserved.</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <div id="worldMobileFlow" class="wc-mobile-flow">
+    <div id="mobileDishSearchTitle" class="wc-mobile-section-title">Yemek ara</div>
+  </div>
+
+  <main class="wc-main">
+    <section class="wc-mosaic">
+      <article class="wc-mosaic-main">
+        <img src="YEMEK-2.webp" alt="World cuisine">
+        <div class="wc-mosaic-copy">
+          <span id="mosaicEyebrow">A TABLE WITHOUT BORDERS</span>
+          <h1 id="mosaicTitle">Discover the world's most loved dishes</h1>
+          <p id="mosaicText">Search by name, country or dish type. Every discovery grows Nili's recipe collection.</p>
+        </div>
+        <div class="wc-hero-actions">
+          <button type="button" id="heroSearchAction">
+            <span id="heroSearchActionEyebrow">FIND A DISH</span>
+            <strong id="heroSearchActionTitle">What are you craving?</strong>
+          </button>
+          <button type="button" id="heroResultsAction">
+            <span id="heroResultsActionEyebrow">CURATED RESULTS</span>
+            <strong id="heroResultsActionTitle">Recipes worth discovering</strong>
+          </button>
+        </div>
+      </article>
+      <article class="wc-mosaic-small"><img src="YEMEK-4.webp" alt="Fresh world cuisine"><span id="mosaicCardOne">Fresh discoveries</span></article>
+      <article class="wc-mosaic-small"><img src="YEMEK-6.webp" alt="Healthy world cuisine"><span id="mosaicCardTwo">Cook around the world</span></article>
+    </section>
+
+    <section class="wc-search-card">
+      <div class="wc-search-panel-inner">
+        <button id="worldSearchClose" class="wc-search-close" type="button" aria-label="Close">×</button>
+        <div class="wc-search-copy">
+          <div><span id="searchEyebrow" class="wc-eyebrow">FIND A DISH</span><h2 id="searchTitle">What are you craving?</h2></div>
+          <p id="searchLead" class="wc-search-lead">Choose a country, dish type, or search by name.</p>
+          <form id="worldSearchForm" class="wc-search-form">
+            <input id="worldQuery" type="search" autocomplete="off" placeholder="Pizza, ramen, baklava...">
+            <button id="searchButton" type="submit">Find recipes</button>
+          </form>
+        </div>
+        <div class="wc-search-gallery" aria-hidden="true">
+          <img src="YEMEK-2.webp" alt="">
+          <img src="YEMEK-4.webp" alt="">
+          <img src="YEMEK-6.webp" alt="">
+          <img src="YEMEK-4.webp" alt="">
+          <img src="YEMEK-6.webp" alt="">
+          <img src="YEMEK-2.webp" alt="">
+        </div>
+      </div>
+    </section>
+
+    <section id="resultsSection" class="wc-results">
+      <header class="wc-results-header">
+        <div><span id="resultsEyebrow" class="wc-eyebrow">CURATED RESULTS</span><h2 id="resultsTitle">Recipes worth discovering</h2></div>
+        <span id="resultsMeta"></span>
+      </header>
+      <div id="worldStatus" class="wc-status"></div>
+      <div id="worldResults" class="wc-results-grid"></div>
+    </section>
+  </main>
+
+  <div id="worldDetectedModal" class="wc-detected-modal" aria-hidden="true">
+    <section class="wc-detected-card">
+      <button id="worldDetectedClose" class="wc-modal-close" type="button">×</button>
+      <span id="worldDetectedEyebrow" class="wc-eyebrow">SMART SCAN</span>
+      <h2 id="worldDetectedTitle">Detected ingredients</h2>
+      <p id="worldDetectedText">Check the ingredients before searching for recipes.</p>
+      <div id="worldDetectedItems" class="wc-detected-items"></div>
+      <div class="wc-detected-actions">
+        <button id="worldDetectedCancel" type="button">Scan again</button>
+        <button id="worldDetectedConfirm" type="button">Find recipes</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="recipeModal" class="wc-modal" aria-hidden="true">
+    <article class="wc-modal-card">
+      <button id="modalClose" class="wc-modal-close" type="button">×</button>
+      <div id="recipeModalBody"></div>
+    </article>
+  </div>
+  <script src="world-cuisines.js?v=26" defer></script>
+</body>
+</html>

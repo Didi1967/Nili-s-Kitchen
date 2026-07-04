@@ -1,5 +1,32 @@
 [
   {
+    "id": "aji_amarillo_paste",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Aji Amarillo Paste",
+      "tr": "Aji amarillo ezmesi",
+      "ru": "паста ахи амарильо",
+      "ar": "معجون آخي أماريلو",
+      "es": "pasta de ají amarillo",
+      "pt": "pasta de aji amarillo",
+      "fr": "pâte d’aji amarillo",
+      "de": "Aji-Amarillo-Paste",
+      "zh": "黄辣椒酱",
+      "ja": "アヒアマリージョペースト"
+    },
+    "aliases": [
+      "Aji Amarillo Paste",
+      "aji_amarillo_paste",
+      "aji amarillo paste",
+      "Aji amarillo ezmesi",
+      "паста ахи амарильо",
+      "pasta de ají amarillo",
+      "pâte d’aji amarillo",
+      "معجون آخي أماريلو"
+    ]
+  },
+  {
     "id": "alfredo_sauce",
     "category": "sauces_condiments",
     "subcategory": "general",
@@ -100,6 +127,33 @@
     ]
   },
   {
+    "id": "banana_ketchup",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Banana Ketchup",
+      "tr": "Muz ketçabı",
+      "ru": "банановый кетчуп",
+      "ar": "كاتشب الموز",
+      "es": "kétchup de banana",
+      "pt": "ketchup de banana",
+      "fr": "ketchup de banane",
+      "de": "Bananenketchup",
+      "zh": "香蕉番茄酱",
+      "ja": "バナナケチャップ"
+    },
+    "aliases": [
+      "Banana Ketchup",
+      "banana_ketchup",
+      "banana ketchup",
+      "Muz ketçabı",
+      "банановый кетчуп",
+      "kétchup de banana",
+      "ketchup de banane",
+      "كاتشب الموز"
+    ]
+  },
+  {
     "id": "bbq_sauce",
     "category": "sauces_condiments",
     "subcategory": "marinades",
@@ -131,6 +185,33 @@
       "Bbq Соус",
       "bbq sauce",
       "Bbq صلصة"
+    ]
+  },
+  {
+    "id": "black_bean_garlic_sauce",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Black Bean Garlic Sauce",
+      "tr": "Sarımsaklı siyah fasulye sosu",
+      "ru": "чесночный соус из черных бобов",
+      "ar": "صلصة الفاصوليا السوداء بالثوم",
+      "es": "salsa de frijol negro con ajo",
+      "pt": "molho de feijão preto com alho",
+      "fr": "sauce haricots noirs et ail",
+      "de": "Schwarze-Bohnen-Knoblauch-Sauce",
+      "zh": "蒜蓉豆豉酱",
+      "ja": "黒豆にんにくソース"
+    },
+    "aliases": [
+      "Black Bean Garlic Sauce",
+      "black_bean_garlic_sauce",
+      "black bean garlic sauce",
+      "Sarımsaklı siyah fasulye sosu",
+      "чесночный соус из черных бобов",
+      "salsa de frijol negro con ajo",
+      "sauce haricots noirs et ail",
+      "صلصة الفاصوليا السوداء بالثوم"
     ]
   },
   {
@@ -168,6 +249,31 @@
     ]
   },
   {
+    "id": "chili_crisp",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Chili Crisp",
+      "tr": "Çıtır acı yağ sosu",
+      "ru": "чили крисп",
+      "ar": "تشيلي كريسب",
+      "es": "chili crisp",
+      "pt": "chili crisp",
+      "fr": "chili crisp",
+      "de": "Chili Crisp",
+      "zh": "辣椒脆油",
+      "ja": "チリクリスプ"
+    },
+    "aliases": [
+      "Chili Crisp",
+      "chili_crisp",
+      "chili crisp",
+      "Çıtır acı yağ sosu",
+      "чили крисп",
+      "تشيلي كريسب"
+    ]
+  },
+  {
     "id": "chili_paste",
     "category": "sauces_condiments",
     "subcategory": "general",
@@ -199,6 +305,32 @@
       "piment paste",
       "فلفل حار paste",
       "pimenta paste"
+    ]
+  },
+  {
+    "id": "coconut_aminos",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Coconut Aminos",
+      "tr": "Hindistan cevizi aminosu",
+      "ru": "кокосовые аминосы",
+      "ar": "أمينوس جوز الهند",
+      "es": "aminos de coco",
+      "pt": "aminos de coco",
+      "fr": "aminos de coco",
+      "de": "Kokos-Aminos",
+      "zh": "椰子氨基酸调味汁",
+      "ja": "ココナッツアミノ"
+    },
+    "aliases": [
+      "Coconut Aminos",
+      "coconut_aminos",
+      "coconut aminos",
+      "Hindistan cevizi aminosu",
+      "кокосовые аминосы",
+      "aminos de coco",
+      "أمينوس جوز الهند"
     ]
   },
   {
@@ -337,6 +469,30 @@
     ]
   },
   {
+    "id": "doubanjiang",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Doubanjiang",
+      "tr": "Doubanjiang fasulye ezmesi",
+      "ru": "доубаньцзян",
+      "ar": "دوبانجيانغ",
+      "es": "doubanjiang",
+      "pt": "doubanjiang",
+      "fr": "doubanjiang",
+      "de": "Doubanjiang",
+      "zh": "豆瓣酱",
+      "ja": "豆板醤"
+    },
+    "aliases": [
+      "Doubanjiang",
+      "doubanjiang",
+      "Doubanjiang fasulye ezmesi",
+      "доубаньцзян",
+      "دوبانجيانغ"
+    ]
+  },
+  {
     "id": "fish_sauce",
     "category": "sauces_condiments",
     "subcategory": "general",
@@ -436,6 +592,33 @@
     ]
   },
   {
+    "id": "green_curry_paste",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Green Curry Paste",
+      "tr": "Yeşil köri ezmesi",
+      "ru": "зеленая паста карри",
+      "ar": "معجون الكاري الأخضر",
+      "es": "pasta de curry verde",
+      "pt": "pasta de curry verde",
+      "fr": "pâte de curry vert",
+      "de": "grüne Currypaste",
+      "zh": "绿咖喱酱",
+      "ja": "グリーンカレーペースト"
+    },
+    "aliases": [
+      "Green Curry Paste",
+      "green_curry_paste",
+      "green curry paste",
+      "Yeşil köri ezmesi",
+      "зеленая паста карри",
+      "pasta de curry verde",
+      "pâte de curry vert",
+      "معجون الكاري الأخضر"
+    ]
+  },
+  {
     "id": "guacamole",
     "category": "sauces_condiments",
     "subcategory": "general",
@@ -499,6 +682,33 @@
       "Harissa sosu",
       "harissa salsa",
       "harissa صلصة"
+    ]
+  },
+  {
+    "id": "harissa_paste",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Harissa Paste",
+      "tr": "Harissa ezmesi",
+      "ru": "паста харисса",
+      "ar": "معجون الهريسة",
+      "es": "pasta harissa",
+      "pt": "pasta de harissa",
+      "fr": "pâte de harissa",
+      "de": "Harissapaste",
+      "zh": "哈里萨辣酱",
+      "ja": "ハリッサペースト"
+    },
+    "aliases": [
+      "Harissa Paste",
+      "harissa_paste",
+      "harissa paste",
+      "Harissa ezmesi",
+      "паста харисса",
+      "pasta harissa",
+      "pâte de harissa",
+      "معجون الهريسة"
     ]
   },
   {
@@ -633,6 +843,31 @@
       "соус Hummus",
       "Hummus صلصة",
       "Hummus sosu"
+    ]
+  },
+  {
+    "id": "kecap_manis",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Kecap Manis",
+      "tr": "Tatlı soya sosu",
+      "ru": "сладкий соевый соус",
+      "ar": "صلصة صويا حلوة",
+      "es": "kecap manis",
+      "pt": "kecap manis",
+      "fr": "kecap manis",
+      "de": "Kecap Manis",
+      "zh": "印尼甜酱油",
+      "ja": "ケチャップマニス"
+    },
+    "aliases": [
+      "Kecap Manis",
+      "kecap_manis",
+      "kecap manis",
+      "Tatlı soya sosu",
+      "сладкий соевый соус",
+      "صلصة صويا حلوة"
     ]
   },
   {
@@ -969,6 +1204,33 @@
     ]
   },
   {
+    "id": "ponzu_sauce",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Ponzu Sauce",
+      "tr": "Ponzu sosu",
+      "ru": "соус понзу",
+      "ar": "صلصة بونزو",
+      "es": "salsa ponzu",
+      "pt": "molho ponzu",
+      "fr": "sauce ponzu",
+      "de": "Ponzu-Sauce",
+      "zh": "柚子醋酱油",
+      "ja": "ポン酢"
+    },
+    "aliases": [
+      "Ponzu Sauce",
+      "ponzu_sauce",
+      "ponzu sauce",
+      "Ponzu sosu",
+      "соус понзу",
+      "salsa ponzu",
+      "sauce ponzu",
+      "صلصة بونزو"
+    ]
+  },
+  {
     "id": "ranch_dressing",
     "category": "sauces_condiments",
     "subcategory": "general",
@@ -1232,6 +1494,33 @@
     ]
   },
   {
+    "id": "tamarind_chutney",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Tamarind Chutney",
+      "tr": "Demirhindi chutney",
+      "ru": "тамариндовый чатни",
+      "ar": "صلصة تمر هندي",
+      "es": "chutney de tamarindo",
+      "pt": "chutney de tamarindo",
+      "fr": "chutney de tamarin",
+      "de": "Tamarinden-Chutney",
+      "zh": "罗望子酸甜酱",
+      "ja": "タマリンドチャツネ"
+    },
+    "aliases": [
+      "Tamarind Chutney",
+      "tamarind_chutney",
+      "tamarind chutney",
+      "Demirhindi chutney",
+      "тамариндовый чатни",
+      "chutney de tamarindo",
+      "chutney de tamarin",
+      "صلصة تمر هندي"
+    ]
+  },
+  {
     "id": "teriyaki_sauce",
     "category": "sauces_condiments",
     "subcategory": "general",
@@ -1328,6 +1617,33 @@
       "tomate salsa",
       "Tomato Sauce",
       "Tomate Salsa"
+    ]
+  },
+  {
+    "id": "umeboshi_paste",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Umeboshi Paste",
+      "tr": "Umeboshi ezmesi",
+      "ru": "паста умэбоси",
+      "ar": "معجون أوميبوشي",
+      "es": "pasta de umeboshi",
+      "pt": "pasta de umeboshi",
+      "fr": "pâte d’umeboshi",
+      "de": "Umeboshi-Paste",
+      "zh": "梅干酱",
+      "ja": "梅干しペースト"
+    },
+    "aliases": [
+      "Umeboshi Paste",
+      "umeboshi_paste",
+      "umeboshi paste",
+      "Umeboshi ezmesi",
+      "паста умэбоси",
+      "pasta de umeboshi",
+      "pâte d’umeboshi",
+      "معجون أوميبوشي"
     ]
   },
   {
@@ -1490,6 +1806,31 @@
       "Worcestershire Sauce",
       "worcestershire molho",
       "Worcestershire Соус"
+    ]
+  },
+  {
+    "id": "yuzu_kosho",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Yuzu Kosho",
+      "tr": "Yuzu kosho",
+      "ru": "юдзу кошо",
+      "ar": "يوزو كوشو",
+      "es": "yuzu kosho",
+      "pt": "yuzu kosho",
+      "fr": "yuzu kosho",
+      "de": "Yuzu Kosho",
+      "zh": "柚子胡椒",
+      "ja": "柚子胡椒"
+    },
+    "aliases": [
+      "Yuzu Kosho",
+      "yuzu_kosho",
+      "yuzu kosho",
+      "Yuzu kosho",
+      "юдзу кошо",
+      "يوزو كوشو"
     ]
   }
 ]

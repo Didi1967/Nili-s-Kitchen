@@ -34,6 +34,33 @@
     ]
   },
   {
+    "id": "adzuki_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Adzuki Beans",
+      "tr": "Azuki fasulyesi",
+      "ru": "фасоль адзуки",
+      "ar": "فاصوليا أزوكي",
+      "es": "frijoles adzuki",
+      "pt": "feijão azuki",
+      "fr": "haricots azuki",
+      "de": "Adzukibohnen",
+      "zh": "红豆",
+      "ja": "小豆"
+    },
+    "aliases": [
+      "Adzuki Beans",
+      "adzuki_beans",
+      "adzuki beans",
+      "Azuki fasulyesi",
+      "фасоль адзуки",
+      "frijoles adzuki",
+      "haricots azuki",
+      "فاصوليا أزوكي"
+    ]
+  },
+  {
     "id": "beluga_lentil",
     "category": "legumes",
     "subcategory": "general",
@@ -101,6 +128,33 @@
     ]
   },
   {
+    "id": "black_beluga_lentils",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Black Beluga Lentils",
+      "tr": "Siyah beluga mercimeği",
+      "ru": "черная чечевица белуга",
+      "ar": "عدس بيلوجا أسود",
+      "es": "lentejas beluga negras",
+      "pt": "lentilhas beluga pretas",
+      "fr": "lentilles beluga noires",
+      "de": "schwarze Belugalinsen",
+      "zh": "黑小扁豆",
+      "ja": "黒ベルーガレンズ豆"
+    },
+    "aliases": [
+      "Black Beluga Lentils",
+      "black_beluga_lentils",
+      "black beluga lentils",
+      "Siyah beluga mercimeği",
+      "черная чечевица белуга",
+      "lentejas beluga negras",
+      "lentilles beluga noires",
+      "عدس بيلوجا أسود"
+    ]
+  },
+  {
     "id": "black_eyed_pea",
     "category": "legumes",
     "subcategory": "general",
@@ -165,6 +219,33 @@
       "Negro Lenteja",
       "negro lenteja",
       "Noir Lentille"
+    ]
+  },
+  {
+    "id": "borlotti_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Borlotti Beans",
+      "tr": "Borlotti fasulyesi",
+      "ru": "фасоль борлотти",
+      "ar": "فاصوليا بورلوتي",
+      "es": "frijoles borlotti",
+      "pt": "feijão borlotti",
+      "fr": "haricots borlotti",
+      "de": "Borlottibohnen",
+      "zh": "斑豆",
+      "ja": "ボルロッティ豆"
+    },
+    "aliases": [
+      "Borlotti Beans",
+      "borlotti_beans",
+      "borlotti beans",
+      "Borlotti fasulyesi",
+      "фасоль борлотти",
+      "frijoles borlotti",
+      "haricots borlotti",
+      "فاصوليا بورلوتي"
     ]
   },
   {
@@ -336,6 +417,33 @@
     ]
   },
   {
+    "id": "cannellini_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Cannellini Beans",
+      "tr": "Cannellini fasulyesi",
+      "ru": "фасоль каннеллини",
+      "ar": "فاصوليا كانيليني",
+      "es": "frijoles cannellini",
+      "pt": "feijão cannellini",
+      "fr": "haricots cannellini",
+      "de": "Cannellinibohnen",
+      "zh": "白腰豆",
+      "ja": "カネリーニ豆"
+    },
+    "aliases": [
+      "Cannellini Beans",
+      "cannellini_beans",
+      "cannellini beans",
+      "Cannellini fasulyesi",
+      "фасоль каннеллини",
+      "frijoles cannellini",
+      "haricots cannellini",
+      "فاصوليا كانيليني"
+    ]
+  },
+  {
     "id": "chickpea",
     "category": "legumes",
     "subcategory": "chickpeas",
@@ -398,6 +506,33 @@
       "Edamame بقوليات",
       "бобовый продукт edamame",
       "edamame bakliyatı"
+    ]
+  },
+  {
+    "id": "flageolet_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Flageolet Beans",
+      "tr": "Flageolet fasulyesi",
+      "ru": "фасоль флажоле",
+      "ar": "فاصوليا فلاجيوليه",
+      "es": "frijoles flageolet",
+      "pt": "feijão flageolet",
+      "fr": "haricots flageolets",
+      "de": "Flageoletbohnen",
+      "zh": "嫩青豆",
+      "ja": "フラジョレ豆"
+    },
+    "aliases": [
+      "Flageolet Beans",
+      "flageolet_beans",
+      "flageolet beans",
+      "Flageolet fasulyesi",
+      "фасоль флажоле",
+      "frijoles flageolet",
+      "haricots flageolets",
+      "فاصوليا فلاجيوليه"
     ]
   },
   {
@@ -573,6 +708,33 @@
     "aliases": []
   },
   {
+    "id": "lupini_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Lupini Beans",
+      "tr": "Lupin fasulyesi",
+      "ru": "люпиновые бобы",
+      "ar": "حبوب الترمس",
+      "es": "altramuces",
+      "pt": "tremoços",
+      "fr": "graines de lupin",
+      "de": "Lupinenbohnen",
+      "zh": "羽扇豆",
+      "ja": "ルピーニ豆"
+    },
+    "aliases": [
+      "Lupini Beans",
+      "lupini_beans",
+      "lupini beans",
+      "Lupin fasulyesi",
+      "люпиновые бобы",
+      "altramuces",
+      "graines de lupin",
+      "حبوب الترمس"
+    ]
+  },
+  {
     "id": "moth_bean",
     "category": "legumes",
     "subcategory": "beans",
@@ -589,6 +751,33 @@
       "fr": "Moth Bean"
     },
     "aliases": []
+  },
+  {
+    "id": "moth_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Moth Beans",
+      "tr": "Matki fasulyesi",
+      "ru": "мот фасоль",
+      "ar": "فاصوليا موث",
+      "es": "frijoles moth",
+      "pt": "feijão moth",
+      "fr": "haricots moth",
+      "de": "Mothbohnen",
+      "zh": "蛾豆",
+      "ja": "モスビーンズ"
+    },
+    "aliases": [
+      "Moth Beans",
+      "moth_beans",
+      "moth beans",
+      "Matki fasulyesi",
+      "мот фасоль",
+      "frijoles moth",
+      "haricots moth",
+      "فاصوليا موث"
+    ]
   },
   {
     "id": "mung_bean",
@@ -659,6 +848,33 @@
     ]
   },
   {
+    "id": "navy_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Navy Beans",
+      "tr": "Küçük beyaz fasulye",
+      "ru": "мелкая белая фасоль",
+      "ar": "فاصوليا بيضاء صغيرة",
+      "es": "alubias blancas pequeñas",
+      "pt": "feijão branco pequeno",
+      "fr": "haricots blancs",
+      "de": "weiße Bohnen",
+      "zh": "海军豆",
+      "ja": "ネイビービーンズ"
+    },
+    "aliases": [
+      "Navy Beans",
+      "navy_beans",
+      "navy beans",
+      "Küçük beyaz fasulye",
+      "мелкая белая фасоль",
+      "alubias blancas pequeñas",
+      "haricots blancs",
+      "فاصوليا بيضاء صغيرة"
+    ]
+  },
+  {
     "id": "pea",
     "category": "legumes",
     "subcategory": "peas",
@@ -688,6 +904,33 @@
       "bezelye",
       "Горох",
       "guisante"
+    ]
+  },
+  {
+    "id": "pigeon_peas",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Pigeon Peas",
+      "tr": "Güvercin bezelyesi",
+      "ru": "голубиный горох",
+      "ar": "بازلاء حمام",
+      "es": "guandules",
+      "pt": "feijão guandu",
+      "fr": "pois d’Angole",
+      "de": "Straucherbsen",
+      "zh": "木豆",
+      "ja": "キマメ"
+    },
+    "aliases": [
+      "Pigeon Peas",
+      "pigeon_peas",
+      "pigeon peas",
+      "Güvercin bezelyesi",
+      "голубиный горох",
+      "guandules",
+      "pois d’Angole",
+      "بازلاء حمام"
     ]
   },
   {
@@ -941,6 +1184,31 @@
     ]
   },
   {
+    "id": "urad_dal",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Urad Dal",
+      "tr": "Urad dal",
+      "ru": "урад дал",
+      "ar": "أوراد دال",
+      "es": "urad dal",
+      "pt": "urad dal",
+      "fr": "urad dal",
+      "de": "Urad Dal",
+      "zh": "黑扁豆仁",
+      "ja": "ウラドダル"
+    },
+    "aliases": [
+      "Urad Dal",
+      "urad_dal",
+      "urad dal",
+      "Urad dal",
+      "урад дал",
+      "أوراد دال"
+    ]
+  },
+  {
     "id": "white_bean",
     "category": "legumes",
     "subcategory": "beans",
@@ -991,5 +1259,32 @@
       "fr": "Yardlong Bean"
     },
     "aliases": []
+  },
+  {
+    "id": "yellow_split_peas",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Yellow Split Peas",
+      "tr": "Sarı kırık bezelye",
+      "ru": "желтый колотый горох",
+      "ar": "بازلاء صفراء مجروشة",
+      "es": "guisantes partidos amarillos",
+      "pt": "ervilhas amarelas partidas",
+      "fr": "pois cassés jaunes",
+      "de": "gelbe Schälerbsen",
+      "zh": "黄豌豆瓣",
+      "ja": "黄割りエンドウ"
+    },
+    "aliases": [
+      "Yellow Split Peas",
+      "yellow_split_peas",
+      "yellow split peas",
+      "Sarı kırık bezelye",
+      "желтый колотый горох",
+      "guisantes partidos amarillos",
+      "pois cassés jaunes",
+      "بازلاء صفراء مجروشة"
+    ]
   }
 ]

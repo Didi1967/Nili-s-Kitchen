@@ -458,6 +458,431 @@ biraz tuz -> salt
   }
 );
 
+/* WORLD RECIPE CATALOG */
+
+const recipeCatalogDir = path.join(__dirname, "recipe-catalog");
+const recipeCatalogFile = path.join(recipeCatalogDir, "catalog.json");
+
+const PRIORITY_CUISINES = {
+  turkey: { label: "Turkish", mealDbArea: "Turkish", spoon: "Turkish" },
+  italy: { label: "Italian", mealDbArea: "Italian", spoon: "Italian" },
+  mexico: { label: "Mexican", mealDbArea: "Mexican", spoon: "Mexican" },
+  india: { label: "Indian", mealDbArea: "Indian", spoon: "Indian" },
+  china: { label: "Chinese", mealDbArea: "Chinese", spoon: "Chinese" },
+  japan: { label: "Japanese", mealDbArea: "Japanese", spoon: "Japanese" },
+  france: { label: "French", mealDbArea: "French", spoon: "French" },
+  greece: { label: "Greek", mealDbArea: "Greek", spoon: "Greek" },
+  usa: { label: "American", mealDbArea: "American", spoon: "American" },
+  thailand: { label: "Thai", mealDbArea: "Thai", spoon: "Thai" }
+};
+
+function ensureRecipeCatalog(){
+  if(!fs.existsSync(recipeCatalogDir)) fs.mkdirSync(recipeCatalogDir, { recursive:true });
+  if(!fs.existsSync(recipeCatalogFile)) fs.writeFileSync(recipeCatalogFile, "[]", "utf8");
+}
+
+function readRecipeCatalog(){
+  ensureRecipeCatalog();
+  try{
+    const data = JSON.parse(fs.readFileSync(recipeCatalogFile, "utf8"));
+    return Array.isArray(data) ? data : [];
+  }catch(error){
+    console.log("RECIPE CATALOG READ ERROR:", error.message);
+    return [];
+  }
+}
+
+function writeRecipeCatalog(recipes){
+  ensureRecipeCatalog();
+  const tempFile = recipeCatalogFile + ".tmp";
+  fs.writeFileSync(tempFile, JSON.stringify(recipes, null, 2), "utf8");
+  try{
+    fs.renameSync(tempFile, recipeCatalogFile);
+  }catch(error){
+    // Windows cannot always replace an existing file with renameSync.
+    fs.copyFileSync(tempFile, recipeCatalogFile);
+    fs.unlinkSync(tempFile);
+  }
+}
+
+function recipeCatalogKey(recipe){
+  return `${recipe.source || "unknown"}:${recipe.sourceId || recipe.id || ""}`;
+}
+
+function upsertRecipeCatalog(incoming){
+  if(!Array.isArray(incoming) || !incoming.length) return readRecipeCatalog();
+  const catalog = readRecipeCatalog();
+  const byKey = new Map(catalog.map(item => [recipeCatalogKey(item), item]));
+
+  incoming.forEach(recipe => {
+    if(!recipe || !recipe.sourceId || !recipe.title) return;
+    const key = recipeCatalogKey(recipe);
+    const existing = byKey.get(key) || {};
+    byKey.set(key, {
+      ...existing,
+      ...recipe,
+      localizations: existing.localizations || {},
+      cachedAt: existing.cachedAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    });
+  });
+
+  const next = [...byKey.values()];
+  writeRecipeCatalog(next);
+  return next;
+}
+
+function catalogSearchText(recipe){
+  return normalizeText([
+    recipe.title,
+    recipe.cuisine,
+    recipe.country,
+    recipe.category,
+    ...(recipe.tags || []),
+    ...(recipe.extendedIngredients || []).map(item => item.name || item.original || "")
+  ].join(" "));
+}
+
+function searchRecipeCatalog({ query, cuisine, category, limit }){
+  const queryText = normalizeText(query || "");
+  const cuisineText = normalizeText(PRIORITY_CUISINES[cuisine]?.label || cuisine || "");
+  const categoryText = normalizeText(category || "");
+
+  return readRecipeCatalog()
+    .map(recipe => {
+      const text = catalogSearchText(recipe);
+      let score = 0;
+      if(queryText){
+        if(normalizeText(recipe.title) === queryText) score += 100;
+        else if(normalizeText(recipe.title).includes(queryText)) score += 60;
+        else if(text.includes(queryText)) score += 20;
+        else return null;
+      }
+      if(cuisineText){
+        if(normalizeText(recipe.cuisine).includes(cuisineText) || normalizeText(recipe.country).includes(cuisineText)) score += 40;
+        else return null;
+      }
+      if(categoryText){
+        if(normalizeText(recipe.category).includes(categoryText) || text.includes(categoryText)) score += 30;
+        else return null;
+      }
+      return { recipe, score };
+    })
+    .filter(Boolean)
+    .sort((a,b) => b.score - a.score || String(b.recipe.updatedAt).localeCompare(String(a.recipe.updatedAt)))
+    .slice(0, limit)
+    .map(item => item.recipe);
+}
+
+function mapNiliDiscoveryRecipe(recipe){
+  const rawIngredients = recipe.adminIngredientsTr || recipe.ingredients || [];
+  const ingredients = (Array.isArray(rawIngredients) ? rawIngredients : String(rawIngredients).split(/\r?\n|,/))
+    .map(item => typeof item === "string" ? { name:item.trim(), original:item.trim() } : item)
+    .filter(item => item && (item.name || item.original));
+  return {
+    id:`nili-${recipe.id}`,
+    sourceId:String(recipe.id),
+    source:"nili_creator",
+    title:recipe.adminTitleTr || recipe.title || "Nili's Recipe",
+    image:recipe.mediaUrl || (recipe.mediaFile ? `/creator-uploads/${recipe.mediaFile}` : ""),
+    cuisine:recipe.cuisine || recipe.country || "",
+    country:recipe.country || recipe.cuisine || "",
+    category:recipe.category || recipe.dishType || "",
+    tags:recipe.tags || [],
+    readyInMinutes:Number(recipe.prepTime || recipe.readyInMinutes) || 30,
+    servings:recipe.servings || null,
+    usedIngredients:ingredients,
+    extendedIngredients:ingredients,
+    instructions:recipe.adminInstructionsTr || recipe.instructions || "Recipe instructions unavailable.",
+    sourceUrl:""
+  };
+}
+
+function searchNiliDiscovery({ query, cuisine, category, limit }){
+  const queryText=normalizeText(query || "");
+  const cuisineText=normalizeText(PRIORITY_CUISINES[cuisine]?.label || cuisine || "");
+  const categoryText=normalizeText(category || "");
+  return readApprovedRecipes()
+    .filter(recipe => recipe.status === "approved")
+    .map(mapNiliDiscoveryRecipe)
+    .filter(recipe => {
+      const text=catalogSearchText(recipe);
+      return (!queryText || text.includes(queryText)) &&
+        (!cuisineText || text.includes(cuisineText)) &&
+        (!categoryText || text.includes(categoryText));
+    })
+    .slice(0,limit);
+}
+
+function uniqueRecipes(recipes){
+  return recipes.filter((recipe,index,array) =>
+    array.findIndex(item => normalizeText(item.title) === normalizeText(recipe.title)) === index
+  );
+}
+
+function mealDbIngredients(detail){
+  const ingredients = [];
+  for(let index=1; index<=20; index++){
+    const name = String(detail[`strIngredient${index}`] || "").trim();
+    const measure = String(detail[`strMeasure${index}`] || "").trim();
+    if(name) ingredients.push({ name, original:`${measure} ${name}`.trim() });
+  }
+  return ingredients;
+}
+
+function mapMealDbRecipe(detail){
+  const ingredients = mealDbIngredients(detail);
+  return {
+    id:`themealdb-${detail.idMeal}`,
+    sourceId:String(detail.idMeal),
+    source:"themealdb",
+    title:detail.strMeal || "Recipe",
+    image:detail.strMealThumb || "",
+    cuisine:detail.strArea || "",
+    country:detail.strArea || "",
+    category:detail.strCategory || "",
+    tags:String(detail.strTags || "").split(",").map(item => item.trim()).filter(Boolean),
+    readyInMinutes:30,
+    servings:null,
+    usedIngredients:ingredients,
+    extendedIngredients:ingredients,
+    instructions:detail.strInstructions || "Recipe instructions unavailable.",
+    sourceUrl:detail.strSource || detail.strYoutube || ""
+  };
+}
+
+async function fetchMealDbDiscovery({ query, cuisine, category, limit }){
+  if(!useTheMealDB) return [];
+  const apiKey = process.env.THEMEALDB_KEY || "1";
+  let summaries = [];
+  if(query){
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/${apiKey}/search.php?s=${encodeURIComponent(query)}`);
+    summaries = (await response.json()).meals || [];
+    return summaries.slice(0,limit).map(mapMealDbRecipe);
+  }
+
+  const cuisineConfig = PRIORITY_CUISINES[cuisine];
+  const filter = cuisineConfig
+    ? `a=${encodeURIComponent(cuisineConfig.mealDbArea)}`
+    : `c=${encodeURIComponent(category || "Main course")}`;
+  const response = await fetch(`https://www.themealdb.com/api/json/v1/${apiKey}/filter.php?${filter}`);
+  summaries = (await response.json()).meals || [];
+
+  const details = await Promise.all(summaries.slice(0,limit).map(async summary => {
+    const detailResponse = await fetch(`https://www.themealdb.com/api/json/v1/${apiKey}/lookup.php?i=${summary.idMeal}`);
+    return (await detailResponse.json()).meals?.[0] || null;
+  }));
+  return details.filter(Boolean).map(mapMealDbRecipe);
+}
+
+async function fetchMealDbFallback(limit){
+  if(!useTheMealDB) return [];
+  const apiKey=process.env.THEMEALDB_KEY || "1";
+  const attempts=Math.min(Math.max(limit,1),6);
+  const settled=await Promise.allSettled(Array.from({length:attempts},async()=>{
+    const response=await fetch(`https://www.themealdb.com/api/json/v1/${apiKey}/random.php`);
+    if(!response.ok) throw new Error(`TheMealDB ${response.status}`);
+    return (await response.json()).meals?.[0] || null;
+  }));
+  return uniqueRecipes(settled.filter(item=>item.status==="fulfilled"&&item.value).map(item=>mapMealDbRecipe(item.value)));
+}
+
+async function fetchSpoonDiscovery({ query, cuisine, category, limit }){
+  if(!useSpoonacular || !process.env.SPOON_KEY) return [];
+  const params = new URLSearchParams({
+    apiKey:process.env.SPOON_KEY,
+    number:String(limit),
+    addRecipeInformation:"true",
+    fillIngredients:"true",
+    instructionsRequired:"true"
+  });
+  if(query) params.set("query", query);
+  if(cuisine && PRIORITY_CUISINES[cuisine]) params.set("cuisine", PRIORITY_CUISINES[cuisine].spoon);
+  if(category) params.set("type", category);
+
+  const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?${params}`);
+  if(!response.ok) throw new Error(`Spoonacular ${response.status}`);
+  const results = (await response.json()).results || [];
+  return results.map(recipe => ({
+    id:`spoonacular-${recipe.id}`,
+    sourceId:String(recipe.id),
+    source:"spoonacular",
+    title:recipe.title || "Recipe",
+    image:recipe.image || "",
+    cuisine:recipe.cuisines?.[0] || PRIORITY_CUISINES[cuisine]?.label || "",
+    country:PRIORITY_CUISINES[cuisine]?.label || recipe.cuisines?.[0] || "",
+    category:recipe.dishTypes?.[0] || category || "",
+    tags:[...(recipe.diets || []), ...(recipe.dishTypes || [])],
+    readyInMinutes:recipe.readyInMinutes || 30,
+    servings:recipe.servings || null,
+    usedIngredients:recipe.extendedIngredients || [],
+    extendedIngredients:recipe.extendedIngredients || [],
+    analyzedInstructions:recipe.analyzedInstructions || [],
+    instructions:recipe.instructions || recipe.summary || "Recipe instructions unavailable.",
+    sourceUrl:recipe.sourceUrl || recipe.spoonacularSourceUrl || ""
+  }));
+}
+
+async function fetchEdamamDiscovery({ query, cuisine, category, limit }){
+  if(!useEdamam || !process.env.EDAMAM_APP_ID || !process.env.EDAMAM_APP_KEY) return [];
+  const params = new URLSearchParams({
+    type:"public",
+    q:query || category || PRIORITY_CUISINES[cuisine]?.label || "popular",
+    app_id:process.env.EDAMAM_APP_ID,
+    app_key:process.env.EDAMAM_APP_KEY,
+    random:"false"
+  });
+  if(cuisine && PRIORITY_CUISINES[cuisine]) params.append("cuisineType", PRIORITY_CUISINES[cuisine].label.toLowerCase());
+  if(category) params.append("dishType", category.toLowerCase());
+  const response = await fetch(`https://api.edamam.com/api/recipes/v2?${params}`);
+  if(!response.ok) throw new Error(`Edamam ${response.status}`);
+  const hits = (await response.json()).hits || [];
+  return hits.slice(0,limit).map(hit => {
+    const recipe = hit.recipe || {};
+    return {
+      id:`edamam-${encodeURIComponent(recipe.uri || recipe.url || recipe.label)}`,
+      sourceId:recipe.uri || recipe.url || recipe.label,
+      source:"edamam-live",
+      title:recipe.label || "Recipe",
+      image:recipe.image || "",
+      cuisine:recipe.cuisineType?.[0] || "",
+      country:recipe.cuisineType?.[0] || "",
+      category:recipe.dishType?.[0] || "",
+      tags:[...(recipe.dietLabels || []), ...(recipe.healthLabels || []).slice(0,4)],
+      readyInMinutes:recipe.totalTime || 30,
+      servings:recipe.yield || null,
+      usedIngredients:recipe.ingredients || [],
+      extendedIngredients:recipe.ingredients || [],
+      instructions:recipe.url || "Open recipe source for instructions.",
+      sourceUrl:recipe.url || ""
+    };
+  });
+}
+
+async function localizeDiscoveryRecipes(recipes, lang){
+  if(!lang || lang === "en") return recipes;
+  return Promise.all(recipes.map(async recipe => ({
+    ...recipe,
+    title:await translateText(recipe.title || "", lang),
+    instructions:await translateText(recipe.instructions || "", lang),
+    extendedIngredients:Array.isArray(recipe.extendedIngredients)
+      ? await Promise.all(recipe.extendedIngredients.map(async item => ({
+          ...item,
+          name:item.name ? await translateText(item.name, lang) : item.name,
+          original:item.original ? await translateText(item.original, lang) : item.original
+        })))
+      : []
+  })));
+}
+
+app.get("/world-recipe-options", (req,res) => {
+  res.json({
+    cuisines:Object.entries(PRIORITY_CUISINES).map(([id,value]) => ({ id, label:value.label })),
+    categories:["main course","side dish","dessert","appetizer","salad","soup","breakfast","pasta","seafood"]
+  });
+});
+
+app.post("/discover-recipes", async (req,res) => {
+  try{
+    const query = String(req.body.query || "").trim();
+    const cuisine = String(req.body.cuisine || "").trim().toLowerCase();
+    const category = String(req.body.category || "").trim().toLowerCase();
+    const lang = String(req.body.lang || "en").trim().toLowerCase();
+    const limit = Math.min(Math.max(Number(req.body.limit) || 18, 1), 30);
+
+    if(!query && !cuisine && !category){
+      return res.status(400).json({ error:"query, cuisine or category is required" });
+    }
+
+    const niliCreatorResults=searchNiliDiscovery({ query, cuisine, category, limit });
+    const catalogResults=searchRecipeCatalog({ query, cuisine, category, limit });
+    let combined=uniqueRecipes([...niliCreatorResults, ...catalogResults]);
+    const fetchedSources=[];
+    let mealDb=[];
+    let spoon=[];
+    let liveEdamam=[];
+
+    if(combined.length < limit){
+      try{
+        mealDb=await fetchMealDbDiscovery({ query, cuisine, category, limit:Math.min(12,limit-combined.length) });
+        if(mealDb.length){ upsertRecipeCatalog(mealDb); combined=uniqueRecipes([...combined,...mealDb]); }
+        fetchedSources.push("themealdb");
+      }catch(error){ console.log("DISCOVERY THEMEALDB FAILED:",error.message); }
+    }
+
+    if(combined.length < limit){
+      try{
+        spoon=await fetchSpoonDiscovery({ query, cuisine, category, limit:Math.min(12,limit-combined.length) });
+        if(spoon.length){ upsertRecipeCatalog(spoon); combined=uniqueRecipes([...combined,...spoon]); }
+        fetchedSources.push("spoonacular");
+      }catch(error){ console.log("DISCOVERY SPOON FAILED:",error.message); }
+    }
+
+    if(combined.length < limit){
+      try{
+        liveEdamam=await fetchEdamamDiscovery({ query, cuisine, category, limit:Math.min(12,limit-combined.length) });
+        if(liveEdamam.length) combined=uniqueRecipes([...combined,...liveEdamam]);
+        fetchedSources.push("edamam-live");
+      }catch(error){ console.log("DISCOVERY EDAMAM FAILED:",error.message); }
+    }
+
+    let fallbackMode="";
+    if(combined.length===0){
+      const niliFallback=searchNiliDiscovery({ query:"", cuisine:"", category:"", limit });
+      const catalogFallback=readRecipeCatalog()
+        .sort((a,b)=>String(b.updatedAt||b.cachedAt||"").localeCompare(String(a.updatedAt||a.cachedAt||"")))
+        .slice(0,limit);
+      combined=uniqueRecipes([...niliFallback,...catalogFallback]);
+      if(combined.length) fallbackMode="nili-popular";
+    }
+
+    if(combined.length===0){
+      try{
+        const mealFallback=await fetchMealDbFallback(Math.min(limit,6));
+        if(mealFallback.length){
+          upsertRecipeCatalog(mealFallback);
+          combined=mealFallback;
+          fallbackMode="themealdb-random";
+          if(!fetchedSources.includes("themealdb")) fetchedSources.push("themealdb");
+        }
+      }catch(error){ console.log("DISCOVERY FALLBACK FAILED:",error.message); }
+    }
+
+    if(combined.length===0){
+      try{
+        const edamamFallback=await fetchEdamamDiscovery({ query:"popular", cuisine:"", category:"", limit:Math.min(limit,12) });
+        if(edamamFallback.length){
+          combined=edamamFallback;
+          fallbackMode="edamam-live-popular";
+          if(!fetchedSources.includes("edamam-live")) fetchedSources.push("edamam-live");
+        }
+      }catch(error){ console.log("DISCOVERY EDAMAM FALLBACK FAILED:",error.message); }
+    }
+
+    combined=combined.slice(0,limit);
+
+    const localized = await localizeDiscoveryRecipes(combined, lang);
+    return res.json({
+      recipes:localized,
+      meta:{
+        niliCreatorCount:niliCreatorResults.length,
+        localCount:catalogResults.length,
+        mealDbCount:mealDb.length,
+        spoonCount:spoon.length,
+        liveEdamamCount:liveEdamam.length,
+        fetched:fetchedSources.length>0,
+        fetchedSources,
+        fallbackMode,
+        sourceOrder:["nili_database","themealdb","spoonacular","edamam-live"],
+        catalogSize:readRecipeCatalog().length
+      }
+    });
+  }catch(error){
+    console.log("DISCOVER RECIPES ERROR:", error);
+    return res.status(500).json({ error:"Recipe discovery failed" });
+  }
+});
+
  /* RECIPES */
 
  const useSpoonacular =
@@ -553,6 +978,10 @@ console.log("SPOON STATUS:", spoonRes.status);
                   image: recipe.image || "",
                   readyInMinutes: detail.readyInMinutes || 30,
                   usedIngredients: recipe.usedIngredients || [],
+                  missedIngredients: recipe.missedIngredients || [],
+                  extendedIngredients: detail.extendedIngredients || [],
+                  servings: detail.servings || null,
+                  analyzedInstructions: detail.analyzedInstructions || [],
                   instructions:
                     detail.instructions ||
                     detail.summary ||
@@ -568,6 +997,7 @@ console.log("SPOON STATUS:", spoonRes.status);
                   image: recipe.image || "",
                   readyInMinutes: 30,
                   usedIngredients: recipe.usedIngredients || [],
+                  missedIngredients: recipe.missedIngredients || [],
                   instructions: "No instructions"
                 };
 
@@ -663,7 +1093,7 @@ console.log("EDAMAM COUNT:", testData.count);
 
             const edamamRecipes =
             edamamData.hits
-            slice(0, 12)
+            .slice(0, 12)
             .map(item => {
 
               const recipe =
@@ -680,6 +1110,10 @@ console.log("EDAMAM COUNT:", testData.count);
                     : 30,
                 usedIngredients:
                   recipe.ingredients || [],
+                extendedIngredients:
+                  recipe.ingredients || [],
+                servings:
+                  recipe.yield || null,
                 instructions:
                   recipe.url ||
                   "Open recipe source for instructions."
@@ -814,6 +1248,7 @@ return {
 timeEstimated: true,
 timeLabel: `~${estimatedTime} min`,
   usedIngredients: usedIngredients,
+  extendedIngredients: usedIngredients,
   instructions:
     detail.strInstructions?.trim() ||
     "Recipe instructions unavailable."
@@ -938,6 +1373,26 @@ if(lang !== "en"){
                   : ing.original
               };
             })
+          );
+        }
+
+        if(Array.isArray(recipe.missedIngredients)){
+          recipe.missedIngredients = await Promise.all(
+            recipe.missedIngredients.map(async (ing) => ({
+              ...ing,
+              name: ing.name ? await translateText(ing.name, lang) : ing.name,
+              original: ing.original ? await translateText(ing.original, lang) : ing.original
+            }))
+          );
+        }
+
+        if(Array.isArray(recipe.extendedIngredients)){
+          recipe.extendedIngredients = await Promise.all(
+            recipe.extendedIngredients.map(async (ing) => ({
+              ...ing,
+              name: ing.name ? await translateText(ing.name, lang) : ing.name,
+              original: ing.original ? await translateText(ing.original, lang) : ing.original
+            }))
           );
         }
 

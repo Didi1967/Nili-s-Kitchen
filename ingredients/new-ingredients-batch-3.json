@@ -1,0 +1,2139 @@
+[
+  {
+    "id": "amaranth_flour",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Amaranth Flour",
+      "tr": "Amarant unu",
+      "ru": "амарантовая мука",
+      "ar": "دقيق القطيفة",
+      "es": "harina de amaranto",
+      "pt": "farinha de amaranto",
+      "fr": "farine d’amarante",
+      "de": "Amaranthmehl",
+      "zh": "苋菜籽粉",
+      "ja": "アマランサス粉"
+    },
+    "aliases": [
+      "Amaranth Flour",
+      "amaranth_flour",
+      "amaranth flour",
+      "Amarant unu",
+      "амарантовая мука",
+      "harina de amaranto",
+      "farine d’amarante",
+      "دقيق القطيفة"
+    ]
+  },
+  {
+    "id": "buckwheat_noodles",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Buckwheat Noodles",
+      "tr": "Karabuğday eriştesi",
+      "ru": "гречневая лапша",
+      "ar": "نودلز الحنطة السوداء",
+      "es": "fideos de trigo sarraceno",
+      "pt": "macarrão de trigo-sarraceno",
+      "fr": "nouilles de sarrasin",
+      "de": "Buchweizennudeln",
+      "zh": "荞麦面",
+      "ja": "そば麺"
+    },
+    "aliases": [
+      "Buckwheat Noodles",
+      "buckwheat_noodles",
+      "buckwheat noodles",
+      "Karabuğday eriştesi",
+      "гречневая лапша",
+      "fideos de trigo sarraceno",
+      "nouilles de sarrasin",
+      "نودلز الحنطة السوداء"
+    ]
+  },
+  {
+    "id": "corn_tortilla",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Corn Tortilla",
+      "tr": "Mısır tortilla",
+      "ru": "кукурузная тортилья",
+      "ar": "تورتيلا الذرة",
+      "es": "tortilla de maíz",
+      "pt": "tortilha de milho",
+      "fr": "tortilla de maïs",
+      "de": "Maistortilla",
+      "zh": "玉米饼",
+      "ja": "コーントルティーヤ"
+    },
+    "aliases": [
+      "Corn Tortilla",
+      "corn_tortilla",
+      "corn tortilla",
+      "Mısır tortilla",
+      "кукурузная тортилья",
+      "tortilla de maíz",
+      "tortilla de maïs",
+      "تورتيلا الذرة"
+    ]
+  },
+  {
+    "id": "durum_wheat_semolina",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Durum Wheat Semolina",
+      "tr": "Durum buğday irmiği",
+      "ru": "манная крупа из твердых сортов пшеницы",
+      "ar": "سميد القمح القاسي",
+      "es": "sémola de trigo duro",
+      "pt": "sêmola de trigo duro",
+      "fr": "semoule de blé dur",
+      "de": "Hartweizengrieß",
+      "zh": "杜伦小麦粗粒粉",
+      "ja": "デュラム小麦セモリナ"
+    },
+    "aliases": [
+      "Durum Wheat Semolina",
+      "durum_wheat_semolina",
+      "durum wheat semolina",
+      "Durum buğday irmiği",
+      "манная крупа из твердых сортов пшеницы",
+      "sémola de trigo duro",
+      "semoule de blé dur",
+      "سميد القمح القاسي"
+    ]
+  },
+  {
+    "id": "einkorn_flour",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Einkorn Flour",
+      "tr": "Siyez unu",
+      "ru": "мука из однозернянки",
+      "ar": "دقيق القمح وحيد الحبة",
+      "es": "harina de escaña",
+      "pt": "farinha de einkorn",
+      "fr": "farine de petit épeautre",
+      "de": "Einkornmehl",
+      "zh": "一粒小麦粉",
+      "ja": "アインコーン小麦粉"
+    },
+    "aliases": [
+      "Einkorn Flour",
+      "einkorn_flour",
+      "einkorn flour",
+      "Siyez unu",
+      "мука из однозернянки",
+      "harina de escaña",
+      "farine de petit épeautre",
+      "دقيق القمح وحيد الحبة"
+    ]
+  },
+  {
+    "id": "farro",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Farro",
+      "tr": "Farro buğdayı",
+      "ru": "фарро",
+      "ar": "فارو",
+      "es": "farro",
+      "pt": "farro",
+      "fr": "farro",
+      "de": "Farro",
+      "zh": "法罗麦",
+      "ja": "ファッロ"
+    },
+    "aliases": [
+      "Farro",
+      "farro",
+      "Farro buğdayı",
+      "фарро",
+      "فارو"
+    ]
+  },
+  {
+    "id": "freekeh",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Freekeh",
+      "tr": "Firik bulguru",
+      "ru": "фрике",
+      "ar": "فريكة",
+      "es": "freekeh",
+      "pt": "freekeh",
+      "fr": "freekeh",
+      "de": "Freekeh",
+      "zh": "青麦粒",
+      "ja": "フリーカ"
+    },
+    "aliases": [
+      "Freekeh",
+      "freekeh",
+      "Firik bulguru",
+      "фрике",
+      "فريكة"
+    ]
+  },
+  {
+    "id": "glutinous_rice_flour",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Glutinous Rice Flour",
+      "tr": "Yapışkan pirinç unu",
+      "ru": "клейкая рисовая мука",
+      "ar": "دقيق الأرز اللزج",
+      "es": "harina de arroz glutinoso",
+      "pt": "farinha de arroz glutinoso",
+      "fr": "farine de riz gluant",
+      "de": "Klebreismehl",
+      "zh": "糯米粉",
+      "ja": "もち米粉"
+    },
+    "aliases": [
+      "Glutinous Rice Flour",
+      "glutinous_rice_flour",
+      "glutinous rice flour",
+      "Yapışkan pirinç unu",
+      "клейкая рисовая мука",
+      "harina de arroz glutinoso",
+      "farine de riz gluant",
+      "دقيق الأرز اللزج"
+    ]
+  },
+  {
+    "id": "kamut_grain",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Kamut Grain",
+      "tr": "Kamut buğdayı",
+      "ru": "камут",
+      "ar": "قمح كاموت",
+      "es": "grano kamut",
+      "pt": "grão kamut",
+      "fr": "grain de kamut",
+      "de": "Kamutkorn",
+      "zh": "卡姆小麦",
+      "ja": "カムット小麦"
+    },
+    "aliases": [
+      "Kamut Grain",
+      "kamut_grain",
+      "kamut grain",
+      "Kamut buğdayı",
+      "камут",
+      "grano kamut",
+      "grain de kamut",
+      "قمح كاموت"
+    ]
+  },
+  {
+    "id": "matzo_meal",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Matzo Meal",
+      "tr": "Matzo unu",
+      "ru": "мука мацы",
+      "ar": "دقيق ماتزو",
+      "es": "harina de matzá",
+      "pt": "farinha de matzá",
+      "fr": "farine de matsa",
+      "de": "Matzenmehl",
+      "zh": "无酵饼粉",
+      "ja": "マッツォ粉"
+    },
+    "aliases": [
+      "Matzo Meal",
+      "matzo_meal",
+      "matzo meal",
+      "Matzo unu",
+      "мука мацы",
+      "harina de matzá",
+      "farine de matsa",
+      "دقيق ماتزو"
+    ]
+  },
+  {
+    "id": "millet_flour",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Millet Flour",
+      "tr": "Darı unu",
+      "ru": "пшенная мука",
+      "ar": "دقيق الدخن",
+      "es": "harina de mijo",
+      "pt": "farinha de painço",
+      "fr": "farine de millet",
+      "de": "Hirsemehl",
+      "zh": "小米粉",
+      "ja": "キビ粉"
+    },
+    "aliases": [
+      "Millet Flour",
+      "millet_flour",
+      "millet flour",
+      "Darı unu",
+      "пшенная мука",
+      "harina de mijo",
+      "farine de millet",
+      "دقيق الدخن"
+    ]
+  },
+  {
+    "id": "oat_bran",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Oat Bran",
+      "tr": "Yulaf kepeği",
+      "ru": "овсяные отруби",
+      "ar": "نخالة الشوفان",
+      "es": "salvado de avena",
+      "pt": "farelo de aveia",
+      "fr": "son d’avoine",
+      "de": "Haferkleie",
+      "zh": "燕麦麸",
+      "ja": "オートブラン"
+    },
+    "aliases": [
+      "Oat Bran",
+      "oat_bran",
+      "oat bran",
+      "Yulaf kepeği",
+      "овсяные отруби",
+      "salvado de avena",
+      "son d’avoine",
+      "نخالة الشوفان"
+    ]
+  },
+  {
+    "id": "rye_berries",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Rye Berries",
+      "tr": "Çavdar tanesi",
+      "ru": "зерна ржи",
+      "ar": "حبوب الجاودار",
+      "es": "granos de centeno",
+      "pt": "grãos de centeio",
+      "fr": "grains de seigle",
+      "de": "Roggenkörner",
+      "zh": "黑麦粒",
+      "ja": "ライ麦粒"
+    },
+    "aliases": [
+      "Rye Berries",
+      "rye_berries",
+      "rye berries",
+      "Çavdar tanesi",
+      "зерна ржи",
+      "granos de centeno",
+      "grains de seigle",
+      "حبوب الجاودار"
+    ]
+  },
+  {
+    "id": "sourdough_breadcrumbs",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Sourdough Breadcrumbs",
+      "tr": "Ekşi mayalı ekmek kırıntısı",
+      "ru": "панировочные сухари из заквасочного хлеба",
+      "ar": "فتات خبز العجين المخمر",
+      "es": "pan rallado de masa madre",
+      "pt": "farinha de rosca de fermentação natural",
+      "fr": "chapelure de pain au levain",
+      "de": "Sauerteigsemmelbrösel",
+      "zh": "酸面包屑",
+      "ja": "サワードウパン粉"
+    },
+    "aliases": [
+      "Sourdough Breadcrumbs",
+      "sourdough_breadcrumbs",
+      "sourdough breadcrumbs",
+      "Ekşi mayalı ekmek kırıntısı",
+      "панировочные сухари из заквасочного хлеба",
+      "pan rallado de masa madre",
+      "chapelure de pain au levain",
+      "فتات خبز العجين المخمر"
+    ]
+  },
+  {
+    "id": "teff_flour",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Teff Flour",
+      "tr": "Tef unu",
+      "ru": "теффовая мука",
+      "ar": "دقيق التيف",
+      "es": "harina de teff",
+      "pt": "farinha de teff",
+      "fr": "farine de teff",
+      "de": "Teffmehl",
+      "zh": "苔麸粉",
+      "ja": "テフ粉"
+    },
+    "aliases": [
+      "Teff Flour",
+      "teff_flour",
+      "teff flour",
+      "Tef unu",
+      "теффовая мука",
+      "harina de teff",
+      "farine de teff",
+      "دقيق التيف"
+    ]
+  },
+  {
+    "id": "adzuki_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Adzuki Beans",
+      "tr": "Azuki fasulyesi",
+      "ru": "фасоль адзуки",
+      "ar": "فاصوليا أزوكي",
+      "es": "frijoles adzuki",
+      "pt": "feijão azuki",
+      "fr": "haricots azuki",
+      "de": "Adzukibohnen",
+      "zh": "红豆",
+      "ja": "小豆"
+    },
+    "aliases": [
+      "Adzuki Beans",
+      "adzuki_beans",
+      "adzuki beans",
+      "Azuki fasulyesi",
+      "фасоль адзуки",
+      "frijoles adzuki",
+      "haricots azuki",
+      "فاصوليا أزوكي"
+    ]
+  },
+  {
+    "id": "black_beluga_lentils",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Black Beluga Lentils",
+      "tr": "Siyah beluga mercimeği",
+      "ru": "черная чечевица белуга",
+      "ar": "عدس بيلوجا أسود",
+      "es": "lentejas beluga negras",
+      "pt": "lentilhas beluga pretas",
+      "fr": "lentilles beluga noires",
+      "de": "schwarze Belugalinsen",
+      "zh": "黑小扁豆",
+      "ja": "黒ベルーガレンズ豆"
+    },
+    "aliases": [
+      "Black Beluga Lentils",
+      "black_beluga_lentils",
+      "black beluga lentils",
+      "Siyah beluga mercimeği",
+      "черная чечевица белуга",
+      "lentejas beluga negras",
+      "lentilles beluga noires",
+      "عدس بيلوجا أسود"
+    ]
+  },
+  {
+    "id": "borlotti_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Borlotti Beans",
+      "tr": "Borlotti fasulyesi",
+      "ru": "фасоль борлотти",
+      "ar": "فاصوليا بورلوتي",
+      "es": "frijoles borlotti",
+      "pt": "feijão borlotti",
+      "fr": "haricots borlotti",
+      "de": "Borlottibohnen",
+      "zh": "斑豆",
+      "ja": "ボルロッティ豆"
+    },
+    "aliases": [
+      "Borlotti Beans",
+      "borlotti_beans",
+      "borlotti beans",
+      "Borlotti fasulyesi",
+      "фасоль борлотти",
+      "frijoles borlotti",
+      "haricots borlotti",
+      "فاصوليا بورلوتي"
+    ]
+  },
+  {
+    "id": "cannellini_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Cannellini Beans",
+      "tr": "Cannellini fasulyesi",
+      "ru": "фасоль каннеллини",
+      "ar": "فاصوليا كانيليني",
+      "es": "frijoles cannellini",
+      "pt": "feijão cannellini",
+      "fr": "haricots cannellini",
+      "de": "Cannellinibohnen",
+      "zh": "白腰豆",
+      "ja": "カネリーニ豆"
+    },
+    "aliases": [
+      "Cannellini Beans",
+      "cannellini_beans",
+      "cannellini beans",
+      "Cannellini fasulyesi",
+      "фасоль каннеллини",
+      "frijoles cannellini",
+      "haricots cannellini",
+      "فاصوليا كانيليني"
+    ]
+  },
+  {
+    "id": "fava_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Fava Beans",
+      "tr": "Bakla",
+      "ru": "бобы фава",
+      "ar": "فول",
+      "es": "habas",
+      "pt": "favas",
+      "fr": "fèves",
+      "de": "Favabohnen",
+      "zh": "蚕豆",
+      "ja": "そら豆"
+    },
+    "aliases": [
+      "Fava Beans",
+      "fava_beans",
+      "fava beans",
+      "Bakla",
+      "бобы фава",
+      "habas",
+      "fèves",
+      "فول"
+    ]
+  },
+  {
+    "id": "flageolet_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Flageolet Beans",
+      "tr": "Flageolet fasulyesi",
+      "ru": "фасоль флажоле",
+      "ar": "فاصوليا فلاجيوليه",
+      "es": "frijoles flageolet",
+      "pt": "feijão flageolet",
+      "fr": "haricots flageolets",
+      "de": "Flageoletbohnen",
+      "zh": "嫩青豆",
+      "ja": "フラジョレ豆"
+    },
+    "aliases": [
+      "Flageolet Beans",
+      "flageolet_beans",
+      "flageolet beans",
+      "Flageolet fasulyesi",
+      "фасоль флажоле",
+      "frijoles flageolet",
+      "haricots flageolets",
+      "فاصوليا فلاجيوليه"
+    ]
+  },
+  {
+    "id": "lupini_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Lupini Beans",
+      "tr": "Lupin fasulyesi",
+      "ru": "люпиновые бобы",
+      "ar": "حبوب الترمس",
+      "es": "altramuces",
+      "pt": "tremoços",
+      "fr": "graines de lupin",
+      "de": "Lupinenbohnen",
+      "zh": "羽扇豆",
+      "ja": "ルピーニ豆"
+    },
+    "aliases": [
+      "Lupini Beans",
+      "lupini_beans",
+      "lupini beans",
+      "Lupin fasulyesi",
+      "люпиновые бобы",
+      "altramuces",
+      "graines de lupin",
+      "حبوب الترمس"
+    ]
+  },
+  {
+    "id": "moth_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Moth Beans",
+      "tr": "Matki fasulyesi",
+      "ru": "мот фасоль",
+      "ar": "فاصوليا موث",
+      "es": "frijoles moth",
+      "pt": "feijão moth",
+      "fr": "haricots moth",
+      "de": "Mothbohnen",
+      "zh": "蛾豆",
+      "ja": "モスビーンズ"
+    },
+    "aliases": [
+      "Moth Beans",
+      "moth_beans",
+      "moth beans",
+      "Matki fasulyesi",
+      "мот фасоль",
+      "frijoles moth",
+      "haricots moth",
+      "فاصوليا موث"
+    ]
+  },
+  {
+    "id": "navy_beans",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Navy Beans",
+      "tr": "Küçük beyaz fasulye",
+      "ru": "мелкая белая фасоль",
+      "ar": "فاصوليا بيضاء صغيرة",
+      "es": "alubias blancas pequeñas",
+      "pt": "feijão branco pequeno",
+      "fr": "haricots blancs",
+      "de": "weiße Bohnen",
+      "zh": "海军豆",
+      "ja": "ネイビービーンズ"
+    },
+    "aliases": [
+      "Navy Beans",
+      "navy_beans",
+      "navy beans",
+      "Küçük beyaz fasulye",
+      "мелкая белая фасоль",
+      "alubias blancas pequeñas",
+      "haricots blancs",
+      "فاصوليا بيضاء صغيرة"
+    ]
+  },
+  {
+    "id": "pigeon_peas",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Pigeon Peas",
+      "tr": "Güvercin bezelyesi",
+      "ru": "голубиный горох",
+      "ar": "بازلاء حمام",
+      "es": "guandules",
+      "pt": "feijão guandu",
+      "fr": "pois d’Angole",
+      "de": "Straucherbsen",
+      "zh": "木豆",
+      "ja": "キマメ"
+    },
+    "aliases": [
+      "Pigeon Peas",
+      "pigeon_peas",
+      "pigeon peas",
+      "Güvercin bezelyesi",
+      "голубиный горох",
+      "guandules",
+      "pois d’Angole",
+      "بازلاء حمام"
+    ]
+  },
+  {
+    "id": "urad_dal",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Urad Dal",
+      "tr": "Urad dal",
+      "ru": "урад дал",
+      "ar": "أوراد دال",
+      "es": "urad dal",
+      "pt": "urad dal",
+      "fr": "urad dal",
+      "de": "Urad Dal",
+      "zh": "黑扁豆仁",
+      "ja": "ウラドダル"
+    },
+    "aliases": [
+      "Urad Dal",
+      "urad_dal",
+      "urad dal",
+      "Urad dal",
+      "урад дал",
+      "أوراد دال"
+    ]
+  },
+  {
+    "id": "yellow_split_peas",
+    "category": "legumes",
+    "subcategory": "general",
+    "name": {
+      "en": "Yellow Split Peas",
+      "tr": "Sarı kırık bezelye",
+      "ru": "желтый колотый горох",
+      "ar": "بازلاء صفراء مجروشة",
+      "es": "guisantes partidos amarillos",
+      "pt": "ervilhas amarelas partidas",
+      "fr": "pois cassés jaunes",
+      "de": "gelbe Schälerbsen",
+      "zh": "黄豌豆瓣",
+      "ja": "黄割りエンドウ"
+    },
+    "aliases": [
+      "Yellow Split Peas",
+      "yellow_split_peas",
+      "yellow split peas",
+      "Sarı kırık bezelye",
+      "желтый колотый горох",
+      "guisantes partidos amarillos",
+      "pois cassés jaunes",
+      "بازلاء صفراء مجروشة"
+    ]
+  },
+  {
+    "id": "black_sesame_seeds",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Black Sesame Seeds",
+      "tr": "Siyah susam",
+      "ru": "черный кунжут",
+      "ar": "بذور السمسم الأسود",
+      "es": "semillas de sésamo negro",
+      "pt": "sementes de gergelim preto",
+      "fr": "graines de sésame noir",
+      "de": "schwarzer Sesam",
+      "zh": "黑芝麻",
+      "ja": "黒ごま"
+    },
+    "aliases": [
+      "Black Sesame Seeds",
+      "black_sesame_seeds",
+      "black sesame seeds",
+      "Siyah susam",
+      "черный кунжут",
+      "semillas de sésamo negro",
+      "graines de sésame noir",
+      "بذور السمسم الأسود"
+    ]
+  },
+  {
+    "id": "brown_flaxseed",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Brown Flaxseed",
+      "tr": "Kahverengi keten tohumu",
+      "ru": "коричневое льняное семя",
+      "ar": "بذور الكتان البنية",
+      "es": "linaza marrón",
+      "pt": "linhaça marrom",
+      "fr": "graines de lin brun",
+      "de": "braune Leinsamen",
+      "zh": "棕色亚麻籽",
+      "ja": "ブラウンフラックスシード"
+    },
+    "aliases": [
+      "Brown Flaxseed",
+      "brown_flaxseed",
+      "brown flaxseed",
+      "Kahverengi keten tohumu",
+      "коричневое льняное семя",
+      "linaza marrón",
+      "graines de lin brun",
+      "بذور الكتان البنية"
+    ]
+  },
+  {
+    "id": "candlenuts",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Candlenuts",
+      "tr": "Kukui cevizi",
+      "ru": "орехи кукуи",
+      "ar": "جوز الشموع",
+      "es": "nueces de vela",
+      "pt": "noz-de-candela",
+      "fr": "noix de bancoul",
+      "de": "Kemirinüsse",
+      "zh": "石栗",
+      "ja": "キャンドルナッツ"
+    },
+    "aliases": [
+      "Candlenuts",
+      "candlenuts",
+      "Kukui cevizi",
+      "орехи кукуи",
+      "nueces de vela",
+      "noix de bancoul",
+      "جوز الشموع"
+    ]
+  },
+  {
+    "id": "hemp_hearts",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Hemp Hearts",
+      "tr": "Kenevir içi",
+      "ru": "ядра конопли",
+      "ar": "قلوب القنب",
+      "es": "corazones de cáñamo",
+      "pt": "corações de cânhamo",
+      "fr": "cœurs de chanvre",
+      "de": "Hanfsamen geschält",
+      "zh": "火麻仁",
+      "ja": "ヘンプハーツ"
+    },
+    "aliases": [
+      "Hemp Hearts",
+      "hemp_hearts",
+      "hemp hearts",
+      "Kenevir içi",
+      "ядра конопли",
+      "corazones de cáñamo",
+      "cœurs de chanvre",
+      "قلوب القنب"
+    ]
+  },
+  {
+    "id": "lotus_seeds",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Lotus Seeds",
+      "tr": "Lotus tohumu",
+      "ru": "семена лотоса",
+      "ar": "بذور اللوتس",
+      "es": "semillas de loto",
+      "pt": "sementes de lótus",
+      "fr": "graines de lotus",
+      "de": "Lotussamen",
+      "zh": "莲子",
+      "ja": "蓮の実"
+    },
+    "aliases": [
+      "Lotus Seeds",
+      "lotus_seeds",
+      "lotus seeds",
+      "Lotus tohumu",
+      "семена лотоса",
+      "semillas de loto",
+      "graines de lotus",
+      "بذور اللوتس"
+    ]
+  },
+  {
+    "id": "melon_seeds",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Melon Seeds",
+      "tr": "Kavun çekirdeği",
+      "ru": "семена дыни",
+      "ar": "بذور الشمام",
+      "es": "semillas de melón",
+      "pt": "sementes de melão",
+      "fr": "graines de melon",
+      "de": "Melonenkerne",
+      "zh": "甜瓜籽",
+      "ja": "メロンシード"
+    },
+    "aliases": [
+      "Melon Seeds",
+      "melon_seeds",
+      "melon seeds",
+      "Kavun çekirdeği",
+      "семена дыни",
+      "semillas de melón",
+      "graines de melon",
+      "بذور الشمام"
+    ]
+  },
+  {
+    "id": "pine_nuts",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Pine Nuts",
+      "tr": "Çam fıstığı",
+      "ru": "кедровые орехи",
+      "ar": "صنوبر",
+      "es": "piñones",
+      "pt": "pinhões",
+      "fr": "pignons de pin",
+      "de": "Pinienkerne",
+      "zh": "松子",
+      "ja": "松の実"
+    },
+    "aliases": [
+      "Pine Nuts",
+      "pine_nuts",
+      "pine nuts",
+      "Çam fıstığı",
+      "кедровые орехи",
+      "piñones",
+      "pignons de pin",
+      "صنوبر"
+    ]
+  },
+  {
+    "id": "poppy_seeds",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Poppy Seeds",
+      "tr": "Haşhaş tohumu",
+      "ru": "семена мака",
+      "ar": "بذور الخشخاش",
+      "es": "semillas de amapola",
+      "pt": "sementes de papoula",
+      "fr": "graines de pavot",
+      "de": "Mohnsamen",
+      "zh": "罂粟籽",
+      "ja": "ポピーシード"
+    },
+    "aliases": [
+      "Poppy Seeds",
+      "poppy_seeds",
+      "poppy seeds",
+      "Haşhaş tohumu",
+      "семена мака",
+      "semillas de amapola",
+      "graines de pavot",
+      "بذور الخشخاش"
+    ]
+  },
+  {
+    "id": "pumpkin_seed_kernels",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Pumpkin Seed Kernels",
+      "tr": "Kabak çekirdeği içi",
+      "ru": "ядра тыквенных семечек",
+      "ar": "لب بذور اليقطين",
+      "es": "pepitas de calabaza",
+      "pt": "sementes de abóbora sem casca",
+      "fr": "graines de courge décortiquées",
+      "de": "Kürbiskerne",
+      "zh": "南瓜籽仁",
+      "ja": "かぼちゃの種"
+    },
+    "aliases": [
+      "Pumpkin Seed Kernels",
+      "pumpkin_seed_kernels",
+      "pumpkin seed kernels",
+      "Kabak çekirdeği içi",
+      "ядра тыквенных семечек",
+      "pepitas de calabaza",
+      "graines de courge décortiquées",
+      "لب بذور اليقطين"
+    ]
+  },
+  {
+    "id": "sacha_inchi_seeds",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Sacha Inchi Seeds",
+      "tr": "Sacha inchi tohumu",
+      "ru": "семена сача инчи",
+      "ar": "بذور ساشا إنشي",
+      "es": "semillas de sacha inchi",
+      "pt": "sementes de sacha inchi",
+      "fr": "graines de sacha inchi",
+      "de": "Sacha-Inchi-Samen",
+      "zh": "印加花生籽",
+      "ja": "サチャインチシード"
+    },
+    "aliases": [
+      "Sacha Inchi Seeds",
+      "sacha_inchi_seeds",
+      "sacha inchi seeds",
+      "Sacha inchi tohumu",
+      "семена сача инчи",
+      "semillas de sacha inchi",
+      "graines de sacha inchi",
+      "بذور ساشا إنشي"
+    ]
+  },
+  {
+    "id": "sunflower_seed_kernels",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "Sunflower Seed Kernels",
+      "tr": "Ay çekirdeği içi",
+      "ru": "ядра подсолнечника",
+      "ar": "لب بذور عباد الشمس",
+      "es": "semillas de girasol peladas",
+      "pt": "sementes de girassol sem casca",
+      "fr": "graines de tournesol décortiquées",
+      "de": "Sonnenblumenkerne",
+      "zh": "葵花籽仁",
+      "ja": "ひまわりの種"
+    },
+    "aliases": [
+      "Sunflower Seed Kernels",
+      "sunflower_seed_kernels",
+      "sunflower seed kernels",
+      "Ay çekirdeği içi",
+      "ядра подсолнечника",
+      "semillas de girasol peladas",
+      "graines de tournesol décortiquées",
+      "لب بذور عباد الشمس"
+    ]
+  },
+  {
+    "id": "white_chia_seeds",
+    "category": "nuts_seeds",
+    "subcategory": "general",
+    "name": {
+      "en": "White Chia Seeds",
+      "tr": "Beyaz chia tohumu",
+      "ru": "белые семена чиа",
+      "ar": "بذور الشيا البيضاء",
+      "es": "semillas de chía blancas",
+      "pt": "sementes de chia branca",
+      "fr": "graines de chia blanches",
+      "de": "weiße Chiasamen",
+      "zh": "白奇亚籽",
+      "ja": "ホワイトチアシード"
+    },
+    "aliases": [
+      "White Chia Seeds",
+      "white_chia_seeds",
+      "white chia seeds",
+      "Beyaz chia tohumu",
+      "белые семена чиа",
+      "semillas de chía blancas",
+      "graines de chia blanches",
+      "بذور الشيا البيضاء"
+    ]
+  },
+  {
+    "id": "almond_oil",
+    "category": "oils_fats",
+    "subcategory": "general",
+    "name": {
+      "en": "Almond Oil",
+      "tr": "Badem yağı",
+      "ru": "миндальное масло",
+      "ar": "زيت اللوز",
+      "es": "aceite de almendra",
+      "pt": "óleo de amêndoa",
+      "fr": "huile d’amande",
+      "de": "Mandelöl",
+      "zh": "杏仁油",
+      "ja": "アーモンドオイル"
+    },
+    "aliases": [
+      "Almond Oil",
+      "almond_oil",
+      "almond oil",
+      "Badem yağı",
+      "миндальное масло",
+      "aceite de almendra",
+      "huile d’amande",
+      "زيت اللوز"
+    ]
+  },
+  {
+    "id": "avocado_oil",
+    "category": "oils_fats",
+    "subcategory": "general",
+    "name": {
+      "en": "Avocado Oil",
+      "tr": "Avokado yağı",
+      "ru": "масло авокадо",
+      "ar": "زيت الأفوكادو",
+      "es": "aceite de aguacate",
+      "pt": "óleo de abacate",
+      "fr": "huile d’avocat",
+      "de": "Avocadoöl",
+      "zh": "牛油果油",
+      "ja": "アボカドオイル"
+    },
+    "aliases": [
+      "Avocado Oil",
+      "avocado_oil",
+      "avocado oil",
+      "Avokado yağı",
+      "масло авокадо",
+      "aceite de aguacate",
+      "huile d’avocat",
+      "زيت الأفوكادو"
+    ]
+  },
+  {
+    "id": "duck_fat",
+    "category": "oils_fats",
+    "subcategory": "general",
+    "name": {
+      "en": "Duck Fat",
+      "tr": "Ördek yağı",
+      "ru": "утиный жир",
+      "ar": "دهن البط",
+      "es": "grasa de pato",
+      "pt": "gordura de pato",
+      "fr": "graisse de canard",
+      "de": "Entenfett",
+      "zh": "鸭油",
+      "ja": "鴨脂"
+    },
+    "aliases": [
+      "Duck Fat",
+      "duck_fat",
+      "duck fat",
+      "Ördek yağı",
+      "утиный жир",
+      "grasa de pato",
+      "graisse de canard",
+      "دهن البط"
+    ]
+  },
+  {
+    "id": "grapeseed_oil",
+    "category": "oils_fats",
+    "subcategory": "general",
+    "name": {
+      "en": "Grapeseed Oil",
+      "tr": "Üzüm çekirdeği yağı",
+      "ru": "масло виноградных косточек",
+      "ar": "زيت بذور العنب",
+      "es": "aceite de semilla de uva",
+      "pt": "óleo de semente de uva",
+      "fr": "huile de pépins de raisin",
+      "de": "Traubenkernöl",
+      "zh": "葡萄籽油",
+      "ja": "グレープシードオイル"
+    },
+    "aliases": [
+      "Grapeseed Oil",
+      "grapeseed_oil",
+      "grapeseed oil",
+      "Üzüm çekirdeği yağı",
+      "масло виноградных косточек",
+      "aceite de semilla de uva",
+      "huile de pépins de raisin",
+      "زيت بذور العنب"
+    ]
+  },
+  {
+    "id": "hazelnut_oil",
+    "category": "oils_fats",
+    "subcategory": "general",
+    "name": {
+      "en": "Hazelnut Oil",
+      "tr": "Fındık yağı",
+      "ru": "масло фундука",
+      "ar": "زيت البندق",
+      "es": "aceite de avellana",
+      "pt": "óleo de avelã",
+      "fr": "huile de noisette",
+      "de": "Haselnussöl",
+      "zh": "榛子油",
+      "ja": "ヘーゼルナッツオイル"
+    },
+    "aliases": [
+      "Hazelnut Oil",
+      "hazelnut_oil",
+      "hazelnut oil",
+      "Fındık yağı",
+      "масло фундука",
+      "aceite de avellana",
+      "huile de noisette",
+      "زيت البندق"
+    ]
+  },
+  {
+    "id": "mustard_oil",
+    "category": "oils_fats",
+    "subcategory": "general",
+    "name": {
+      "en": "Mustard Oil",
+      "tr": "Hardal yağı",
+      "ru": "горчичное масло",
+      "ar": "زيت الخردل",
+      "es": "aceite de mostaza",
+      "pt": "óleo de mostarda",
+      "fr": "huile de moutarde",
+      "de": "Senföl",
+      "zh": "芥末油",
+      "ja": "マスタードオイル"
+    },
+    "aliases": [
+      "Mustard Oil",
+      "mustard_oil",
+      "mustard oil",
+      "Hardal yağı",
+      "горчичное масло",
+      "aceite de mostaza",
+      "huile de moutarde",
+      "زيت الخردل"
+    ]
+  },
+  {
+    "id": "rice_bran_oil",
+    "category": "oils_fats",
+    "subcategory": "general",
+    "name": {
+      "en": "Rice Bran Oil",
+      "tr": "Pirinç kepeği yağı",
+      "ru": "масло рисовых отрубей",
+      "ar": "زيت نخالة الأرز",
+      "es": "aceite de salvado de arroz",
+      "pt": "óleo de farelo de arroz",
+      "fr": "huile de son de riz",
+      "de": "Reiskleieöl",
+      "zh": "米糠油",
+      "ja": "米ぬか油"
+    },
+    "aliases": [
+      "Rice Bran Oil",
+      "rice_bran_oil",
+      "rice bran oil",
+      "Pirinç kepeği yağı",
+      "масло рисовых отрубей",
+      "aceite de salvado de arroz",
+      "huile de son de riz",
+      "زيت نخالة الأرز"
+    ]
+  },
+  {
+    "id": "walnut_oil",
+    "category": "oils_fats",
+    "subcategory": "general",
+    "name": {
+      "en": "Walnut Oil",
+      "tr": "Ceviz yağı",
+      "ru": "масло грецкого ореха",
+      "ar": "زيت الجوز",
+      "es": "aceite de nuez",
+      "pt": "óleo de noz",
+      "fr": "huile de noix",
+      "de": "Walnussöl",
+      "zh": "核桃油",
+      "ja": "くるみ油"
+    },
+    "aliases": [
+      "Walnut Oil",
+      "walnut_oil",
+      "walnut oil",
+      "Ceviz yağı",
+      "масло грецкого ореха",
+      "aceite de nuez",
+      "huile de noix",
+      "زيت الجوز"
+    ]
+  },
+  {
+    "id": "aji_amarillo_paste",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Aji Amarillo Paste",
+      "tr": "Aji amarillo ezmesi",
+      "ru": "паста ахи амарильо",
+      "ar": "معجون آخي أماريلو",
+      "es": "pasta de ají amarillo",
+      "pt": "pasta de aji amarillo",
+      "fr": "pâte d’aji amarillo",
+      "de": "Aji-Amarillo-Paste",
+      "zh": "黄辣椒酱",
+      "ja": "アヒアマリージョペースト"
+    },
+    "aliases": [
+      "Aji Amarillo Paste",
+      "aji_amarillo_paste",
+      "aji amarillo paste",
+      "Aji amarillo ezmesi",
+      "паста ахи амарильо",
+      "pasta de ají amarillo",
+      "pâte d’aji amarillo",
+      "معجون آخي أماريلو"
+    ]
+  },
+  {
+    "id": "banana_ketchup",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Banana Ketchup",
+      "tr": "Muz ketçabı",
+      "ru": "банановый кетчуп",
+      "ar": "كاتشب الموز",
+      "es": "kétchup de banana",
+      "pt": "ketchup de banana",
+      "fr": "ketchup de banane",
+      "de": "Bananenketchup",
+      "zh": "香蕉番茄酱",
+      "ja": "バナナケチャップ"
+    },
+    "aliases": [
+      "Banana Ketchup",
+      "banana_ketchup",
+      "banana ketchup",
+      "Muz ketçabı",
+      "банановый кетчуп",
+      "kétchup de banana",
+      "ketchup de banane",
+      "كاتشب الموز"
+    ]
+  },
+  {
+    "id": "black_bean_garlic_sauce",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Black Bean Garlic Sauce",
+      "tr": "Sarımsaklı siyah fasulye sosu",
+      "ru": "чесночный соус из черных бобов",
+      "ar": "صلصة الفاصوليا السوداء بالثوم",
+      "es": "salsa de frijol negro con ajo",
+      "pt": "molho de feijão preto com alho",
+      "fr": "sauce haricots noirs et ail",
+      "de": "Schwarze-Bohnen-Knoblauch-Sauce",
+      "zh": "蒜蓉豆豉酱",
+      "ja": "黒豆にんにくソース"
+    },
+    "aliases": [
+      "Black Bean Garlic Sauce",
+      "black_bean_garlic_sauce",
+      "black bean garlic sauce",
+      "Sarımsaklı siyah fasulye sosu",
+      "чесночный соус из черных бобов",
+      "salsa de frijol negro con ajo",
+      "sauce haricots noirs et ail",
+      "صلصة الفاصوليا السوداء بالثوم"
+    ]
+  },
+  {
+    "id": "chili_crisp",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Chili Crisp",
+      "tr": "Çıtır acı yağ sosu",
+      "ru": "чили крисп",
+      "ar": "تشيلي كريسب",
+      "es": "chili crisp",
+      "pt": "chili crisp",
+      "fr": "chili crisp",
+      "de": "Chili Crisp",
+      "zh": "辣椒脆油",
+      "ja": "チリクリスプ"
+    },
+    "aliases": [
+      "Chili Crisp",
+      "chili_crisp",
+      "chili crisp",
+      "Çıtır acı yağ sosu",
+      "чили крисп",
+      "تشيلي كريسب"
+    ]
+  },
+  {
+    "id": "coconut_aminos",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Coconut Aminos",
+      "tr": "Hindistan cevizi aminosu",
+      "ru": "кокосовые аминосы",
+      "ar": "أمينوس جوز الهند",
+      "es": "aminos de coco",
+      "pt": "aminos de coco",
+      "fr": "aminos de coco",
+      "de": "Kokos-Aminos",
+      "zh": "椰子氨基酸调味汁",
+      "ja": "ココナッツアミノ"
+    },
+    "aliases": [
+      "Coconut Aminos",
+      "coconut_aminos",
+      "coconut aminos",
+      "Hindistan cevizi aminosu",
+      "кокосовые аминосы",
+      "aminos de coco",
+      "أمينوس جوز الهند"
+    ]
+  },
+  {
+    "id": "date_syrup",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Date Syrup",
+      "tr": "Hurma şurubu",
+      "ru": "финиковый сироп",
+      "ar": "دبس التمر",
+      "es": "sirope de dátil",
+      "pt": "xarope de tâmaras",
+      "fr": "sirop de datte",
+      "de": "Dattelsirup",
+      "zh": "枣糖浆",
+      "ja": "デーツシロップ"
+    },
+    "aliases": [
+      "Date Syrup",
+      "date_syrup",
+      "date syrup",
+      "Hurma şurubu",
+      "финиковый сироп",
+      "sirope de dátil",
+      "sirop de datte",
+      "دبس التمر"
+    ]
+  },
+  {
+    "id": "doubanjiang",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Doubanjiang",
+      "tr": "Doubanjiang fasulye ezmesi",
+      "ru": "доубаньцзян",
+      "ar": "دوبانجيانغ",
+      "es": "doubanjiang",
+      "pt": "doubanjiang",
+      "fr": "doubanjiang",
+      "de": "Doubanjiang",
+      "zh": "豆瓣酱",
+      "ja": "豆板醤"
+    },
+    "aliases": [
+      "Doubanjiang",
+      "doubanjiang",
+      "Doubanjiang fasulye ezmesi",
+      "доубаньцзян",
+      "دوبانجيانغ"
+    ]
+  },
+  {
+    "id": "green_curry_paste",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Green Curry Paste",
+      "tr": "Yeşil köri ezmesi",
+      "ru": "зеленая паста карри",
+      "ar": "معجون الكاري الأخضر",
+      "es": "pasta de curry verde",
+      "pt": "pasta de curry verde",
+      "fr": "pâte de curry vert",
+      "de": "grüne Currypaste",
+      "zh": "绿咖喱酱",
+      "ja": "グリーンカレーペースト"
+    },
+    "aliases": [
+      "Green Curry Paste",
+      "green_curry_paste",
+      "green curry paste",
+      "Yeşil köri ezmesi",
+      "зеленая паста карри",
+      "pasta de curry verde",
+      "pâte de curry vert",
+      "معجون الكاري الأخضر"
+    ]
+  },
+  {
+    "id": "harissa_paste",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Harissa Paste",
+      "tr": "Harissa ezmesi",
+      "ru": "паста харисса",
+      "ar": "معجون الهريسة",
+      "es": "pasta harissa",
+      "pt": "pasta de harissa",
+      "fr": "pâte de harissa",
+      "de": "Harissapaste",
+      "zh": "哈里萨辣酱",
+      "ja": "ハリッサペースト"
+    },
+    "aliases": [
+      "Harissa Paste",
+      "harissa_paste",
+      "harissa paste",
+      "Harissa ezmesi",
+      "паста харисса",
+      "pasta harissa",
+      "pâte de harissa",
+      "معجون الهريسة"
+    ]
+  },
+  {
+    "id": "hoisin_sauce",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Hoisin Sauce",
+      "tr": "Hoisin sosu",
+      "ru": "соус хойсин",
+      "ar": "صلصة هويسن",
+      "es": "salsa hoisin",
+      "pt": "molho hoisin",
+      "fr": "sauce hoisin",
+      "de": "Hoisin-Sauce",
+      "zh": "海鲜酱",
+      "ja": "ホイシンソース"
+    },
+    "aliases": [
+      "Hoisin Sauce",
+      "hoisin_sauce",
+      "hoisin sauce",
+      "Hoisin sosu",
+      "соус хойсин",
+      "salsa hoisin",
+      "sauce hoisin",
+      "صلصة هويسن"
+    ]
+  },
+  {
+    "id": "kecap_manis",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Kecap Manis",
+      "tr": "Tatlı soya sosu",
+      "ru": "сладкий соевый соус",
+      "ar": "صلصة صويا حلوة",
+      "es": "kecap manis",
+      "pt": "kecap manis",
+      "fr": "kecap manis",
+      "de": "Kecap Manis",
+      "zh": "印尼甜酱油",
+      "ja": "ケチャップマニス"
+    },
+    "aliases": [
+      "Kecap Manis",
+      "kecap_manis",
+      "kecap manis",
+      "Tatlı soya sosu",
+      "сладкий соевый соус",
+      "صلصة صويا حلوة"
+    ]
+  },
+  {
+    "id": "ponzu_sauce",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Ponzu Sauce",
+      "tr": "Ponzu sosu",
+      "ru": "соус понзу",
+      "ar": "صلصة بونزو",
+      "es": "salsa ponzu",
+      "pt": "molho ponzu",
+      "fr": "sauce ponzu",
+      "de": "Ponzu-Sauce",
+      "zh": "柚子醋酱油",
+      "ja": "ポン酢"
+    },
+    "aliases": [
+      "Ponzu Sauce",
+      "ponzu_sauce",
+      "ponzu sauce",
+      "Ponzu sosu",
+      "соус понзу",
+      "salsa ponzu",
+      "sauce ponzu",
+      "صلصة بونزو"
+    ]
+  },
+  {
+    "id": "tamarind_chutney",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Tamarind Chutney",
+      "tr": "Demirhindi chutney",
+      "ru": "тамариндовый чатни",
+      "ar": "صلصة تمر هندي",
+      "es": "chutney de tamarindo",
+      "pt": "chutney de tamarindo",
+      "fr": "chutney de tamarin",
+      "de": "Tamarinden-Chutney",
+      "zh": "罗望子酸甜酱",
+      "ja": "タマリンドチャツネ"
+    },
+    "aliases": [
+      "Tamarind Chutney",
+      "tamarind_chutney",
+      "tamarind chutney",
+      "Demirhindi chutney",
+      "тамариндовый чатни",
+      "chutney de tamarindo",
+      "chutney de tamarin",
+      "صلصة تمر هندي"
+    ]
+  },
+  {
+    "id": "umeboshi_paste",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Umeboshi Paste",
+      "tr": "Umeboshi ezmesi",
+      "ru": "паста умэбоси",
+      "ar": "معجون أوميبوشي",
+      "es": "pasta de umeboshi",
+      "pt": "pasta de umeboshi",
+      "fr": "pâte d’umeboshi",
+      "de": "Umeboshi-Paste",
+      "zh": "梅干酱",
+      "ja": "梅干しペースト"
+    },
+    "aliases": [
+      "Umeboshi Paste",
+      "umeboshi_paste",
+      "umeboshi paste",
+      "Umeboshi ezmesi",
+      "паста умэбоси",
+      "pasta de umeboshi",
+      "pâte d’umeboshi",
+      "معجون أوميبوشي"
+    ]
+  },
+  {
+    "id": "yuzu_kosho",
+    "category": "sauces_condiments",
+    "subcategory": "general",
+    "name": {
+      "en": "Yuzu Kosho",
+      "tr": "Yuzu kosho",
+      "ru": "юдзу кошо",
+      "ar": "يوزو كوشو",
+      "es": "yuzu kosho",
+      "pt": "yuzu kosho",
+      "fr": "yuzu kosho",
+      "de": "Yuzu Kosho",
+      "zh": "柚子胡椒",
+      "ja": "柚子胡椒"
+    },
+    "aliases": [
+      "Yuzu Kosho",
+      "yuzu_kosho",
+      "yuzu kosho",
+      "Yuzu kosho",
+      "юдзу кошо",
+      "يوزو كوشو"
+    ]
+  },
+  {
+    "id": "agar_agar_powder",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Agar Agar Powder",
+      "tr": "Agar agar tozu",
+      "ru": "порошок агар-агара",
+      "ar": "مسحوق الآغار",
+      "es": "agar agar en polvo",
+      "pt": "agar agar em pó",
+      "fr": "agar-agar en poudre",
+      "de": "Agar-Agar-Pulver",
+      "zh": "琼脂粉",
+      "ja": "寒天パウダー"
+    },
+    "aliases": [
+      "Agar Agar Powder",
+      "agar_agar_powder",
+      "agar agar powder",
+      "Agar agar tozu",
+      "порошок агар-агара",
+      "agar agar en polvo",
+      "agar-agar en poudre",
+      "مسحوق الآغار"
+    ]
+  },
+  {
+    "id": "barley_malt_syrup",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Barley Malt Syrup",
+      "tr": "Arpa malt şurubu",
+      "ru": "ячменный солодовый сироп",
+      "ar": "شراب الشعير المملح",
+      "es": "sirope de malta de cebada",
+      "pt": "xarope de malte de cevada",
+      "fr": "sirop de malt d’orge",
+      "de": "Gerstenmalzsirup",
+      "zh": "大麦麦芽糖浆",
+      "ja": "大麦モルトシロップ"
+    },
+    "aliases": [
+      "Barley Malt Syrup",
+      "barley_malt_syrup",
+      "barley malt syrup",
+      "Arpa malt şurubu",
+      "ячменный солодовый сироп",
+      "sirope de malta de cebada",
+      "sirop de malt d’orge",
+      "شراب الشعير المملح"
+    ]
+  },
+  {
+    "id": "blackstrap_molasses",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Blackstrap Molasses",
+      "tr": "Koyu melas",
+      "ru": "черная патока",
+      "ar": "دبس أسود",
+      "es": "melaza negra",
+      "pt": "melaço escuro",
+      "fr": "mélasse noire",
+      "de": "Blackstrap-Melasse",
+      "zh": "黑糖蜜",
+      "ja": "ブラックストラップモラセス"
+    },
+    "aliases": [
+      "Blackstrap Molasses",
+      "blackstrap_molasses",
+      "blackstrap molasses",
+      "Koyu melas",
+      "черная патока",
+      "melaza negra",
+      "mélasse noire",
+      "دبس أسود"
+    ]
+  },
+  {
+    "id": "cake_flour",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Cake Flour",
+      "tr": "Kek unu",
+      "ru": "мука для тортов",
+      "ar": "دقيق الكيك",
+      "es": "harina para pastel",
+      "pt": "farinha para bolo",
+      "fr": "farine à gâteau",
+      "de": "Kuchenmehl",
+      "zh": "低筋面粉",
+      "ja": "ケーキフラワー"
+    },
+    "aliases": [
+      "Cake Flour",
+      "cake_flour",
+      "cake flour",
+      "Kek unu",
+      "мука для тортов",
+      "harina para pastel",
+      "farine à gâteau",
+      "دقيق الكيك"
+    ]
+  },
+  {
+    "id": "cream_of_tartar",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Cream of Tartar",
+      "tr": "Tartar kremi",
+      "ru": "винный камень",
+      "ar": "كريم التارتار",
+      "es": "cremor tártaro",
+      "pt": "cremor de tártaro",
+      "fr": "crème de tartre",
+      "de": "Weinstein",
+      "zh": "塔塔粉",
+      "ja": "クリームオブターター"
+    },
+    "aliases": [
+      "Cream of Tartar",
+      "cream_of_tartar",
+      "cream of tartar",
+      "Tartar kremi",
+      "винный камень",
+      "cremor tártaro",
+      "crème de tartre",
+      "كريم التارتار"
+    ]
+  },
+  {
+    "id": "demerara_sugar",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Demerara Sugar",
+      "tr": "Demerara şekeri",
+      "ru": "сахар демерара",
+      "ar": "سكر ديميرارا",
+      "es": "azúcar demerara",
+      "pt": "açúcar demerara",
+      "fr": "sucre demerara",
+      "de": "Demerara-Zucker",
+      "zh": "德梅拉拉糖",
+      "ja": "デメララ糖"
+    },
+    "aliases": [
+      "Demerara Sugar",
+      "demerara_sugar",
+      "demerara sugar",
+      "Demerara şekeri",
+      "сахар демерара",
+      "azúcar demerara",
+      "sucre demerara",
+      "سكر ديميرارا"
+    ]
+  },
+  {
+    "id": "glucose_syrup",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Glucose Syrup",
+      "tr": "Glikoz şurubu",
+      "ru": "глюкозный сироп",
+      "ar": "شراب الجلوكوز",
+      "es": "jarabe de glucosa",
+      "pt": "xarope de glicose",
+      "fr": "sirop de glucose",
+      "de": "Glukosesirup",
+      "zh": "葡萄糖浆",
+      "ja": "グルコースシロップ"
+    },
+    "aliases": [
+      "Glucose Syrup",
+      "glucose_syrup",
+      "glucose syrup",
+      "Glikoz şurubu",
+      "глюкозный сироп",
+      "jarabe de glucosa",
+      "sirop de glucose",
+      "شراب الجلوكوز"
+    ]
+  },
+  {
+    "id": "muscovado_sugar",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Muscovado Sugar",
+      "tr": "Muscovado şekeri",
+      "ru": "сахар мусковадо",
+      "ar": "سكر موسكوفادو",
+      "es": "azúcar muscovado",
+      "pt": "açúcar mascavo muscovado",
+      "fr": "sucre muscovado",
+      "de": "Muscovado-Zucker",
+      "zh": "穆斯科瓦多糖",
+      "ja": "マスコバド糖"
+    },
+    "aliases": [
+      "Muscovado Sugar",
+      "muscovado_sugar",
+      "muscovado sugar",
+      "Muscovado şekeri",
+      "сахар мусковадо",
+      "azúcar muscovado",
+      "sucre muscovado",
+      "سكر موسكوفادو"
+    ]
+  },
+  {
+    "id": "orange_blossom_water",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Orange Blossom Water",
+      "tr": "Portakal çiçeği suyu",
+      "ru": "вода апельсинового цвета",
+      "ar": "ماء زهر البرتقال",
+      "es": "agua de azahar",
+      "pt": "água de flor de laranjeira",
+      "fr": "eau de fleur d’oranger",
+      "de": "Orangenblütenwasser",
+      "zh": "橙花水",
+      "ja": "オレンジブロッサムウォーター"
+    },
+    "aliases": [
+      "Orange Blossom Water",
+      "orange_blossom_water",
+      "orange blossom water",
+      "Portakal çiçeği suyu",
+      "вода апельсинового цвета",
+      "agua de azahar",
+      "eau de fleur d’oranger",
+      "ماء زهر البرتقال"
+    ]
+  },
+  {
+    "id": "pearl_sugar",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Pearl Sugar",
+      "tr": "İnci şeker",
+      "ru": "жемчужный сахар",
+      "ar": "سكر اللؤلؤ",
+      "es": "azúcar perlado",
+      "pt": "açúcar perolado",
+      "fr": "sucre perlé",
+      "de": "Hagelzucker",
+      "zh": "珍珠糖",
+      "ja": "パールシュガー"
+    },
+    "aliases": [
+      "Pearl Sugar",
+      "pearl_sugar",
+      "pearl sugar",
+      "İnci şeker",
+      "жемчужный сахар",
+      "azúcar perlado",
+      "sucre perlé",
+      "سكر اللؤلؤ"
+    ]
+  },
+  {
+    "id": "rice_syrup",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Rice Syrup",
+      "tr": "Pirinç şurubu",
+      "ru": "рисовый сироп",
+      "ar": "شراب الأرز",
+      "es": "sirope de arroz",
+      "pt": "xarope de arroz",
+      "fr": "sirop de riz",
+      "de": "Reissirup",
+      "zh": "米糖浆",
+      "ja": "ライスシロップ"
+    },
+    "aliases": [
+      "Rice Syrup",
+      "rice_syrup",
+      "rice syrup",
+      "Pirinç şurubu",
+      "рисовый сироп",
+      "sirope de arroz",
+      "sirop de riz",
+      "شراب الأرز"
+    ]
+  },
+  {
+    "id": "vanilla_bean_paste",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Vanilla Bean Paste",
+      "tr": "Vanilya çubuğu ezmesi",
+      "ru": "паста ванильных бобов",
+      "ar": "معجون الفانيليا",
+      "es": "pasta de vainilla",
+      "pt": "pasta de baunilha",
+      "fr": "pâte de vanille",
+      "de": "Vanillepaste",
+      "zh": "香草豆膏",
+      "ja": "バニラビーンズペースト"
+    },
+    "aliases": [
+      "Vanilla Bean Paste",
+      "vanilla_bean_paste",
+      "vanilla bean paste",
+      "Vanilya çubuğu ezmesi",
+      "паста ванильных бобов",
+      "pasta de vainilla",
+      "pâte de vanille",
+      "معجون الفانيليا"
+    ]
+  },
+  {
+    "id": "ajwain_seeds",
+    "category": "herbs_spices",
+    "subcategory": "general",
+    "name": {
+      "en": "Ajwain Seeds",
+      "tr": "Ajwain tohumu",
+      "ru": "семена ажгона",
+      "ar": "بذور الأجوين",
+      "es": "semillas de ajwain",
+      "pt": "sementes de ajwain",
+      "fr": "graines d’ajwain",
+      "de": "Ajowan-Samen",
+      "zh": "印度藏茴香籽",
+      "ja": "アジョワンシード"
+    },
+    "aliases": [
+      "Ajwain Seeds",
+      "ajwain_seeds",
+      "ajwain seeds",
+      "Ajwain tohumu",
+      "семена ажгона",
+      "semillas de ajwain",
+      "graines d’ajwain",
+      "بذور الأجوين"
+    ]
+  },
+  {
+    "id": "asafoetida_powder",
+    "category": "herbs_spices",
+    "subcategory": "general",
+    "name": {
+      "en": "Asafoetida Powder",
+      "tr": "Asafetida tozu",
+      "ru": "порошок асафетиды",
+      "ar": "مسحوق الحلتيت",
+      "es": "asafétida en polvo",
+      "pt": "asafoetida em pó",
+      "fr": "asafoetida en poudre",
+      "de": "Asantpulver",
+      "zh": "阿魏粉",
+      "ja": "ヒングパウダー"
+    },
+    "aliases": [
+      "Asafoetida Powder",
+      "asafoetida_powder",
+      "asafoetida powder",
+      "Asafetida tozu",
+      "порошок асафетиды",
+      "asafétida en polvo",
+      "asafoetida en poudre",
+      "مسحوق الحلتيت"
+    ]
+  },
+  {
+    "id": "epazote",
+    "category": "herbs_spices",
+    "subcategory": "general",
+    "name": {
+      "en": "Epazote",
+      "tr": "Epazote otu",
+      "ru": "эпазот",
+      "ar": "إيبازوت",
+      "es": "epazote",
+      "pt": "epazote",
+      "fr": "épazote",
+      "de": "Epazote",
+      "zh": "土荆芥",
+      "ja": "エパソーテ"
+    },
+    "aliases": [
+      "Epazote",
+      "epazote",
+      "Epazote otu",
+      "эпазот",
+      "épazote",
+      "إيبازوت"
+    ]
+  },
+  {
+    "id": "fenugreek_leaves",
+    "category": "herbs_spices",
+    "subcategory": "general",
+    "name": {
+      "en": "Fenugreek Leaves",
+      "tr": "Çemen otu yaprağı",
+      "ru": "листья пажитника",
+      "ar": "أوراق الحلبة",
+      "es": "hojas de fenogreco",
+      "pt": "folhas de feno-grego",
+      "fr": "feuilles de fenugrec",
+      "de": "Bockshornkleeblätter",
+      "zh": "葫芦巴叶",
+      "ja": "フェヌグリークリーフ"
+    },
+    "aliases": [
+      "Fenugreek Leaves",
+      "fenugreek_leaves",
+      "fenugreek leaves",
+      "Çemen otu yaprağı",
+      "листья пажитника",
+      "hojas de fenogreco",
+      "feuilles de fenugrec",
+      "أوراق الحلبة"
+    ]
+  },
+  {
+    "id": "nigella_seeds",
+    "category": "herbs_spices",
+    "subcategory": "general",
+    "name": {
+      "en": "Nigella Seeds",
+      "tr": "Çörek otu",
+      "ru": "семена нигеллы",
+      "ar": "حبة البركة",
+      "es": "semillas de nigella",
+      "pt": "sementes de nigella",
+      "fr": "graines de nigelle",
+      "de": "Schwarzkümmel",
+      "zh": "黑种草籽",
+      "ja": "ニゲラシード"
+    },
+    "aliases": [
+      "Nigella Seeds",
+      "nigella_seeds",
+      "nigella seeds",
+      "Çörek otu",
+      "семена нигеллы",
+      "semillas de nigella",
+      "graines de nigelle",
+      "حبة البركة"
+    ]
+  },
+  {
+    "id": "sumac",
+    "category": "herbs_spices",
+    "subcategory": "general",
+    "name": {
+      "en": "Sumac",
+      "tr": "Sumak",
+      "ru": "сумах",
+      "ar": "سماق",
+      "es": "zumaque",
+      "pt": "sumagre",
+      "fr": "sumac",
+      "de": "Sumach",
+      "zh": "漆树香料",
+      "ja": "スマック"
+    },
+    "aliases": [
+      "Sumac",
+      "sumac",
+      "Sumak",
+      "сумах",
+      "zumaque",
+      "سماق"
+    ]
+  }
+]

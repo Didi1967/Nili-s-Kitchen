@@ -33,6 +33,33 @@
     ]
   },
   {
+    "id": "amaranth_flour",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Amaranth Flour",
+      "tr": "Amarant unu",
+      "ru": "амарантовая мука",
+      "ar": "دقيق القطيفة",
+      "es": "harina de amaranto",
+      "pt": "farinha de amaranto",
+      "fr": "farine d’amarante",
+      "de": "Amaranthmehl",
+      "zh": "苋菜籽粉",
+      "ja": "アマランサス粉"
+    },
+    "aliases": [
+      "Amaranth Flour",
+      "amaranth_flour",
+      "amaranth flour",
+      "Amarant unu",
+      "амарантовая мука",
+      "harina de amaranto",
+      "farine d’amarante",
+      "دقيق القطيفة"
+    ]
+  },
+  {
     "id": "arborio_rice",
     "category": "grains_bakery",
     "subcategory": "general",
@@ -414,6 +441,33 @@
     ]
   },
   {
+    "id": "buckwheat_noodles",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Buckwheat Noodles",
+      "tr": "Karabuğday eriştesi",
+      "ru": "гречневая лапша",
+      "ar": "نودلز الحنطة السوداء",
+      "es": "fideos de trigo sarraceno",
+      "pt": "macarrão de trigo-sarraceno",
+      "fr": "nouilles de sarrasin",
+      "de": "Buchweizennudeln",
+      "zh": "荞麦面",
+      "ja": "そば麺"
+    },
+    "aliases": [
+      "Buckwheat Noodles",
+      "buckwheat_noodles",
+      "buckwheat noodles",
+      "Karabuğday eriştesi",
+      "гречневая лапша",
+      "fideos de trigo sarraceno",
+      "nouilles de sarrasin",
+      "نودلز الحنطة السوداء"
+    ]
+  },
+  {
     "id": "bulgur",
     "category": "grains_bakery",
     "subcategory": "bulgur_couscous",
@@ -615,6 +669,33 @@
     ]
   },
   {
+    "id": "corn_tortilla",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Corn Tortilla",
+      "tr": "Mısır tortilla",
+      "ru": "кукурузная тортилья",
+      "ar": "تورتيلا الذرة",
+      "es": "tortilla de maíz",
+      "pt": "tortilha de milho",
+      "fr": "tortilla de maïs",
+      "de": "Maistortilla",
+      "zh": "玉米饼",
+      "ja": "コーントルティーヤ"
+    },
+    "aliases": [
+      "Corn Tortilla",
+      "corn_tortilla",
+      "corn tortilla",
+      "Mısır tortilla",
+      "кукурузная тортилья",
+      "tortilla de maíz",
+      "tortilla de maïs",
+      "تورتيلا الذرة"
+    ]
+  },
+  {
     "id": "cornmeal",
     "category": "grains_bakery",
     "subcategory": "cornmeal",
@@ -714,6 +795,33 @@
     ]
   },
   {
+    "id": "durum_wheat_semolina",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Durum Wheat Semolina",
+      "tr": "Durum buğday irmiği",
+      "ru": "манная крупа из твердых сортов пшеницы",
+      "ar": "سميد القمح القاسي",
+      "es": "sémola de trigo duro",
+      "pt": "sêmola de trigo duro",
+      "fr": "semoule de blé dur",
+      "de": "Hartweizengrieß",
+      "zh": "杜伦小麦粗粒粉",
+      "ja": "デュラム小麦セモリナ"
+    },
+    "aliases": [
+      "Durum Wheat Semolina",
+      "durum_wheat_semolina",
+      "durum wheat semolina",
+      "Durum buğday irmiği",
+      "манная крупа из твердых сортов пшеницы",
+      "sémola de trigo duro",
+      "semoule de blé dur",
+      "سميد القمح القاسي"
+    ]
+  },
+  {
     "id": "egg_noodles",
     "category": "grains_bakery",
     "subcategory": "general",
@@ -744,6 +852,33 @@
       "Huevo Fideos",
       "œuf nouilles",
       "Œuf Nouilles"
+    ]
+  },
+  {
+    "id": "einkorn_flour",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Einkorn Flour",
+      "tr": "Siyez unu",
+      "ru": "мука из однозернянки",
+      "ar": "دقيق القمح وحيد الحبة",
+      "es": "harina de escaña",
+      "pt": "farinha de einkorn",
+      "fr": "farine de petit épeautre",
+      "de": "Einkornmehl",
+      "zh": "一粒小麦粉",
+      "ja": "アインコーン小麦粉"
+    },
+    "aliases": [
+      "Einkorn Flour",
+      "einkorn_flour",
+      "einkorn flour",
+      "Siyez unu",
+      "мука из однозернянки",
+      "harina de escaña",
+      "farine de petit épeautre",
+      "دقيق القمح وحيد الحبة"
     ]
   },
   {
@@ -911,6 +1046,30 @@
     ]
   },
   {
+    "id": "freekeh",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Freekeh",
+      "tr": "Firik bulguru",
+      "ru": "фрике",
+      "ar": "فريكة",
+      "es": "freekeh",
+      "pt": "freekeh",
+      "fr": "freekeh",
+      "de": "Freekeh",
+      "zh": "青麦粒",
+      "ja": "フリーカ"
+    },
+    "aliases": [
+      "Freekeh",
+      "freekeh",
+      "Firik bulguru",
+      "фрике",
+      "فريكة"
+    ]
+  },
+  {
     "id": "fusilli",
     "category": "grains_bakery",
     "subcategory": "general",
@@ -975,6 +1134,33 @@
       "glass fideos",
       "Glass Noodle",
       "Glass Macarrão"
+    ]
+  },
+  {
+    "id": "glutinous_rice_flour",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Glutinous Rice Flour",
+      "tr": "Yapışkan pirinç unu",
+      "ru": "клейкая рисовая мука",
+      "ar": "دقيق الأرز اللزج",
+      "es": "harina de arroz glutinoso",
+      "pt": "farinha de arroz glutinoso",
+      "fr": "farine de riz gluant",
+      "de": "Klebreismehl",
+      "zh": "糯米粉",
+      "ja": "もち米粉"
+    },
+    "aliases": [
+      "Glutinous Rice Flour",
+      "glutinous_rice_flour",
+      "glutinous rice flour",
+      "Yapışkan pirinç unu",
+      "клейкая рисовая мука",
+      "harina de arroz glutinoso",
+      "farine de riz gluant",
+      "دقيق الأرز اللزج"
     ]
   },
   {
@@ -1063,6 +1249,33 @@
       "jasmine pirinç",
       "jasmine_rice",
       "Jasmine أرز"
+    ]
+  },
+  {
+    "id": "kamut_grain",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Kamut Grain",
+      "tr": "Kamut buğdayı",
+      "ru": "камут",
+      "ar": "قمح كاموت",
+      "es": "grano kamut",
+      "pt": "grão kamut",
+      "fr": "grain de kamut",
+      "de": "Kamutkorn",
+      "zh": "卡姆小麦",
+      "ja": "カムット小麦"
+    },
+    "aliases": [
+      "Kamut Grain",
+      "kamut_grain",
+      "kamut grain",
+      "Kamut buğdayı",
+      "камут",
+      "grano kamut",
+      "grain de kamut",
+      "قمح كاموت"
     ]
   },
   {
@@ -1220,6 +1433,33 @@
     ]
   },
   {
+    "id": "matzo_meal",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Matzo Meal",
+      "tr": "Matzo unu",
+      "ru": "мука мацы",
+      "ar": "دقيق ماتزو",
+      "es": "harina de matzá",
+      "pt": "farinha de matzá",
+      "fr": "farine de matsa",
+      "de": "Matzenmehl",
+      "zh": "无酵饼粉",
+      "ja": "マッツォ粉"
+    },
+    "aliases": [
+      "Matzo Meal",
+      "matzo_meal",
+      "matzo meal",
+      "Matzo unu",
+      "мука мацы",
+      "harina de matzá",
+      "farine de matsa",
+      "دقيق ماتزو"
+    ]
+  },
+  {
     "id": "millet",
     "category": "grains_bakery",
     "subcategory": "general",
@@ -1250,6 +1490,33 @@
       "millet grão",
       "Millet tahıl ürünü",
       "зерновой продукт millet"
+    ]
+  },
+  {
+    "id": "millet_flour",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Millet Flour",
+      "tr": "Darı unu",
+      "ru": "пшенная мука",
+      "ar": "دقيق الدخن",
+      "es": "harina de mijo",
+      "pt": "farinha de painço",
+      "fr": "farine de millet",
+      "de": "Hirsemehl",
+      "zh": "小米粉",
+      "ja": "キビ粉"
+    },
+    "aliases": [
+      "Millet Flour",
+      "millet_flour",
+      "millet flour",
+      "Darı unu",
+      "пшенная мука",
+      "harina de mijo",
+      "farine de millet",
+      "دقيق الدخن"
     ]
   },
   {
@@ -1315,6 +1582,33 @@
       "Macarrão",
       "fideos",
       "Nouilles"
+    ]
+  },
+  {
+    "id": "oat_bran",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Oat Bran",
+      "tr": "Yulaf kepeği",
+      "ru": "овсяные отруби",
+      "ar": "نخالة الشوفان",
+      "es": "salvado de avena",
+      "pt": "farelo de aveia",
+      "fr": "son d’avoine",
+      "de": "Haferkleie",
+      "zh": "燕麦麸",
+      "ja": "オートブラン"
+    },
+    "aliases": [
+      "Oat Bran",
+      "oat_bran",
+      "oat bran",
+      "Yulaf kepeği",
+      "овсяные отруби",
+      "salvado de avena",
+      "son d’avoine",
+      "نخالة الشوفان"
     ]
   },
   {
@@ -2059,6 +2353,33 @@
     ]
   },
   {
+    "id": "sourdough_breadcrumbs",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Sourdough Breadcrumbs",
+      "tr": "Ekşi mayalı ekmek kırıntısı",
+      "ru": "панировочные сухари из заквасочного хлеба",
+      "ar": "فتات خبز العجين المخمر",
+      "es": "pan rallado de masa madre",
+      "pt": "farinha de rosca de fermentação natural",
+      "fr": "chapelure de pain au levain",
+      "de": "Sauerteigsemmelbrösel",
+      "zh": "酸面包屑",
+      "ja": "サワードウパン粉"
+    },
+    "aliases": [
+      "Sourdough Breadcrumbs",
+      "sourdough_breadcrumbs",
+      "sourdough breadcrumbs",
+      "Ekşi mayalı ekmek kırıntısı",
+      "панировочные сухари из заквасочного хлеба",
+      "pan rallado de masa madre",
+      "chapelure de pain au levain",
+      "فتات خبز العجين المخمر"
+    ]
+  },
+  {
     "id": "spaghetti",
     "category": "grains_bakery",
     "subcategory": "pasta",
@@ -2177,6 +2498,33 @@
       "Sushi Рис",
       "Sushi Rice",
       "sushi рис"
+    ]
+  },
+  {
+    "id": "teff_flour",
+    "category": "grains_bakery",
+    "subcategory": "general",
+    "name": {
+      "en": "Teff Flour",
+      "tr": "Tef unu",
+      "ru": "теффовая мука",
+      "ar": "دقيق التيف",
+      "es": "harina de teff",
+      "pt": "farinha de teff",
+      "fr": "farine de teff",
+      "de": "Teffmehl",
+      "zh": "苔麸粉",
+      "ja": "テフ粉"
+    },
+    "aliases": [
+      "Teff Flour",
+      "teff_flour",
+      "teff flour",
+      "Tef unu",
+      "теффовая мука",
+      "harina de teff",
+      "farine de teff",
+      "دقيق التيف"
     ]
   },
   {

@@ -1,5 +1,32 @@
 [
   {
+    "id": "agar_agar_powder",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Agar Agar Powder",
+      "tr": "Agar agar tozu",
+      "ru": "порошок агар-агара",
+      "ar": "مسحوق الآغار",
+      "es": "agar agar en polvo",
+      "pt": "agar agar em pó",
+      "fr": "agar-agar en poudre",
+      "de": "Agar-Agar-Pulver",
+      "zh": "琼脂粉",
+      "ja": "寒天パウダー"
+    },
+    "aliases": [
+      "Agar Agar Powder",
+      "agar_agar_powder",
+      "agar agar powder",
+      "Agar agar tozu",
+      "порошок агар-агара",
+      "agar agar en polvo",
+      "agar-agar en poudre",
+      "مسحوق الآغار"
+    ]
+  },
+  {
     "id": "agave_syrup",
     "category": "sweeteners_baking",
     "subcategory": "general",
@@ -131,6 +158,60 @@
       "karbonat",
       "baking_soda",
       "bicarbonato de sodio"
+    ]
+  },
+  {
+    "id": "barley_malt_syrup",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Barley Malt Syrup",
+      "tr": "Arpa malt şurubu",
+      "ru": "ячменный солодовый сироп",
+      "ar": "شراب الشعير المملح",
+      "es": "sirope de malta de cebada",
+      "pt": "xarope de malte de cevada",
+      "fr": "sirop de malt d’orge",
+      "de": "Gerstenmalzsirup",
+      "zh": "大麦麦芽糖浆",
+      "ja": "大麦モルトシロップ"
+    },
+    "aliases": [
+      "Barley Malt Syrup",
+      "barley_malt_syrup",
+      "barley malt syrup",
+      "Arpa malt şurubu",
+      "ячменный солодовый сироп",
+      "sirope de malta de cebada",
+      "sirop de malt d’orge",
+      "شراب الشعير المملح"
+    ]
+  },
+  {
+    "id": "blackstrap_molasses",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Blackstrap Molasses",
+      "tr": "Koyu melas",
+      "ru": "черная патока",
+      "ar": "دبس أسود",
+      "es": "melaza negra",
+      "pt": "melaço escuro",
+      "fr": "mélasse noire",
+      "de": "Blackstrap-Melasse",
+      "zh": "黑糖蜜",
+      "ja": "ブラックストラップモラセス"
+    },
+    "aliases": [
+      "Blackstrap Molasses",
+      "blackstrap_molasses",
+      "blackstrap molasses",
+      "Koyu melas",
+      "черная патока",
+      "melaza negra",
+      "mélasse noire",
+      "دبس أسود"
     ]
   },
   {
@@ -503,6 +584,33 @@
     ]
   },
   {
+    "id": "demerara_sugar",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Demerara Sugar",
+      "tr": "Demerara şekeri",
+      "ru": "сахар демерара",
+      "ar": "سكر ديميرارا",
+      "es": "azúcar demerara",
+      "pt": "açúcar demerara",
+      "fr": "sucre demerara",
+      "de": "Demerara-Zucker",
+      "zh": "德梅拉拉糖",
+      "ja": "デメララ糖"
+    },
+    "aliases": [
+      "Demerara Sugar",
+      "demerara_sugar",
+      "demerara sugar",
+      "Demerara şekeri",
+      "сахар демерара",
+      "azúcar demerara",
+      "sucre demerara",
+      "سكر ديميرارا"
+    ]
+  },
+  {
     "id": "dry_yeast",
     "category": "sweeteners_baking",
     "subcategory": "general",
@@ -599,6 +707,33 @@
       "ингредиент для выпечки gelatin",
       "gelatin مكون خبز",
       "gelatin ingrediente de confeitaria"
+    ]
+  },
+  {
+    "id": "glucose_syrup",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Glucose Syrup",
+      "tr": "Glikoz şurubu",
+      "ru": "глюкозный сироп",
+      "ar": "شراب الجلوكوز",
+      "es": "jarabe de glucosa",
+      "pt": "xarope de glicose",
+      "fr": "sirop de glucose",
+      "de": "Glukosesirup",
+      "zh": "葡萄糖浆",
+      "ja": "グルコースシロップ"
+    },
+    "aliases": [
+      "Glucose Syrup",
+      "glucose_syrup",
+      "glucose syrup",
+      "Glikoz şurubu",
+      "глюкозный сироп",
+      "jarabe de glucosa",
+      "sirop de glucose",
+      "شراب الجلوكوز"
     ]
   },
   {
@@ -765,6 +900,87 @@
     ]
   },
   {
+    "id": "muscovado_sugar",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Muscovado Sugar",
+      "tr": "Muscovado şekeri",
+      "ru": "сахар мусковадо",
+      "ar": "سكر موسكوفادو",
+      "es": "azúcar muscovado",
+      "pt": "açúcar mascavo muscovado",
+      "fr": "sucre muscovado",
+      "de": "Muscovado-Zucker",
+      "zh": "穆斯科瓦多糖",
+      "ja": "マスコバド糖"
+    },
+    "aliases": [
+      "Muscovado Sugar",
+      "muscovado_sugar",
+      "muscovado sugar",
+      "Muscovado şekeri",
+      "сахар мусковадо",
+      "azúcar muscovado",
+      "sucre muscovado",
+      "سكر موسكوفادو"
+    ]
+  },
+  {
+    "id": "orange_blossom_water",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Orange Blossom Water",
+      "tr": "Portakal çiçeği suyu",
+      "ru": "вода апельсинового цвета",
+      "ar": "ماء زهر البرتقال",
+      "es": "agua de azahar",
+      "pt": "água de flor de laranjeira",
+      "fr": "eau de fleur d’oranger",
+      "de": "Orangenblütenwasser",
+      "zh": "橙花水",
+      "ja": "オレンジブロッサムウォーター"
+    },
+    "aliases": [
+      "Orange Blossom Water",
+      "orange_blossom_water",
+      "orange blossom water",
+      "Portakal çiçeği suyu",
+      "вода апельсинового цвета",
+      "agua de azahar",
+      "eau de fleur d’oranger",
+      "ماء زهر البرتقال"
+    ]
+  },
+  {
+    "id": "pearl_sugar",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Pearl Sugar",
+      "tr": "İnci şeker",
+      "ru": "жемчужный сахар",
+      "ar": "سكر اللؤلؤ",
+      "es": "azúcar perlado",
+      "pt": "açúcar perolado",
+      "fr": "sucre perlé",
+      "de": "Hagelzucker",
+      "zh": "珍珠糖",
+      "ja": "パールシュガー"
+    },
+    "aliases": [
+      "Pearl Sugar",
+      "pearl_sugar",
+      "pearl sugar",
+      "İnci şeker",
+      "жемчужный сахар",
+      "azúcar perlado",
+      "sucre perlé",
+      "سكر اللؤلؤ"
+    ]
+  },
+  {
     "id": "pectin",
     "category": "sweeteners_baking",
     "subcategory": "general",
@@ -828,6 +1044,33 @@
       "Powdered Sugar",
       "сахарная пудра",
       "Pudra Şekeri"
+    ]
+  },
+  {
+    "id": "rice_syrup",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Rice Syrup",
+      "tr": "Pirinç şurubu",
+      "ru": "рисовый сироп",
+      "ar": "شراب الأرز",
+      "es": "sirope de arroz",
+      "pt": "xarope de arroz",
+      "fr": "sirop de riz",
+      "de": "Reissirup",
+      "zh": "米糖浆",
+      "ja": "ライスシロップ"
+    },
+    "aliases": [
+      "Rice Syrup",
+      "rice_syrup",
+      "rice syrup",
+      "Pirinç şurubu",
+      "рисовый сироп",
+      "sirope de arroz",
+      "sirop de riz",
+      "شراب الأرز"
     ]
   },
   {
@@ -958,6 +1201,33 @@
       "vainilla",
       "Vanilya",
       "Ваниль"
+    ]
+  },
+  {
+    "id": "vanilla_bean_paste",
+    "category": "sweeteners_baking",
+    "subcategory": "general",
+    "name": {
+      "en": "Vanilla Bean Paste",
+      "tr": "Vanilya çubuğu ezmesi",
+      "ru": "паста ванильных бобов",
+      "ar": "معجون الفانيليا",
+      "es": "pasta de vainilla",
+      "pt": "pasta de baunilha",
+      "fr": "pâte de vanille",
+      "de": "Vanillepaste",
+      "zh": "香草豆膏",
+      "ja": "バニラビーンズペースト"
+    },
+    "aliases": [
+      "Vanilla Bean Paste",
+      "vanilla_bean_paste",
+      "vanilla bean paste",
+      "Vanilya çubuğu ezmesi",
+      "паста ванильных бобов",
+      "pasta de vainilla",
+      "pâte de vanille",
+      "معجون الفانيليا"
     ]
   },
   {
