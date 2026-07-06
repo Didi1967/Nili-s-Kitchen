@@ -6,9 +6,9 @@
   <title>World Cuisines | Nili's Kitchen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Manrope:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3093">
-  <link rel="stylesheet" href="world-cuisines.css?v=27">
+  <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@600;700;800&family=Lobster&family=Manrope:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3108">
+  <link rel="stylesheet" href="world-cuisines.css?v=46">
 </head>
 <body>
   <div class="wc-page-tools">
@@ -22,6 +22,21 @@
         <div class="nk-brand-inner">
           <div class="nk-logo-shell"><img src="logo.jpeg" alt="Nili's Kitchen" class="nk-logo"></div>
           <div class="nk-brand-text"><h1 class="nk-title">Nili's Kitchen</h1><p class="nk-subtitle" id="brandSub">World Cuisine Collection</p></div>
+        </div>
+        <div class="wc-mobile-brand-controls">
+          <div class="wc-mobile-account">
+            <button id="worldMobileUserButton" type="button"><span aria-hidden="true">&#128100;</span> <span id="worldMobileUserName">Login</span></button>
+            <div id="worldMobileUserMenu" class="wc-mobile-control-menu">
+              <a id="worldMobileDashboard" href="creator-dashboard.html">Dashboard</a>
+              <a id="worldMobileAddRecipe" href="creator.html">Add Recipe</a>
+              <a id="worldMobileHow" href="how-it-works.html">How It Works</a>
+              <button id="worldMobileLogout" type="button">Logout</button>
+            </div>
+          </div>
+          <div class="wc-mobile-language">
+            <button id="worldMobileLanguageButton" type="button">TR</button>
+            <div id="worldMobileLanguageMenu" class="wc-mobile-control-menu"></div>
+          </div>
         </div>
       </div>
 
@@ -50,20 +65,23 @@
 
         <div class="ad-media-box"><video autoplay muted loop playsinline controls><source src="./ad-video.mp4" type="video/mp4"></video></div>
 
-        <div class="join-area"><div class="nk-mini-card"><div class="nk-mini-icon">✨</div><div class="nk-mini-content"><h4 id="worldJoinTitle">Join Nili's Kitchen</h4><p id="worldJoinDesc">Save favorites, upload recipes and unlock creator features.</p></div><button id="worldJoinButton" type="button">Join Free</button></div></div>
+        <div class="join-area"><div class="nk-mini-card"><div class="nk-mini-icon nk-mini-icon-logo"><img src="logo.jpeg" alt="Nili's Kitchen"></div><div class="nk-mini-content"><h4 id="worldJoinTitle">Join Nili's Kitchen</h4><p id="worldJoinDesc">Save favorites, upload recipes and unlock creator features.</p></div><button id="worldJoinButton" type="button">Join Free</button></div></div>
         <div class="site-footer-note"><span id="worldFooter">© 2026 Nili's Kitchen AI. All rights reserved.</span></div>
       </div>
     </div>
   </aside>
 
   <div id="worldMobileFlow" class="wc-mobile-flow">
-    <div id="mobileDishSearchTitle" class="wc-mobile-section-title">Yemek ara</div>
+    <button id="mobileFeaturedButton" class="wc-mobile-featured-btn" type="button">
+      <span id="mobileFeaturedEyebrow">CURATED RESULTS</span>
+      <strong id="mobileFeaturedTitle">Recipes worth discovering</strong>
+    </button>
   </div>
 
   <main class="wc-main">
     <section class="wc-mosaic">
       <article class="wc-mosaic-main">
-        <img src="YEMEK-2.webp" alt="World cuisine">
+        <img src="japanese-nigiri-sushi-recipe-1749130962.jpg" alt="World cuisine">
         <div class="wc-mosaic-copy">
           <span id="mosaicEyebrow">A TABLE WITHOUT BORDERS</span>
           <h1 id="mosaicTitle">Discover the world's most loved dishes</h1>
@@ -75,13 +93,13 @@
             <strong id="heroSearchActionTitle">What are you craving?</strong>
           </button>
           <button type="button" id="heroResultsAction">
-            <span id="heroResultsActionEyebrow">CURATED RESULTS</span>
-            <strong id="heroResultsActionTitle">Recipes worth discovering</strong>
+            <span id="heroResultsActionEyebrow" style="color:#e7c77f;text-shadow:0 1px 2px rgba(0,0,0,.24);">CURATED RESULTS</span>
+            <strong id="heroResultsActionTitle" style="color:#fffaf0;text-shadow:0 1px 2px rgba(0,0,0,.24);">Recipes worth discovering</strong>
           </button>
         </div>
       </article>
-      <article class="wc-mosaic-small"><img src="YEMEK-4.webp" alt="Fresh world cuisine"><span id="mosaicCardOne">Fresh discoveries</span></article>
-      <article class="wc-mosaic-small"><img src="YEMEK-6.webp" alt="Healthy world cuisine"><span id="mosaicCardTwo">Cook around the world</span></article>
+      <article class="wc-mosaic-small"><img src="20250904-SEA-WhiteChocolateCheesecake-LorenaMasso-HERO-206c88529afb4abbb2ca8f114b1d0f2b.webp" alt="Fresh world cuisine"><span id="mosaicCardOne">Fresh discoveries</span></article>
+      <article class="wc-mosaic-small"><img src="amberg_121108_018.jpg" alt="Healthy world cuisine"><span id="mosaicCardTwo">Cook around the world</span></article>
     </section>
 
     <section class="wc-search-card">
@@ -96,12 +114,12 @@
           </form>
         </div>
         <div class="wc-search-gallery" aria-hidden="true">
-          <img src="YEMEK-2.webp" alt="">
-          <img src="YEMEK-4.webp" alt="">
-          <img src="YEMEK-6.webp" alt="">
-          <img src="YEMEK-4.webp" alt="">
-          <img src="YEMEK-6.webp" alt="">
-          <img src="YEMEK-2.webp" alt="">
+          <img src="CD_R315020_Buttery-Croissant_8998_preview-b9cb4afd77df47978601ec2438b95ce6.webp" alt="">
+          <img src="Little-Black-Pastry-Box-Authentic-French-Patisserie-Pastry-Desserts-Giftbox-Giftset-cake-Boite-de-gateaux-01_e13a8ce0-ba57-4390-a3e4-17dcadec2282.webp" alt="">
+          <img src="Old-Fashioned-Hamburger-Recipe-Simply-LaKita-5.jpg" alt="">
+          <img src="Doner-Kebabs-main.jpg" alt="">
+          <img src="Easy-Mediterranean-Pizza-Recipe-3-765x1148.jpg" alt="">
+          <img src="Tom_Yum_Goong_featuring_1-1.webp" alt="">
         </div>
       </div>
     </section>
@@ -136,6 +154,8 @@
       <div id="recipeModalBody"></div>
     </article>
   </div>
-  <script src="world-cuisines.js?v=26" defer></script>
+  <script src="world-cuisines.js?v=38" defer></script>
 </body>
 </html>
+
+

@@ -2,11 +2,58 @@ const API_BASE = ["localhost","127.0.0.1"].includes(location.hostname) || /^(192
   ? `http://${location.hostname}:3000` : "https://api.niliskitchen.com";
 
 const languages=["en","tr","ru","de","fr","es","pt","ar","ja","zh"];
+const languageFlags={en:"gb",tr:"tr",ru:"ru",de:"de",fr:"fr",es:"es",pt:"pt",ar:"sa",ja:"jp",zh:"cn"};
 const cuisineData=[
   ["turkey","tr"],["italy","it"],["mexico","mx"],["india","in"],["china","cn"],
   ["japan","jp"],["france","fr"],["greece","gr"],["usa","us"],["thailand","th"]
 ];
 const typeIds=["main course","meat","vegetarian","pasta","seafood","soup","salad","breakfast","dessert","appetizer"];
+const cuisineSearchHints={
+  turkey:"kebab",
+  italy:"pasta",
+  mexico:"tacos",
+  india:"curry",
+  china:"noodles",
+  japan:"sushi",
+  france:"croissant",
+  greece:"gyros",
+  usa:"burger",
+  thailand:"tom yum"
+};
+const typeSearchHints={
+  "main course":"dinner",
+  meat:"meat",
+  vegetarian:"vegetarian",
+  pasta:"pasta",
+  seafood:"seafood",
+  soup:"soup",
+  salad:"salad",
+  breakfast:"breakfast",
+  dessert:"dessert",
+  appetizer:"appetizer"
+};
+const weeklyCuratedSets=[
+  [
+    {query:"baklava",cuisine:"turkey",category:"dessert"},
+    {query:"pasta",cuisine:"italy",category:"pasta"},
+    {query:"ramen",cuisine:"japan",category:"soup"}
+  ],
+  [
+    {query:"tacos",cuisine:"mexico",category:"main course"},
+    {query:"curry",cuisine:"india",category:"main course"},
+    {query:"croissant",cuisine:"france",category:"breakfast"}
+  ],
+  [
+    {query:"noodles",cuisine:"china",category:"main course"},
+    {query:"gyros",cuisine:"greece",category:"meat"},
+    {query:"burger",cuisine:"usa",category:"main course"}
+  ],
+  [
+    {query:"tom yum",cuisine:"thailand",category:"soup"},
+    {query:"doner",cuisine:"turkey",category:"meat"},
+    {query:"sushi",cuisine:"japan",category:"seafood"}
+  ]
+];
 
 const copy={
 en:{brand:"World Cuisine Collection",home:"Home kitchen",ce:"EXPLORE BY COUNTRY",ct:"World cuisines",te:"WHAT TO COOK",tt:"Dish types",me:"A TABLE WITHOUT BORDERS",mt:"Discover the world's most loved dishes",mx:"Search by name, country or dish type. Every discovery grows Nili's recipe collection.",m1:"Fresh discoveries",m2:"Cook around the world",se:"FIND A DISH",st:"What are you craving?",ph:"Pizza, ramen, baklava...",find:"Find recipes",re:"CURATED RESULTS",rt:"Recipes worth discovering",idle:"Choose a country, dish type, or search by name.",loading:"Searching our collection and trusted recipe sources...",empty:"No recipes found. Try another choice.",error:"Recipes could not be loaded. Please try again.",ingredients:"Ingredients",instructions:"Preparation",servings:"servings",minutes:"min",source:"View original source",count:"recipes",countries:["Turkey","Italy","Mexico","India","China","Japan","France","Greece","USA","Thailand"],types:["Main dishes","Meat dishes","Vegetable dishes","Pasta","Seafood","Soups","Salads","Breakfast","Desserts","Appetizers"]},
@@ -45,12 +92,14 @@ let recipes=[];
 
 const $=id=>document.getElementById(id);
 const textMap={brandSub:"brand",cuisineEyebrow:"ce",cuisineTitle:"ct",typeEyebrow:"te",typeTitle:"tt",mosaicEyebrow:"me",mosaicTitle:"mt",mosaicText:"mx",mosaicCardOne:"m1",mosaicCardTwo:"m2",searchEyebrow:"se",searchTitle:"st",searchLead:"idle",searchButton:"find",resultsEyebrow:"re",resultsTitle:"rt"};
+const languageButtonHtml=value=>`<img src="https://flagcdn.com/w40/${languageFlags[value]}.png" alt="${value.toUpperCase()} flag"><span>${value.toUpperCase()}</span>`;
 
 function applyLanguage(){
   const t=copy[lang];
   document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";
   Object.entries(textMap).forEach(([id,key])=>{if($(id)) $(id).textContent=t[key]});
-  $("backHome").querySelector("span").textContent=t.home;$("worldQuery").placeholder=t.ph;$("languageButton").textContent=lang.toUpperCase();
+  $("backHome").querySelector("span").textContent=t.home;$("worldQuery").placeholder=t.ph;$("languageButton").innerHTML=languageButtonHtml(lang);
+  if($("worldMobileLanguageButton")) $("worldMobileLanguageButton").innerHTML=languageButtonHtml(lang);
   localStorage.setItem("niliKitchenLangV2",lang);
   const side=sidebarCopy[lang]||sidebarCopy.en;
   [["worldScanTitle",0],["worldScanDesc",1],["worldGalleryText",2],["worldJoinTitle",4],["worldJoinDesc",5],["worldJoinButton",6]].forEach(([id,index])=>{if($(id))$(id).textContent=side[index]});
@@ -58,11 +107,56 @@ function applyLanguage(){
   if($("worldFooter")) $("worldFooter").textContent=`© 2026 Nili's Kitchen AI. ${side[7]}`;
   const detected=detectedCopy[lang]||detectedCopy.en;
   [["worldDetectedEyebrow",0],["worldDetectedTitle",1],["worldDetectedText",2],["worldDetectedCancel",3],["worldDetectedConfirm",4]].forEach(([id,index])=>{if($(id))$(id).textContent=detected[index]});
-  if($("mobileDishSearchTitle")) $("mobileDishSearchTitle").textContent=t.se;
+  if($("mobileFeaturedEyebrow")) $("mobileFeaturedEyebrow").textContent=t.re;
+  if($("mobileFeaturedTitle")) $("mobileFeaturedTitle").textContent=t.rt;
   [["heroSearchActionEyebrow","se"],["heroSearchActionTitle","st"],["heroResultsActionEyebrow","re"],["heroResultsActionTitle","rt"]].forEach(([id,key])=>{if($(id))$(id).textContent=t[key]});
+  if($("heroResultsActionEyebrow")){
+    $("heroResultsActionEyebrow").style.color="#e7c77f";
+    $("heroResultsActionEyebrow").style.textShadow="0 1px 2px rgba(0,0,0,.24)";
+  }
+  if($("heroResultsActionTitle")){
+    $("heroResultsActionTitle").style.color="#fffaf0";
+    $("heroResultsActionTitle").style.textShadow="0 1px 2px rgba(0,0,0,.24)";
+  }
   renderFilters();renderResults();
   if(!recipes.length) setStatus(t.idle,true);
 }
+
+function worldUserIsLoggedIn(){return !!(localStorage.getItem("creatorEmail")||localStorage.getItem("niliUserEmail"))}
+function initWorldMobileControls(){
+  const userButton=$("worldMobileUserButton"),userName=$("worldMobileUserName"),userMenu=$("worldMobileUserMenu");
+  const languageButton=$("worldMobileLanguageButton"),languageMenu=$("worldMobileLanguageMenu");
+  if(!userButton||!userName||!userMenu||!languageButton||!languageMenu)return;
+  const username=localStorage.getItem("creatorUsername")||localStorage.getItem("niliCreatorUsername")||localStorage.getItem("niliUsername");
+  const email=localStorage.getItem("creatorEmail")||localStorage.getItem("niliCreatorEmail")||localStorage.getItem("niliUserEmail");
+  userName.textContent=username||email||(lang==="tr"?"Giriş":"Login");
+  $("worldMobileDashboard").href=`creator-dashboard.html?lang=${lang}`;
+  $("worldMobileAddRecipe").href=`creator.html?lang=${lang}`;
+  $("worldMobileHow").href=`how-it-works.html?lang=${lang}`;
+  languageMenu.innerHTML=languages.map(value=>`<button type="button" data-mobile-lang="${value}">${languageButtonHtml(value)}</button>`).join("");
+  languageButton.innerHTML=languageButtonHtml(lang);
+}
+
+$("worldMobileUserButton").addEventListener("click",()=>{
+  if(!worldUserIsLoggedIn()){location.href=`index.html?lang=${lang}&login=1`;return}
+  $("worldMobileUserMenu").classList.toggle("open");$("worldMobileLanguageMenu").classList.remove("open");
+});
+$("worldMobileLanguageButton").addEventListener("click",()=>{
+  $("worldMobileLanguageMenu").classList.toggle("open");$("worldMobileUserMenu").classList.remove("open");
+});
+$("worldMobileLanguageMenu").addEventListener("click",event=>{
+  const button=event.target.closest("[data-mobile-lang]");if(!button)return;
+  lang=button.dataset.mobileLang;$("worldMobileLanguageMenu").classList.remove("open");
+  history.replaceState(null,"",`?lang=${lang}${selectedCuisine?`&cuisine=${selectedCuisine}`:""}`);applyLanguage();renderFilters();initWorldMobileControls();
+});
+$("worldMobileLogout").addEventListener("click",()=>{
+  ["creatorUsername","creatorEmail","creatorEmailOrUser","creatorMode","niliCreatorUsername","niliCreatorEmail","niliUserEmail","niliUsername","niliFavorites"].forEach(key=>localStorage.removeItem(key));
+  $("worldMobileUserMenu").classList.remove("open");initWorldMobileControls();
+});
+document.addEventListener("click",event=>{
+  if(!event.target.closest(".wc-mobile-account"))$("worldMobileUserMenu").classList.remove("open");
+  if(!event.target.closest(".wc-mobile-language"))$("worldMobileLanguageMenu").classList.remove("open");
+});
 
 function renderFilters(){
   const t=copy[lang];
@@ -73,6 +167,11 @@ function renderFilters(){
 
 function setStatus(message,show){$("worldStatus").textContent=message;$("worldStatus").classList.toggle("show",show)}
 function ingredientList(recipe){return recipe.extendedIngredients || recipe.usedIngredients || []}
+function ingredientText(item){
+  if(!item) return "";
+  if(typeof item === "string") return item;
+  return item.original || item.originalName || item.name || item.text || item.food || "";
+}
 function instructionText(recipe){
   if(typeof recipe.instructions==="string") return recipe.instructions.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
   const steps=recipe.analyzedInstructions?.flatMap(group=>group.steps||[]).map(step=>step.step).filter(Boolean);return steps?.join(" ")||"";
@@ -83,36 +182,143 @@ function renderResults(){
   const t=copy[lang];$("resultsMeta").textContent=recipes.length?`${recipes.length} ${t.count}`:"";
   document.body.classList.toggle("wc-has-results",recipes.length>0);
   $("worldResults").innerHTML=recipes.map((recipe,index)=>{
-    const list=ingredientList(recipe);const preview=list.slice(0,5).map(item=>item.original||item.name||item).join(" · ");
+    const list=ingredientList(recipe);const preview=list.slice(0,5).map(ingredientText).filter(Boolean).join(" · ");
     return `<article class="wc-recipe-card" data-index="${index}"><img src="${esc(recipe.image||"YEMEK-2.webp")}" alt="${esc(recipe.title)}"><div class="wc-recipe-body"><h3>${esc(recipe.title)}</h3><div class="wc-meta"><span>⏱ ${recipe.readyInMinutes||30} ${t.minutes}</span>${recipe.servings?`<span>◉ ${recipe.servings} ${t.servings}</span>`:""}<span>${esc(recipe.cuisine||recipe.category||"")}</span></div><p class="wc-ingredients-preview">${esc(preview)}</p></div></article>`;
   }).join("");
+}
+
+async function fetchDiscoverRecipes(payload){
+  const response=await fetch(`${API_BASE}/discover-recipes`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(payload)
+  });
+  const data=await response.json();
+  if(!response.ok) throw new Error(data.error||"Search failed");
+  return Array.isArray(data.recipes) ? data.recipes : [];
+}
+
+async function fetchRecipesFromIngredients(ingredients){
+  const normalizedResponse=await fetch(`${API_BASE}/normalize-ingredients`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({ingredients,lang})
+  });
+  const normalizedData=await normalizedResponse.json();
+  const normalizedIngredients=
+    normalizedData?.success && Array.isArray(normalizedData.ingredients)
+      ? normalizedData.ingredients.map(item=>item.canonicalEn).filter(Boolean)
+      : ingredients;
+
+  const response=await fetch(`${API_BASE}/recipes`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({ingredients:normalizedIngredients,lang})
+  });
+  const data=await response.json();
+  if(!response.ok) throw new Error(data.error||"Recipes failed");
+  return Array.isArray(data)
+    ? data
+    : data.recipes || data.results || data.meals || data.data || [];
+}
+
+async function loadWorldRecipes(payload){
+  const t=copy[lang];
+  recipes=[];
+  renderResults();
+  document.body.classList.add("wc-has-results");
+  setStatus(t.loading,true);
+  $("searchButton").disabled=true;
+
+  try{
+    recipes=await fetchDiscoverRecipes(payload);
+    renderResults();
+    setStatus(recipes.length?"":t.empty,!recipes.length);
+    closeWorldSearchPanel();
+    $("resultsSection").scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(error){
+    console.error(error);
+    setStatus(t.error,true);
+  }finally{
+    $("searchButton").disabled=false;
+  }
 }
 
 async function discoverRecipes(){
   const query=$("worldQuery").value.trim(),t=copy[lang];
   if(!query&&!selectedCuisine&&!selectedType){setStatus(t.idle,true);return}
-  setStatus(t.loading,true);$("searchButton").disabled=true;
+  const broadType=["meat","vegetarian"].includes(selectedType);
+  const fallbackQuery =
+    query ||
+    (selectedCuisine ? cuisineSearchHints[selectedCuisine] : "") ||
+    (selectedType ? typeSearchHints[selectedType] : "") ||
+    "";
+  await loadWorldRecipes({
+    query:(fallbackQuery || broadType) ? (fallbackQuery || selectedType) : "",
+    cuisine:selectedCuisine,
+    category:broadType ? "main course" : selectedType,
+    lang,
+    limit:24
+  });
+}
+
+function getWeeklyCuratedSet(){
+  const start=new Date("2026-01-05T00:00:00Z");
+  const now=new Date();
+  const weekIndex=Math.max(0,Math.floor((now-start)/(7*24*60*60*1000)));
+  return weeklyCuratedSets[weekIndex % weeklyCuratedSets.length];
+}
+
+async function showWeeklyFeaturedRecipes(){
+  const t=copy[lang];
+  const presets=getWeeklyCuratedSet();
+  recipes=[];
+  renderResults();
+  document.body.classList.add("wc-has-results");
+  setStatus(t.loading,true);
+  $("worldQuery").value="";
+  selectedCuisine="";
+  selectedType="";
+  renderFilters();
+
   try{
-    const broadType=["meat","vegetarian"].includes(selectedType);
-    const response=await fetch(`${API_BASE}/discover-recipes`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:query||broadType?query||selectedType:"",cuisine:selectedCuisine,category:broadType?"main course":selectedType,lang,limit:24})});
-    const data=await response.json();if(!response.ok) throw new Error(data.error||"Search failed");
-    recipes=Array.isArray(data.recipes)?data.recipes:[];renderResults();setStatus(recipes.length?"":t.empty,!recipes.length);closeWorldSearchPanel();$("resultsSection").scrollIntoView({behavior:"smooth",block:"start"});
-  }catch(error){console.error(error);setStatus(t.error,true)}finally{$("searchButton").disabled=false}
+    const settled=await Promise.allSettled(
+      presets.map(preset=>fetchDiscoverRecipes({
+        query:preset.query || "",
+        cuisine:preset.cuisine || "",
+        category:preset.category || "",
+        lang,
+        limit:1
+      }))
+    );
+
+    recipes=settled
+      .filter(item=>item.status==="fulfilled")
+      .flatMap(item=>item.value)
+      .slice(0,3);
+
+    renderResults();
+    setStatus(recipes.length?"":t.empty,!recipes.length);
+    $("resultsSection").scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(error){
+    console.error(error);
+    setStatus(t.error,true);
+  }
 }
 
 function openRecipe(index){
   const recipe=recipes[index],t=copy[lang];if(!recipe)return;
-  const ingredients=ingredientList(recipe).map(item=>`<li>${esc(item.original||item.name||item)}</li>`).join("");
-  $("recipeModalBody").innerHTML=`<img class="wc-modal-hero" src="${esc(recipe.image||"YEMEK-2.webp")}" alt="${esc(recipe.title)}"><h2>${esc(recipe.title)}</h2><div class="wc-meta"><span>⏱ ${recipe.readyInMinutes||30} ${t.minutes}</span>${recipe.servings?`<span>◉ ${recipe.servings} ${t.servings}</span>`:""}</div><h3>${t.ingredients}</h3><ul>${ingredients}</ul><h3>${t.instructions}</h3><p>${esc(instructionText(recipe))}</p>${recipe.sourceUrl?`<a class="wc-source" href="${esc(recipe.sourceUrl)}" target="_blank" rel="noopener">${t.source} →</a>`:""}`;
+  const ingredients=ingredientList(recipe).map(item=>`<li>${esc(ingredientText(item))}</li>`).join("");
+  $("recipeModalBody").innerHTML=`<img class="wc-modal-hero" src="${esc(recipe.image||"YEMEK-2.webp")}" alt="${esc(recipe.title)}"><h2>${esc(recipe.title)}</h2><div class="wc-meta"><span>⏱ ${recipe.readyInMinutes||30} ${t.minutes}</span>${recipe.servings?`<span>◉ ${recipe.servings} ${t.servings}</span>`:""}</div><h3>${t.ingredients}</h3><ul>${ingredients}</ul><h3>${t.instructions}</h3><p>${esc(instructionText(recipe))}</p>`;
   $("recipeModal").classList.add("open");$("recipeModal").setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
 }
 function closeModal(){$("recipeModal").classList.remove("open");$("recipeModal").setAttribute("aria-hidden","true");document.body.style.overflow=""}
 
-$("languageMenu").innerHTML=languages.map(value=>`<button type="button" data-lang="${value}">${value.toUpperCase()}</button>`).join("");
+$("languageMenu").innerHTML=languages.map(value=>`<button type="button" data-lang="${value}">${languageButtonHtml(value)}</button>`).join("");
 $("languageButton").addEventListener("click",()=>$("languageMenu").classList.toggle("open"));
 $("languageMenu").addEventListener("click",event=>{const button=event.target.closest("[data-lang]");if(!button)return;lang=button.dataset.lang;$("languageMenu").classList.remove("open");history.replaceState(null,"",`?lang=${lang}${selectedCuisine?`&cuisine=${selectedCuisine}`:""}`);applyLanguage()});
-$("worldSidebarCuisineList").addEventListener("click",event=>{const button=event.target.closest("[data-cuisine]");if(!button)return;selectedCuisine=selectedCuisine===button.dataset.cuisine?"":button.dataset.cuisine;renderFilters();discoverRecipes()});
-$("typeList").addEventListener("click",event=>{const button=event.target.closest("[data-type]");if(!button)return;selectedType=selectedType===button.dataset.type?"":button.dataset.type;renderFilters();discoverRecipes()});
+$("worldSidebarCuisineList").addEventListener("click",event=>{const button=event.target.closest("[data-cuisine]");if(!button)return;selectedCuisine=button.dataset.cuisine;renderFilters();discoverRecipes()});
+$("typeList").addEventListener("click",event=>{const button=event.target.closest("[data-type]");if(!button)return;selectedType=button.dataset.type;renderFilters();discoverRecipes()});
 $("worldSearchForm").addEventListener("submit",event=>{event.preventDefault();discoverRecipes()});
 $("worldResults").addEventListener("click",event=>{const card=event.target.closest("[data-index]");if(card)openRecipe(Number(card.dataset.index))});
 $("modalClose").addEventListener("click",closeModal);$("recipeModal").addEventListener("click",event=>{if(event.target===$("recipeModal"))closeModal()});document.addEventListener("keydown",event=>{if(event.key==="Escape")closeModal()});
@@ -132,43 +338,65 @@ $("worldPhoto").addEventListener("change",analyzeWorldPhoto);$("worldPhotoGaller
 let detectedWorldIngredients=[];
 function openDetectedIngredients(items){detectedWorldIngredients=[...new Set(items.map(item=>String(item).trim()).filter(Boolean))];$("worldDetectedItems").innerHTML=detectedWorldIngredients.map(item=>`<span>${esc(item)}</span>`).join("");$("worldDetectedModal").classList.add("open");$("worldDetectedModal").setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
 function closeDetectedIngredients(){$("worldDetectedModal").classList.remove("open");$("worldDetectedModal").setAttribute("aria-hidden","true");document.body.style.overflow=""}
-async function findDetectedIngredientRecipes(){if(!detectedWorldIngredients.length)return;const t=copy[lang];$("worldDetectedConfirm").disabled=true;try{const response=await fetch(`${API_BASE}/recipes`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({ingredients:detectedWorldIngredients,lang})});const data=await response.json();if(!response.ok)throw new Error(data.error||"Recipe search failed");recipes=Array.isArray(data)?data:(data.recipes||data.results||data.meals||data.data||[]);renderResults();closeDetectedIngredients();setStatus(recipes.length?"":t.empty,!recipes.length);$("resultsSection").scrollIntoView({behavior:"smooth",block:"start"})}catch(error){console.error(error);setStatus(t.error,true);closeDetectedIngredients()}finally{$("worldDetectedConfirm").disabled=false}}
+async function findDetectedIngredientRecipes(){
+  if(!detectedWorldIngredients.length) return;
+
+  $("worldDetectedConfirm").disabled=true;
+  const t=copy[lang];
+
+  try{
+    closeDetectedIngredients();
+    recipes=[];
+    renderResults();
+    document.body.classList.add("wc-has-results");
+    setStatus(t.loading,true);
+    recipes=await fetchRecipesFromIngredients(detectedWorldIngredients);
+    renderResults();
+    setStatus(recipes.length?"":t.empty,!recipes.length);
+    $("resultsSection").scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(error){
+    console.error(error);
+    setStatus(t.error,true);
+  }finally{
+    $("worldDetectedConfirm").disabled=false;
+  }
+}
 $("worldDetectedClose").addEventListener("click",closeDetectedIngredients);$("worldDetectedCancel").addEventListener("click",()=>{closeDetectedIngredients();$("worldPhotoGallery").click()});$("worldDetectedConfirm").addEventListener("click",findDetectedIngredientRecipes);$("worldDetectedModal").addEventListener("click",event=>{if(event.target===$("worldDetectedModal"))closeDetectedIngredients()});
 function openWorldSearchPanel(){const card=$("worldSearchForm").closest(".wc-search-card");card.classList.add("open");document.body.classList.add("wc-search-open");setTimeout(()=>$("worldQuery").focus(),80)}
 function closeWorldSearchPanel(){const card=$("worldSearchForm").closest(".wc-search-card");card.classList.remove("open");document.body.classList.remove("wc-search-open")}
 $("heroSearchAction").addEventListener("click",openWorldSearchPanel);
-$("heroResultsAction").addEventListener("click",()=>{if(recipes.length)$("resultsSection").scrollIntoView({behavior:"smooth",block:"start"});else openWorldSearchPanel()});
+$("heroResultsAction").addEventListener("click",showWeeklyFeaturedRecipes);
+$("mobileFeaturedButton").addEventListener("click",showWeeklyFeaturedRecipes);
 $("worldSearchClose").addEventListener("click",closeWorldSearchPanel);
 
 const mobileFlow=$("worldMobileFlow");
-const mobileSearchTitle=$("mobileDishSearchTitle");
 let mobileWorldArranged=false;
 let mobilePlaceholders=[];
 function arrangeWorldMobile(){
   if(window.innerWidth<=980 && !mobileWorldArranged){
+    const mosaicCards=Array.from(document.querySelectorAll(".wc-mosaic-small"));
     const nodes=[
       document.querySelector(".nk-brand-card"),
-      document.querySelector(".world-country-panel"),
-      mobileSearchTitle,
-      document.querySelector(".world-sidebar .manual"),
-      document.querySelector(".wc-type-dock"),
       document.querySelector(".wc-mosaic-main"),
-      document.querySelector(".wc-search-card"),
-      ...document.querySelectorAll(".wc-mosaic-small"),
+      document.querySelector(".world-country-panel"),
+      ...mosaicCards.slice(0,1),
+      $("mobileFeaturedButton"),
+      ...mosaicCards.slice(1,2),
       document.querySelector(".wc-results"),
       document.querySelector(".world-sidebar .join-area"),
       document.querySelector(".world-sidebar .site-footer-note")
-    ].filter(Boolean);
+    ].filter((node,index,self)=>node && self.indexOf(node)===index);
     mobilePlaceholders=nodes.map(node=>{const marker=document.createComment("world-mobile-slot");node.parentNode.insertBefore(marker,node);mobileFlow.appendChild(node);return {node,marker}});
     document.body.classList.add("world-mobile-arranged");
     mobileWorldArranged=true;
   }else if(window.innerWidth>980 && mobileWorldArranged){
     mobilePlaceholders.forEach(({node,marker})=>marker.replaceWith(node));
     mobilePlaceholders=[];document.body.classList.remove("world-mobile-arranged");mobileWorldArranged=false;
-    mobileFlow.appendChild(mobileSearchTitle);
+    mobileFlow.appendChild($("mobileFeaturedButton"));
   }
 }
 arrangeWorldMobile();window.addEventListener("resize",arrangeWorldMobile);
 
 applyLanguage();
+initWorldMobileControls();
 if(selectedCuisine) discoverRecipes();

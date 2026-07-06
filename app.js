@@ -1833,6 +1833,10 @@ setText("joinNiliTitle", t("joinNiliTitle"));
 setText("joinNiliDesc", t("joinNiliDesc"));
 setText("joinNiliBtn", t("joinNiliBtn"));
 
+if(typeof applyWorldSearchLanguage === "function"){
+  applyWorldSearchLanguage();
+}
+
 
   const title =
   document.getElementById("creatorCardTitle");
@@ -2453,6 +2457,8 @@ if(!safeItems.length && window.NilisIngredients){
     ingredientSearchEmpty.classList.remove("show");
   }
 
+  filterIngredientModalItems();
+
   ingredientModal.style.display = "flex";
 
 }
@@ -2467,6 +2473,45 @@ window.closeIngredientModal = function(){
   }
 
 };
+
+function filterIngredientModalItems(){
+  if(!ingredientModalSearch || !ingredientModalItems) return;
+
+  const query =
+  normalizeIngredientLookup(ingredientModalSearch.value);
+
+  let visibleCount = 0;
+
+  ingredientModalItems
+    .querySelectorAll(".modal-ingredient-btn")
+    .forEach(button => {
+      const label =
+      normalizeIngredientLookup(button.textContent);
+
+      const visible =
+      !query || label.includes(query);
+
+      button.hidden = !visible;
+
+      if(visible){
+        visibleCount++;
+      }
+    });
+
+  if(ingredientSearchEmpty){
+    ingredientSearchEmpty.classList.toggle(
+      "show",
+      visibleCount === 0
+    );
+  }
+}
+
+if(ingredientModalSearch){
+  ingredientModalSearch.addEventListener(
+    "input",
+    filterIngredientModalItems
+  );
+}
 
 document
 .querySelectorAll(".category-btn")
@@ -2576,29 +2621,6 @@ function continueSelectingIngredients(){
 const floatingLang = document.querySelector(".floating-lang");
 if(floatingLang && window.innerWidth <= 980){
   floatingLang.style.display = "none";
-}
-
-function filterIngredientModalItems(){
-  if(!ingredientModalSearch || !ingredientModalItems) return;
-  const query = normalizeIngredientLookup(ingredientModalSearch.value);
-  let visibleCount = 0;
-
-  ingredientModalItems
-    .querySelectorAll(".modal-ingredient-btn")
-    .forEach(button => {
-      const label = normalizeIngredientLookup(button.textContent);
-      const visible = !query || label.includes(query);
-      button.hidden = !visible;
-      if(visible) visibleCount++;
-    });
-
-  if(ingredientSearchEmpty){
-    ingredientSearchEmpty.classList.toggle("show", visibleCount === 0);
-  }
-}
-
-if(ingredientModalSearch){
-  ingredientModalSearch.addEventListener("input", filterIngredientModalItems);
 }
 
 result.style.display = "grid";
@@ -2995,23 +3017,33 @@ const totalPages = 1;
     visibleRecipes.map(recipe => {
 
       const allIngredients = getAllRecipeIngredients(recipe);
-      const usedCount = allIngredients.length ||
-        recipe.usedIngredientCount || recipe.usedCount || 0;
+      const usedCount =
+        allIngredients.length ||
+        recipe.usedIngredientCount ||
+        recipe.usedCount ||
+        0;
 
-      const usedList =
+      const visibleIngredients =
         allIngredients.length
           ? allIngredients
-              .map(item => `<span>${item.original || item.originalName || item.name || item}</span>`)
+              .slice(0, 6)
+              .map(item => `
+                <li class="recipe-ingredient-row">
+                  <span class="recipe-ingredient-bullet">•</span>
+                  <span>${item.original || item.originalName || item.name || item}</span>
+                </li>
+              `)
               .join("")
-          : `<span>${t("ingredientDetailsUnavailable")}</span>`;
+          : `<li class="recipe-ingredient-row">
+               <span class="recipe-ingredient-bullet">•</span>
+               <span>${t("ingredientDetailsUnavailable")}</span>
+             </li>`;
 
-      const instructionPreview =
-        getInstructionText(recipe) || t("instructionsUnavailable");
+      const countryBadge =
+        getRecipeCountryBadge(recipe);
 
-      const previewText =
-        instructionPreview.length > 150
-          ? instructionPreview.slice(0, 150).trim() + "..."
-          : instructionPreview;
+      const cuisineLabel =
+        getRecipeCuisineLabel(recipe);
 
       return `
         <div class="card recipe-card" data-recipe-id="${recipe.id}">
@@ -3037,7 +3069,13 @@ const totalPages = 1;
 
           <div class="card-body recipe-card-body">
 
-            ${recipe.source ? `<span class="recipe-source-badge">${recipe.source === "edamam-live" ? "Edamam" : recipe.source === "themealdb" ? "TheMealDB" : "Spoonacular"}</span>` : ""}
+            ${
+              countryBadge
+                ? `<div class="recipe-card-country-wrap">${countryBadge}</div>`
+                : cuisineLabel
+                  ? `<div class="recipe-card-cuisine">${cuisineLabel}</div>`
+                  : ""
+            }
 
             <div class="recipe-card-meta">
               <span class="recipe-meta-pill recipe-time">
@@ -3059,13 +3097,12 @@ const totalPages = 1;
               }
             </div>
 
-            <div class="ingredients recipe-ingredients">
-              ${usedList}
+            <div class="recipe-card-ingredients-panel">
+              <div class="recipe-card-ingredients-title">🥗 ${t("ingredientsTitle")}</div>
+              <ul class="recipe-ingredients-list">
+                ${visibleIngredients}
+              </ul>
             </div>
-
-            <p class="recipe-preview">
-              🍳 ${previewText}
-            </p>
 
           </div>
 
@@ -3222,52 +3259,75 @@ function openRecipe(id){
     recipe.yields ||
     recipe.aggregateLikes && recipe.servings ? recipe.servings : "";
 
+  const countryBadge =
+  getRecipeCountryBadge(recipe);
+
+  const cuisineLabel =
+  getRecipeCuisineLabel(recipe);
+
   modalBody.innerHTML = `
-    <div class="recipe-detail-sticky">
-      <h1>${recipe.title || "Recipe"}</h1>
+    <div class="recipe-detail-shell recipe-detail-portrait">
+      <div class="recipe-detail-fixed">
+        <div class="recipe-detail-heading">
+        <h1>${recipe.title || "Recipe"}</h1>
 
-      <div class="recipe-detail-hero">
-        <img
-          src="${
-            recipe.image ||
-            "https://img.spoonacular.com/recipes/716429-556x370.jpg"
-          }"
-          alt="${recipe.title || "Recipe"}"
-        >
-      </div>
-    </div>
-
-    <div class="recipe-detail-content">
-      <div class="recipe-detail-meta">
-        <span class="recipe-detail-pill">
-          ⏱ ${
-            recipe.readyInMinutes
-              ? `${recipe.readyInMinutes} ${t("timeMin")}`
-              : `${recipe.timeLabel || t("timeUnavailable") || "Time unavailable"}`
-          }
-        </span>
         ${
-          servingsValue
-            ? `<span class="recipe-detail-pill">👥 ${servingsValue}</span>`
+          cuisineLabel
+            ? `<p class="recipe-detail-subtitle">${cuisineLabel}</p>`
             : ""
         }
+
+        ${countryBadge}
+        </div>
+
+        <div class="recipe-detail-hero">
+          <img
+            src="${
+              recipe.image ||
+              "https://img.spoonacular.com/recipes/716429-556x370.jpg"
+            }"
+            alt="${recipe.title || "Recipe"}"
+          >
+        </div>
+
+        <div class="recipe-detail-meta">
+          <span class="recipe-detail-pill">
+            ⏱ ${
+              recipe.readyInMinutes
+                ? `${recipe.readyInMinutes} ${t("timeMin")}`
+                : `${recipe.timeLabel || t("timeUnavailable") || "Time unavailable"}`
+            }
+          </span>
+          ${
+            servingsValue
+              ? `<span class="recipe-detail-pill">👥 ${servingsValue}</span>`
+              : ""
+          }
+        </div>
+
+        <div class="recipe-detail-ingredients-panel">
+        <h2>🥗 ${t("ingredientsTitle")}</h2>
+        <ul class="recipe-detail-ingredients recipe-detail-ingredients-fixed">
+          ${ingredientHtml}
+        </ul>
+        </div>
       </div>
 
-      <h2>🥗 ${t("ingredientsTitle")}</h2>
-      <ul class="recipe-detail-ingredients">
-        ${ingredientHtml}
-      </ul>
-
-      <h2>👨‍🍳 ${t("instructionsTitle")}</h2>
-      <ol class="recipe-detail-steps">
-        ${instructionsHtml}
-      </ol>
+      <div class="recipe-detail-content">
+        <h2>👨‍🍳 ${t("instructionsTitle")}</h2>
+        <ol class="recipe-detail-steps">
+          ${instructionsHtml}
+        </ol>
+      </div>
     </div>
   `;
 
   modal.style.display = "flex";
 
   const modalContent = modal.querySelector(".modal-content");
+  if(modalContent){
+    modalContent.classList.add("recipe-portrait-modal");
+  }
   if(modalContent) modalContent.scrollTop = 0;
   if(modalBody) modalBody.scrollTop = 0;
 
@@ -3276,6 +3336,54 @@ function openRecipe(id){
     if(modalBody) modalBody.scrollTop = 0;
   });
 
+}
+
+function getRecipeCuisineLabel(recipe){
+  return (
+    recipe.country ||
+    recipe.cuisine ||
+    recipe.category ||
+    ""
+  );
+}
+
+function getRecipeCountryBadge(recipe){
+  const raw =
+  normalizeText(
+    recipe.country ||
+    recipe.cuisine ||
+    recipe.category ||
+    ""
+  );
+
+  const countryMap = [
+    { match:["turk", "turkish", "turkiye"], flag:"🇹🇷", label:"Türkiye" },
+    { match:["ital", "italian"], flag:"🇮🇹", label:"Italy" },
+    { match:["mexic"], flag:"🇲🇽", label:"Mexico" },
+    { match:["indian", "india"], flag:"🇮🇳", label:"India" },
+    { match:["chinese", "china"], flag:"🇨🇳", label:"China" },
+    { match:["japan", "japanese"], flag:"🇯🇵", label:"Japan" },
+    { match:["french", "france"], flag:"🇫🇷", label:"France" },
+    { match:["greek", "greece"], flag:"🇬🇷", label:"Greece" },
+    { match:["thai", "thailand"], flag:"🇹🇭", label:"Thailand" },
+    { match:["american", "usa", "united states"], flag:"🇺🇸", label:"USA" }
+  ];
+
+  const found =
+  countryMap.find(item =>
+    item.match.some(keyword => raw.includes(keyword))
+  );
+
+  if(!found){
+    return "";
+  }
+
+  return `
+    <div class="recipe-detail-country">
+      <span class="recipe-detail-country-flag">${found.flag}</span>
+      <span class="recipe-detail-country-label">${found.label}</span>
+    </div>
+  `;
 }
 
 function getInstructionText(recipe){
@@ -3329,6 +3437,10 @@ window.closeModal = function(){
   history.replaceState(null, "", "#recipes");
 
   if(modal){
+    const modalContent = modal.querySelector(".modal-content");
+    if(modalContent){
+      modalContent.classList.remove("recipe-portrait-modal");
+    }
     modal.style.display = "none";
   }
 
@@ -4616,4 +4728,14 @@ window.addEventListener("pageshow", () => {
   applyLanguage();
   updateCreatorLinks();
   updateAllLinks();
+});
+
+document.addEventListener("DOMContentLoaded",()=>{
+  const params=new URLSearchParams(location.search);
+  if(params.get("login")==="1"){
+    openSignupInvite();
+    params.delete("login");
+    const query=params.toString();
+    history.replaceState(null,"",location.pathname+(query?`?${query}`:"")+location.hash);
+  }
 });

@@ -167,6 +167,103 @@ ${text}
 
 }
 
+async function translateTextBatch(items, lang){
+  const source = Array.isArray(items)
+    ? items.map(item => String(item ?? ""))
+    : [];
+
+  if(!source.length || lang === "en"){
+    return source;
+  }
+
+  try{
+    const gpt =
+    await openai.chat.completions.create({
+      model:"gpt-4o-mini",
+      messages:[
+        {
+          role:"system",
+          content:`
+
+Translate each array item into the target language.
+
+Return ONLY a valid JSON array of strings.
+
+Keep the same order and the same number of items.
+
+`
+        },
+        {
+          role:"user",
+          content:`
+
+Language:
+${lang}
+
+JSON array:
+${JSON.stringify(source)}
+
+`
+        }
+      ]
+    });
+
+    const content =
+    gpt?.choices?.[0]?.message?.content?.trim() || "";
+
+    const jsonMatch =
+    content.match(/\[[\s\S]*\]/);
+
+    const parsed =
+    JSON.parse(jsonMatch ? jsonMatch[0] : content);
+
+    if(Array.isArray(parsed) && parsed.length === source.length){
+      return parsed.map(item => String(item ?? ""));
+    }
+  }catch(error){
+    console.log("BATCH TRANSLATE FAILED:", error.message);
+  }
+
+  return source;
+}
+
+async function localizeIngredientArray(items, lang){
+  if(!Array.isArray(items) || !items.length || lang === "en"){
+    return Array.isArray(items) ? items : [];
+  }
+
+  const originals =
+  items.map(item =>
+    String(item?.original || item?.name || "")
+  );
+
+  const translated =
+  await translateTextBatch(originals, lang);
+
+  return items.map((item, index) => ({
+    ...item,
+    original: translated[index] || item.original || item.name,
+    name: translated[index] || item.name || item.original
+  }));
+}
+
+async function fetchJsonWithTimeout(url, options = {}, timeoutMs = 5000){
+  const controller = new AbortController();
+  const timeout =
+  setTimeout(() => controller.abort(), timeoutMs);
+
+  try{
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+
+    return response;
+  }finally{
+    clearTimeout(timeout);
+  }
+}
+
 app.post("/translate-ingredients", async (req, res) => {
 
   try{
@@ -574,6 +671,39 @@ function searchRecipeCatalog({ query, cuisine, category, limit }){
     .map(item => item.recipe);
 }
 
+function searchRecipeCatalogByIngredients(ingredients, limit){
+  const normalizedIngredients =
+  (Array.isArray(ingredients) ? ingredients : [])
+    .map(item => normalizeText(item))
+    .filter(Boolean);
+
+  if(!normalizedIngredients.length){
+    return [];
+  }
+
+  return readRecipeCatalog()
+    .map(recipe => {
+      const text = catalogSearchText(recipe);
+      const matchCount =
+      normalizedIngredients.filter(ingredient =>
+        text.includes(ingredient)
+      ).length;
+
+      if(!matchCount){
+        return null;
+      }
+
+      return { recipe, matchCount };
+    })
+    .filter(Boolean)
+    .sort((a, b) =>
+      b.matchCount - a.matchCount ||
+      String(b.recipe.updatedAt).localeCompare(String(a.recipe.updatedAt))
+    )
+    .slice(0, limit)
+    .map(item => item.recipe);
+}
+
 function mapNiliDiscoveryRecipe(recipe){
   const rawIngredients = recipe.adminIngredientsTr || recipe.ingredients || [];
   const ingredients = (Array.isArray(rawIngredients) ? rawIngredients : String(rawIngredients).split(/\r?\n|,/))
@@ -591,8 +721,8 @@ function mapNiliDiscoveryRecipe(recipe){
     tags:recipe.tags || [],
     readyInMinutes:Number(recipe.prepTime || recipe.readyInMinutes) || 30,
     servings:recipe.servings || null,
-    usedIngredients:ingredients,
-    extendedIngredients:ingredients,
+    usedIngredients:normalizeIngredientList(ingredients),
+    extendedIngredients:normalizeIngredientList(ingredients),
     instructions:recipe.adminInstructionsTr || recipe.instructions || "Recipe instructions unavailable.",
     sourceUrl:""
   };
@@ -620,6 +750,112 @@ function uniqueRecipes(recipes){
   );
 }
 
+function normalizeIngredientEntry(item){
+  if(!item) return null;
+  if(typeof item === "string"){
+    const value = item.trim();
+    return value ? { name:value, original:value } : null;
+  }
+
+  const original = String(
+    item.original ||
+    item.originalName ||
+    item.text ||
+    item.food ||
+    ""
+  ).trim();
+
+  const name = String(
+    item.name ||
+    item.food ||
+    original ||
+    ""
+  ).trim();
+
+  if(!original && !name){
+    return null;
+  }
+
+  const quantity = item.quantity ? String(item.quantity).trim() : "";
+  const measure = item.measure ? String(item.measure).trim() : "";
+  const combined = [quantity, measure, name].filter(Boolean).join(" ").trim();
+
+  return {
+    name:name || combined,
+    original:original || combined || name
+  };
+}
+
+function normalizeIngredientList(list){
+  if(!Array.isArray(list)) return [];
+  return list.map(normalizeIngredientEntry).filter(Boolean);
+}
+
+function recipeInstructionSteps(recipe){
+  if(Array.isArray(recipe?.analyzedInstructions) && recipe.analyzedInstructions.length){
+    return recipe.analyzedInstructions
+      .flatMap(block => Array.isArray(block.steps) ? block.steps : [])
+      .map(step => String(step?.step || "").trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
+function recipeHasUsableInstructions(recipe){
+  const steps = recipeInstructionSteps(recipe);
+  if(steps.length >= 2) return true;
+
+  const text = String(recipe?.instructions || "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if(!text || /^https?:\/\//i.test(text)) return false;
+
+  const lowered = text.toLowerCase();
+  if(
+    lowered.includes("open recipe source for instructions") ||
+    lowered.includes("recipe instructions unavailable") ||
+    lowered.includes("no instructions")
+  ){
+    return false;
+  }
+
+  return text.length >= 80;
+}
+
+function sanitizeRecipeForApp(recipe){
+  const usedIngredients = normalizeIngredientList(recipe.usedIngredients);
+  const missedIngredients = normalizeIngredientList(recipe.missedIngredients);
+  const extendedIngredients = normalizeIngredientList(
+    recipe.extendedIngredients?.length ? recipe.extendedIngredients : usedIngredients
+  );
+
+  return {
+    ...recipe,
+    usedIngredients,
+    missedIngredients,
+    extendedIngredients,
+    sourceUrl:"",
+    instructions:String(recipe.instructions || "")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+  };
+}
+
+function filterRenderableRecipes(recipes){
+  return uniqueRecipes(
+    (recipes || [])
+      .map(sanitizeRecipeForApp)
+      .filter(recipe =>
+        recipeHasUsableInstructions(recipe) &&
+        Array.isArray(recipe.extendedIngredients) &&
+        recipe.extendedIngredients.length >= 2
+      )
+  );
+}
+
 function mealDbIngredients(detail){
   const ingredients = [];
   for(let index=1; index<=20; index++){
@@ -644,8 +880,8 @@ function mapMealDbRecipe(detail){
     tags:String(detail.strTags || "").split(",").map(item => item.trim()).filter(Boolean),
     readyInMinutes:30,
     servings:null,
-    usedIngredients:ingredients,
-    extendedIngredients:ingredients,
+    usedIngredients:normalizeIngredientList(ingredients),
+    extendedIngredients:normalizeIngredientList(ingredients),
     instructions:detail.strInstructions || "Recipe instructions unavailable.",
     sourceUrl:detail.strSource || detail.strYoutube || ""
   };
@@ -656,23 +892,38 @@ async function fetchMealDbDiscovery({ query, cuisine, category, limit }){
   const apiKey = process.env.THEMEALDB_KEY || "1";
   let summaries = [];
   if(query){
-    const response = await fetch(`https://www.themealdb.com/api/json/v1/${apiKey}/search.php?s=${encodeURIComponent(query)}`);
+    const response =
+    await fetchJsonWithTimeout(
+      `https://www.themealdb.com/api/json/v1/${apiKey}/search.php?s=${encodeURIComponent(query)}`,
+      {},
+      4500
+    );
     summaries = (await response.json()).meals || [];
-    return summaries.slice(0,limit).map(mapMealDbRecipe);
+    return filterRenderableRecipes(summaries.slice(0,limit).map(mapMealDbRecipe));
   }
 
   const cuisineConfig = PRIORITY_CUISINES[cuisine];
   const filter = cuisineConfig
     ? `a=${encodeURIComponent(cuisineConfig.mealDbArea)}`
     : `c=${encodeURIComponent(category || "Main course")}`;
-  const response = await fetch(`https://www.themealdb.com/api/json/v1/${apiKey}/filter.php?${filter}`);
+  const response =
+  await fetchJsonWithTimeout(
+    `https://www.themealdb.com/api/json/v1/${apiKey}/filter.php?${filter}`,
+    {},
+    4500
+  );
   summaries = (await response.json()).meals || [];
 
   const details = await Promise.all(summaries.slice(0,limit).map(async summary => {
-    const detailResponse = await fetch(`https://www.themealdb.com/api/json/v1/${apiKey}/lookup.php?i=${summary.idMeal}`);
+    const detailResponse =
+    await fetchJsonWithTimeout(
+      `https://www.themealdb.com/api/json/v1/${apiKey}/lookup.php?i=${summary.idMeal}`,
+      {},
+      4500
+    );
     return (await detailResponse.json()).meals?.[0] || null;
   }));
-  return details.filter(Boolean).map(mapMealDbRecipe);
+  return filterRenderableRecipes(details.filter(Boolean).map(mapMealDbRecipe));
 }
 
 async function fetchMealDbFallback(limit){
@@ -680,11 +931,16 @@ async function fetchMealDbFallback(limit){
   const apiKey=process.env.THEMEALDB_KEY || "1";
   const attempts=Math.min(Math.max(limit,1),6);
   const settled=await Promise.allSettled(Array.from({length:attempts},async()=>{
-    const response=await fetch(`https://www.themealdb.com/api/json/v1/${apiKey}/random.php`);
+    const response=
+    await fetchJsonWithTimeout(
+      `https://www.themealdb.com/api/json/v1/${apiKey}/random.php`,
+      {},
+      4500
+    );
     if(!response.ok) throw new Error(`TheMealDB ${response.status}`);
     return (await response.json()).meals?.[0] || null;
   }));
-  return uniqueRecipes(settled.filter(item=>item.status==="fulfilled"&&item.value).map(item=>mapMealDbRecipe(item.value)));
+  return filterRenderableRecipes(settled.filter(item=>item.status==="fulfilled"&&item.value).map(item=>mapMealDbRecipe(item.value)));
 }
 
 async function fetchSpoonDiscovery({ query, cuisine, category, limit }){
@@ -700,10 +956,15 @@ async function fetchSpoonDiscovery({ query, cuisine, category, limit }){
   if(cuisine && PRIORITY_CUISINES[cuisine]) params.set("cuisine", PRIORITY_CUISINES[cuisine].spoon);
   if(category) params.set("type", category);
 
-  const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?${params}`);
+  const response =
+  await fetchJsonWithTimeout(
+    `https://api.spoonacular.com/recipes/complexSearch?${params}`,
+    {},
+    4500
+  );
   if(!response.ok) throw new Error(`Spoonacular ${response.status}`);
   const results = (await response.json()).results || [];
-  return results.map(recipe => ({
+  return filterRenderableRecipes(results.map(recipe => ({
     id:`spoonacular-${recipe.id}`,
     sourceId:String(recipe.id),
     source:"spoonacular",
@@ -715,12 +976,12 @@ async function fetchSpoonDiscovery({ query, cuisine, category, limit }){
     tags:[...(recipe.diets || []), ...(recipe.dishTypes || [])],
     readyInMinutes:recipe.readyInMinutes || 30,
     servings:recipe.servings || null,
-    usedIngredients:recipe.extendedIngredients || [],
-    extendedIngredients:recipe.extendedIngredients || [],
+    usedIngredients:normalizeIngredientList(recipe.extendedIngredients || []),
+    extendedIngredients:normalizeIngredientList(recipe.extendedIngredients || []),
     analyzedInstructions:recipe.analyzedInstructions || [],
-    instructions:recipe.instructions || recipe.summary || "Recipe instructions unavailable.",
-    sourceUrl:recipe.sourceUrl || recipe.spoonacularSourceUrl || ""
-  }));
+    instructions:recipe.instructions || "Recipe instructions unavailable.",
+    sourceUrl:""
+  })));
 }
 
 async function fetchEdamamDiscovery({ query, cuisine, category, limit }){
@@ -734,10 +995,15 @@ async function fetchEdamamDiscovery({ query, cuisine, category, limit }){
   });
   if(cuisine && PRIORITY_CUISINES[cuisine]) params.append("cuisineType", PRIORITY_CUISINES[cuisine].label.toLowerCase());
   if(category) params.append("dishType", category.toLowerCase());
-  const response = await fetch(`https://api.edamam.com/api/recipes/v2?${params}`);
+  const response =
+  await fetchJsonWithTimeout(
+    `https://api.edamam.com/api/recipes/v2?${params}`,
+    {},
+    4500
+  );
   if(!response.ok) throw new Error(`Edamam ${response.status}`);
   const hits = (await response.json()).hits || [];
-  return hits.slice(0,limit).map(hit => {
+  return filterRenderableRecipes(hits.slice(0,limit).map(hit => {
     const recipe = hit.recipe || {};
     return {
       id:`edamam-${encodeURIComponent(recipe.uri || recipe.url || recipe.label)}`,
@@ -751,27 +1017,36 @@ async function fetchEdamamDiscovery({ query, cuisine, category, limit }){
       tags:[...(recipe.dietLabels || []), ...(recipe.healthLabels || []).slice(0,4)],
       readyInMinutes:recipe.totalTime || 30,
       servings:recipe.yield || null,
-      usedIngredients:recipe.ingredients || [],
-      extendedIngredients:recipe.ingredients || [],
-      instructions:recipe.url || "Open recipe source for instructions.",
-      sourceUrl:recipe.url || ""
+      usedIngredients:normalizeIngredientList(recipe.ingredients || []),
+      extendedIngredients:normalizeIngredientList(recipe.ingredients || []),
+      instructions:"",
+      sourceUrl:""
     };
-  });
+  }));
 }
 
 async function localizeDiscoveryRecipes(recipes, lang){
   if(!lang || lang === "en") return recipes;
-  return Promise.all(recipes.map(async recipe => ({
+
+  const titles =
+  await translateTextBatch(
+    recipes.map(recipe => recipe.title || ""),
+    lang
+  );
+
+  const instructions =
+  await translateTextBatch(
+    recipes.map(recipe => recipe.instructions || ""),
+    lang
+  );
+
+  return Promise.all(recipes.map(async (recipe, index) => ({
     ...recipe,
-    title:await translateText(recipe.title || "", lang),
-    instructions:await translateText(recipe.instructions || "", lang),
-    extendedIngredients:Array.isArray(recipe.extendedIngredients)
-      ? await Promise.all(recipe.extendedIngredients.map(async item => ({
-          ...item,
-          name:item.name ? await translateText(item.name, lang) : item.name,
-          original:item.original ? await translateText(item.original, lang) : item.original
-        })))
-      : []
+    title:titles[index] || recipe.title,
+    instructions:instructions[index] || recipe.instructions,
+    usedIngredients:await localizeIngredientArray(recipe.usedIngredients, lang),
+    missedIngredients:await localizeIngredientArray(recipe.missedIngredients, lang),
+    extendedIngredients:await localizeIngredientArray(recipe.extendedIngredients, lang)
   })));
 }
 
@@ -804,14 +1079,6 @@ app.post("/discover-recipes", async (req,res) => {
 
     if(combined.length < limit){
       try{
-        mealDb=await fetchMealDbDiscovery({ query, cuisine, category, limit:Math.min(12,limit-combined.length) });
-        if(mealDb.length){ upsertRecipeCatalog(mealDb); combined=uniqueRecipes([...combined,...mealDb]); }
-        fetchedSources.push("themealdb");
-      }catch(error){ console.log("DISCOVERY THEMEALDB FAILED:",error.message); }
-    }
-
-    if(combined.length < limit){
-      try{
         spoon=await fetchSpoonDiscovery({ query, cuisine, category, limit:Math.min(12,limit-combined.length) });
         if(spoon.length){ upsertRecipeCatalog(spoon); combined=uniqueRecipes([...combined,...spoon]); }
         fetchedSources.push("spoonacular");
@@ -821,9 +1088,20 @@ app.post("/discover-recipes", async (req,res) => {
     if(combined.length < limit){
       try{
         liveEdamam=await fetchEdamamDiscovery({ query, cuisine, category, limit:Math.min(12,limit-combined.length) });
-        if(liveEdamam.length) combined=uniqueRecipes([...combined,...liveEdamam]);
+        if(liveEdamam.length){
+          upsertRecipeCatalog(liveEdamam);
+          combined=uniqueRecipes([...combined,...liveEdamam]);
+        }
         fetchedSources.push("edamam-live");
       }catch(error){ console.log("DISCOVERY EDAMAM FAILED:",error.message); }
+    }
+
+    if(combined.length < limit){
+      try{
+        mealDb=await fetchMealDbDiscovery({ query, cuisine, category, limit:Math.min(12,limit-combined.length) });
+        if(mealDb.length){ upsertRecipeCatalog(mealDb); combined=uniqueRecipes([...combined,...mealDb]); }
+        fetchedSources.push("themealdb");
+      }catch(error){ console.log("DISCOVERY THEMEALDB FAILED:",error.message); }
     }
 
     let fallbackMode="";
@@ -859,7 +1137,7 @@ app.post("/discover-recipes", async (req,res) => {
       }catch(error){ console.log("DISCOVERY EDAMAM FALLBACK FAILED:",error.message); }
     }
 
-    combined=combined.slice(0,limit);
+    combined=filterRenderableRecipes(combined).slice(0,limit);
 
     const localized = await localizeDiscoveryRecipes(combined, lang);
     return res.json({
@@ -873,7 +1151,7 @@ app.post("/discover-recipes", async (req,res) => {
         fetched:fetchedSources.length>0,
         fetchedSources,
         fallbackMode,
-        sourceOrder:["nili_database","themealdb","spoonacular","edamam-live"],
+        sourceOrder:["nili_database","spoonacular","edamam-live","themealdb"],
         catalogSize:readRecipeCatalog().length
       }
     });
@@ -894,6 +1172,289 @@ process.env.USE_EDAMAM === "true";
 const useTheMealDB =
 process.env.USE_THEMEALDB === "true";
 
+async function fetchSpoonacularRecipesByIngredients(ingredients, limit){
+  if(!useSpoonacular || !process.env.SPOON_KEY){
+    return [];
+  }
+
+  const query =
+  ingredients.join(",");
+
+  const searchResponse =
+  await fetchJsonWithTimeout(
+    `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(query)}&number=${Math.min(limit, 6)}&apiKey=${process.env.SPOON_KEY}`,
+    {},
+    4500
+  );
+
+  if(!searchResponse.ok){
+    throw new Error(`Spoonacular ${searchResponse.status}`);
+  }
+
+  const basicRecipes =
+  await searchResponse.json();
+
+  if(!Array.isArray(basicRecipes) || !basicRecipes.length){
+    return [];
+  }
+
+  const settled =
+  await Promise.allSettled(
+    basicRecipes.slice(0, limit).map(async recipe => {
+      try{
+        const detailResponse =
+        await fetchJsonWithTimeout(
+          `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${process.env.SPOON_KEY}`,
+          {},
+          4500
+        );
+
+        const detail =
+        await detailResponse.json();
+
+        return {
+          id: recipe.id,
+          sourceId: String(recipe.id),
+          source: "spoonacular",
+          title: recipe.title || "Recipe",
+          image: recipe.image || "",
+          readyInMinutes: detail.readyInMinutes || 30,
+          usedIngredients: normalizeIngredientList(recipe.usedIngredients || []),
+          missedIngredients: normalizeIngredientList(recipe.missedIngredients || []),
+          extendedIngredients: normalizeIngredientList(detail.extendedIngredients || recipe.usedIngredients || []),
+          servings: detail.servings || null,
+          analyzedInstructions: detail.analyzedInstructions || [],
+          instructions:
+            detail.instructions ||
+            "No instructions",
+          sourceUrl:""
+        };
+      }catch{
+        return {
+          id: recipe.id,
+          sourceId: String(recipe.id),
+          source: "spoonacular",
+          title: recipe.title || "Recipe",
+          image: recipe.image || "",
+          readyInMinutes: 30,
+          usedIngredients: normalizeIngredientList(recipe.usedIngredients || []),
+          missedIngredients: normalizeIngredientList(recipe.missedIngredients || []),
+          extendedIngredients: normalizeIngredientList(recipe.usedIngredients || []),
+          instructions: "No instructions",
+          sourceUrl: ""
+        };
+      }
+    })
+  );
+
+  return filterRenderableRecipes(settled
+    .filter(item => item.status === "fulfilled" && item.value)
+    .map(item => item.value));
+}
+
+async function fetchEdamamRecipesByIngredients(ingredients, limit){
+  if(
+    !useEdamam ||
+    !process.env.EDAMAM_APP_ID ||
+    !process.env.EDAMAM_APP_KEY
+  ){
+    return [];
+  }
+
+  const queries = [
+    ingredients.slice(0, 3).join(" "),
+    ingredients[0],
+    ingredients[1]
+  ].filter(Boolean);
+
+  for(const query of queries){
+    const response =
+    await fetchJsonWithTimeout(
+      `https://api.edamam.com/api/recipes/v2?type=public&q=${encodeURIComponent(query)}&app_id=${process.env.EDAMAM_APP_ID}&app_key=${process.env.EDAMAM_APP_KEY}`,
+      { method: "GET" },
+      4500
+    );
+
+    if(!response.ok){
+      continue;
+    }
+
+    const data =
+    await response.json();
+
+    if(Array.isArray(data.hits) && data.hits.length){
+      return filterRenderableRecipes(data.hits.slice(0, limit).map(item => {
+        const recipe = item.recipe || {};
+        return {
+          id: encodeURIComponent(recipe.uri || recipe.url || recipe.label),
+          sourceId: recipe.uri || recipe.url || recipe.label,
+          source: "edamam",
+          title: recipe.label || "Recipe",
+          image: recipe.image || "",
+          readyInMinutes:
+            recipe.totalTime && recipe.totalTime > 0
+              ? recipe.totalTime
+              : 30,
+          usedIngredients: normalizeIngredientList(recipe.ingredients || []),
+          extendedIngredients: normalizeIngredientList(recipe.ingredients || []),
+          servings: recipe.yield || null,
+          instructions:"",
+          sourceUrl:""
+        };
+      }));
+    }
+  }
+
+  return [];
+}
+
+async function fetchMealDbRecipesByIngredients(ingredients, limit){
+  if(!useTheMealDB){
+    return [];
+  }
+
+  const validIngredients =
+  ingredients.filter(item =>
+    !item.toLowerCase().includes("apple") &&
+    !item.toLowerCase().includes("banana") &&
+    !item.toLowerCase().includes("orange") &&
+    !item.toLowerCase().includes("bell pepper")
+  );
+
+  const mealIngredient =
+  validIngredients[0] || ingredients[0];
+
+  const mealResponse =
+  await fetchJsonWithTimeout(
+    `https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(mealIngredient)}`,
+    {},
+    4500
+  );
+
+  if(!mealResponse.ok){
+    throw new Error(`TheMealDB ${mealResponse.status}`);
+  }
+
+  const mealData =
+  await mealResponse.json();
+
+  if(!Array.isArray(mealData.meals) || !mealData.meals.length){
+    return [];
+  }
+
+  const settled =
+  await Promise.allSettled(
+    mealData.meals.slice(0, limit).map(async meal => {
+      const detailResponse =
+      await fetchJsonWithTimeout(
+        `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`,
+        {},
+        4500
+      );
+
+      const detailData =
+      await detailResponse.json();
+
+      const detail =
+      detailData.meals?.[0];
+
+      if(!detail){
+        return null;
+      }
+
+      let estimatedTime = null;
+      const instructionText = detail.strInstructions || "";
+      const stepCount =
+      instructionText
+        .split(".")
+        .filter(item => item.trim().length > 20)
+        .length;
+
+      if(stepCount <= 4){
+        estimatedTime = 20;
+      }else if(stepCount <= 7){
+        estimatedTime = 30;
+      }else if(stepCount <= 10){
+        estimatedTime = 45;
+      }else{
+        estimatedTime = 60;
+      }
+
+      const usedIngredients = [];
+
+      for(let index = 1; index <= 20; index++){
+        const ing = detail[`strIngredient${index}`];
+        const measure = detail[`strMeasure${index}`];
+
+        if(ing && ing.trim()){
+          usedIngredients.push({
+            name: ing.trim(),
+            original: `${measure || ""} ${ing}`.trim()
+          });
+        }
+      }
+
+      return {
+        id: detail.idMeal,
+        sourceId: String(detail.idMeal),
+        source: "themealdb",
+        title: detail.strMeal,
+        image: detail.strMealThumb,
+        readyInMinutes: estimatedTime,
+        timeEstimated: true,
+        timeLabel: `~${estimatedTime} min`,
+        usedIngredients,
+        extendedIngredients: usedIngredients,
+        instructions:
+          detail.strInstructions?.trim() ||
+          "Recipe instructions unavailable.",
+        sourceUrl:
+          detail.strSource ||
+          detail.strYoutube ||
+          ""
+      };
+    })
+  );
+
+  return settled
+    .filter(item => item.status === "fulfilled" && item.value)
+    .map(item => item.value);
+}
+
+async function localizeRecipeResults(recipes, lang){
+  if(!lang || lang === "en"){
+    return recipes;
+  }
+
+  const titles =
+  await translateTextBatch(
+    recipes.map(recipe => recipe.title || ""),
+    lang
+  );
+
+  const ingredientTexts =
+  await translateTextBatch(
+    recipes.map(recipe => recipe.ingredientsText || ""),
+    lang
+  );
+
+  const instructions =
+  await translateTextBatch(
+    recipes.map(recipe => recipe.instructions || ""),
+    lang
+  );
+
+  return Promise.all(recipes.map(async (recipe, index) => ({
+    ...recipe,
+    title: titles[index] || recipe.title,
+    ingredientsText: ingredientTexts[index] || recipe.ingredientsText,
+    instructions: instructions[index] || recipe.instructions,
+    usedIngredients: await localizeIngredientArray(recipe.usedIngredients, lang),
+    missedIngredients: await localizeIngredientArray(recipe.missedIngredients, lang),
+    extendedIngredients: await localizeIngredientArray(recipe.extendedIngredients, lang)
+  })));
+}
+
 app.post(
   
   "/recipes",
@@ -908,436 +1469,106 @@ app.post(
 Number(req.body.offset || 0);
 
 const limit =
-8;
+Math.min(Math.max(Number(req.body.limit) || 8, 1), 12);
 
 const targetCount =
-offset + limit + 1;
+offset + limit;
 
       if (!ingredients.length) {
         return res.json([]);
       }
 
-      const query =
-      ingredients.join(",");
+      const approvedCreatorRecipes =
+      findApprovedRecipesByIngredients(ingredients);
+
+      const approvedCreatorCards =
+      approvedCreatorRecipes.map(recipe => ({
+        id: recipe.id,
+        sourceId: String(recipe.id),
+        source: "nili_creator",
+        title:
+          recipe.adminTitleTr ||
+          recipe.title ||
+          "Creator Recipe",
+        image:
+          recipe.mediaUrl ||
+          (
+            recipe.mediaFile
+              ? "/creator-uploads/" + recipe.mediaFile
+              : ""
+          ),
+        readyInMinutes:
+          recipe.prepTime || 30,
+        servings:
+          recipe.servings || "",
+        usedIngredients:
+          recipe.matchedIngredients || [],
+        extendedIngredients:
+          recipe.adminIngredientsTr
+            ? String(recipe.adminIngredientsTr)
+                .split(/\r?\n|,/)
+                .map(item => ({ original: item.trim(), name: item.trim() }))
+                .filter(item => item.original)
+            : [],
+        instructions:
+          recipe.adminInstructionsTr ||
+          recipe.instructions ||
+          "Recipe instructions unavailable.",
+        ingredientsText:
+          recipe.adminIngredientsTr ||
+          recipe.ingredients ||
+          "",
+        creatorUsername:
+          recipe.creatorUsername || "",
+        clicks:
+          recipe.clicks || 0,
+        totalBonus:
+          recipe.totalBonus || 0
+      }));
+
+      const cachedCatalogRecipes =
+      searchRecipeCatalogByIngredients(
+        ingredients,
+        targetCount
+      );
 
       let allRecipes =
-      [];
+      uniqueRecipes([
+        ...approvedCreatorCards,
+        ...cachedCatalogRecipes
+      ]);
 
-      /*
-        1. SPOONACULAR
-      */
+      if(allRecipes.length < targetCount){
+        const remaining =
+        Math.min(6, targetCount - allRecipes.length);
 
-      if (
-  useSpoonacular &&
-  allRecipes.length < targetCount
-) {  
+        const sourceResults =
+        await Promise.allSettled([
+          fetchSpoonacularRecipesByIngredients(ingredients, remaining),
+          fetchEdamamRecipesByIngredients(ingredients, remaining),
+          fetchMealDbRecipesByIngredients(ingredients, remaining)
+        ]);
 
-      try {
+        const fetchedRecipes =
+        sourceResults
+          .filter(item => item.status === "fulfilled" && Array.isArray(item.value))
+          .flatMap(item => item.value);
 
-        const spoonRes =
-        await fetch(
-`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(query)}&number=6&apiKey=${process.env.SPOON_KEY}`
-        );
-
-console.log("SPOON STATUS:", spoonRes.status);
-
-        const basicRecipes =
-        await spoonRes.json();
-
-        console.log("SPOON RAW:", basicRecipes);
-
-        if (
-          Array.isArray(basicRecipes) &&
-          basicRecipes.length > 0 &&
-          basicRecipes.status !== "failure"
-        ) {
-
-          console.log("SOURCE: SPOONACULAR");
-
-          const spoonRecipes =
-          await Promise.all(
-
-            basicRecipes
-            .slice(0, 12)
-            .map(async recipe => {
-
-              try {
-
-                const detailRes =
-                await fetch(
-`https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${process.env.SPOON_KEY}`
-                );
-
-                const detail =
-                await detailRes.json();
-
-                return {
-                  id: recipe.id,
-                  source: "spoonacular",
-                  title: recipe.title || "Recipe",
-                  image: recipe.image || "",
-                  readyInMinutes: detail.readyInMinutes || 30,
-                  usedIngredients: recipe.usedIngredients || [],
-                  missedIngredients: recipe.missedIngredients || [],
-                  extendedIngredients: detail.extendedIngredients || [],
-                  servings: detail.servings || null,
-                  analyzedInstructions: detail.analyzedInstructions || [],
-                  instructions:
-                    detail.instructions ||
-                    detail.summary ||
-                    "No instructions"
-                };
-
-              } catch {
-
-                return {
-                  id: recipe.id,
-                  source: "spoonacular",
-                  title: recipe.title || "Recipe",
-                  image: recipe.image || "",
-                  readyInMinutes: 30,
-                  usedIngredients: recipe.usedIngredients || [],
-                  missedIngredients: recipe.missedIngredients || [],
-                  instructions: "No instructions"
-                };
-
-              }
-
-            })
-
-          );
-
-          allRecipes.push(...spoonRecipes);
-
+        if(fetchedRecipes.length){
+          upsertRecipeCatalog(fetchedRecipes);
+          allRecipes = uniqueRecipes([
+            ...allRecipes,
+            ...fetchedRecipes
+          ]);
         }
-
-      } catch (e) {
-
-        console.log("SPOONACULAR FAILED:", e.message);
-
       }
-
-      } else {
-  console.log("SPOONACULAR DISABLED");
-}
-
-
-      /*
-        2. EDAMAM
-      */
-
-       if (
-  useEdamam &&
-  allRecipes.length < targetCount
-) { 
-
-      try {
-
-        if (
-          process.env.EDAMAM_APP_ID &&
-          process.env.EDAMAM_APP_KEY
-        ) {
-
-const edamamQueries = [
-  ingredients.slice(0, 3).join(" "),
-  ingredients[0],
-  ingredients[1],
-  ingredients[2],
-  "chicken",
-  "pasta",
-  "salad"
-].filter(Boolean);
-
-let edamamData = null;
-
-for (const edamamQuery of edamamQueries) {
-
-  console.log("EDAMAM QUERY:", edamamQuery);
-
-  const edamamUrl =
-`https://api.edamam.com/api/recipes/v2?type=public&q=${encodeURIComponent(edamamQuery)}&app_id=${process.env.EDAMAM_APP_ID}&app_key=${process.env.EDAMAM_APP_KEY}`;
-
-const edamamRes =
-await fetch(
-  edamamUrl,
-  {
-    method: "GET"
-  }
-);
-
-console.log("EDAMAM STATUS:", edamamRes.status);
-
-const testData =
-await edamamRes.json();
-console.log("EDAMAM COUNT:", testData.count);
-
-  if (
-    testData.hits &&
-    Array.isArray(testData.hits) &&
-    testData.hits.length > 0
-  ) {
-    edamamData = testData;
-    break;
-  }
-
-}
-
-          if (
-  edamamData &&
-  edamamData.hits &&
-  Array.isArray(edamamData.hits) &&
-  edamamData.hits.length > 0
-) {
-
-            console.log("SOURCE: EDAMAM");
-
-            const edamamRecipes =
-            edamamData.hits
-            .slice(0, 12)
-            .map(item => {
-
-              const recipe =
-              item.recipe;
-
-              return {
-                id: encodeURIComponent(recipe.uri),
-                source: "edamam",
-                title: recipe.label || "Recipe",
-                image: recipe.image || "",
-                readyInMinutes:
-                  recipe.totalTime && recipe.totalTime > 0
-                    ? recipe.totalTime
-                    : 30,
-                usedIngredients:
-                  recipe.ingredients || [],
-                extendedIngredients:
-                  recipe.ingredients || [],
-                servings:
-                  recipe.yield || null,
-                instructions:
-                  recipe.url ||
-                  "Open recipe source for instructions."
-              };
-
-            });
-
-            allRecipes.push(...edamamRecipes);
-
-          } else {
-  console.log("EDAMAM FOUND 0 RECIPES");
-}
-
-        } else {
-
-          console.log("EDAMAM KEYS MISSING");
-
-        }
-
-      } catch (e) {
-
-        console.log("EDAMAM FAILED:", e.message);
-
-      }
-
-      } else {
-  console.log("EDAMAM DISABLED");
-}
-
-
-      /*
-        3. THEMEALDB
-      */
-
-        if (
-  useTheMealDB &&
-  allRecipes.length < targetCount
-) {
-
-      try {
-
-        const validIngredients =
-        ingredients.filter(x =>
-          !x.toLowerCase().includes("apple") &&
-          !x.toLowerCase().includes("banana") &&
-          !x.toLowerCase().includes("orange") &&
-          !x.toLowerCase().includes("bell pepper")
-        );
-
-        const mealIngredient =
-        validIngredients[0] || ingredients[0];
-
-        console.log("THEMEAL INGREDIENT:", mealIngredient);
-
-        const mealRes =
-        await fetch(
-`https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(mealIngredient)}`
-        );
-
-        const mealData =
-        await mealRes.json();
-
-        if (
-          mealData.meals &&
-          Array.isArray(mealData.meals) &&
-          mealData.meals.length > 0
-        ) {
-
-          console.log("SOURCE: THEMEALDB");
-
-          const mealRecipes =
-          await Promise.all(
-
-            mealData.meals
-            .slice(0, 12)
-            .map(async meal => {
-
-  const detailRes =
-  await fetch(
-`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`
-  );
-
-  const detailData =
-  await detailRes.json();
-
-  const detail =
-  detailData.meals[0];
-
-  let estimatedTime = null;
-
-const instructionText =
-  detail.strInstructions || "";
-
-const stepCount =
-  instructionText
-    .split(".")
-    .filter(x => x.trim().length > 20)
-    .length;
-
-if(stepCount <= 4){
-  estimatedTime = 20;
-}else if(stepCount <= 7){
-  estimatedTime = 30;
-}else if(stepCount <= 10){
-  estimatedTime = 45;
-}else{
-  estimatedTime = 60;
-}
-
-  const usedIngredients = [];
-
-  for(let i = 1; i <= 20; i++){
-
-    const ing = detail[`strIngredient${i}`];
-    const measure = detail[`strMeasure${i}`];
-
-    if(ing && ing.trim()){
-      usedIngredients.push({
-        name: ing.trim(),
-        original: `${measure || ""} ${ing}`.trim()
-      });
-    }
-
-  }
-
-return {
-  id: detail.idMeal,
-  source: "themealdb",
-  title: detail.strMeal,
-  image: detail.strMealThumb,
-  readyInMinutes: estimatedTime,
-timeEstimated: true,
-timeLabel: `~${estimatedTime} min`,
-  usedIngredients: usedIngredients,
-  extendedIngredients: usedIngredients,
-  instructions:
-    detail.strInstructions?.trim() ||
-    "Recipe instructions unavailable."
-};
-
-})
-
-          );
-
-          allRecipes.push(...mealRecipes);
-
-        } else {
-
-          console.log("THEMEALDB FOUND 0 RECIPES");
-
-        }
-
-      } catch (e) {
-
-        console.log("THEMEALDB FAILED:", e.message);
-
-      }
-
-      } else {
-  console.log("THEMEALDB DISABLED");
-}
-
 
       console.log("TOTAL RECIPES:", allRecipes.length);
-
-/* NILI APPROVED CREATOR RECIPES */
-
-const approvedCreatorRecipes =
-findApprovedRecipesByIngredients(ingredients);
-
-const approvedCreatorCards =
-approvedCreatorRecipes.map(recipe => ({
-  id: recipe.id,
-  source: "nili_creator",
-
-  title:
-    recipe.adminTitleTr ||
-    recipe.title ||
-    "Creator Recipe",
-
-  image:
-    recipe.mediaUrl ||
-    (
-      recipe.mediaFile
-        ? "/creator-uploads/" + recipe.mediaFile
-        : ""
-    ),
-
-  readyInMinutes:
-    recipe.prepTime || 30,
-
-  servings:
-    recipe.servings || "",
-
-  usedIngredients:
-    recipe.matchedIngredients || [],
-
-  instructions:
-    recipe.adminInstructionsTr ||
-    recipe.instructions ||
-    "Recipe instructions unavailable.",
-
-  ingredientsText:
-    recipe.adminIngredientsTr ||
-    recipe.ingredients ||
-    "",
-
-  creatorUsername:
-    recipe.creatorUsername || "",
-
-  clicks:
-    recipe.clicks || 0,
-
-  totalBonus:
-    recipe.totalBonus || 0
-}));
 
 console.log("NILI APPROVED RECIPES:", approvedCreatorCards.length);
 
 const finalRecipes =
-[
-  ...approvedCreatorCards,
-  ...allRecipes
-].slice(offset, offset + limit);
+filterRenderableRecipes(allRecipes).slice(offset, offset + limit);
 
 const lang =
 req.body.lang || "en";
@@ -1345,64 +1576,10 @@ req.body.lang || "en";
 console.log("RECIPE TRANSLATE LANG:", lang);
 
 if(lang !== "en"){
+  const localizedRecipes =
+  await localizeRecipeResults(finalRecipes, lang);
 
-  await Promise.all(
-    finalRecipes.map(async (recipe) => {
-
-      try{
-
-        recipe.title =
-          await translateText(recipe.title || "", lang);
-
-        recipe.ingredientsText =
-          await translateText(recipe.ingredientsText || "", lang);
-
-        recipe.instructions =
-        await translateText(recipe.instructions || "", lang);  
-
-        if(Array.isArray(recipe.usedIngredients)){
-          recipe.usedIngredients = await Promise.all(
-            recipe.usedIngredients.map(async (ing) => {
-              return {
-                ...ing,
-                name: ing.name
-                  ? await translateText(ing.name, lang)
-                  : ing.name,
-                original: ing.original
-                  ? await translateText(ing.original, lang)
-                  : ing.original
-              };
-            })
-          );
-        }
-
-        if(Array.isArray(recipe.missedIngredients)){
-          recipe.missedIngredients = await Promise.all(
-            recipe.missedIngredients.map(async (ing) => ({
-              ...ing,
-              name: ing.name ? await translateText(ing.name, lang) : ing.name,
-              original: ing.original ? await translateText(ing.original, lang) : ing.original
-            }))
-          );
-        }
-
-        if(Array.isArray(recipe.extendedIngredients)){
-          recipe.extendedIngredients = await Promise.all(
-            recipe.extendedIngredients.map(async (ing) => ({
-              ...ing,
-              name: ing.name ? await translateText(ing.name, lang) : ing.name,
-              original: ing.original ? await translateText(ing.original, lang) : ing.original
-            }))
-          );
-        }
-
-      }catch(e){
-        console.log("RECIPE TRANSLATION FAILED:", e.message);
-      }
-
-    })
-  );
-
+  return res.json(localizedRecipes);
 }
 
 return res.json(finalRecipes);

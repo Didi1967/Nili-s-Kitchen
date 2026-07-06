@@ -12,3 +12,53 @@ body:has(.creator-page){padding:34px!important}.creator-page{position:relative;m
 .how-card,.stat-card,.recipe-card{transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease}
 .creator-actions button,.action-btn,.how-back,.back{transition:transform .2s ease,filter .2s ease}.creator-actions button:hover,.action-btn:hover,.how-back:hover,.back:hover{filter:brightness(1.08);transform:translateY(-2px)}
 @media(max-width:760px){body:has(.creator-page){padding:10px!important}.creator-page{padding:24px 17px!important}.creator-page .top{flex-direction:column!important}.creator-page .top h1{font-size:36px!important}.how-page{padding:14px 10px 50px!important}.how-hero{min-height:480px!important;padding:34px 22px 210px!important}.how-hero:after{right:20px;bottom:20px;width:calc(100% - 40px);height:175px}.how-hero h1{font-size:40px!important}.how-card{padding:21px!important}.dashboard{padding:12px!important}.welcome-card{min-height:430px!important;padding:34px 22px 220px!important}.welcome-card:after{right:20px;top:auto;bottom:20px;width:calc(100% - 40px);height:175px}.welcome-card h1,.welcome-card p{max-width:100%}.welcome-card h1{font-size:40px!important}.stats-grid{grid-template-columns:1fr 1fr!important}.action-grid{flex-direction:column!important}}
+
+/* Keep premium pages on the same font system as home and world pages. */
+@media(max-width:760px){
+  body.how-page-body,
+  body:has(.creator-page),
+  body:has(.dashboard),
+  body.how-page-body button,
+  body:has(.creator-page) button,
+  body:has(.dashboard) button,
+  body.how-page-body input,
+  body:has(.creator-page) input,
+  body:has(.dashboard) input,
+  body.how-page-body textarea,
+  body:has(.creator-page) textarea{
+    font-family:"Manrope",Arial,sans-serif!important;
+  }
+
+  .how-page:before,
+  .creator-page:before,
+  .dashboard:before{
+    font-size:26px!important;
+  }
+
+  .how-hero h1,
+  .creator-page .top h1,
+  .welcome-card h1,
+  .how-card h2,
+  .top h1,
+  .recipes-section>h2{
+    font-family:"Playfair Display",Georgia,serif!important;
+    letter-spacing:-.025em!important;
+  }
+
+  .how-hero p,
+  .creator-info,
+  .creator-form input,
+  .creator-form textarea{
+    font-family:"Manrope",Arial,sans-serif!important;
+    font-size:13px!important;
+    line-height:1.5!important;
+  }
+
+  .how-step h3,
+  .creator-form label{
+    font-family:"Sora","Manrope",Arial,sans-serif!important;
+    font-size:14px!important;
+    line-height:1.2!important;
+    font-weight:700!important;
+  }
+}
