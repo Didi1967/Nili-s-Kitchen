@@ -12,6 +12,7 @@
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
 
   <title>Nili's Kitchen Admin</title>
 
@@ -75,6 +76,515 @@ body {
       gap: 22px;
     }
 
+    .admin-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 0 0 22px;
+    }
+
+    .admin-stat-card {
+      background: #fffaf3;
+      border: 1px solid #eadcc7;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 12px 28px rgba(48, 30, 18, 0.07);
+    }
+
+    .admin-stat-card span {
+      display: block;
+      color: #6b5a47;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .admin-stat-card strong {
+      display: block;
+      margin-top: 8px;
+      color: #173222;
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .admin-tabs {
+      display: flex;
+      gap: 10px;
+      margin: 0 0 20px;
+      flex-wrap: wrap;
+    }
+
+    .admin-tabs button {
+      border: 1px solid #d8c3a8;
+      border-radius: 999px;
+      background: #fffaf3;
+      color: #244331;
+      padding: 11px 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .admin-tabs button.active {
+      background: #244331;
+      color: #fffaf3;
+      border-color: #c99b4f;
+    }
+
+    .admin-tab-panel {
+      display: none;
+    }
+
+    .admin-tab-panel.active {
+      display: block;
+    }
+
+    .admin-table-card,
+    .admin-mail-panel {
+      background: #fffaf3;
+      border: 1px solid #eadcc7;
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 16px 40px rgba(48, 30, 18, 0.08);
+      overflow-x: auto;
+    }
+
+    .recipe-card-queue{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:16px}
+    .recipe-card-queue-item{display:grid;gap:10px;padding:12px;border:1px solid #eadcc7;border-radius:18px;background:#fffaf3}
+    .recipe-card-queue-preview{display:block;overflow:hidden;border-radius:12px;background:#efe4d4;cursor:zoom-in}
+    .recipe-card-queue-preview img{display:block;width:100%;aspect-ratio:1;object-fit:contain;transition:transform .18s ease}
+    .recipe-card-queue-preview:hover img{transform:scale(1.02)}
+    .recipe-card-queue-meta{display:grid;gap:4px}
+    .recipe-card-queue-meta span,.recipe-card-queue-meta small{color:#65584b}
+    .recipe-generation-progress{position:sticky;top:10px;z-index:60;margin:12px 0;padding:14px;border:1px solid #dfbd88;border-radius:16px;background:#fff8eb;box-shadow:0 10px 28px rgba(45,31,18,.12)}
+    .recipe-generation-progress-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:9px;color:#244331;font-weight:900}
+    .recipe-generation-progress-track{height:18px;overflow:hidden;border-radius:999px;background:#e8ded0;box-shadow:inset 0 1px 3px rgba(40,25,12,.14)}
+    .recipe-generation-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#ec642e,#eda13b);border-radius:inherit;transition:width .35s ease}
+    .recipe-generation-progress.is-running .recipe-generation-progress-fill{background:linear-gradient(90deg,#ec642e,#f4bd45,#ec642e);background-size:200% 100%;animation:recipeProgressPulse 1.3s linear infinite}
+    .recipe-generation-progress.is-stopping .recipe-generation-progress-fill{background:#bb3d2e}
+    .recipe-generation-progress small{display:block;margin-top:8px;color:#6b5a47}
+    .recipe-generation-notice{display:none;margin:10px 0;padding:12px 14px;border:1px solid #d7b16f;border-radius:12px;background:#fff1d8;color:#70451e;font-weight:800}
+    .recipe-generation-notice.is-success{border-color:#a8c89e;background:#edf7e9;color:#245d32}
+    .recipe-generation-notice.is-error{border-color:#dfa49b;background:#fff1ef;color:#8b2d27}
+    @keyframes recipeProgressPulse{to{background-position:-200% 0}}
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    .admin-table th,
+    .admin-table td {
+      border-bottom: 1px solid #eadcc7;
+      padding: 11px 10px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+    }
+
+    .admin-table th {
+      color: #244331;
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .approved-manager-toolbar {
+      display: grid;
+      grid-template-columns: minmax(220px, 2fr) repeat(4, minmax(130px, 1fr));
+      gap: 10px;
+      margin: 14px 0 16px;
+    }
+
+    .approved-manager-toolbar input,
+    .approved-manager-toolbar select {
+      width: 100%;
+      min-height: 42px;
+      box-sizing: border-box;
+      border: 1px solid #ddc9ae;
+      border-radius: 13px;
+      padding: 9px 11px;
+      background: #fff;
+      color: #26352c;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .approved-manager-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .approved-manager-summary span {
+      padding: 7px 10px;
+      border: 1px solid #e4d0b4;
+      border-radius: 999px;
+      background: #f8ecdb;
+      color: #294536;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .approved-state {
+      display: inline-flex;
+      padding: 6px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .approved-state.published { background: #dcecdc; color: #1e5a32; }
+    .approved-state.hidden { background: #fff0c9; color: #795218; }
+    .approved-state.archived { background: #e9e4dc; color: #665c50; }
+    .approved-state.deleted { background: #f5d8d4; color: #922f2b; }
+
+    .approved-row-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-width: 250px;
+    }
+
+    .approved-row-actions button,
+    .approved-manager-pages button {
+      border: 1px solid #d3b982;
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: #fffaf2;
+      color: #294536;
+      font-size: 11px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .approved-row-actions button.primary {
+      background: #294a36;
+      color: #fff;
+    }
+
+    .approved-row-actions button.danger {
+      border-color: #d9aaa4;
+      color: #9b302c;
+    }
+
+    .approved-manager-pages {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+      font-weight: 900;
+    }
+
+    .approved-manager-pages button:disabled {
+      cursor: not-allowed;
+      opacity: .42;
+    }
+
+    .approved-page-jump {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #294536;
+      font-size: 12px;
+    }
+
+    .approved-page-jump input {
+      width: 72px;
+      min-height: 34px;
+      border: 1px solid #d3b982;
+      border-radius: 10px;
+      background: #fffaf2;
+      color: #294536;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .approved-edit-modal {
+      position: fixed;
+      z-index: 10020;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(22, 27, 23, .68);
+      backdrop-filter: blur(7px);
+    }
+
+    .approved-edit-box {
+      width: min(920px, 100%);
+      max-height: 92vh;
+      overflow-y: auto;
+      border: 1px solid #d8bd91;
+      border-radius: 24px;
+      padding: 22px;
+      background: #fffaf3;
+      box-shadow: 0 25px 70px rgba(20, 25, 20, .28);
+    }
+
+    .approved-edit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .approved-edit-grid label {
+      display: grid;
+      gap: 6px;
+      color: #37433b;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .approved-edit-grid label.wide { grid-column: 1 / -1; }
+
+    .approved-edit-grid input,
+    .approved-edit-grid textarea {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #dfccb1;
+      border-radius: 13px;
+      padding: 11px 12px;
+      background: #fff;
+      color: #26352c;
+      font: inherit;
+    }
+
+    .approved-edit-grid textarea { min-height: 130px; resize: vertical; }
+
+    .approved-edit-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .approved-edit-actions button {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 18px;
+      background: #e9ddcc;
+      color: #26352c;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .approved-edit-actions button.primary { background: #294a36; color: #fff; }
+
+    @media (max-width: 780px) {
+      .approved-manager-toolbar,
+      .approved-edit-grid { grid-template-columns: 1fr; }
+      .approved-edit-grid label.wide { grid-column: auto; }
+    }
+
+    .admin-recipe-thumb-cell {
+      width: 74px;
+      min-width: 74px;
+    }
+
+    .admin-recipe-thumb-link {
+      display: inline-grid;
+      width: 58px;
+      height: 58px;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid #d8c3a8;
+      border-radius: 14px;
+      background: #efe4d4;
+      box-shadow: 0 8px 18px rgba(48, 30, 18, 0.08);
+    }
+
+    .admin-recipe-thumb-link img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .admin-recipe-thumb-missing {
+      display: inline-grid;
+      width: 58px;
+      height: 58px;
+      place-items: center;
+      border: 1px dashed #c99b4f;
+      border-radius: 14px;
+      background: #fff4e4;
+      color: #8a5831;
+      font-size: 10px;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.15;
+    }
+
+    .admin-recipe-thumb-link.broken {
+      border-style: dashed;
+      background: #fff4e4;
+    }
+
+    .admin-recipe-thumb-link.broken::after {
+      content: "Kırık";
+      color: #a12626;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .admin-recipe-thumb-link.broken img {
+      display: none;
+    }
+
+    .admin-mail-panel {
+      display: grid;
+      gap: 12px;
+      max-width: 820px;
+    }
+
+    .admin-mail-panel input,
+    .admin-mail-panel textarea {
+      width: 100%;
+      border: 1px solid #eadcc7;
+      border-radius: 16px;
+      padding: 13px 14px;
+      background: white;
+      box-sizing: border-box;
+      font-weight: 700;
+    }
+
+    .admin-mail-panel textarea {
+      min-height: 180px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .admin-mail-panel button {
+      justify-self: start;
+      border: none;
+      border-radius: 999px;
+      padding: 13px 22px;
+      background: #244331;
+      color: white;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .admin-status-line {
+      margin: 0;
+      color: #6b5a47;
+      font-weight: 800;
+    }
+
+    @media (max-width: 900px) {
+      .admin-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .admin-wrap {
+        padding: 18px;
+      }
+
+      .admin-stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .admin-import-panel {
+      background: #fffaf3;
+      border: 1px solid #eadcc7;
+      border-radius: 24px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 16px 40px rgba(48, 30, 18, 0.08);
+    }
+
+    .admin-import-panel h2 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      color: #1f2d24;
+    }
+
+    .admin-import-panel p {
+      margin: 0 0 16px;
+      color: #5f5144;
+      line-height: 1.45;
+      font-weight: 600;
+    }
+
+    .admin-import-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .admin-import-row input {
+      flex: 1 1 320px;
+      border: 1px solid #eadcc7;
+      border-radius: 999px;
+      padding: 12px 14px;
+      background: white;
+      font-weight: 700;
+    }
+
+    .admin-import-row button {
+      border: none;
+      border-radius: 999px;
+      padding: 13px 22px;
+      background: #244331;
+      color: white;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(36, 67, 49, 0.2);
+    }
+
+    .admin-import-photo-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      padding: 14px 16px;
+      border: 1px dashed #c99a52;
+      border-radius: 18px;
+      background: #f7eddd;
+    }
+
+    .admin-import-photo-box label {
+      color: #244331;
+      font-weight: 900;
+    }
+
+    .admin-import-photo-box input {
+      flex: 1 1 340px;
+      min-width: 240px;
+    }
+
+    .admin-import-photo-box small {
+      flex: 1 1 100%;
+      color: #67584a;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .admin-import-status {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #f3eadc;
+      color: #2c2118;
+      font-weight: 800;
+      display: none;
+      white-space: pre-wrap;
+    }
+
     .admin-card {
       background: #fffaf3;
       border: 1px solid #eadcc7;
@@ -89,6 +599,18 @@ body {
       background: #eee;
       object-fit: cover;
       display: block;
+    }
+
+    .admin-card-media-placeholder {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(135deg, #efe2cf, #fffaf3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6a4c32;
+      font-weight: 900;
+      letter-spacing: 0.03em;
     }
 
     .admin-card-body {
@@ -215,6 +737,19 @@ body {
   resize: vertical;
 }
 
+.edit-check-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  font-weight: 900;
+}
+
+.edit-check-row input {
+  width: 18px;
+  height: 18px;
+}
+
 .edit-actions {
   display: flex;
   gap: 10px;
@@ -227,57 +762,1902 @@ body {
   color: white;
 }
 
+.edit-media-preview {
+  min-height: 170px;
+  margin: 10px 0 12px;
+  border: 1px dashed #c8aa7d;
+  border-radius: 18px;
+  background: #f4eadc;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #66584a;
+  font-weight: 800;
+}
+
+.edit-media-preview img,
+.edit-media-preview video {
+  width: 100%;
+  max-height: 280px;
+  object-fit: contain;
+  display: block;
+}
+
+.admin-media-gallery {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.admin-media-gallery a,
+.admin-media-gallery video {
+  min-height: 120px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #172e22;
+  border: 1px solid #d4a84f;
+}
+
+.admin-media-gallery img,
+.admin-media-gallery video {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  display: block;
+}
+
+.publish-now-btn {
+  background: #244331;
+  color: white;
+  border: 1px solid #c89a4b !important;
+}
+
+.admin-login-gate {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(190, 139, 66, 0.18), transparent 34%),
+    linear-gradient(145deg, #f8f0e4, #e9ddca);
+}
+
+.admin-login-card {
+  width: min(430px, 100%);
+  box-sizing: border-box;
+  padding: 34px;
+  border: 1px solid #dcc7a8;
+  border-radius: 28px;
+  background: #fffaf3;
+  box-shadow: 0 24px 70px rgba(47, 35, 24, 0.18);
+  text-align: center;
+}
+
+.admin-login-card h1 {
+  margin: 0 0 8px;
+  color: #213b2b;
+  font-size: 30px;
+}
+
+.admin-login-card p {
+  color: #65584b;
+  line-height: 1.5;
+}
+
+.admin-login-card input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid #d8c3a3;
+  border-radius: 14px;
+  background: white;
+  font-size: 16px;
+}
+
+.admin-login-card button,
+.admin-logout-btn {
+  border: 1px solid #c89a4b;
+  border-radius: 999px;
+  background: #244331;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.admin-login-card button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 14px;
+}
+
+.admin-login-home {
+  display: inline-flex;
+  justify-content: center;
+  margin-top: 14px;
+  color: #294a36;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.admin-login-status {
+  min-height: 22px;
+  margin: 12px 0 0;
+  color: #a12626 !important;
+  font-weight: 800;
+}
+
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-logout-btn {
+  padding: 10px 16px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
   </style>
+  <link rel="stylesheet" href="/nili-typography.css?v=1">
 </head>
 
-<body class="content-page-body">
-  <div class="admin-wrap">
+<body class="content-page-body nili-type-system">
+  <section id="adminLoginGate" class="admin-login-gate">
+    <form class="admin-login-card" onsubmit="submitAdminLogin(event)">
+      <h1 id="adminLoginTitle">Admin Girişi</h1>
+      <p id="adminLoginDescription">Tarif yönetimine erişmek için admin parolasını girin.</p>
+      <input id="adminPassword" type="password" autocomplete="current-password" required aria-label="Admin password">
+      <button id="adminLoginButton" type="submit">Giriş yap</button>
+      <a id="adminLoginHome" class="admin-login-home" href="/">⌂ Ana sayfa</a>
+      <p id="adminLoginStatus" class="admin-login-status" role="alert"></p>
+    </form>
+  </section>
+
+  <div id="adminApp" class="admin-wrap" hidden>
     <div class="admin-header">
       <div>
-        <h1>Admin Recipe Review</h1>
-        <p>Bekleyen tarifler Türkçe olarak burada görünür.</p>
+        <h1 data-i18n="adminTitle">Admin Recipe Review</h1>
+        <p data-i18n="adminDesc">Bekleyen tarifler Türkçe olarak burada görünür.</p>
       </div>
 
-      <a href="/" style="font-weight:700;color:#07172d;text-decoration:none;">
-        Back to app
-      </a>
+      <div class="admin-header-actions">
+        <a id="adminBackLink" href="/" style="font-weight:700;color:#07172d;text-decoration:none;" data-i18n="back">
+          Back to app
+        </a>
+        <button class="admin-logout-btn" type="button" onclick="logoutAdmin()">Çıkış</button>
+      </div>
     </div>
 
-    <div id="adminRecipes" class="admin-grid"></div>
+    <section id="adminStats" class="admin-stats-grid"></section>
+
+    <nav class="admin-tabs" aria-label="Admin bölümleri">
+      <button id="tabReview" type="button" class="active" onclick="showAdminTab('review')">Tarif onayı</button>
+      <button id="tabDashboard" type="button" onclick="showAdminTab('dashboard')">Dashboard</button>
+      <button id="tabUsers" type="button" onclick="showAdminTab('users')">Kullanıcılar</button>
+      <button id="tabRecipes" type="button" onclick="showAdminTab('recipes')">Tarif tabloları</button>
+      <button id="tabMail" type="button" onclick="showAdminTab('mail')">Mail gönder</button>
+    </nav>
+
+    <section id="panelReview" class="admin-tab-panel active">
+      <section class="admin-import-panel">
+        <h2 data-i18n="importTitle">Excel ile toplu tarif yükle</h2>
+        <p data-i18n="importDesc">Yüklenen tarifler direkt yayınlanmaz; bekleyen onay kuyruğuna eklenir.</p>
+        <div class="admin-import-row">
+          <input id="recipeImportFile" type="file" accept=".xlsx,.xls,.csv">
+          <input id="recipeImportSheet" type="text" value="Sisteme Aktarım" placeholder="Sheet adı (boşsa tüm sheetler)">
+          <button type="button" onclick="importRecipesFromExcel()" data-i18n="importButton">İçe aktar</button>
+          <button type="button" onclick="downloadRecipeMasterExcel()" data-i18n="exportButton">Güncel ana Excel'i indir</button>
+        </div>
+        <div class="admin-import-photo-box">
+          <label for="recipeImportPhotoFolder" data-i18n="importPhotoFolder">Fotoğraf klasörü (isteğe bağlı)</label>
+          <input id="recipeImportPhotoFolder" type="file" accept="image/jpeg,image/png,image/webp,image/avif" webkitdirectory directory multiple>
+          <small data-i18n="importPhotoHelp">Excel'de bilgisayar yolu kullanıyorsanız fotoğrafların bulunduğu klasörü seçin. Bulut bağlantısı doğrudan ve herkese açık bir görsel URL olmalıdır.</small>
+        </div>
+        <div id="recipeImportStatus" class="admin-import-status"></div>
+      </section>
+
+      <div id="adminRecipes" class="admin-grid"></div>
+    </section>
+
+    <section id="panelDashboard" class="admin-tab-panel">
+      <div class="admin-table-card">
+        <h2>Son hareketler</h2>
+        <div id="adminRecentTable"></div>
+      </div>
+    </section>
+
+    <section id="panelUsers" class="admin-tab-panel">
+      <div class="admin-table-card">
+        <h2>Creator kullanıcıları</h2>
+        <div id="adminUsersTable"></div>
+      </div>
+    </section>
+
+    <section id="panelRecipes" class="admin-tab-panel">
+      <div class="admin-table-card">
+        <h2>Onaylı tarif yönetimi</h2>
+        <div class="approved-manager-toolbar">
+          <input id="approvedSearch" type="search" placeholder="ID, yemek veya creator ara" oninput="scheduleApprovedRecipeLoad()">
+          <select id="approvedStatusFilter" onchange="loadApprovedRecipeManager(1)">
+            <option value="all">Tüm durumlar</option>
+            <option value="published">Yayında</option>
+            <option value="hidden">Yayına kapalı</option>
+            <option value="archived">Arşiv</option>
+            <option value="deleted">Silinenler</option>
+          </select>
+          <select id="approvedCuisineFilter" onchange="loadApprovedRecipeManager(1)"><option value="">Tüm ülke/bölgeler</option></select>
+          <select id="approvedTypeFilter" onchange="loadApprovedRecipeManager(1)"><option value="">Tüm yemek tipleri</option></select>
+          <select id="approvedCreatorFilter" onchange="loadApprovedRecipeManager(1)"><option value="">Tüm creatorlar</option></select>
+        </div>
+        <div id="approvedManagerSummary" class="approved-manager-summary"></div>
+        <div class="approved-row-actions" style="margin:0 0 12px">
+          <button type="button" onclick="toggleVisibleRecipeCardSelection(true)">Bu sayfadakileri seç</button>
+          <button type="button" onclick="toggleVisibleRecipeCardSelection(false)">Seçimi temizle</button>
+          <button id="selectedRecipeCardsDeleteButton" class="danger" type="button" onclick="deleteSelectedRecipesCards()" disabled>Seçili yemeklerin kartlarını sil</button>
+          <span id="selectedRecipeCardCount" class="admin-status-line">0 yemek seçildi</span>
+        </div>
+        <div id="adminApprovedTable"></div>
+        <div id="approvedManagerPages" class="approved-manager-pages"></div>
+      </div>
+      <div class="admin-table-card" style="margin-top:18px">
+        <h2>Recipe card üretimi ve onay kuyruğu</h2>
+        <p class="admin-status-line">Yeni kartlar onaylanana kadar mevcut yemek görseli değişmez. Toplu üretim sunucuda arka planda sırayla çalışır.</p>
+        <div style="display:grid;gap:10px;margin:14px 0;padding:12px;border:1px solid #eadcc7;border-radius:16px;background:#fff">
+          <strong>Üretilecek dilleri seç</strong>
+          <div id="recipeCardLanguageChoices" style="display:flex;flex-wrap:wrap;gap:8px 14px">
+            <label><input type="checkbox" name="recipeCardLanguage" value="en" checked> EN</label>
+            <label><input type="checkbox" name="recipeCardLanguage" value="tr"> TR</label>
+            <label><input type="checkbox" name="recipeCardLanguage" value="de"> DE</label>
+            <label><input type="checkbox" name="recipeCardLanguage" value="fr"> FR</label>
+            <label><input type="checkbox" name="recipeCardLanguage" value="es"> ES</label>
+            <label><input type="checkbox" name="recipeCardLanguage" value="pt"> PT</label>
+            <label><input type="checkbox" name="recipeCardLanguage" value="ru"> RU</label>
+            <label><input type="checkbox" name="recipeCardLanguage" value="ar"> AR</label>
+            <label><input type="checkbox" name="recipeCardLanguage" value="ja"> JA</label>
+            <label><input type="checkbox" name="recipeCardLanguage" value="zh"> ZH</label>
+          </div>
+          <div class="approved-row-actions">
+            <button type="button" onclick="toggleRecipeCardLanguages(true)">Tüm dilleri seç</button>
+            <button type="button" onclick="toggleRecipeCardLanguages(false)">Seçimi temizle</button>
+          </div>
+        </div>
+        <div style="display:grid;gap:10px;margin:14px 0;padding:14px;border:1px solid #dfbd88;border-radius:16px;background:#fff8eb">
+          <strong>Malzemeye göre hatalı kartları düzelt</strong>
+          <p class="admin-status-line" style="margin:0">Kaynak tariflerde malzemeyi bulur; yukarıda seçili diller için yeni kartları kuyruğa ekler. Eski onaylı kartlar, yenileri onaylanana kadar yayında kalır.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <input id="ingredientCardRepairTerm" type="search" placeholder="Örn. un, asma yaprağı, aşurelik buğday" style="flex:1 1 280px">
+            <button type="button" onclick="previewIngredientCardRepair()">Etkilenenleri bul</button>
+            <button id="ingredientCardRepairButton" class="primary" type="button" onclick="queueIngredientCardRepair()" disabled>Seçili dillerde yeniden üret</button>
+          </div>
+          <div class="approved-row-actions">
+            <button type="button" onclick="setIngredientCardRepairTerm('un')">Un</button>
+            <button type="button" onclick="setIngredientCardRepairTerm('bulgur')">Bulgur</button>
+            <button type="button" onclick="setIngredientCardRepairTerm('aşurelik buğday')">Aşurelik buğday</button>
+            <button type="button" onclick="setIngredientCardRepairTerm('asma yaprağı')">Asma/üzüm yaprağı</button>
+            <button type="button" onclick="setIngredientCardRepairTerm('yenibahar')">Yenibahar</button>
+          </div>
+          <div id="ingredientCardRepairResult" class="admin-status-line">Henüz arama yapılmadı.</div>
+        </div>
+        <div class="approved-row-actions" style="margin:12px 0">
+          <button id="selectedRecipeCardButton" class="primary" type="button" onclick="startSelectedRecipeCardGeneration()">Seçili yemekleri üret</button>
+          <button id="bulkRecipeCardButton" type="button" onclick="startBulkRecipeCardGeneration()">Tüm tarifleri üret</button>
+          <button id="pauseRecipeCardButton" class="danger" type="button" onclick="pauseRecipeCardGeneration()">Üretimi durdur ve iptal et</button>
+          <button id="resumeRecipeCardButton" type="button" onclick="resumeRecipeCardGeneration()">Devam et</button>
+          <button id="cancelRecipeCardButton" class="danger" type="button" onclick="cancelQueuedRecipeCardGeneration()">Bekleyenleri iptal et</button>
+          <button id="resetRecipeCardButton" type="button" onclick="resetRecipeCardGenerationHistory()">Üretim sayacını sıfırla</button>
+          <button id="retryRecipeCardButton" type="button" onclick="retryFailedRecipeCardGeneration()" hidden>Hatalı kartları tekrar üret</button>
+        </div>
+        <p id="recipeCardGenerationStatus" class="admin-status-line">Üretim durumu henüz yüklenmedi.</p>
+        <div id="recipeCardGenerationNotice" class="recipe-generation-notice" role="status" aria-live="polite"></div>
+        <div id="recipeCardGenerationProgress" class="recipe-generation-progress">
+          <div class="recipe-generation-progress-head"><span id="recipeCardProgressLabel">Hazır</span><span id="recipeCardProgressPercent">0%</span></div>
+          <div class="recipe-generation-progress-track"><div id="recipeCardProgressFill" class="recipe-generation-progress-fill"></div></div>
+          <small id="recipeCardProgressDetail">Henüz aktif üretim yok.</small>
+          <div id="recipeCardProgressResult" style="display:none;margin-top:10px;padding:10px;border-radius:10px;background:#edf5e9;color:#244331;font-weight:800"></div>
+        </div>
+        <div id="recipeCardFailureList" class="admin-status-line" style="display:none;margin-top:10px;padding:12px;border:1px solid #e4b5ad;border-radius:14px;background:#fff4f1;color:#8b2d27"></div>
+        <p id="recipeCardQueueSummary" class="admin-status-line"></p>
+        <div class="approved-row-actions" id="recipeCardQueueBulkActions" style="margin:10px 0">
+          <button id="selectAllQueueCardsButton" type="button" onclick="selectAllQueueCards()">Tüm bekleyen kartları seç</button>
+          <button type="button" onclick="clearQueueCardSelection()">Seçimi temizle</button>
+          <button id="approveSelectedQueueCardsButton" class="primary" type="button" onclick="approveSelectedQueueCards()" disabled>Seçilen kartları onayla</button>
+          <button id="deleteSelectedQueueCardsButton" class="danger" type="button" onclick="deleteSelectedQueueCards()" disabled>Seçilen kartları sil</button>
+          <span id="selectedQueueCardCount" class="admin-status-line">0 kart seçildi</span>
+        </div>
+        <div id="adminRecipeCardQueue" class="recipe-card-queue"></div>
+      </div>
+    </section>
+
+    <section id="panelMail" class="admin-tab-panel">
+      <form class="admin-mail-panel" onsubmit="sendAdminMail(event)">
+        <h2>Mail gönder</h2>
+        <p class="admin-status-line">Birden fazla alıcı için e-postaları virgülle ayırabilirsin.</p>
+        <input id="adminMailTo" type="text" placeholder="Alıcı e-posta adresleri" required>
+        <input id="adminMailSubject" type="text" placeholder="Konu" required>
+        <textarea id="adminMailMessage" placeholder="Mesaj" required></textarea>
+        <button id="adminMailButton" type="submit">Mail gönder</button>
+        <p id="adminMailStatus" class="admin-status-line"></p>
+      </form>
+    </section>
   </div>
 
+  <script src="/i18n-extra.js?v=1"></script>
   <script>
-  
-  const API_BASE = "https://api.niliskitchen.com";
+
+const urlLang = new URLSearchParams(location.search).get("lang");
+const currentLang =
+  urlLang ||
+  localStorage.getItem("niliLang") ||
+  localStorage.getItem("lang") ||
+  "en";
+
+if(urlLang){
+  localStorage.setItem("niliLang", urlLang);
+  localStorage.setItem("lang", urlLang);
+}
+
+document.documentElement.lang = currentLang;
+
+const adminTexts = {
+  en:{
+    adminTitle:"Admin Recipe Review",
+    adminDesc:"Pending recipes appear here for review.",
+    back:"Back to app",
+    loading:"Loading recipes...",
+    empty:"There are no pending recipes right now.",
+    loadError:"Admin recipes could not be loaded.",
+    sender:"Sender",
+    time:"Time",
+    servings:"Servings",
+    status:"Status",
+    ingredients:"Ingredients",
+    instructions:"Instructions",
+    edit:"Edit",
+    approve:"Publish",
+    reject:"Reject",
+    approveConfirm:"Do you want to approve this recipe?",
+    rejectConfirm:"Do you want to reject this recipe?",
+    notFound:"Recipe not found.",
+    updateFailed:"Update failed.",
+    updated:"Recipe updated.",
+    editTitle:"Edit Recipe",
+    recipeTitle:"Recipe Title",
+    adminTitleTr:"Admin Turkish Title",
+    adminIngredientsTr:"Admin Turkish Ingredients",
+    adminInstructionsTr:"Admin Turkish Instructions",
+    tags:"Tags",
+    seoTitle:"SEO Title",
+    seoDescription:"SEO Description",
+    publishEnabled:"Open for publishing",
+    changeMedia:"Change photo / video",
+    importTitle:"Bulk recipe import from Excel",
+    importDesc:"Imported recipes are not published immediately; they are added to the pending review queue.",
+    importButton:"Import",
+    exportButton:"Download current master Excel",
+    importSheetPlaceholder:"Sheet name: 1-100 (blank imports all sheets)",
+    importChooseFile:"Please choose an Excel file first.",
+    importPhotoFolder:"Photo folder (optional)",
+    importPhotoHelp:"If the Excel file contains computer paths, select the photo folder. Cloud links must be direct, publicly accessible image URLs.",
+    importPhotoUploading:"Uploading photos",
+    importUploading:"Importing recipes...",
+    importDone:"Import completed.",
+    importFailed:"Import failed.",
+    imported:"Imported",
+    updatedCount:"Updated",
+    updatedApproved:"Updated published",
+    skipped:"Skipped",
+    duplicates:"Duplicates",
+    sheet:"Sheet",
+    ignoredSheets:"Ignored sheets",
+    noMedia:"Photo waiting",
+    mediaRequired:"Add and save a recipe photo before publishing.",
+    publishNow:"Save and publish",
+    newMediaPreview:"New media preview",
+    save:"Save",
+    cancel:"Cancel"
+  },
+  tr:{
+    adminTitle:"Admin Tarif İnceleme",
+    adminDesc:"Bekleyen tarifler burada incelenir.",
+    back:"Uygulamaya dön",
+    loading:"Tarifler yükleniyor...",
+    empty:"Şu anda bekleyen tarif yok.",
+    loadError:"Admin tarifleri yüklenemedi.",
+    sender:"Gönderen",
+    time:"Süre",
+    servings:"Porsiyon",
+    status:"Durum",
+    ingredients:"Malzemeler",
+    instructions:"Yapılış",
+    edit:"Düzenle",
+    approve:"Yayınla",
+    reject:"Reddet",
+    approveConfirm:"Bu tarifi onaylamak istiyor musun?",
+    rejectConfirm:"Bu tarifi reddetmek istiyor musun?",
+    notFound:"Recipe bulunamadı.",
+    updateFailed:"Güncelleme başarısız.",
+    updated:"Recipe güncellendi.",
+    editTitle:"Recipe Düzenle",
+    recipeTitle:"Tarif Adı",
+    adminTitleTr:"Admin Türkçe Başlık",
+    adminIngredientsTr:"Admin Türkçe Malzemeler",
+    adminInstructionsTr:"Admin Türkçe Yapılış",
+    tags:"Etiketler",
+    seoTitle:"SEO Başlık",
+    seoDescription:"SEO Açıklama",
+    publishEnabled:"Yayına açık",
+    changeMedia:"Fotoğraf / Video değiştir",
+    importTitle:"Excel ile toplu tarif yükle",
+    importDesc:"Yüklenen tarifler direkt yayınlanmaz; bekleyen onay kuyruğuna eklenir.",
+    importButton:"İçe aktar",
+    exportButton:"Güncel ana Excel'i indir",
+    importSheetPlaceholder:"Sheet adı: 1-100 (boşsa tüm sheetler)",
+    importChooseFile:"Önce bir Excel dosyası seç.",
+    importPhotoFolder:"Fotoğraf klasörü (isteğe bağlı)",
+    importPhotoHelp:"Excel'de bilgisayar yolu kullanıyorsanız fotoğrafların bulunduğu klasörü seçin. Bulut bağlantısı doğrudan ve herkese açık bir görsel URL olmalıdır.",
+    importPhotoUploading:"Fotoğraflar yükleniyor",
+    importUploading:"Tarifler içe aktarılıyor...",
+    importDone:"İçe aktarma tamamlandı.",
+    importFailed:"İçe aktarma başarısız.",
+    imported:"Eklenen",
+    updatedCount:"Güncellenen",
+    updatedApproved:"Onaylı güncellenen",
+    skipped:"Atlanan",
+    duplicates:"Tekrar",
+    sheet:"Sayfa",
+    ignoredSheets:"Pas geçilen sheetler",
+    noMedia:"Fotoğraf bekleniyor",
+    mediaRequired:"Yayınlamadan önce tarif fotoğrafını ekleyip kaydedin.",
+    publishNow:"Kaydet ve yayınla",
+    newMediaPreview:"Yeni fotoğraf önizlemesi",
+    save:"Kaydet",
+    cancel:"Vazgeç"
+  }
+};
+
+Object.entries(window.NILI_I18N_EXTRA?.admin || {}).forEach(([lang, values]) => {
+  adminTexts[lang] = { ...(adminTexts[lang] || adminTexts.en), ...values };
+});
+
+function at(key){
+  return adminTexts[currentLang]?.[key] || adminTexts.en[key] || key;
+}
+
+function applyAdminLanguage(){
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    el.textContent = at(el.dataset.i18n);
+  });
+
+  const sheetInput = document.getElementById("recipeImportSheet");
+  if(sheetInput){
+    sheetInput.placeholder = at("importSheetPlaceholder");
+  }
+
+  const backLink = document.getElementById("adminBackLink");
+  if(backLink){
+    backLink.href = `/?lang=${currentLang}`;
+  }
+}
+
+  const IS_LOCAL_ADMIN =
+    location.hostname === "localhost" ||
+    location.hostname === "127.0.0.1" ||
+    location.hostname.startsWith("192.168.") ||
+    location.hostname.startsWith("10.") ||
+    location.hostname.startsWith("172.");
+  const API_BASE = IS_LOCAL_ADMIN
+    ? `${location.protocol === "https:" ? "https" : "http"}://${location.hostname || "127.0.0.1"}:3000`
+    : "https://api.niliskitchen.com";
 
 let adminRecipesCache = [];
+let adminDashboardCache = null;
+let approvedRecipeCache = [];
+const selectedRecipeCardIds = new Set();
+const selectedQueueRecipeCards = new Set();
+let recipeCardQueueCache = [];
+const recipeCardQueueSelectionCache = new Map();
+let approvedRecipePage = 1;
+let approvedRecipePages = 1;
+let approvedRecipeSearchTimer = null;
+let approvedFiltersLoaded = false;
+const ADMIN_TOKEN_KEY = "niliAdminSession";
+
+function getAdminToken() {
+  return sessionStorage.getItem(ADMIN_TOKEN_KEY) || "";
+}
+
+async function adminFetch(url, options = {}) {
+  const headers = new Headers(options.headers || {});
+  const token = getAdminToken();
+
+  if (token) headers.set("Authorization", `Bearer ${token}`);
+
+  const response = await fetch(url, { ...options, headers });
+
+  if (response.status === 401) {
+    sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+    showAdminLogin(currentLang === "tr" ? "Admin oturumunun süresi doldu." : "Admin session expired.");
+  }
+
+  return response;
+}
+
+function adminEscape(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    "\"":"&quot;",
+    "'":"&#39;"
+  }[ch]));
+}
+
+function showAdminTab(name) {
+  document.querySelectorAll(".admin-tab-panel").forEach(panel => panel.classList.remove("active"));
+  document.querySelectorAll(".admin-tabs button").forEach(button => button.classList.remove("active"));
+
+  const panel = document.getElementById(`panel${name.charAt(0).toUpperCase()}${name.slice(1)}`);
+  const tab = document.getElementById(`tab${name.charAt(0).toUpperCase()}${name.slice(1)}`);
+
+  if(panel) panel.classList.add("active");
+  if(tab) tab.classList.add("active");
+
+  if(name !== "review") {
+    loadAdminDashboard();
+  }
+  if(name === "recipes") {
+    loadApprovedRecipeManager(1);
+    loadRecipeCardQueue();
+    loadRecipeCardGenerationStatus();
+  }
+}
+
+function renderAdminTable(rows, columns, emptyText = "Kayıt yok.") {
+  if(!rows || !rows.length) {
+    return `<p class="admin-status-line">${adminEscape(emptyText)}</p>`;
+  }
+
+  return `
+    <table class="admin-table">
+      <thead>
+        <tr>${columns.map(column => `<th>${adminEscape(column.label)}</th>`).join("")}</tr>
+      </thead>
+      <tbody>
+        ${rows.map(row => `
+          <tr>
+            ${columns.map(column => {
+              const value = typeof column.value === "function" ? column.value(row) : row[column.value];
+              const className = column.className ? ` class="${adminEscape(column.className)}"` : "";
+              return `<td${className}>${column.html ? value : adminEscape(value)}</td>`;
+            }).join("")}
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+function resolveAdminMediaUrl(value) {
+  const raw = String(value || "").trim();
+  if(!raw) return "";
+  const first = raw.split(";").map(item => item.trim()).filter(Boolean)[0] || "";
+  if(!first) return "";
+  if(/^https?:\/\//i.test(first)) return first;
+  const clean = first.replace(/\\/g, "/");
+  if(clean.startsWith("/")) return `${API_BASE}${clean}`;
+  return `${API_BASE}/${clean.replace(/^\/+/, "")}`;
+}
+
+function adminRecipeThumb(recipe) {
+  const url = resolveAdminMediaUrl(
+    recipe.mediaPreviewUrl ||
+    recipe.mediaUrl ||
+    recipe.image ||
+    recipe.fullImage ||
+    recipe.mediaFile ||
+    (Array.isArray(recipe.mediaUrls) ? recipe.mediaUrls.join(";") : "")
+  );
+
+  const title = recipe.adminTitleTr || recipe.title || "Recipe image";
+
+  if(!url) {
+    return `<span class="admin-recipe-thumb-missing">Foto<br>yok</span>`;
+  }
+
+  return `
+    <a class="admin-recipe-thumb-link" href="${adminEscape(url)}" target="_blank" rel="noopener" title="${adminEscape(title)}">
+      <img src="${adminEscape(url)}" alt="${adminEscape(title)}" loading="lazy" onerror="this.closest('.admin-recipe-thumb-link').classList.add('broken')">
+    </a>
+  `;
+}
+
+function adminRecipeMediaGallery(recipe) {
+  const mediaUrls=Array.isArray(recipe?.mediaUrls) ? recipe.mediaUrls : [];
+  const mediaTypes=Array.isArray(recipe?.mediaTypes) ? recipe.mediaTypes : [];
+  const rawEntries=[
+    ...mediaUrls.map((url,index)=>({url,type:mediaTypes[index] || ""})),
+    {url:recipe?.mediaUrl,type:recipe?.mediaType || ""},
+    ...(Array.isArray(recipe?.originalMediaUrls)
+      ? recipe.originalMediaUrls.map((url,index)=>({
+          url,
+          type:(Array.isArray(recipe?.mediaTypes) ? recipe.mediaTypes[index] : "") || ""
+        }))
+      : []),
+    {url:recipe?.originalMediaUrl,type:recipe?.mediaType || ""}
+  ];
+  const seen=new Set();
+  const entries=rawEntries
+    .map(entry=>({...entry,url:resolveAdminMediaUrl(entry.url)}))
+    .filter(entry=>entry.url && !seen.has(entry.url) && seen.add(entry.url));
+
+  if(!entries.length){
+    return `<span class="admin-recipe-thumb-missing">${adminEscape(at("noMedia"))}</span>`;
+  }
+
+  return `<div class="admin-media-gallery">${entries.map((entry,index)=>{
+    const isVideo=String(entry.type).startsWith("video/") || /\.(mp4|webm|mov|m4v)(?:\?|$)/i.test(entry.url);
+    return isVideo
+      ? `<video controls preload="metadata" src="${adminEscape(entry.url)}" title="Video ${index+1}"></video>`
+      : `<a href="${adminEscape(entry.url)}" target="_blank" rel="noopener"><img src="${adminEscape(entry.url)}" alt="${adminEscape(recipe?.title || "Recipe")} ${index+1}" loading="lazy"></a>`;
+  }).join("")}</div>`;
+}
+
+function renderAdminDashboard(data) {
+  adminDashboardCache = data;
+
+  const stats = data.stats || {};
+  const cards = [
+    ["Aktif kullanıcı", stats.activeVisitors || 0],
+    ["Bekleyen tarif", stats.pendingRecipes || 0],
+    ["Yayınlı tarif", stats.approvedRecipes || 0],
+    ["Creator", stats.creatorUsers || 0],
+    ["Favori kayıt", stats.favorites || 0],
+    ["Toplam tıklama", stats.totalClicks || 0],
+    ["Toplam görüntüleme", stats.totalViews || 0],
+    ["Toplam bonus", Number(stats.totalBonus || 0).toFixed(2)]
+  ];
+
+  document.getElementById("adminStats").innerHTML = cards.map(([label, value]) => `
+    <article class="admin-stat-card">
+      <span>${adminEscape(label)}</span>
+      <strong>${adminEscape(value)}</strong>
+    </article>
+  `).join("");
+
+  document.getElementById("adminRecentTable").innerHTML = renderAdminTable(
+    data.recentRecipes || [],
+    [
+      { label:"Tarif", value:"title" },
+      { label:"Durum", value:"status" },
+      { label:"Creator", value: row => row.creatorUsername || row.creatorEmail || "-" },
+      { label:"Mutfak", value:"cuisine" },
+      { label:"Tıklama", value:"clicks" },
+      { label:"Tarih", value: row => row.approvedAt || row.createdAt || "-" }
+    ],
+    "Son hareket yok."
+  );
+
+  document.getElementById("adminUsersTable").innerHTML = renderAdminTable(
+    data.users || [],
+    [
+      { label:"Kullanıcı", value:"username" },
+      { label:"E-posta", value:"email" },
+      { label:"Rol", value:"role" },
+      { label:"Bekleyen", value:"pendingRecipes" },
+      { label:"Yayınlı", value:"publishedRecipes" },
+      { label:"Tıklama", value:"clicks" },
+      { label:"Bonus", value: row => Number(row.bonus || 0).toFixed(2) }
+    ],
+    "Creator kullanıcısı yok."
+  );
+
+}
+
+async function loadAdminDashboard() {
+  try {
+    const res = await adminFetch(`${API_BASE}/admin/dashboard`);
+    const data = await res.json().catch(() => ({
+      success: false,
+      error: `Dashboard response was not JSON. HTTP ${res.status}`
+    }));
+
+    if(res.status === 401) {
+      return;
+    }
+
+    if(!res.ok || !data.success) {
+      throw new Error(data.error || `Dashboard failed. HTTP ${res.status}`);
+    }
+
+    renderAdminDashboard(data);
+  } catch (error) {
+    console.error("ADMIN DASHBOARD ERROR:", error);
+    const message = currentLang === "tr"
+      ? `Dashboard verisi yüklenemedi: ${error.message || "Bilinmeyen hata"}`
+      : `Dashboard data could not be loaded: ${error.message || "Unknown error"}`;
+    const stats = document.getElementById("adminStats");
+    if(stats) {
+      stats.innerHTML = `<div class="empty">${adminEscape(message)}</div>`;
+    }
+    ["adminRecentTable", "adminUsersTable"].forEach(id => {
+      const box = document.getElementById(id);
+      if(box) box.innerHTML = `<p class="admin-status-line">${adminEscape(message)}</p>`;
+    });
+  }
+}
+
+function approvedStateLabel(state) {
+  return ({
+    published: "Yayında",
+    hidden: "Yayına kapalı",
+    archived: "Arşivde",
+    deleted: "Silinmiş"
+  })[state] || state || "-";
+}
+
+function fillApprovedFilter(id, values, firstLabel) {
+  const select = document.getElementById(id);
+  if(!select) return;
+  const current = select.value;
+  select.innerHTML = `<option value="">${adminEscape(firstLabel)}</option>` +
+    (values || []).map(value => `<option value="${adminEscape(value)}">${adminEscape(value)}</option>`).join("");
+  if([...select.options].some(option => option.value === current)) select.value = current;
+}
+
+function scheduleApprovedRecipeLoad() {
+  clearTimeout(approvedRecipeSearchTimer);
+  approvedRecipeSearchTimer = setTimeout(() => loadApprovedRecipeManager(1), 280);
+}
+
+async function loadApprovedRecipeManager(page = approvedRecipePage) {
+  const table = document.getElementById("adminApprovedTable");
+  if(!table) return;
+  table.innerHTML = `<p class="admin-status-line">Onaylı tarifler yükleniyor...</p>`;
+
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: "50",
+    q: document.getElementById("approvedSearch")?.value.trim() || "",
+    status: document.getElementById("approvedStatusFilter")?.value || "all",
+    cuisine: document.getElementById("approvedCuisineFilter")?.value || "",
+    type: document.getElementById("approvedTypeFilter")?.value || "",
+    creator: document.getElementById("approvedCreatorFilter")?.value || ""
+  });
+
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/approved-recipes/manage?${params}`);
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Liste yüklenemedi");
+
+    approvedRecipeCache = data.recipes || [];
+    approvedRecipePage = Number(data.pagination?.page || 1);
+    approvedRecipePages = Number(data.pagination?.pages || 1);
+
+    if(!approvedFiltersLoaded) {
+      fillApprovedFilter("approvedCuisineFilter", data.filters?.cuisines, "Tüm ülke/bölgeler");
+      const approvedTypes = [...new Set([
+        ...(data.filters?.types || []),
+        "Sıcak İçecek",
+        "Soğuk İçecek"
+      ])].sort((left, right) => left.localeCompare(right, "tr"));
+      fillApprovedFilter("approvedTypeFilter", approvedTypes, "Tüm yemek tipleri");
+      fillApprovedFilter("approvedCreatorFilter", data.filters?.creators, "Tüm creatorlar");
+      approvedFiltersLoaded = true;
+    }
+
+    const currentBatch = data.currentBatch || { total:data.total || 0, counts:data.counts || {} };
+    const counts = currentBatch.counts || {};
+    document.getElementById("approvedManagerSummary").innerHTML = [
+      ["Toplam", counts.all || 0],
+      ["Yayında", counts.published || 0],
+      ["Kapalı", counts.hidden || 0],
+      ["Arşiv", counts.archived || 0],
+      ["Silinen", counts.deleted || 0]
+    ].map(([label, count]) => `<span>${label}: ${adminEscape(count)}</span>`).join("");
+
+    table.innerHTML = renderAdminTable(
+      approvedRecipeCache,
+      [
+        { label:"Seç", value: row => `<input type="checkbox" aria-label="Kart üretimi için seç" ${selectedRecipeCardIds.has(String(row.id)) ? "checked" : ""} onchange='toggleRecipeCardSelection(${JSON.stringify(String(row.id))},this.checked)'>`, html:true },
+        { label:"ID No", value: row => row.displayRecipeId || row.id || "-" },
+        { label:"Foto", value: row => adminRecipeThumb(row), html:true, className:"admin-recipe-thumb-cell" },
+        { label:"Creator", value: row => row.creatorUsername || row.creatorEmail || "-" },
+        { label:"Yemek adı", value: row => row.adminTitleTr || row.title || "-" },
+        { label:"Yemek tipi", value: row => row.type || "-" },
+        { label:"Ülke / Bölge", value: row => row.cuisine || "-" },
+        { label:"Durum", value: row => `<span class="approved-state ${adminEscape(row.managementState)}">${approvedStateLabel(row.managementState)}</span>`, html:true },
+        { label:"İşlemler", value: row => approvedRecipeActions(row), html:true }
+      ],
+      "Filtreye uygun tarif bulunamadı."
+    );
+    updateSelectedRecipeCardCount();
+
+    document.getElementById("approvedManagerPages").innerHTML = `
+      <button type="button" ${approvedRecipePage <= 1 ? "disabled" : ""} onclick="loadApprovedRecipeManager(1)">« İlk</button>
+      <button type="button" ${approvedRecipePage <= 1 ? "disabled" : ""} onclick="loadApprovedRecipeManager(${approvedRecipePage - 1})">← Önceki</button>
+      <label class="approved-page-jump">
+        Sayfa
+        <input type="number" min="1" max="${approvedRecipePages}" value="${approvedRecipePage}"
+          onchange="goToApprovedRecipePage(this.value)"
+          onkeydown="if(event.key === 'Enter'){ event.preventDefault(); goToApprovedRecipePage(this.value); }">
+        / ${approvedRecipePages}
+      </label>
+      <span>${adminEscape(data.pagination?.total || 0)} kayıt</span>
+      <button type="button" ${approvedRecipePage >= approvedRecipePages ? "disabled" : ""} onclick="loadApprovedRecipeManager(${approvedRecipePage + 1})">Sonraki →</button>
+      <button type="button" ${approvedRecipePage >= approvedRecipePages ? "disabled" : ""} onclick="loadApprovedRecipeManager(${approvedRecipePages})">Son »</button>
+    `;
+  } catch(error) {
+    console.error("APPROVED MANAGER ERROR:", error);
+    table.innerHTML = `<p class="admin-status-line">Onaylı tarifler yüklenemedi: ${adminEscape(error.message)}</p>`;
+  }
+}
+
+function goToApprovedRecipePage(value) {
+  const requestedPage = Math.trunc(Number(value));
+  if(!Number.isFinite(requestedPage)) return;
+  loadApprovedRecipeManager(
+    Math.min(approvedRecipePages, Math.max(1, requestedPage))
+  );
+}
+
+function updateSelectedRecipeCardCount() {
+  const count = document.getElementById("selectedRecipeCardCount");
+  if(count) count.textContent = `${selectedRecipeCardIds.size} yemek seçildi`;
+  const button = document.getElementById("selectedRecipeCardButton");
+  if(button) button.disabled = selectedRecipeCardIds.size === 0;
+  const deleteButton = document.getElementById("selectedRecipeCardsDeleteButton");
+  if(deleteButton) deleteButton.disabled = selectedRecipeCardIds.size === 0;
+}
+
+function toggleRecipeCardSelection(id, selected) {
+  if(selected) selectedRecipeCardIds.add(String(id));
+  else selectedRecipeCardIds.delete(String(id));
+  updateSelectedRecipeCardCount();
+}
+
+function toggleVisibleRecipeCardSelection(selected) {
+  approvedRecipeCache.forEach(recipe => {
+    if(selected) selectedRecipeCardIds.add(String(recipe.id));
+    else selectedRecipeCardIds.delete(String(recipe.id));
+  });
+  loadApprovedRecipeManager(approvedRecipePage);
+}
+
+async function deleteSelectedRecipesCards() {
+  const recipeIds = [...selectedRecipeCardIds];
+  if(!recipeIds.length) return;
+  if(!confirm(`${recipeIds.length} yemeğin mevcut tüm dil kartları silinecek. Tarifler ve yemek fotoğrafları korunacak. Devam edilsin mi?`)) return;
+  const button = document.getElementById("selectedRecipeCardsDeleteButton");
+  if(button) button.disabled = true;
+  const jobs = recipeIds.flatMap(id => ["en","tr","de","fr","es","pt","ru","ar","ja","zh"].map(lang => ({id,lang})));
+  let failed = 0;
+  let processed = 0;
+  updateRecipeCardOperation("Seçili yemeklerin kartları siliniyor", 0, jobs.length, `0/${jobs.length} kart işlendi.`, "running");
+  for(let index = 0; index < jobs.length; index += 8) {
+    const results = await Promise.all(jobs.slice(index, index + 8).map(async ({id,lang}) => {
+      try {
+        const response = await adminFetch(`${API_BASE}/admin/recipe-card/${encodeURIComponent(id)}/${encodeURIComponent(lang)}`, {method:"DELETE"});
+        const data = await response.json();
+        return Boolean(response.ok && data.success);
+      } catch { return false; }
+      finally {
+        processed += 1;
+        updateRecipeCardOperation("Seçili yemeklerin kartları siliniyor", processed, jobs.length, `${processed}/${jobs.length} kart işlendi.`, "running");
+      }
+    }));
+    failed += results.filter(result => !result).length;
+    updateRecipeCardOperation("Seçili yemeklerin kartları siliniyor", processed, jobs.length, `${processed}/${jobs.length} işlendi · ${processed - failed} silindi · ${failed} hatalı`, "running");
+  }
+  selectedRecipeCardIds.clear();
+  await Promise.all([loadApprovedRecipeManager(approvedRecipePage), loadRecipeCardQueue()]);
+  finishRecipeCardOperation("Kart silme tamamlandı", `Sonuç: ${jobs.length - failed} kart silindi, ${failed} kart silinemedi.`);
+  alert(failed ? `Kartlar silindi; ${failed} dil işlemi tamamlanamadı.` : `${recipeIds.length} yemeğin tüm kartları silindi.`);
+}
+
+function approvedRecipeActions(recipe) {
+  const id = adminEscape(recipe.id || "");
+  const state = recipe.managementState;
+  const cardStatuses = recipe.recipeCardStatuses && typeof recipe.recipeCardStatuses === "object" ? recipe.recipeCardStatuses : {};
+  const cardUrls = recipe.recipeCardUrls && typeof recipe.recipeCardUrls === "object" ? recipe.recipeCardUrls : {};
+  const cardCount = Object.keys(cardUrls).filter(lang => cardUrls[lang] && cardStatuses[lang] !== "rejected").length;
+  const publishAction = state === "published" ? "hide" : "publish";
+  const publishLabel = state === "published" ? "Yayını kapat" : "Yayına aç";
+
+  if(state === "deleted") {
+    return `<div class="approved-row-actions"><button type="button" onclick="changeApprovedRecipeState('${id}','restore')">Geri al</button></div>`;
+  }
+
+  return `
+    <div class="approved-row-actions">
+      <button class="primary" type="button" onclick="openApprovedRecipeEditor('${id}')">Güncelle</button>
+      <button type="button" data-recipe-card-count-id="${id}" onclick="openRecipeCardLanguages('${id}')">Kartlar ${cardCount}/10</button>
+      <button type="button" onclick="changeApprovedRecipeState('${id}','${publishAction}')">${publishLabel}</button>
+      ${state === "archived"
+        ? `<button type="button" onclick="changeApprovedRecipeState('${id}','restore')">Arşivden çıkar</button>`
+        : `<button type="button" onclick="changeApprovedRecipeState('${id}','archive')">Arşivle</button>`}
+      <button class="danger" type="button" onclick="changeApprovedRecipeState('${id}','delete')">Sil</button>
+    </div>
+  `;
+}
+
+async function openRecipeCardLanguages(id) {
+  let modal = document.getElementById("recipeCardLanguagesModal");
+  if(!modal) {
+    modal = document.createElement("div");
+    modal.id = "recipeCardLanguagesModal";
+    modal.style.cssText = "position:fixed;z-index:11000;inset:0;background:rgba(20,24,21,.78);padding:24px;overflow:auto";
+    modal.addEventListener("click", event => { if(event.target === modal) modal.remove(); });
+    document.body.appendChild(modal);
+  }
+  modal.innerHTML = '<div style="max-width:1180px;margin:auto;padding:22px;border-radius:24px;background:#fffaf3"><p>Kartlar yükleniyor...</p></div>';
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/${encodeURIComponent(id)}/languages`);
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Kartlar yüklenemedi");
+    const approvedCount = (data.cards || []).filter(card => card.url && card.status !== "rejected").length;
+    const rowCountButton = document.querySelector(`[data-recipe-card-count-id="${CSS.escape(String(id))}"]`);
+    if(rowCountButton) rowCountButton.textContent = `Kartlar ${approvedCount}/10`;
+    modal.innerHTML = `<section style="max-width:1180px;margin:auto;padding:22px;border-radius:24px;background:#fffaf3">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px">
+        <div><h2 style="margin:0">${adminEscape(data.title || id)}</h2><small>${adminEscape(id)}</small></div>
+        <div class="approved-row-actions">
+          <button type="button" onclick="setRecipeLanguageModalSelection(true)">Tümünü seç</button>
+          <button type="button" onclick="setRecipeLanguageModalSelection(false)">Seçimi temizle</button>
+          <button class="primary" type="button" onclick='generateSelectedRecipeCardLanguages(${JSON.stringify(id)})'>Seçili dilleri üret</button>
+          <button class="danger" type="button" onclick='deleteAllRecipeCards(${JSON.stringify(id)})'>Bu tarifin tüm kartlarını sil</button>
+          <button type="button" onclick="document.getElementById('recipeCardLanguagesModal')?.remove()">Kapat</button>
+        </div>
+      </div>
+      <div class="recipe-card-queue">${data.cards.map(card => {
+        const hasCard = Boolean(card.url);
+        const rawUrl = hasCard ? resolveAdminMediaUrl(card.url) : "";
+        const imageUrl = rawUrl ? rawUrl + (rawUrl.includes("?") ? "&" : "?") + "adminv=" + encodeURIComponent(card.generatedAt || Date.now()) : "";
+        return `<article class="recipe-card-queue-item">
+          <label style="display:flex;align-items:center;gap:8px;font-weight:800"><input type="checkbox" name="recipeLanguageModalSelection" value="${adminEscape(card.lang)}" ${hasCard ? "" : "checked"}> ${adminEscape(card.lang.toUpperCase())} seç</label>
+          ${hasCard ? `<a class="recipe-card-queue-preview" href="${adminEscape(imageUrl)}" target="_blank" rel="noopener"><img src="${adminEscape(imageUrl)}" alt="${adminEscape(card.lang)}"></a>` : `<div class="recipe-card-queue-preview" style="display:grid;place-items:center;aspect-ratio:1">Kart yok</div>`}
+          <div class="recipe-card-queue-meta"><strong>${adminEscape(card.lang.toUpperCase())}</strong><small>${adminEscape(card.status)}</small></div>
+          <div class="approved-row-actions">
+            ${hasCard ? `<button type="button" onclick='downloadQueueRecipeCard(${JSON.stringify(card.url)},${JSON.stringify((data.title || id) + "-" + card.lang)})'>İndir</button>` : ""}
+            ${hasCard || card.status !== "missing" ? `<button class="danger" type="button" onclick='deleteRecipeCard(${JSON.stringify(id)},${JSON.stringify(card.lang)})'>Bu kartı sil</button>` : ""}
+          </div>
+        </article>`;
+      }).join("")}</div>
+    </section>`;
+  } catch(error) {
+    modal.innerHTML = `<div style="max-width:700px;margin:auto;padding:22px;border-radius:24px;background:#fffaf3">${adminEscape(error.message)}</div>`;
+  }
+}
+
+async function deleteRecipeCard(id, lang, skipConfirm = false) {
+  if(!skipConfirm && !confirm(`${String(lang).toUpperCase()} kartı kalıcı olarak silinecek. Tarif ve yemek fotoğrafı korunacak. Devam edilsin mi?`)) return false;
+  if(!skipConfirm) {
+    document.getElementById("recipeCardLanguagesModal")?.remove();
+    updateRecipeCardOperation(`${String(lang).toUpperCase()} kartı siliniyor`, 0, 1, "0/1 kart işlendi.", "running");
+  }
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/${encodeURIComponent(id)}/${encodeURIComponent(lang)}`, { method:"DELETE" });
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Kart silinemedi.");
+    if(!skipConfirm) await Promise.all([loadRecipeCardQueue(), loadApprovedRecipeManager(approvedRecipePage)]);
+    if(!skipConfirm) finishRecipeCardOperation("Kart silindi", `Sonuç: ${String(lang).toUpperCase()} kartı silindi.`);
+    return true;
+  } catch(error) {
+    if(!skipConfirm) {
+      failRecipeCardOperation("Kart silinemedi", error);
+      alert(error.message || "Kart silinemedi.");
+    }
+    return false;
+  }
+}
+
+async function deleteAllRecipeCards(id) {
+  if(!confirm("Bu tarifin 10 dildeki mevcut tüm kartları kalıcı olarak silinecek. Tarif ve yemek fotoğrafı korunacak. Devam edilsin mi?")) return;
+  document.getElementById("recipeCardLanguagesModal")?.remove();
+  const languages = ["en","tr","de","fr","es","pt","ru","ar","ja","zh"];
+  let removed = 0;
+  updateRecipeCardOperation("Tarifin tüm kartları siliniyor", 0, languages.length, `0/${languages.length} kart işlendi.`, "running");
+  for(let index = 0; index < languages.length; index += 1) {
+    if(await deleteRecipeCard(id, languages[index], true)) removed += 1;
+    updateRecipeCardOperation("Tarifin tüm kartları siliniyor", index + 1, languages.length, `${index + 1}/${languages.length} işlendi · ${removed} silindi`, "running");
+  }
+  await Promise.all([loadRecipeCardQueue(), loadApprovedRecipeManager(approvedRecipePage)]);
+  finishRecipeCardOperation("Tarif kartları silindi", `Sonuç: ${removed} kart silindi, ${languages.length - removed} kart silinemedi veya zaten yoktu.`);
+}
+
+
+let recipeCardGenerationStatusTimer = null;
+let activeRecipeCardUiOperation = null;
+let lastRecipeCardAutomaticStopNotice = "";
+
+function showRecipeCardGenerationNotice(message, tone = "") {
+  const notice = document.getElementById("recipeCardGenerationNotice");
+  if(!notice) return;
+  notice.className = `recipe-generation-notice${tone ? ` is-${tone}` : ""}`;
+  notice.textContent = message;
+  notice.style.display = "block";
+}
+
+function updateRecipeCardOperation(label, done, total, detail = "", state = "running") {
+  const safeTotal = Math.max(0, Number(total || 0));
+  const safeDone = Math.max(0, Math.min(safeTotal || Number(done || 0), Number(done || 0)));
+  activeRecipeCardUiOperation = state === "finished" ? null : {label,state,done:safeDone,total:safeTotal};
+  const percent = safeTotal ? Math.round((safeDone / safeTotal) * 100) : (state === "finished" ? 100 : 0);
+  const progress = document.getElementById("recipeCardGenerationProgress");
+  const fill = document.getElementById("recipeCardProgressFill");
+  const labelNode = document.getElementById("recipeCardProgressLabel");
+  const percentNode = document.getElementById("recipeCardProgressPercent");
+  const detailNode = document.getElementById("recipeCardProgressDetail");
+  const resultNode = document.getElementById("recipeCardProgressResult");
+  if(progress) progress.className = `recipe-generation-progress${state === "running" ? " is-running" : ""}${state === "stopping" ? " is-stopping" : ""}`;
+  if(fill) fill.style.width = `${percent}%`;
+  if(labelNode) labelNode.textContent = safeTotal ? `${label} · ${safeDone}/${safeTotal}` : label;
+  if(percentNode) percentNode.textContent = `${percent}%`;
+  if(detailNode) detailNode.textContent = detail || `${safeDone}/${safeTotal}`;
+  if(resultNode && state !== "finished") { resultNode.style.display = "none"; resultNode.textContent = ""; }
+}
+
+function finishRecipeCardOperation(label, result) {
+  const total=Math.max(1,Number(activeRecipeCardUiOperation?.total || 1));
+  updateRecipeCardOperation(label, total, total, `${total}/${total} işlem tamamlandı.`, "finished");
+  const resultNode = document.getElementById("recipeCardProgressResult");
+  if(resultNode) { resultNode.style.display = "block"; resultNode.textContent = result; }
+}
+
+function failRecipeCardOperation(label, error) {
+  const current = activeRecipeCardUiOperation || {done:0,total:1};
+  const done = Math.max(0, Number(current.done || 0));
+  const total = Math.max(1, Number(current.total || 1));
+  updateRecipeCardOperation(label, done, total, `${done}/${total} işlem tamamlandı.`, "finished");
+  const resultNode = document.getElementById("recipeCardProgressResult");
+  if(resultNode) {
+    resultNode.style.display = "block";
+    resultNode.textContent = `Sonuç: İşlem tamamlanamadı. ${error?.message || error || "Bilinmeyen hata"}`;
+  }
+}
+
+function scheduleRecipeCardGenerationStatus(active) {
+  if(recipeCardGenerationStatusTimer) clearTimeout(recipeCardGenerationStatusTimer);
+  recipeCardGenerationStatusTimer = active
+    ? setTimeout(loadRecipeCardGenerationStatus, 2000)
+    : null;
+}
+
+async function loadRecipeCardGenerationStatus() {
+  const status = document.getElementById("recipeCardGenerationStatus");
+  if(!status) return;
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/generation-status`);
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Üretim durumu alınamadı");
+    const currentBatch = data.currentBatch || { total:0, counts:{} };
+    const counts = currentBatch.counts || {};
+    const queued = Number(counts.queued || 0);
+    const running = Number(counts.running || 0);
+    const completed = Number(counts.completed || 0);
+    const failed = Number(counts.failed || 0);
+    const cancelled = Number(counts.cancelled || 0);
+    const paused = data.paused === true;
+    const pauseReason = String(data.pauseReason || "");
+    const statusParts = [`Son üretim: ${Number(currentBatch.total || 0)} kart`, `Tamamlanan ${completed}`];
+    if(queued) statusParts.push(`Bekleyen ${queued}`);
+    if(running) statusParts.push(`Üretilen ${running}`);
+    if(failed) statusParts.push(`Hatalı ${failed}`);
+    if(cancelled) statusParts.push(`İptal ${cancelled}`);
+    const nextJob = data.next || null;
+    const nextLabel = nextJob ? ` · Şu an: ${nextJob.displayId || nextJob.recipeId} · ${String(nextJob.lang || "").toUpperCase()}` : "";
+    status.innerHTML = `<strong>${paused ? "DURAKLATILDI · " : ""}Seçilen ${Number(currentBatch.total || 0)}</strong> · Tamamlanan ${completed} · Bekleyen ${queued} · Çalışan ${running} · Hatalı ${failed} · İptal ${cancelled}${adminEscape(nextLabel)}`;
+    if(paused && pauseReason) {
+      status.innerHTML += `<div style="margin-top:9px;padding:10px;border-radius:10px;background:#fff0e8;color:#9b2f20"><strong>Otomatik durdurma:</strong> ${adminEscape(pauseReason)}</div>`;
+      const noticeKey = `${data.pauseUpdatedAt || ""}:${pauseReason}`;
+      if(noticeKey !== lastRecipeCardAutomaticStopNotice) {
+        lastRecipeCardAutomaticStopNotice = noticeKey;
+        finishRecipeCardOperation("Üretim otomatik durduruldu", `Sonuç: ${pauseReason} Bekleyen kartlar korunuyor.`);
+      }
+    }
+    const failureList = document.getElementById("recipeCardFailureList");
+    if(failureList) {
+      const failures = Array.isArray(data.failed) ? data.failed : [];
+      failureList.style.display = failures.length ? "block" : "none";
+      failureList.innerHTML = failures.length
+        ? `<strong>Üretilemeyen kartlar</strong>${failures.map(item => `<div style="margin-top:6px">${adminEscape(item.title || item.displayId || item.recipeId)} · ${adminEscape(String(item.lang || "").toUpperCase())}: ${adminEscape(item.reason || "Bilinmeyen hata")}</div>`).join("")}`
+        : "";
+    }
+    const bulkButton = document.getElementById("bulkRecipeCardButton");
+    if(bulkButton) bulkButton.disabled = queued + running > 0;
+    const retryButton = document.getElementById("retryRecipeCardButton");
+    if(retryButton) {
+      retryButton.hidden = failed === 0;
+      retryButton.disabled = running > 0;
+    }
+    const pauseButton = document.getElementById("pauseRecipeCardButton");
+    if(pauseButton) pauseButton.disabled = paused || queued + running === 0;
+    const resumeButton = document.getElementById("resumeRecipeCardButton");
+    if(resumeButton) resumeButton.disabled = !paused;
+    const cancelButton = document.getElementById("cancelRecipeCardButton");
+    if(cancelButton) cancelButton.disabled = !paused || queued === 0 || running > 0;
+    const resetButton = document.getElementById("resetRecipeCardButton");
+    if(resetButton) resetButton.disabled = queued + running > 0;
+    const progress = document.getElementById("recipeCardGenerationProgress");
+    const progressFill = document.getElementById("recipeCardProgressFill");
+    const progressLabel = document.getElementById("recipeCardProgressLabel");
+    const progressPercent = document.getElementById("recipeCardProgressPercent");
+    const progressDetail = document.getElementById("recipeCardProgressDetail");
+    const total = Math.max(0, Number(currentBatch.total || 0));
+    const finished = Math.min(total, completed + failed + cancelled);
+    const percent = total ? Math.round((finished / total) * 100) : 0;
+    if(!activeRecipeCardUiOperation || activeRecipeCardUiOperation.label === "Kart üretimi") {
+      if(progress) progress.className = `recipe-generation-progress${running ? " is-running" : ""}${paused && running ? " is-stopping" : ""}`;
+      if(progressFill) progressFill.style.width = `${percent}%`;
+      if(progressPercent) progressPercent.textContent = `${percent}%`;
+      if(progressLabel) {
+        const generationLabel=paused ? "Üretim durduruldu" : running ? "Kart üretimi" : queued ? "Kart üretimi bekliyor" : total ? "Kart üretimi tamamlandı" : "Hazır";
+        progressLabel.textContent=total ? `${generationLabel} · ${finished}/${total}` : generationLabel;
+      }
+      if(progressDetail) progressDetail.textContent = nextJob
+        ? `${nextJob.displayId || nextJob.recipeId} · ${String(nextJob.lang || "").toUpperCase()} işleniyor — ${finished}/${total} tamamlandı`
+        : total ? `${finished}/${total} sonuçlandı · ${cancelled} iptal · ${failed} hatalı` : "Henüz aktif üretim yok.";
+      if(queued + running > 0) activeRecipeCardUiOperation = {label:"Kart üretimi",state:"running",done:finished,total};
+      else if(activeRecipeCardUiOperation?.label === "Kart üretimi") {
+        activeRecipeCardUiOperation = null;
+        const resultNode = document.getElementById("recipeCardProgressResult");
+        if(resultNode) { resultNode.style.display="block"; resultNode.textContent=`Sonuç: ${completed} tamamlandı, ${failed} hatalı, ${cancelled} iptal edildi.`; }
+      }
+    }
+    scheduleRecipeCardGenerationStatus(queued + running > 0);
+    await loadRecipeCardQueue();
+  } catch(error) {
+    status.textContent = error.message;
+    scheduleRecipeCardGenerationStatus(false);
+  }
+}
+
+function selectedRecipeCardLanguages() {
+  return [...document.querySelectorAll('input[name="recipeCardLanguage"]:checked')].map(input => input.value);
+}
+
+function toggleRecipeCardLanguages(checked) {
+  document.querySelectorAll('input[name="recipeCardLanguage"]').forEach(input => { input.checked = checked; });
+}
+
+async function pauseRecipeCardGeneration() {
+  if(!confirm("Çalışan kart işlemi durdurulacak ve tüm bekleyen üretimler iptal edilecek. Üretilmiş kartlar korunacak. Devam edilsin mi?")) return;
+  const button = document.getElementById("pauseRecipeCardButton");
+  const status = document.getElementById("recipeCardGenerationStatus");
+  const oldLabel = button?.textContent || "Üretimi durdur ve iptal et";
+  updateRecipeCardOperation("Üretim durduruluyor", 0, 1, "Çalışan proses ve bekleyen kuyruk kapatılıyor…", "stopping");
+  if(button) { button.disabled = true; button.textContent = "Durduruluyor…"; }
+  if(status) status.textContent = "Durdurma isteği gönderiliyor…";
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/pause`, { method:"POST" });
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Üretim durdurulamadı.");
+    if(status) status.textContent = data.stopping
+      ? `Çalışan proses kapatılıyor; ${Number(data.cancelled || 0)} üretim iptal edildi…`
+      : `Üretim durduruldu; ${Number(data.cancelled || 0)} üretim iptal edildi.`;
+    showRecipeCardGenerationNotice(
+      data.stopping
+        ? `Durdurma isteği alındı. ${Number(data.cancelled || 0)} bekleyen iş iptal edildi; çalışan iş kapanıyor.`
+        : `Üretim durduruldu. ${Number(data.cancelled || 0)} iş iptal edildi; tamamlanan kartlar korundu.`,
+      "success"
+    );
+    await loadRecipeCardGenerationStatus();
+    finishRecipeCardOperation("Üretim durduruldu", `Sonuç: ${Number(data.cancelled || 0)} üretim iptal edildi. Üretilmiş kartlar korundu.`);
+  } catch(error) {
+    if(status) status.textContent = error.message;
+    showRecipeCardGenerationNotice(`Durdurma başarısız: ${error.message}`, "error");
+    failRecipeCardOperation("Üretim durdurulamadı", error);
+    alert(error.message);
+  } finally {
+    if(button) button.textContent = oldLabel;
+  }
+}
+
+async function resumeRecipeCardGeneration() {
+  const button = document.getElementById("resumeRecipeCardButton");
+  const status = document.getElementById("recipeCardGenerationStatus");
+  const oldLabel = button?.textContent || "Devam ettir";
+  updateRecipeCardOperation("Üretim devam ettiriliyor", 0, 1, "0/1 başlatma isteği işlendi.", "running");
+  if(button) { button.disabled = true; button.textContent = "Başlatılıyor…"; }
+  if(status) status.textContent = "Üretimi devam ettirme isteği gönderildi…";
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/resume`, { method:"POST" });
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Üretim devam ettirilemedi.");
+    if(status) status.textContent = "Üretim yeniden başlatıldı. Durum yenileniyor…";
+    showRecipeCardGenerationNotice("Üretim yeniden başlatıldı. Kuyruk durumu yenileniyor…", "success");
+    await loadRecipeCardGenerationStatus();
+    if(!activeRecipeCardUiOperation || activeRecipeCardUiOperation.label !== "Kart üretimi") finishRecipeCardOperation("Üretim devam ettirildi", "Sonuç: Üretim kuyruğu yeniden başlatıldı.");
+  } catch(error) {
+    if(status) status.textContent = error.message;
+    showRecipeCardGenerationNotice(`Devam ettirme başarısız: ${error.message}`, "error");
+    failRecipeCardOperation("Üretim başlatılamadı", error);
+    alert(error.message);
+  } finally {
+    if(button) button.textContent = oldLabel;
+  }
+}
+
+async function cancelQueuedRecipeCardGeneration() {
+  if(!confirm("Duraklatılmış kuyruktaki tüm bekleyen işler iptal edilecek. Tamamlanan kartlar korunacak. Devam edilsin mi?")) return;
+  const button = document.getElementById("cancelRecipeCardButton");
+  const status = document.getElementById("recipeCardGenerationStatus");
+  const oldLabel = button?.textContent || "Bekleyenleri iptal et";
+  updateRecipeCardOperation("Bekleyenler iptal ediliyor", 0, 1, "Kuyruk güncelleniyor…", "stopping");
+  if(button) { button.disabled = true; button.textContent = "İptal ediliyor…"; }
+  if(status) status.textContent = "Bekleyen işler iptal ediliyor…";
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/cancel-queued`, { method:"POST" });
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Bekleyen işler iptal edilemedi.");
+    alert(`${Number(data.cancelled || 0)} bekleyen iş iptal edildi.`);
+    showRecipeCardGenerationNotice(`${Number(data.cancelled || 0)} bekleyen iş iptal edildi.`, "success");
+    await loadRecipeCardGenerationStatus();
+    finishRecipeCardOperation("Bekleyenler iptal edildi", `Sonuç: ${Number(data.cancelled || 0)} bekleyen üretim iptal edildi.`);
+  } catch(error) {
+    if(status) status.textContent = error.message;
+    showRecipeCardGenerationNotice(`İptal başarısız: ${error.message}`, "error");
+    failRecipeCardOperation("Bekleyenler iptal edilemedi", error);
+    alert(error.message);
+  } finally {
+    if(button) button.textContent = oldLabel;
+  }
+}
+async function resetRecipeCardGenerationHistory() {
+  if(!confirm("Tamamlanan, hatalı ve iptal edilen son üretim sayaçları temizlenecek. Üretilmiş/onaylı kartlar korunacak. Devam edilsin mi?")) return;
+  const button = document.getElementById("resetRecipeCardButton");
+  if(button) { button.disabled = true; button.textContent = "Sıfırlanıyor…"; }
+  updateRecipeCardOperation("Sayaç sıfırlanıyor", 0, 1, "Üretim geçmişi temizleniyor…", "running");
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/reset-generation-history`, {method:"POST"});
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Üretim sayacı sıfırlanamadı");
+    selectedRecipeCardIds.clear();
+    selectedQueueRecipeCards.clear();
+    updateSelectedRecipeCardCount();
+    updateSelectedQueueCardCount();
+    await Promise.all([loadRecipeCardGenerationStatus(),loadRecipeCardQueue()]);
+    finishRecipeCardOperation("Sayaç sıfırlandı", `Sonuç: ${Number(data.removed || 0)} işlem kaydı temizlendi. Kartlar korundu.`);
+  } catch(error) {
+    failRecipeCardOperation("Sayaç sıfırlanamadı", error);
+    alert(error.message);
+  } finally {
+    if(button) { button.disabled = false; button.textContent = "Üretim sayacını sıfırla"; }
+  }
+}
+async function startSelectedRecipeCardGeneration() {
+  const recipeIds = [...selectedRecipeCardIds];
+  const languages = selectedRecipeCardLanguages();
+  if(!recipeIds.length) return alert("En az bir yemek seçmelisin.");
+  if(!languages.length) return alert("En az bir dil seçmelisin.");
+  if(!confirm(`${recipeIds.length} seçili yemek için ${languages.map(value => value.toUpperCase()).join(", ")} kartları üretim kuyruğuna eklensin mi?`)) return;
+  const button = document.getElementById("selectedRecipeCardButton");
+  if(button) button.disabled = true;
+  const requested = recipeIds.length * languages.length;
+  updateRecipeCardOperation("Seçili kartlar kuyruğa ekleniyor", 0, requested, `0/${requested} kart kuyruğa hazırlandı.`, "running");
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/selected-generate`, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({recipeIds,languages})
+    });
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Seçili yemekler üretim kuyruğuna eklenemedi");
+    const added = Number(data.added || 0);
+    if(added) updateRecipeCardOperation("Kart üretimi", 0, added, `0/${added} üretildi · ${Number(data.skipped || 0)} mevcut kart atlandı.`, "running");
+    else finishRecipeCardOperation("Kart kuyruğu tamamlandı", `Sonuç: Yeni kart eklenmedi; ${Number(data.skipped || 0)} mevcut kart atlandı.`);
+    alert(`${Number(data.added || 0)} kart üretim kuyruğuna eklendi. ${Number(data.skipped || 0)} kart atlandı.`);
+    selectedRecipeCardIds.clear();
+    updateSelectedRecipeCardCount();
+    await loadApprovedRecipeManager(approvedRecipePage);
+    await loadRecipeCardGenerationStatus();
+  } catch(error) {
+    failRecipeCardOperation("Kartlar kuyruğa eklenemedi", error);
+    alert(error.message);
+    updateSelectedRecipeCardCount();
+  }
+}
+async function startBulkRecipeCardGeneration() {
+  const languages = selectedRecipeCardLanguages();
+  if(!languages.length) return alert("En az bir dil seçmelisin.");
+  const confirmed = confirm(`${languages.map(value => value.toUpperCase()).join(", ")} dilleri için eksik kartlar üretilecek. İşlem uzun sürebilir. Başlatılsın mı?`);
+  if(!confirmed) return;
+  const button = document.getElementById("bulkRecipeCardButton");
+  if(button) button.disabled = true;
+  updateRecipeCardOperation("Toplu üretim hazırlanıyor", 0, 1, "0/1 kuyruk isteği işlendi.", "running");
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/bulk-generate`, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({languages})
+    });
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Toplu üretim başlatılamadı");
+    const added = Number(data.added || 0);
+    if(added) updateRecipeCardOperation("Kart üretimi", 0, added, `0/${added} üretildi · ${Number(data.skipped || 0)} mevcut kart atlandı.`, "running");
+    else finishRecipeCardOperation("Toplu üretim kontrolü tamamlandı", `Sonuç: Yeni kart eklenmedi; ${Number(data.skipped || 0)} mevcut kart atlandı.`);
+    alert(`${Number(data.added || 0)} kart üretim kuyruğuna eklendi. ${Number(data.skipped || 0)} mevcut kart atlandı.`);
+    await loadRecipeCardGenerationStatus();
+  } catch(error) {
+    failRecipeCardOperation("Toplu üretim başlatılamadı", error);
+    alert(error.message);
+    if(button) button.disabled = false;
+  }
+}
+
+async function retryFailedRecipeCardGeneration() {
+  updateRecipeCardOperation("Hatalı kartlar yeniden hazırlanıyor", 0, 1, "0/1 yeniden başlatma isteği işlendi.", "running");
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/retry-failed`, { method:"POST" });
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Başarısız işler yeniden başlatılamadı.");
+    const retried = Number(data.retried || 0);
+    if(retried) updateRecipeCardOperation("Kart üretimi", 0, retried, `0/${retried} yeniden üretildi.`, "running");
+    else finishRecipeCardOperation("Yeniden üretim tamamlandı", "Sonuç: Yeniden kuyruğa alınacak hatalı kart bulunamadı.");
+    alert(`${retried} başarısız iş yeniden kuyruğa alındı.`);
+    await loadRecipeCardGenerationStatus();
+  } catch(error) {
+    failRecipeCardOperation("Hatalı kartlar başlatılamadı", error);
+    alert(error.message);
+  }
+}
+
+let ingredientCardRepairPreview = null;
+function setIngredientCardRepairTerm(value) {
+  const input = document.getElementById("ingredientCardRepairTerm");
+  if(input) input.value = value;
+  previewIngredientCardRepair();
+}
+
+async function previewIngredientCardRepair() {
+  const term = String(document.getElementById("ingredientCardRepairTerm")?.value || "").trim();
+  const languages = selectedRecipeCardLanguages();
+  const result = document.getElementById("ingredientCardRepairResult");
+  const queueButton = document.getElementById("ingredientCardRepairButton");
+  ingredientCardRepairPreview = null;
+  if(queueButton) queueButton.disabled = true;
+  if(!term) return alert("Aranacak malzemeyi yazın.");
+  if(!languages.length) return alert("Önce en az bir kart dili seçin.");
+  updateRecipeCardOperation("Etkilenen tarifler aranıyor", 0, 1, "0/1 arama tamamlandı.", "running");
+  if(result) result.textContent = "Etkilenen tarifler aranıyor…";
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/ingredient-repair/preview`, {
+      method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({term,languages})
+    });
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Malzeme araması yapılamadı");
+    ingredientCardRepairPreview = data;
+    const sample = (data.items || []).slice(0,12).map(item => item.title).join(", ");
+    if(result) result.innerHTML = `<strong>${Number(data.recipeCount || 0)} tarif · ${Number(data.jobCount || 0)} yeni kart işi</strong>${sample ? `<br><small>${adminEscape(sample)}${data.recipeCount > 12 ? "…" : ""}</small>` : "<br>Eşleşen tarif yok."}`;
+    if(queueButton) queueButton.disabled = !data.recipeCount;
+    finishRecipeCardOperation("Malzeme araması tamamlandı", `Sonuç: ${Number(data.recipeCount || 0)} tarif ve ${Number(data.jobCount || 0)} kart işi bulundu.`);
+  } catch(error) {
+    if(result) result.textContent = error.message;
+    failRecipeCardOperation("Malzeme araması başarısız", error);
+  }
+}
+
+async function queueIngredientCardRepair() {
+  const term = String(document.getElementById("ingredientCardRepairTerm")?.value || "").trim();
+  const languages = selectedRecipeCardLanguages();
+  if(!ingredientCardRepairPreview || ingredientCardRepairPreview.term !== term) return previewIngredientCardRepair();
+  if(!confirm(`${ingredientCardRepairPreview.recipeCount} tarif için ${ingredientCardRepairPreview.jobCount} kart yeniden üretim kuyruğuna eklenecek. Devam edilsin mi?`)) return;
+  const button = document.getElementById("ingredientCardRepairButton");
+  if(button) { button.disabled = true; button.textContent = "Kuyruğa ekleniyor…"; }
+  const requested = Number(ingredientCardRepairPreview.jobCount || 0);
+  updateRecipeCardOperation("Malzeme düzeltme kartları hazırlanıyor", 0, requested || 1, `0/${requested || 1} kart kuyruğa hazırlandı.`, "running");
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/ingredient-repair/queue`, {
+      method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({term,languages})
+    });
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Düzeltme kuyruğu oluşturulamadı");
+    const added = Number(data.added || 0);
+    if(added) updateRecipeCardOperation("Kart üretimi", 0, added, `0/${added} düzeltme kartı üretildi.`, "running");
+    else finishRecipeCardOperation("Düzeltme kuyruğu tamamlandı", `Sonuç: Yeni kart eklenmedi; ${Number(data.skipped || 0)} iş zaten kuyruktaydı.`);
+    alert(`${data.recipeCount} tarif bulundu; ${data.added} kart kuyruğa eklendi, ${data.skipped} kart işi zaten kuyruktaydı.`);
+    await loadRecipeCardGenerationStatus();
+  } catch(error) {
+    failRecipeCardOperation("Düzeltme kuyruğu oluşturulamadı", error);
+    alert(error.message);
+  } finally {
+    if(button) { button.disabled = false; button.textContent = "Seçili dillerde yeniden üret"; }
+  }
+}
+async function loadRecipeCardQueue() {
+  const container = document.getElementById("adminRecipeCardQueue");
+  if(!container) return;
+  container.innerHTML = '<p class="admin-status-line">Kartlar yükleniyor...</p>';
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card-queue?page=1&limit=100`);
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Kuyruk yüklenemedi");
+    const items = data.items || [];
+    recipeCardQueueCache = items;
+    items.forEach(item => recipeCardQueueSelectionCache.set(`${String(item.recipeId)}:${String(item.lang)}`, item));
+    const summary = document.getElementById("recipeCardQueueSummary");
+    if(summary) summary.textContent = `Onay bekleyen toplam ${Number(data.total || items.length)} kart; en yeni ${items.length} kart gösteriliyor.`;
+    container.innerHTML = items.length ? items.map(item => {
+      const rawImageUrl=resolveAdminMediaUrl(item.url);
+      const imageUrl=rawImageUrl+(rawImageUrl.includes("?")?"&":"?")+"adminv="+encodeURIComponent(item.generatedAt||Date.now());
+      const selectionKey = `${String(item.recipeId)}:${String(item.lang)}`;
+      return `<article class="recipe-card-queue-item">
+        <label style="display:flex;align-items:center;gap:8px;font-weight:800">
+          <input type="checkbox" ${selectedQueueRecipeCards.has(selectionKey) ? "checked" : ""} onchange='toggleQueueCardSelection(${JSON.stringify(selectionKey)},this.checked)'> Bu kartı seç
+        </label>
+        <a class="recipe-card-queue-preview" href="${adminEscape(imageUrl)}" target="_blank" rel="noopener" title="Kartı tam boy aç">
+          <img src="${adminEscape(imageUrl)}" alt="${adminEscape(item.title)}" loading="lazy">
+        </a>
+        <div class="recipe-card-queue-meta">
+          <strong>${adminEscape(item.displayId || item.recipeId)}</strong>
+          <span>${adminEscape(item.title)}</span>
+          <small>${adminEscape(String(item.lang || "").toUpperCase())} · ${adminEscape(item.status || "pending")}</small>
+        </div>
+        <div class="approved-row-actions">
+          <button type="button" onclick='downloadQueueRecipeCard(${JSON.stringify(item.url)},${JSON.stringify(item.title)})'>Kartı indir</button>
+          <button class="primary" type="button" onclick='decideRecipeCard(${JSON.stringify(item.recipeId)},${JSON.stringify(item.lang)},"approved")'>Onayla</button>
+          <button class="danger" type="button" onclick='decideRecipeCard(${JSON.stringify(item.recipeId)},${JSON.stringify(item.lang)},"rejected")'>Reddet</button>
+        </div>
+      </article>`;
+    }).join("") : '<p class="admin-status-line">Onay bekleyen kart yok.</p>';
+    updateSelectedQueueCardCount();
+  } catch(error) {
+    container.innerHTML = `<p class="admin-status-line">${adminEscape(error.message)}</p>`;
+  }
+}
+
+function updateSelectedQueueCardCount() {
+  const count = document.getElementById("selectedQueueCardCount");
+  const deleteButton = document.getElementById("deleteSelectedQueueCardsButton");
+  const approveButton = document.getElementById("approveSelectedQueueCardsButton");
+  if(count) count.textContent = `${selectedQueueRecipeCards.size} kart seçildi`;
+  if(deleteButton) deleteButton.disabled = selectedQueueRecipeCards.size === 0;
+  if(approveButton) approveButton.disabled = selectedQueueRecipeCards.size === 0;
+}
+
+function toggleQueueCardSelection(key, selected) {
+  if(selected) selectedQueueRecipeCards.add(String(key));
+  else selectedQueueRecipeCards.delete(String(key));
+  updateSelectedQueueCardCount();
+}
+
+async function selectAllQueueCards() {
+  const button = document.getElementById("selectAllQueueCardsButton");
+  const oldLabel = button?.textContent || "Tüm bekleyen kartları seç";
+  if(button) { button.disabled = true; button.textContent = "Tümü seçiliyor…"; }
+  updateRecipeCardOperation("Bekleyen kartlar seçiliyor", 0, 1, "0/1 liste alındı.", "running");
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card-queue?page=1&limit=10000`);
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Kartların tamamı alınamadı");
+    (data.items || []).forEach(item => {
+      const key = `${String(item.recipeId)}:${String(item.lang)}`;
+      recipeCardQueueSelectionCache.set(key, item);
+      selectedQueueRecipeCards.add(key);
+    });
+    updateSelectedQueueCardCount();
+    await loadRecipeCardQueue();
+    const selectedCount = selectedQueueRecipeCards.size;
+    updateRecipeCardOperation("Bekleyen kartlar seçiliyor", selectedCount, selectedCount || 1, `${selectedCount}/${selectedCount} kart seçildi.`, "running");
+    finishRecipeCardOperation("Kart seçimi tamamlandı", `Sonuç: ${selectedCount} bekleyen kart seçildi.`);
+  } catch(error) {
+    failRecipeCardOperation("Kart seçimi başarısız", error);
+    alert(error.message);
+  } finally {
+    if(button) { button.disabled = false; button.textContent = oldLabel; }
+  }
+}
+
+function clearQueueCardSelection() {
+  selectedQueueRecipeCards.clear();
+  updateSelectedQueueCardCount();
+  loadRecipeCardQueue();
+}
+
+function toggleVisibleQueueCardSelection(selected) {
+  recipeCardQueueCache.forEach(item => {
+    const key = `${String(item.recipeId)}:${String(item.lang)}`;
+    if(selected) selectedQueueRecipeCards.add(key);
+    else selectedQueueRecipeCards.delete(key);
+  });
+  loadRecipeCardQueue();
+}
+
+async function approveSelectedQueueCards() {
+  const selected = [...selectedQueueRecipeCards].map(key => recipeCardQueueSelectionCache.get(key)).filter(Boolean);
+  if(!selected.length) return;
+  if(!confirm(`${selected.length} kart onaylanıp yayındaki kart alanına kaydedilecek. Devam edilsin mi?`)) return;
+  const approveButton = document.getElementById("approveSelectedQueueCardsButton");
+  const deleteButton = document.getElementById("deleteSelectedQueueCardsButton");
+  if(approveButton) approveButton.disabled = true;
+  if(deleteButton) deleteButton.disabled = true;
+  let approved = 0;
+  const failures = [];
+  updateRecipeCardOperation("Kartlar onaylanıyor", 0, selected.length, `0/${selected.length} kart işlendi.`, "running");
+  for(let index = 0; index < selected.length; index += 1) {
+    const item = selected[index];
+    if(approveButton) approveButton.textContent = `Onaylanıyor ${index + 1}/${selected.length}`;
+    try {
+      const response = await adminFetch(`${API_BASE}/admin/recipe-card/${encodeURIComponent(item.recipeId)}/${encodeURIComponent(item.lang)}/decision`, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({decision:"approved"})
+      });
+      const data = await response.json();
+      if(!response.ok || !data.success) throw new Error(data.error || "Kart onaylanamadı");
+      selectedQueueRecipeCards.delete(`${String(item.recipeId)}:${String(item.lang)}`);
+      approved += 1;
+    } catch(error) {
+      failures.push(`${item.title || item.displayId || item.recipeId} (${String(item.lang || "").toUpperCase()}): ${error.message}`);
+    }
+    updateRecipeCardOperation("Kartlar onaylanıyor", index + 1, selected.length, `${index + 1}/${selected.length} işlendi · ${approved} başarılı · ${failures.length} hatalı`, "running");
+  }
+  if(approveButton) approveButton.textContent = "Seçilen kartları onayla";
+  await Promise.all([loadRecipeCardQueue(), loadApprovedRecipeManager(approvedRecipePage)]);
+  finishRecipeCardOperation("Kart onayı tamamlandı", `Sonuç: ${approved} kart onaylandı, ${failures.length} kart onaylanamadı.`);
+  alert(failures.length
+    ? `${approved} kart onaylandı, ${failures.length} kart onaylanamadı.\n\n${failures.slice(0, 8).join("\n")}`
+    : `${approved} kart başarıyla onaylandı.`);
+}
+
+async function deleteSelectedQueueCards() {
+  const selected = [...selectedQueueRecipeCards].map(key => recipeCardQueueSelectionCache.get(key)).filter(Boolean);
+  if(!selected.length) return;
+  if(!confirm(`${selected.length} kart kalıcı olarak silinecek. Tarifler ve yemek fotoğrafları korunacak. Devam edilsin mi?`)) return;
+  const button = document.getElementById("deleteSelectedQueueCardsButton");
+  if(button) button.disabled = true;
+  let removed = 0;
+  let failed = 0;
+  updateRecipeCardOperation("Kartlar siliniyor", 0, selected.length, `0/${selected.length} kart işlendi.`, "running");
+  for(let index = 0; index < selected.length; index += 1) {
+    const item = selected[index];
+    if(button) button.textContent = `Siliniyor ${index + 1}/${selected.length}`;
+    try {
+      const response = await adminFetch(`${API_BASE}/admin/recipe-card/${encodeURIComponent(item.recipeId)}/${encodeURIComponent(item.lang)}/decision`, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({decision:"rejected"})
+      });
+      const data = await response.json();
+      if(!response.ok || !data.success) throw new Error(data.error || "Kart silinemedi");
+      selectedQueueRecipeCards.delete(`${String(item.recipeId)}:${String(item.lang)}`);
+      removed += 1;
+    } catch(error) {
+      console.error("BULK CARD DELETE ERROR:", item, error);
+      failed += 1;
+    }
+    updateRecipeCardOperation("Kartlar siliniyor", index + 1, selected.length, `${index + 1}/${selected.length} işlendi · ${removed} silindi · ${failed} hatalı`, "running");
+  }
+  if(button) button.textContent = "Seçilen kartları sil";
+  await loadRecipeCardQueue();
+  finishRecipeCardOperation("Kart silme tamamlandı", `Sonuç: ${removed} kart silindi, ${failed} kart silinemedi.`);
+  alert(failed ? `${removed} kart silindi, ${failed} kart silinemedi.` : `${removed} kart silindi.`);
+}
+
+async function decideRecipeCard(id, lang, decision) {
+  const actionLabel = decision === "approved" ? "Kart onaylanıyor" : "Kart reddediliyor";
+  updateRecipeCardOperation(actionLabel, 0, 1, "0/1 kart işlendi.", "running");
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/${encodeURIComponent(id)}/${encodeURIComponent(lang)}/decision`, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({decision})
+    });
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Karar kaydedilemedi.");
+    await Promise.all([loadRecipeCardQueue(), loadApprovedRecipeManager(approvedRecipePage)]);
+    const modal = document.getElementById("recipeCardLanguagesModal");
+    if(modal && document.body.contains(modal)) await openRecipeCardLanguages(id);
+    finishRecipeCardOperation(decision === "approved" ? "Kart onaylandı" : "Kart reddedildi", `Sonuç: ${String(lang).toUpperCase()} kartı ${decision === "approved" ? "onaylandı" : "reddedildi"}.`);
+  } catch(error) {
+    failRecipeCardOperation("Kart kararı kaydedilemedi", error);
+    alert(error.message);
+  }
+}
+
+async function downloadQueueRecipeCard(url, title) {
+  try {
+    const response = await fetch(resolveAdminMediaUrl(url));
+    if(!response.ok) throw new Error("Kart indirilemedi.");
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = objectUrl;
+    anchor.download = String(title || "recipe-card").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"").toLowerCase() + ".webp";
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 1500);
+  } catch(error) { alert(error.message || "Kart indirilemedi."); }
+}
+
+async function downloadApprovedRecipeCard(id) {
+  try {
+    const response=await adminFetch(`${API_BASE}/admin/recipe-card/${encodeURIComponent(id)}/download`);
+    if(!response.ok)throw new Error("İndirilecek tarif kartı bulunamadı.");
+    const blob=await response.blob();
+    const disposition=response.headers.get("content-disposition")||"";
+    const matched=disposition.match(/filename\*?=(?:UTF-8''|")?([^";]+)/i);
+    const fileName=matched?decodeURIComponent(matched[1].replace(/"/g,"")):"recipe-card.webp";
+    const objectUrl=URL.createObjectURL(blob),anchor=document.createElement("a");anchor.href=objectUrl;anchor.download=fileName;document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(objectUrl),1500);
+  } catch(error) { alert(error.message||"Kart indirilemedi."); }
+}
+
+async function generateApprovedRecipeCard(id) {
+  const lang = String(prompt("Kart dili: en, tr, de, fr, es, pt, ru, ar, ja, zh", "en") || "").trim().toLowerCase();
+  if(!lang) return;
+  updateRecipeCardOperation("Kart kuyruğa ekleniyor", 0, 1, "0/1 kart kuyruğa hazırlandı.", "running");
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/recipe-card/${encodeURIComponent(id)}/generate`, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({lang})
+    });
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.details || data.error || "Kart üretilemedi.");
+    updateRecipeCardOperation("Kart üretimi", 0, 1, `0/1 ${lang.toUpperCase()} kartı üretildi.`, "running");
+    alert(`${lang.toUpperCase()} kart üretim kuyruğuna alındı.`);
+    await loadRecipeCardGenerationStatus();
+  } catch(error) {
+    failRecipeCardOperation("Kart üretimi başlatılamadı", error);
+    alert(error.message || "Kart üretilemedi.");
+  }
+}
+
+function setRecipeLanguageModalSelection(selected) {
+  document.querySelectorAll('input[name="recipeLanguageModalSelection"]').forEach(input => { input.checked=selected; });
+}
+
+async function generateSelectedRecipeCardLanguages(id) {
+  const languages=[...document.querySelectorAll('input[name="recipeLanguageModalSelection"]:checked')]
+    .map(input=>String(input.value || "").toLowerCase()).filter(Boolean);
+  if(!languages.length) return alert("En az bir dil seçin.");
+  document.getElementById("recipeCardLanguagesModal")?.remove();
+  updateRecipeCardOperation("Seçili diller kuyruğa ekleniyor", 0, languages.length, `0/${languages.length} kart kuyruğa hazırlandı.`, "running");
+  try {
+    const response=await adminFetch(`${API_BASE}/admin/recipe-card/${encodeURIComponent(id)}/generate-selected`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({languages})
+    });
+    const data=await response.json();
+    if(!response.ok || !data.success) throw new Error(data.details || data.error || "Kartlar kuyruğa alınamadı.");
+    const added = Number(data.added || 0);
+    if(added) updateRecipeCardOperation("Kart üretimi", 0, added, `0/${added} kart üretildi · ${Number(data.skipped || 0)} iş atlandı.`, "running");
+    else finishRecipeCardOperation("Kart kuyruğu tamamlandı", `Sonuç: Yeni kart eklenmedi; ${Number(data.skipped || 0)} iş atlandı.`);
+    alert(`${Number(data.added || 0)} kart üretim kuyruğuna alındı; ${Number(data.skipped || 0)} iş atlandı.`);
+    await loadRecipeCardGenerationStatus();
+  } catch(error) {
+    failRecipeCardOperation("Kartlar kuyruğa alınamadı", error);
+    alert(error.message || "Kartlar kuyruğa alınamadı.");
+  }
+}
+
+async function changeApprovedRecipeState(id, action) {
+  const messages = {
+    publish: "Tarif yayına açılsın mı?",
+    hide: "Tarif yayından kaldırılsın mı?",
+    archive: "Tarif arşive taşınsın mı?",
+    restore: "Tarif geri alınsın mı? Yayına kapalı olarak dönecek.",
+    delete: "Tarif silinmiş olarak işaretlensin mi? Kayıt ve ID korunacaktır."
+  };
+  if(!confirm(messages[action] || "İşlem uygulansın mı?")) return;
+
+  const response = await adminFetch(`${API_BASE}/admin/approved-recipe/${encodeURIComponent(id)}/state`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action })
+  });
+  const data = await response.json();
+  if(!response.ok || !data.success) {
+    alert(data.error || "İşlem tamamlanamadı.");
+    return;
+  }
+  await loadApprovedRecipeManager(approvedRecipePage);
+  await loadAdminDashboard();
+}
+
+function openApprovedRecipeEditor(id) {
+  const recipe = approvedRecipeCache.find(item => String(item.id) === String(id));
+  if(!recipe) return;
+  const values = {
+    approvedEditId: recipe.id,
+    approvedEditDisplayId: recipe.displayRecipeId || recipe.id,
+    approvedEditCreator: recipe.creatorUsername || "",
+    approvedEditCreatorEmail: firstEmailValue(recipe.creatorEmail),
+    approvedEditTitle: recipe.adminTitleTr || recipe.title || "",
+    approvedEditType: recipe.type || "",
+    approvedEditCuisine: recipe.cuisine || "",
+    approvedEditServings: recipe.servings || "",
+    approvedEditPrep: recipe.prepTimeText || recipe.prepTime || "",
+    approvedEditCook: recipe.cookTimeText || "",
+    approvedEditIngredients: recipe.adminIngredientsTr || recipe.ingredients || "",
+    approvedEditInstructions: recipe.adminInstructionsTr || recipe.instructions || "",
+    approvedEditTags: Array.isArray(recipe.tags) ? recipe.tags.join(", ") : (recipe.tags || ""),
+    approvedEditSeoTitle: recipe.seoTitle || "",
+    approvedEditSeoDescription: recipe.seoDescription || ""
+  };
+  Object.entries(values).forEach(([id, value]) => {
+    const input = document.getElementById(id);
+    if(input) input.value = value;
+  });
+  document.getElementById("approvedEditPublish").checked = recipe.publishEnabled !== false;
+  document.getElementById("approvedEditMedia").value = "";
+  document.getElementById("approvedEditCurrentPhoto").innerHTML = adminRecipeMediaGallery(recipe);
+  document.getElementById("approvedEditModal").style.display = "flex";
+}
+
+function firstEmailValue(value) {
+  return String(value || "")
+    .split(/[;,]/)
+    .map(item => item.trim())
+    .find(Boolean) || "";
+}
+
+function closeApprovedRecipeEditor() {
+  document.getElementById("approvedEditModal").style.display = "none";
+}
+
+async function saveApprovedRecipeEditor(event) {
+  event.preventDefault();
+  const id = document.getElementById("approvedEditId").value;
+  const form = new FormData();
+  const fields = {
+    creatorUsername: "approvedEditCreator",
+    creatorEmail: "approvedEditCreatorEmail",
+    title: "approvedEditTitle",
+    adminTitleTr: "approvedEditTitle",
+    type: "approvedEditType",
+    cuisine: "approvedEditCuisine",
+    servings: "approvedEditServings",
+    prepTimeText: "approvedEditPrep",
+    prepTime: "approvedEditPrep",
+    cookTimeText: "approvedEditCook",
+    ingredients: "approvedEditIngredients",
+    adminIngredientsTr: "approvedEditIngredients",
+    instructions: "approvedEditInstructions",
+    adminInstructionsTr: "approvedEditInstructions",
+    tags: "approvedEditTags",
+    seoTitle: "approvedEditSeoTitle",
+    seoDescription: "approvedEditSeoDescription"
+  };
+  Object.entries(fields).forEach(([field, inputId]) => {
+    form.append(field, document.getElementById(inputId).value.trim());
+  });
+  form.append("publishEnabled", document.getElementById("approvedEditPublish").checked ? "true" : "false");
+
+  const media = document.getElementById("approvedEditMedia").files?.[0];
+  if(media) {
+    const prepared = await prepareAdminMedia(media);
+    form.append("media", prepared, prepared.name);
+  }
+
+  const button = document.getElementById("approvedEditSave");
+  button.disabled = true;
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/approved-recipe/${encodeURIComponent(id)}`, {
+      method: "POST",
+      body: form
+    });
+    const data = await response.json();
+    if(!response.ok || !data.success) throw new Error(data.error || "Güncelleme başarısız");
+    closeApprovedRecipeEditor();
+    await loadApprovedRecipeManager(approvedRecipePage);
+    await loadAdminDashboard();
+  } catch(error) {
+    alert(error.message || "Tarif güncellenemedi.");
+  } finally {
+    button.disabled = false;
+  }
+}
+
+function setLoginLanguage() {
+  const isTurkish = currentLang === "tr";
+  document.getElementById("adminLoginTitle").textContent = isTurkish ? "Admin Girişi" : "Admin Login";
+  document.getElementById("adminLoginDescription").textContent = isTurkish
+    ? "Tarif yönetimine erişmek için admin parolasını girin."
+    : "Enter the admin password to access recipe management.";
+  document.getElementById("adminLoginButton").textContent = isTurkish ? "Giriş yap" : "Sign in";
+  document.getElementById("adminLoginHome").textContent = isTurkish ? "⌂ Ana sayfa" : "⌂ Home";
+  document.getElementById("adminLoginHome").href = `/?lang=${currentLang}`;
+  document.getElementById("adminPassword").placeholder = isTurkish ? "Admin parolası" : "Admin password";
+}
+
+function showAdminLogin(message = "") {
+  document.getElementById("adminApp").hidden = true;
+  document.getElementById("adminLoginGate").hidden = false;
+  document.getElementById("adminLoginStatus").textContent = message;
+  setLoginLanguage();
+  setTimeout(() => document.getElementById("adminPassword").focus(), 0);
+}
+
+function showAdminApp() {
+  document.getElementById("adminLoginGate").hidden = true;
+  document.getElementById("adminApp").hidden = false;
+  document.getElementById("adminLoginStatus").textContent = "";
+}
+
+async function submitAdminLogin(event) {
+  event.preventDefault();
+  const status = document.getElementById("adminLoginStatus");
+  const passwordInput = document.getElementById("adminPassword");
+  status.textContent = currentLang === "tr" ? "Kontrol ediliyor..." : "Checking...";
+
+  try {
+    const response = await fetch(`${API_BASE}/admin/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: passwordInput.value })
+    });
+    const data = await response.json();
+
+    if (!response.ok || !data.success || !data.token) {
+      status.textContent = response.status === 429
+        ? (currentLang === "tr" ? "Çok fazla deneme yapıldı. 15 dakika sonra tekrar deneyin." : "Too many attempts. Try again in 15 minutes.")
+        : (currentLang === "tr" ? "Parola yanlış veya admin erişimi yapılandırılmamış." : "Invalid password or admin access is not configured.");
+      passwordInput.select();
+      return;
+    }
+
+    sessionStorage.setItem(ADMIN_TOKEN_KEY, data.token);
+    passwordInput.value = "";
+    showAdminApp();
+    await loadAdminDashboard();
+    await loadAdminRecipes();
+  } catch (error) {
+    console.error("ADMIN LOGIN ERROR:", error);
+    status.textContent = currentLang === "tr" ? "Sunucuya ulaşılamadı." : "The server could not be reached.";
+  }
+}
+
+function logoutAdmin() {
+  sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+  showAdminLogin(currentLang === "tr" ? "Oturum kapatıldı." : "Signed out.");
+}
+
+async function initializeAdmin() {
+  setLoginLanguage();
+  if (!getAdminToken()) {
+    showAdminLogin();
+    return;
+  }
+
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/session`);
+    if (!response.ok) return;
+    showAdminApp();
+    await loadAdminDashboard();
+    await loadAdminRecipes();
+  } catch (error) {
+    console.error("ADMIN SESSION ERROR:", error);
+    showAdminLogin(currentLang === "tr" ? "Sunucuya ulaşılamadı." : "The server could not be reached.");
+  }
+}
 
     async function loadAdminRecipes() {
   const container = document.getElementById("adminRecipes");
 
-  container.innerHTML = "<div class='empty'>Tarifler yükleniyor...</div>";
+  container.innerHTML = `<div class='empty'>${at("loading")}</div>`;
 
   try {
-    const res = await fetch(`${API_BASE}/admin/pending-recipes`);
+    const res = await adminFetch(`${API_BASE}/admin/pending-recipes`);
     const data = await res.json();
 
     if (!data.success || !data.recipes || !data.recipes.length) {
-      container.innerHTML = "<div class='empty'>Şu anda bekleyen tarif yok.</div>";
+      container.innerHTML = `<div class='empty'>${at("empty")}</div>`;
       return;
     }
 
     adminRecipesCache = data.recipes;
 
     container.innerHTML = data.recipes.map(recipe => {
-      const isVideo = recipe.mediaType && recipe.mediaType.startsWith("video");
-
-      const mediaUrl = recipe.mediaUrl && recipe.mediaUrl.startsWith("http")
-        ? recipe.mediaUrl
-        : `${API_BASE}${recipe.mediaUrl || ""}`;
-
-      const mediaHtml = isVideo
-        ? `<video class="admin-card-media" controls src="${mediaUrl}"></video>`
-        : `<img class="admin-card-media" src="${mediaUrl}" alt="${recipe.title || ""}">`;
+      const mediaHtml = adminRecipeMediaGallery(recipe);
 
       return `
         <div class="admin-card">
@@ -287,28 +2667,29 @@ let adminRecipesCache = [];
             <h2>${recipe.title || "-"}</h2>
 
             <div class="admin-meta">
-              <strong>Gönderen:</strong> ${recipe.creatorUsername || "-"}<br>
+              <strong>${at("sender")}:</strong> ${recipe.creatorUsername || "-"}<br>
               <strong>Email:</strong> ${recipe.creatorEmail || "-"}<br>
-              <strong>Süre:</strong> ${recipe.prepTime || "-"}<br>
-              <strong>Porsiyon:</strong> ${recipe.servings || "-"}<br>
-              <strong>Durum:</strong> ${recipe.status || "-"}
+              <strong>${at("time")}:</strong> ${recipe.prepTime || "-"}<br>
+              <strong>${at("servings")}:</strong> ${recipe.servings || "-"}<br>
+              <strong>${at("status")}:</strong> ${recipe.status || "-"}<br>
+              <strong>${at("tags")}:</strong> ${recipe.tags || "-"}<br>
+              <strong>${at("seoTitle")}:</strong> ${recipe.seoTitle || "-"}
             </div>
 
             <div class="admin-section">
-              <h3>Malzemeler</h3>
+              <h3>${at("ingredients")}</h3>
               <p>${recipe.ingredients || "-"}</p>
             </div>
 
             <div class="admin-section">
-              <h3>Yapılış</h3>
+              <h3>${at("instructions")}</h3>
               <p>${recipe.instructions || "-"}</p>
             </div>
 
             <div class="admin-actions">
-              <button class="edit-btn" onclick="openEditRecipe('${recipe.id}')">Düzenle</button>
-              <button class="approve-btn" onclick="approveRecipe('${recipe.id}')">Yayınla</button>
-              <button class="reject-btn" onclick="rejectRecipe('${recipe.id}')">Reddet</button>
-              <button class="delete-btn" onclick="deleteRecipe('${recipe.id}')">Arşivle</button>
+              <button class="edit-btn" onclick="openEditRecipe('${recipe.id}')">${at("edit")}</button>
+              <button class="approve-btn" onclick="approveRecipe('${recipe.id}')">${at("approve")}</button>
+              <button class="reject-btn" onclick="rejectRecipe('${recipe.id}')">${at("reject")}</button>
             </div>
           </div>
         </div>
@@ -317,44 +2698,189 @@ let adminRecipesCache = [];
 
   } catch (err) {
     console.error("ADMIN LOAD ERROR:", err);
-    container.innerHTML = "<div class='empty'>Admin tarifleri yüklenemedi.</div>";
+    container.innerHTML = `<div class='empty'>${at("loadError")}</div>`;
   }
 }
-   async function approveRecipe(id) {
-  if (!confirm("Bu tarifi onaylamak istiyor musun?")) return;
+   async function approveRecipe(id, skipConfirm = false) {
+  const recipe = adminRecipesCache.find(item => item.id === id);
 
-  const res = await fetch(`${API_BASE}/admin/approve-recipe/${id}`, {
+  if (!skipConfirm && recipe && !recipe.mediaUrl) {
+    openEditRecipe(id);
+    alert(at("mediaRequired"));
+    return false;
+  }
+
+  if (!skipConfirm && !confirm(at("approveConfirm"))) return false;
+
+  const res = await adminFetch(`${API_BASE}/admin/approve-recipe/${id}`, {
     method: "POST"
   });
 
   const data = await res.json();
 
-  console.log("APPROVE RESPONSE:", data);
+  if (!res.ok || !data.success) {
+    alert(data.error || at("updateFailed"));
+    return false;
+  }
 
-  loadAdminRecipes();
+  await loadAdminRecipes();
+  await loadAdminDashboard();
+  return true;
 }
 
 async function rejectRecipe(id) {
-  if (!confirm("Bu tarifi reddetmek istiyor musun?")) return;
+  if (!confirm(at("rejectConfirm"))) return;
 
-  await fetch(`${API_BASE}/admin/reject-recipe/${id}`, {
+  await adminFetch(`${API_BASE}/admin/reject-recipe/${id}`, {
     method: "POST"
   });
 
-  loadAdminRecipes();
+  await loadAdminRecipes();
+  await loadAdminDashboard();
 }
 
-async function deleteRecipe(id) {
-  if (!confirm("Bu tarifi silmek istiyor musun?")) return;
+applyAdminLanguage();
+initializeAdmin();
 
-  await fetch(`${API_BASE}/admin/delete-recipe/${id}`, {
-    method: "POST"
-  });
-
-  loadAdminRecipes();
+async function downloadRecipeMasterExcel() {
+  try {
+    const response = await adminFetch(`${API_BASE}/admin/export-recipes`);
+    if (!response.ok) throw new Error("Export failed");
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    const disposition = response.headers.get("content-disposition") || "";
+    const fileNameMatch = disposition.match(/filename="?([^";]+)"?/i);
+    link.href = url;
+    link.download = fileNameMatch?.[1] || "nilis-kitchen-recipes.xlsx";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("ADMIN EXPORT ERROR:", error);
+    alert(currentLang === "tr" ? "Excel indirilemedi." : "Excel could not be downloaded.");
+  }
 }
 
-loadAdminRecipes();
+async function uploadRecipeImportPhotos(files, status) {
+  const photoFiles = Array.from(files || []).filter(file =>
+    String(file.type || "").startsWith("image/") ||
+    /\.(?:jpe?g|png|webp|avif)$/i.test(file.name || "")
+  );
+
+  if (!photoFiles.length) return { uploaded: 0, optimized: 0 };
+
+  const batchSize = 4;
+  let uploaded = 0;
+  let optimized = 0;
+
+  for (let start = 0; start < photoFiles.length; start += batchSize) {
+    const batch = photoFiles.slice(start, start + batchSize);
+    const photoForm = new FormData();
+    batch.forEach(file => photoForm.append("photoFiles", file, file.name));
+
+    status.textContent =
+      `${at("importPhotoUploading")}: ${Math.min(start + batch.length, photoFiles.length)}/${photoFiles.length}`;
+
+    const response = await adminFetch(`${API_BASE}/admin/import-images`, {
+      method: "POST",
+      body: photoForm
+    });
+    const responseText = await response.text();
+    let data = {};
+    try {
+      data = responseText ? JSON.parse(responseText) : {};
+    } catch (error) {
+      data = {};
+    }
+    if (!response.ok || !data.success) {
+      const batchNumber = Math.floor(start / batchSize) + 1;
+      throw new Error(
+        data.error ||
+        `${at("importPhotoUploading")} ${batchNumber} (HTTP ${response.status})`
+      );
+    }
+    uploaded += Number(data.uploaded || 0);
+    optimized += Number(data.optimized || 0);
+  }
+
+  return { uploaded, optimized };
+}
+
+async function importRecipesFromExcel() {
+  const fileInput =
+  document.getElementById("recipeImportFile");
+
+  const status =
+  document.getElementById("recipeImportStatus");
+
+  if (!fileInput.files || !fileInput.files[0]) {
+    status.style.display = "block";
+    status.textContent = at("importChooseFile");
+    return;
+  }
+
+  status.style.display = "block";
+  status.textContent = at("importUploading");
+
+  const photoFolderInput =
+  document.getElementById("recipeImportPhotoFolder");
+
+  const formData =
+  new FormData();
+
+  formData.append("recipesFile", fileInput.files[0]);
+  formData.append(
+    "sheetName",
+    document.getElementById("recipeImportSheet").value.trim()
+  );
+
+  try {
+    const photoResult =
+    await uploadRecipeImportPhotos(photoFolderInput?.files, status);
+
+    status.textContent = at("importUploading");
+
+    const res =
+    await adminFetch(`${API_BASE}/admin/import-recipes`, {
+      method: "POST",
+      body: formData
+    });
+
+    const data =
+    await res.json();
+
+    if (!data.success) {
+      status.textContent =
+      data.error || at("importFailed");
+      return;
+    }
+
+    const sheetDetails =
+    Array.isArray(data.processedSheets)
+      ? data.processedSheets
+          .map(item => `${item.sheet}: +${item.imported || 0}, güncel ${item.updated || 0}, onaylı güncel ${item.updatedApproved || 0}, tekrar ${item.duplicates || 0}`)
+          .join("\n")
+      : data.sheet || "-";
+
+    const ignored =
+    Array.isArray(data.ignoredSheets) && data.ignoredSheets.length
+      ? `\n${at("ignoredSheets")}: ${data.ignoredSheets.join(", ")}`
+      : "";
+
+    status.textContent =
+    `${at("importDone")}\n${at("importPhotoFolder")}: ${photoResult.uploaded}\n${at("sheet")}:\n${sheetDetails}\n${at("imported")}: ${data.imported || 0}\n${at("updatedCount")}: ${data.updated || 0}\n${at("updatedApproved")}: ${data.updatedApproved || 0}\n${at("skipped")}: ${data.skipped || 0}\n${at("duplicates")}: ${data.duplicates || 0}${ignored}`;
+
+    fileInput.value = "";
+    if (photoFolderInput) photoFolderInput.value = "";
+    await loadAdminRecipes();
+    await loadAdminDashboard();
+  } catch (err) {
+    console.error("ADMIN IMPORT ERROR:", err);
+    status.textContent = `${at("importFailed")}: ${err.message || "-"}`;
+  }
+}
 
 
     function openEditRecipe(id) {
@@ -364,7 +2890,7 @@ loadAdminRecipes();
   );
 
   if (!recipe) {
-    alert("Recipe bulunamadı.");
+    alert(at("notFound"));
     return;
   }
 
@@ -394,16 +2920,92 @@ loadAdminRecipes();
   document.getElementById("editServings").value =
   recipe.servings || "";
 
+  document.getElementById("editTags").value =
+  recipe.tags || "";
+
+  document.getElementById("editSeoTitle").value =
+  recipe.seoTitle || recipe.adminTitleTr || recipe.title || "";
+
+  document.getElementById("editSeoDescription").value =
+  recipe.seoDescription || "";
+
+  document.getElementById("editPublishEnabled").checked =
+  recipe.publishEnabled !== false;
+
   document.getElementById("editMedia").value = "";
+  renderEditMediaPreview(recipe);
 
   document.getElementById("editRecipeModal").style.display = "flex";
+}
+
+let editMediaPreviewUrl = "";
+
+function renderEditMediaPreview(recipe, file = null) {
+  const preview = document.getElementById("editMediaPreview");
+
+  if (editMediaPreviewUrl) {
+    URL.revokeObjectURL(editMediaPreviewUrl);
+    editMediaPreviewUrl = "";
+  }
+
+  if (file) {
+    editMediaPreviewUrl = URL.createObjectURL(file);
+    preview.innerHTML = file.type.startsWith("video/")
+      ? `<video controls src="${editMediaPreviewUrl}"></video>`
+      : `<img src="${editMediaPreviewUrl}" alt="${at("newMediaPreview")}">`;
+    return;
+  }
+  preview.innerHTML = adminRecipeMediaGallery(recipe);
+}
+
+function previewEditMedia() {
+  const id = document.getElementById("editRecipeId").value;
+  const recipe = adminRecipesCache.find(item => item.id === id);
+  const file = document.getElementById("editMedia").files?.[0] || null;
+  renderEditMediaPreview(recipe, file);
 }
 
 function closeEditRecipe() {
   document.getElementById("editRecipeModal").style.display = "none";
 }
 
-async function saveEditRecipe() {
+async function prepareAdminMedia(file) {
+  const maxUploadBytes = 850 * 1024;
+
+  if (!file || !String(file.type || "").startsWith("image/") || file.size <= maxUploadBytes) {
+    return file;
+  }
+
+  try {
+    const bitmap = await createImageBitmap(file);
+    const maxSide = 1280;
+    const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+    canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+    canvas.getContext("2d", { alpha: false }).drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    bitmap.close?.();
+
+    let blob = null;
+    for (const quality of [0.84, 0.74, 0.64, 0.54]) {
+      blob = await new Promise(resolve => canvas.toBlob(resolve, "image/jpeg", quality));
+      if (blob && blob.size <= maxUploadBytes) break;
+    }
+
+    if (!blob) return file;
+
+    const baseName = String(file.name || "recipe-photo").replace(/\.[^.]+$/, "");
+    return new File([blob], `${baseName}.jpg`, {
+      type: "image/jpeg",
+      lastModified: Date.now()
+    });
+  } catch (error) {
+    console.warn("ADMIN IMAGE PREPARE ERROR:", error);
+    return file;
+  }
+}
+
+async function saveEditRecipe(publishAfterSave = false) {
   const id =
   document.getElementById("editRecipeId").value;
 
@@ -450,78 +3052,216 @@ async function saveEditRecipe() {
     document.getElementById("editServings").value.trim()
   );
 
+  formData.append(
+    "tags",
+    document.getElementById("editTags").value.trim()
+  );
+
+  formData.append(
+    "seoTitle",
+    document.getElementById("editSeoTitle").value.trim()
+  );
+
+  formData.append(
+    "seoDescription",
+    document.getElementById("editSeoDescription").value.trim()
+  );
+
+  formData.append(
+    "publishEnabled",
+    document.getElementById("editPublishEnabled").checked ? "true" : "false"
+  );
+
   const mediaInput =
   document.getElementById("editMedia");
 
   if (mediaInput.files && mediaInput.files[0]) {
-    formData.append("media", mediaInput.files[0]);
+    const preparedMedia = await prepareAdminMedia(mediaInput.files[0]);
+    formData.append("media", preparedMedia, preparedMedia.name);
   }
 
-  const res =
-  await fetch(`${API_BASE}/admin/update-recipe/` + id, {
-    method: "POST",
-    body: formData
-  });
+  const actionButtons = [...document.querySelectorAll("#editRecipeModal .edit-actions button")];
+  actionButtons.forEach(button => button.disabled = true);
 
-  const data =
-  await res.json();
+  try {
+    const res = await adminFetch(`${API_BASE}/admin/update-recipe/` + id, {
+      method: "POST",
+      body: formData
+    });
+    const responseType = res.headers.get("content-type") || "";
+    const data = responseType.includes("application/json")
+      ? await res.json()
+      : { error: await res.text() };
 
-  if (!data.success) {
-    alert(data.error || "Güncelleme başarısız.");
-    return;
+    if (!res.ok || !data.success) {
+      const uploadError = res.status === 413
+        ? (currentLang === "tr"
+            ? "Fotoğraf sunucunun yükleme sınırını aşıyor. Lütfen daha küçük bir fotoğraf deneyin."
+            : "The photo exceeds the server upload limit. Please try a smaller photo.")
+        : data.error;
+      alert(uploadError || at("updateFailed"));
+      return;
+    }
+
+    if (publishAfterSave) {
+      if (!data.recipe?.mediaUrl) {
+        adminRecipesCache = adminRecipesCache.map(item => item.id === id ? data.recipe : item);
+        renderEditMediaPreview(data.recipe);
+        alert(at("mediaRequired"));
+        return;
+      }
+
+      const published = await approveRecipe(id, true);
+      if (!published) return;
+      closeEditRecipe();
+      return;
+    }
+
+    closeEditRecipe();
+    await loadAdminRecipes();
+    alert(at("updated"));
+  } catch (error) {
+    console.error("ADMIN UPDATE ERROR:", error);
+    alert(at("updateFailed"));
+  } finally {
+    actionButtons.forEach(button => button.disabled = false);
   }
+}
 
-  closeEditRecipe();
-  await loadAdminRecipes();
+async function sendAdminMail(event) {
+  event.preventDefault();
 
-  alert("Recipe güncellendi.");
+  const status = document.getElementById("adminMailStatus");
+  const button = document.getElementById("adminMailButton");
+  const payload = {
+    to: document.getElementById("adminMailTo").value.trim(),
+    subject: document.getElementById("adminMailSubject").value.trim(),
+    message: document.getElementById("adminMailMessage").value.trim()
+  };
+
+  status.textContent = "Mail gönderiliyor...";
+  button.disabled = true;
+
+  try {
+    const res = await adminFetch(`${API_BASE}/admin/send-mail`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+
+    if(!res.ok || !data.success) {
+      throw new Error(data.error || "Mail failed");
+    }
+
+    status.textContent = "Mail gönderildi.";
+    document.getElementById("adminMailSubject").value = "";
+    document.getElementById("adminMailMessage").value = "";
+  } catch (error) {
+    console.error("ADMIN MAIL ERROR:", error);
+    status.textContent = "Mail gönderilemedi.";
+  } finally {
+    button.disabled = false;
+  }
 }
   </script>
 
+<div id="approvedEditModal" class="approved-edit-modal" onclick="if(event.target===this) closeApprovedRecipeEditor()">
+  <form class="approved-edit-box" onsubmit="saveApprovedRecipeEditor(event)">
+    <h2>Onaylı tarifi güncelle</h2>
+    <div class="approved-edit-grid">
+      <input id="approvedEditId" type="hidden">
+      <label>ID No<input id="approvedEditDisplayId" type="text" readonly></label>
+      <label class="wide">Mevcut fotoğraf ve videolar<span id="approvedEditCurrentPhoto"></span></label>
+      <label>Creator adı<input id="approvedEditCreator" type="text"></label>
+      <label>Creator e-posta<input id="approvedEditCreatorEmail" type="email"></label>
+      <label>Yemek adı<input id="approvedEditTitle" type="text" required></label>
+      <label>Yemek tipi<input id="approvedEditType" type="text"></label>
+      <label>Ülke / Bölge / Mutfak<input id="approvedEditCuisine" type="text"></label>
+      <label>Kaç kişilik<input id="approvedEditServings" type="text"></label>
+      <label>Hazırlık süresi<input id="approvedEditPrep" type="text"></label>
+      <label>Pişirme süresi<input id="approvedEditCook" type="text"></label>
+      <label class="wide">Malzemeler ve ölçüler<textarea id="approvedEditIngredients" required></textarea></label>
+      <label class="wide">Tarif adımları<textarea id="approvedEditInstructions" required></textarea></label>
+      <label class="wide">Etiketler<input id="approvedEditTags" type="text"></label>
+      <label>SEO başlık<input id="approvedEditSeoTitle" type="text"></label>
+      <label>Yeni fotoğraf<input id="approvedEditMedia" type="file" accept="image/*"></label>
+      <label class="wide">SEO açıklama<textarea id="approvedEditSeoDescription"></textarea></label>
+      <label class="wide"><span><input id="approvedEditPublish" type="checkbox"> Tarif yayında olsun</span></label>
+    </div>
+    <div class="approved-edit-actions">
+      <button type="button" onclick="closeApprovedRecipeEditor()">Vazgeç</button>
+      <button id="approvedEditSave" class="primary" type="submit">Güncelle ve kaydet</button>
+    </div>
+  </form>
+</div>
+
 <div id="editRecipeModal" class="edit-modal">
   <div class="edit-modal-box">
-    <h2>Recipe Düzenle</h2>
+    <h2 data-i18n="editTitle">Recipe Düzenle</h2>
 
     <input type="hidden" id="editRecipeId">
 
-    <label>Tarif Adı</label>
+    <label data-i18n="recipeTitle">Tarif Adı</label>
     <input id="editTitle" type="text">
 
-    <label>Admin Türkçe Başlık</label>
+    <label data-i18n="adminTitleTr">Admin Türkçe Başlık</label>
     <input id="editAdminTitleTr" type="text">
 
-    <label>Malzemeler</label>
+    <label data-i18n="ingredients">Malzemeler</label>
     <textarea id="editIngredients"></textarea>
 
-    <label>Admin Türkçe Malzemeler</label>
+    <label data-i18n="adminIngredientsTr">Admin Türkçe Malzemeler</label>
     <textarea id="editAdminIngredientsTr"></textarea>
 
-    <label>Yapılış</label>
+    <label data-i18n="instructions">Yapılış</label>
     <textarea id="editInstructions"></textarea>
 
-    <label>Admin Türkçe Yapılış</label>
+    <label data-i18n="adminInstructionsTr">Admin Türkçe Yapılış</label>
     <textarea id="editAdminInstructionsTr"></textarea>
 
-    <label>Süre</label>
+    <label data-i18n="time">Süre</label>
     <input id="editPrepTime" type="text">
 
-    <label>Porsiyon</label>
+    <label data-i18n="servings">Porsiyon</label>
     <input id="editServings" type="text">
 
-    <label>Fotoğraf / Video değiştir</label>
-    <input id="editMedia" type="file" accept="image/*,video/*">
+    <label data-i18n="tags">Etiketler</label>
+    <input id="editTags" type="text" placeholder="karnıyarık, türk mutfağı, ana yemek">
+
+    <label data-i18n="seoTitle">SEO Başlık</label>
+    <input id="editSeoTitle" type="text">
+
+    <label data-i18n="seoDescription">SEO Açıklama</label>
+    <textarea id="editSeoDescription"></textarea>
+
+    <label class="edit-check-row">
+      <input id="editPublishEnabled" type="checkbox" checked>
+      <span data-i18n="publishEnabled">Yayına açık</span>
+    </label>
+
+    <label data-i18n="changeMedia">Fotoğraf / Video değiştir</label>
+    <div id="editMediaPreview" class="edit-media-preview"></div>
+    <input id="editMedia" type="file" accept="image/*,video/*" onchange="previewEditMedia()">
 
     <div class="edit-actions">
-      <button onclick="saveEditRecipe()" class="approve-btn">
-        Kaydet
+      <button type="button" onclick="saveEditRecipe(false)" class="approve-btn">
+        <span data-i18n="save">Kaydet</span>
       </button>
 
-      <button onclick="closeEditRecipe()" class="delete-btn">
-        Vazgeç
+      <button type="button" onclick="saveEditRecipe(true)" class="publish-now-btn">
+        <span data-i18n="publishNow">Kaydet ve yayınla</span>
+      </button>
+
+      <button type="button" onclick="closeEditRecipe()" class="delete-btn">
+        <span data-i18n="cancel">Vazgeç</span>
       </button>
     </div>
   </div>
 </div>
 
+<script>
+  applyAdminLanguage();
+</script>
 </body>
 </html>

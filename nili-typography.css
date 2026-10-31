@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Blinker:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap");
+
+:root {
+  --nili-font-brand: "Blinker", sans-serif;
+  --nili-font-heading: "Playfair Display", Georgia, serif;
+  --nili-font-body: "Manrope", sans-serif;
+}
+
+html body.nili-type-system,
+html body.nili-type-system button,
+html body.nili-type-system input,
+html body.nili-type-system select,
+html body.nili-type-system textarea,
+html body.nili-type-system label,
+html body.nili-type-system a,
+html body.nili-type-system p,
+html body.nili-type-system span,
+html body.nili-type-system li,
+html body.nili-type-system small,
+html body.nili-type-system strong,
+html body.nili-type-system table,
+html body.nili-type-system th,
+html body.nili-type-system td {
+  font-family: var(--nili-font-body) !important;
+}
+
+html body.nili-type-system h1,
+html body.nili-type-system h2,
+html body.nili-type-system h3,
+html body.nili-type-system h4,
+html body.nili-type-system h5,
+html body.nili-type-system h6,
+html body.nili-type-system .panel-title,
+html body.nili-type-system .section-title,
+html body.nili-type-system .card-title,
+html body.nili-type-system .modal-title,
+html body.nili-type-system .recipe-title,
+html body.nili-type-system .recipe-card-title,
+html body.nili-type-system .wc-mosaic-small > span {
+  font-family: var(--nili-font-heading) !important;
+}
+
+html body.nili-type-system .nk-title,
+html body.nili-type-system .brand strong {
+  font-family: var(--nili-font-brand) !important;
+}
+
+@media (max-width: 980px) {
+  html body.nili-type-system,
+  html body.nili-type-system button,
+  html body.nili-type-system input,
+  html body.nili-type-system select,
+  html body.nili-type-system textarea {
+    font-family: var(--nili-font-body) !important;
+  }
+
+  html body.nili-type-system h1,
+  html body.nili-type-system h2,
+  html body.nili-type-system h3,
+  html body.nili-type-system h4,
+  html body.nili-type-system h5,
+  html body.nili-type-system h6,
+  html body.nili-type-system .panel-title {
+    font-family: var(--nili-font-heading) !important;
+  }
+}

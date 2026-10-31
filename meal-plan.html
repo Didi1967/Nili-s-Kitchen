@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nili's Weekly Meal Plan</title>
+  <meta name="description" content="Create a personal weekly meal plan and an automatic shopping list with Nili.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/meal-plan.css?v=1">
+</head>
+<body>
+  <header class="plan-header">
+    <a class="plan-brand" id="planHomeLink" href="index.html">
+      <span class="plan-brand-logo"><img src="/logo.jpeg" alt="Nili's Kitchen"></span>
+      <span>
+        <strong>Nili's Kitchen</strong>
+        <small data-copy="brandSubtitle">Weekly meal planner</small>
+      </span>
+    </a>
+
+    <nav class="plan-header-actions" aria-label="Page controls">
+      <a class="plan-home-button" id="planHomeButton" href="index.html">
+        <span aria-hidden="true">←</span>
+        <span data-copy="home">Home kitchen</span>
+      </a>
+      <label class="plan-language">
+        <span class="sr-only" data-copy="language">Language</span>
+        <img id="planLanguageFlag" src="/flags/en.svg" alt="">
+        <select id="planLanguageSelect">
+          <option value="en">EN</option>
+          <option value="tr">TR</option>
+          <option value="de">DE</option>
+          <option value="fr">FR</option>
+          <option value="es">ES</option>
+          <option value="pt">PT</option>
+          <option value="ru">RU</option>
+          <option value="ar">AR</option>
+          <option value="ja">JA</option>
+          <option value="zh">ZH</option>
+        </select>
+      </label>
+    </nav>
+  </header>
+
+  <main>
+    <section class="plan-hero">
+      <div class="plan-hero-copy">
+        <span class="plan-eyebrow" data-copy="eyebrow">YOUR WEEK, BEAUTIFULLY PLANNED</span>
+        <h1 data-copy="heroTitle">Let Nili plan dinner.</h1>
+        <p data-copy="heroText">Personal dinners, less waste and one clear shopping list.</p>
+        <div class="plan-trust-row">
+          <span><b>01</b><small data-copy="trustOne">Nili recipes first</small></span>
+          <span><b>02</b><small data-copy="trustTwo">Your pantry deducted</small></span>
+          <span><b>03</b><small data-copy="trustThree">Ready in seconds</small></span>
+        </div>
+      </div>
+      <div class="plan-hero-art" aria-hidden="true">
+        <div class="plan-art-card plan-art-main">
+          <img src="/optimized-images/site/YEMEK-2.webp.webp" alt="">
+        </div>
+        <div class="plan-art-card plan-art-small">
+          <img src="/optimized-images/site/YEMEK-4.webp.webp" alt="">
+        </div>
+        <div class="plan-art-note">
+          <span>✦</span>
+          <strong data-copy="artNote">A calmer week starts here.</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="planner-shell" id="plannerShell">
+      <form id="mealPlanForm" class="planner-form">
+        <div class="planner-section-heading">
+          <span>01</span>
+          <div>
+            <small data-copy="formEyebrow">TELL NILI ABOUT YOUR WEEK</small>
+            <h2 data-copy="formTitle">Build your personal plan</h2>
+          </div>
+        </div>
+
+        <div class="planner-field-grid">
+          <fieldset class="planner-field">
+            <legend data-copy="days">How many days?</legend>
+            <div class="segmented" data-choice="days">
+              <button type="button" data-value="3">3</button>
+              <button type="button" class="is-active" data-value="5">5</button>
+              <button type="button" data-value="7">7</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="planner-field">
+            <legend data-copy="servings">How many people?</legend>
+            <div class="segmented" data-choice="servings">
+              <button type="button" data-value="1">1</button>
+              <button type="button" class="is-active" data-value="2">2</button>
+              <button type="button" data-value="4">4</button>
+              <button type="button" data-value="6">6</button>
+            </div>
+          </fieldset>
+
+          <label class="planner-field">
+            <span data-copy="budget">Weekly budget</span>
+            <select id="mealPlanBudget">
+              <option value="low" data-copy-option="budgetLow">Economical</option>
+              <option value="medium" selected data-copy-option="budgetMedium">Balanced</option>
+              <option value="flexible" data-copy-option="budgetFlexible">Flexible</option>
+            </select>
+          </label>
+
+          <label class="planner-field">
+            <span data-copy="diet">Eating preference</span>
+            <select id="mealPlanDiet">
+              <option value="standard" data-copy-option="dietStandard">No restriction</option>
+              <option value="vegetarian" data-copy-option="dietVegetarian">Vegetarian</option>
+              <option value="vegan" data-copy-option="dietVegan">Vegan</option>
+              <option value="halal" data-copy-option="dietHalal">Halal</option>
+              <option value="gluten_free" data-copy-option="dietGlutenFree">Gluten-free</option>
+            </select>
+          </label>
+
+          <label class="planner-field">
+            <span data-copy="time">Maximum cooking time</span>
+            <select id="mealPlanTime">
+              <option value="15">15 min</option>
+              <option value="30">30 min</option>
+              <option value="45" selected>45 min</option>
+              <option value="60">60 min</option>
+            </select>
+          </label>
+
+          <label class="planner-field">
+            <span data-copy="disliked">Ingredients you dislike</span>
+            <input id="mealPlanDisliked" type="text" data-copy-placeholder="dislikedPlaceholder" placeholder="e.g. mushrooms, cilantro">
+          </label>
+        </div>
+
+        <div class="pantry-box">
+          <div>
+            <span class="pantry-icon">⌂</span>
+            <div>
+              <strong data-copy="pantryTitle">Already in your kitchen</strong>
+              <small data-copy="pantryHint">These items will be removed from the shopping list.</small>
+            </div>
+          </div>
+          <div id="mealPlanPantry" class="pantry-items"></div>
+          <p id="mealPlanPantryEmpty" class="pantry-empty" data-copy="pantryEmpty">No ingredients selected on the home page yet.</p>
+        </div>
+
+        <p id="mealPlanStatus" class="planner-status" role="status"></p>
+        <button class="planner-submit" id="mealPlanSubmit" type="submit">
+          <span>✦</span>
+          <span>
+            <strong data-copy="submit">Create my meal plan</strong>
+            <small data-copy="submitHint">Nili will choose from approved recipes</small>
+          </span>
+          <b aria-hidden="true">→</b>
+        </button>
+      </form>
+
+      <aside class="planner-preview">
+        <small data-copy="previewEyebrow">WHAT YOU WILL GET</small>
+        <h2 data-copy="previewTitle">One decision. A calmer week.</h2>
+        <div class="preview-list">
+          <article>
+            <span>01</span>
+            <div><strong data-copy="previewOneTitle">Personal dinners</strong><p data-copy="previewOneText">A different approved recipe for each day.</p></div>
+          </article>
+          <article>
+            <span>02</span>
+            <div><strong data-copy="previewTwoTitle">Smart shopping</strong><p data-copy="previewTwoText">Only what is missing from your kitchen.</p></div>
+          </article>
+          <article>
+            <span>03</span>
+            <div><strong data-copy="previewThreeTitle">Less food waste</strong><p data-copy="previewThreeText">Use what you have before buying more.</p></div>
+          </article>
+        </div>
+        <blockquote data-copy="quote">“The best plan is the one you can actually cook.”</blockquote>
+      </aside>
+    </section>
+
+    <section id="mealPlanResults" class="plan-results" hidden>
+      <header class="results-heading">
+        <div>
+          <small data-copy="resultsEyebrow">YOUR NILI PLAN</small>
+          <h2 data-copy="resultsTitle">Dinner is decided.</h2>
+          <p id="mealPlanSummary"></p>
+        </div>
+        <div class="results-actions">
+          <button type="button" id="mealPlanRegenerate" data-copy="regenerate">Regenerate</button>
+          <button type="button" id="mealPlanPrint" data-copy="print">Print plan</button>
+        </div>
+      </header>
+
+      <div class="results-layout">
+        <div id="mealPlanDays" class="plan-days"></div>
+        <aside class="shopping-panel">
+          <div class="shopping-heading">
+            <span>02</span>
+            <div>
+              <small data-copy="shoppingEyebrow">AUTOMATIC LIST</small>
+              <h3 data-copy="shoppingTitle">Shopping list</h3>
+            </div>
+          </div>
+          <div class="shopping-progress"><span id="shoppingProgressBar"></span></div>
+          <p id="shoppingProgressText"></p>
+          <div id="shoppingList" class="shopping-list"></div>
+          <button type="button" id="shoppingCopy" class="shopping-copy" data-copy="copyList">Copy shopping list</button>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="plan-footer">
+    <span>Nili's Kitchen AI</span>
+    <p data-copy="footer">Plan less. Cook better. Waste less.</p>
+    <a id="footerHomeLink" href="index.html" data-copy="home">Home kitchen</a>
+  </footer>
+
+  <script src="/meal-plan.js?v=1" defer></script>
+</body>
+</html>

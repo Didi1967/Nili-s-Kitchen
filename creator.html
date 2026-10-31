@@ -1,722 +1,260 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R7WVN8WCPT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-R7WVN8WCPT');
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Share Your Recipe | Nili's Kitchen</title>
-
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
-
-    body{
-      min-height:100vh;
-      background:#f8f1e7;
-      font-family:Arial, sans-serif;
-      color:#182234;
-      padding:32px;
-    }
-
-    .creator-page{
-      max-width:820px;
-      margin:0 auto;
-      background:white;
-      border-radius:30px;
-      padding:34px;
-      box-shadow:0 28px 80px rgba(0,0,0,.12);
-      border:1px solid #eadfce;
-    }
-
-    .top{
-      display:flex;
-      justify-content:space-between;
-      gap:20px;
-      align-items:flex-start;
-      margin-bottom:28px;
-    }
-
-    .top h1{
-      font-size:36px;
-      line-height:1;
-      letter-spacing:-1.2px;
-      margin-bottom:10px;
-    }
-
-    .top p{
-      color:#6b7280;
-      font-size:15px;
-      line-height:1.5;
-      max-width:560px;
-    }
-
-    .back{
-      text-decoration:none;
-      background:#f3f4f6;
-      color:#374151;
-      padding:12px 16px;
-      border-radius:999px;
-      font-size:13px;
-      font-weight:900;
-      white-space:nowrap;
-    }
-
-    .creator-info{
-      background:#fffaf3;
-      border:1px solid #eadfce;
-      border-radius:20px;
-      padding:16px;
-      margin-bottom:22px;
-      color:#374151;
-      font-size:14px;
-      font-weight:800;
-    }
-
-    .creator-form{
-      display:grid;
-      gap:16px;
-    }
-
-    .creator-form label{
-      display:grid;
-      gap:8px;
-      font-size:13px;
-      font-weight:900;
-      color:#182234;
-    }
-
-    .creator-form input,
-    .creator-form textarea{
-      width:100%;
-      border:1px solid #eadfce;
-      border-radius:16px;
-      padding:14px;
-      font-size:14px;
-      outline:none;
-      font-family:inherit;
-      background:#fffaf3;
-      color:#182234;
-      font-weight:700;
-    }
-
-    .creator-form textarea{
-      min-height:120px;
-      resize:vertical;
-      line-height:1.5;
-    }
-
-    .row{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-
-    .creator-actions{
-      display:flex;
-      gap:12px;
-      margin-top:10px;
-    }
-
-    .creator-submit{
-      height:52px;
-      border:none;
-      border-radius:18px;
-      padding:0 24px;
-      background:linear-gradient(135deg,#ef6a1a,#d94d0a);
-      color:white;
-      font-size:15px;
-      font-weight:950;
-      cursor:pointer;
-    }
-
-    .creator-reset{
-      height:52px;
-      border:none;
-      border-radius:18px;
-      padding:0 22px;
-      background:#f3f4f6;
-      color:#374151;
-      font-size:15px;
-      font-weight:900;
-      cursor:pointer;
-    }
-
-    #creatorMessage{
-      margin-top:18px;
-      font-weight:900;
-    }
-
-    @media(max-width:700px){
-      body{
-        padding:18px;
-      }
-
-      .creator-page{
-        padding:22px;
-        border-radius:24px;
-      }
-
-      .top{
-        flex-direction:column;
-      }
-
-      .row{
-        grid-template-columns:1fr;
-      }
-
-      .top h1{
-        font-size:30px;
-      }
-    }
-  </style>
-  <link rel="stylesheet" href="/premium-pages.css?v=3">
-</head>
-
-<body class="content-page-body">
-
-  <div class="creator-page">
-
-  <div class="top">
-    <div>
-      <h1 data-i18n="shareTitle">Share your recipe</h1>
-
-      <p data-i18n="shareDesc">
-        Upload your own recipe with a food photo or video. After review,
-        approved recipes may appear in Nili’s Kitchen with your name.
-      </p>
-    </div>
-
-    <a class="back" href="/" data-i18n="backToApp">
-      Back to app
-    </a>
-  </div>
-
-  <div class="creator-info" id="creatorInfo">
-    Creator information loading...
-  </div>
-
-  <form class="creator-form" id="creatorForm">
-
-    <input type="hidden" name="creatorUsername" id="creatorUsernameHidden">
-    <input type="hidden" name="creatorEmail" id="creatorEmailHidden">
-
-    <label>
-      <span data-i18n="recipeTitle">Recipe title</span>
-      <input
-        name="title"
-        data-i18n-placeholder="recipeTitlePlaceholder"
-        placeholder="Example: Maria-style chicken rice"
-        required
-      >
-    </label>
-
-    <div class="row">
-      <label>
-        <span data-i18n="prepTime">Prep time</span>
-        <input
-          name="prepTime"
-          data-i18n-placeholder="prepTimePlaceholder"
-          placeholder="Example: 15 min"
-        >
-      </label>
-
-      <label>
-        <span data-i18n="servings">Servings</span>
-        <input
-          name="servings"
-          data-i18n-placeholder="servingsPlaceholder"
-          placeholder="Example: 4"
-        >
-      </label>
-    </div>
-
-    <label>
-      <span data-i18n="ingredients">Ingredients</span>
-      <textarea
-        name="ingredients"
-        data-i18n-placeholder="ingredientsPlaceholder"
-        placeholder="Write ingredients, one per line or separated by commas"
-        required
-      ></textarea>
-    </label>
-
-    <label>
-      <span data-i18n="instructions">Instructions</span>
-      <textarea
-        name="instructions"
-        data-i18n-placeholder="instructionsPlaceholder"
-        placeholder="Write how to prepare this recipe"
-        required
-      ></textarea>
-    </label>
-
-   <label>
-  <span data-i18n="uploadMedia">Upload food photo or video</span>
-
-  <label for="recipeMediaInput" class="custom-upload-btn" data-i18n="chooseFile">
-    Choose File
-  </label>
-
-  <span class="selected-file-name" data-i18n="noFileSelected">
-    No file selected
-  </span>
-
-  <input
-    id="recipeMediaInput"
-    name="media"
-    type="file"
-    accept="image/*,video/*"
-    required
-    hidden
-  >
-
-    </label>
-
-    <div class="creator-actions">
-      <button class="creator-submit" type="submit" data-i18n="submitReview">
-        Submit for Review
-      </button>
-
-      <button class="creator-reset" type="reset" data-i18n="clear">
-        Clear
-      </button>
-    </div>
-
-  </form>
-
-  <div id="creatorMessage"></div>
-
-</div>
+  <title>Recipe Creator | Nili's Kitchen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/creator-v3.css?v=1">
+  <link rel="stylesheet" href="/nili-typography.css?v=1">
+  <!-- Meta Pixel Code -->
   <script>
-    
-    const API_BASE = "https://api.niliskitchen.com";
-
-const urlLang =
-  new URLSearchParams(window.location.search).get("lang");
-
-let currentLang =
-  urlLang ||
-  localStorage.getItem("niliLang") ||
-  localStorage.getItem("lang") ||
-  "en";
-
-if(urlLang){
-  localStorage.setItem("niliLang", urlLang);
-  localStorage.setItem("lang", urlLang);
-}
-
-const creatorTranslations = {
-  en: {
-    shareTitle: "Share your recipe",
-    shareDesc: "Upload your own recipe with a food photo or video. After review, approved recipes may appear in Nili’s Kitchen with your name.",
-    backToApp: "Back to app",
-    loggedInAs: "Logged in as:",
-    creator: "Creator",
-    recipeTitle: "Recipe title",
-    recipeTitlePlaceholder: "Example: Maria-style chicken rice",
-    prepTime: "Prep time",
-    prepTimePlaceholder: "Example: 15 min",
-    servings: "Servings",
-    servingsPlaceholder: "Example: 4",
-    ingredients: "Ingredients",
-    ingredientsPlaceholder: "Write ingredients, one per line or separated by commas",
-    instructions: "Instructions",
-    instructionsPlaceholder: "Write how to prepare this recipe",
-    uploadMedia: "Upload food photo or video",
-    submitReview: "Submit for Review",
-    clear: "Clear",
-    submitting: "Submitting recipe for review...",
-    submitted: "Recipe submitted for review. Thank you!",
-    submitFailed: "Submit failed.",
-    chooseFile: "Choose File",
-    noFileSelected: "No file selected",
-  },
-
-  tr: {
-    shareTitle: "Tarifini paylaş",
-    shareDesc: "Kendi tarifini yemek fotoğrafı veya videosu ile yükle. İncelemeden sonra onaylanan tarifler adınla Nili’s Kitchen’da yayınlanabilir.",
-    backToApp: "Uygulamaya dön",
-    loggedInAs: "Giriş yapan:",
-    creator: "Oluşturucu",
-    recipeTitle: "Tarif başlığı",
-    recipeTitlePlaceholder: "Örnek: Maria usulü tavuklu pilav",
-    prepTime: "Hazırlık süresi",
-    prepTimePlaceholder: "Örnek: 15 dk",
-    servings: "Porsiyon",
-    servingsPlaceholder: "Örnek: 4",
-    ingredients: "Malzemeler",
-    ingredientsPlaceholder: "Malzemeleri her satıra bir tane veya virgülle yaz",
-    instructions: "Hazırlanışı",
-    instructionsPlaceholder: "Bu tarifin nasıl hazırlanacağını yaz",
-    uploadMedia: "Yemek fotoğrafı veya video yükle",
-    submitReview: "İncelemeye gönder",
-    clear: "Temizle",
-    submitting: "Tarif inceleme için gönderiliyor...",
-    submitted: "Tarif incelemeye gönderildi. Teşekkürler!",
-    submitFailed: "Gönderim başarısız.",
-    chooseFile: "Dosya Seç",
-    noFileSelected: "Dosya seçilmedi",
-  },
-
-  ru: {
-    shareTitle: "Поделитесь рецептом",
-    shareDesc: "Загрузите свой рецепт с фото или видео блюда. После проверки одобренные рецепты могут появиться в Nili’s Kitchen с вашим именем.",
-    backToApp: "Вернуться в приложение",
-    loggedInAs: "Вы вошли как:",
-    creator: "Автор",
-    recipeTitle: "Название рецепта",
-    recipeTitlePlaceholder: "Например: курица с рисом по-марийски",
-    prepTime: "Время подготовки",
-    prepTimePlaceholder: "Например: 15 мин",
-    servings: "Порции",
-    servingsPlaceholder: "Например: 4",
-    ingredients: "Ингредиенты",
-    ingredientsPlaceholder: "Напишите ингредиенты по строкам или через запятую",
-    instructions: "Инструкции",
-    instructionsPlaceholder: "Опишите, как приготовить этот рецепт",
-    uploadMedia: "Загрузите фото или видео блюда",
-    submitReview: "Отправить на проверку",
-    clear: "Очистить",
-    submitting: "Рецепт отправляется на проверку...",
-    submitted: "Рецепт отправлен на проверку. Спасибо!",
-    submitFailed: "Не удалось отправить.",
-    chooseFile: "Выбрать файл",
-    noFileSelected: "Файл не выбран",
-
-  },
-
-  ar: {
-    shareTitle: "شارك وصفتك",
-    shareDesc: "ارفع وصفتك الخاصة مع صورة أو فيديو للطعام. بعد المراجعة، قد تظهر الوصفات المعتمدة في Nili’s Kitchen باسمك.",
-    backToApp: "العودة إلى التطبيق",
-    loggedInAs: "تم تسجيل الدخول باسم:",
-    creator: "المبدع",
-    recipeTitle: "عنوان الوصفة",
-    recipeTitlePlaceholder: "مثال: أرز بالدجاج على طريقة ماريا",
-    prepTime: "وقت التحضير",
-    prepTimePlaceholder: "مثال: 15 دقيقة",
-    servings: "عدد الحصص",
-    servingsPlaceholder: "مثال: 4",
-    ingredients: "المكونات",
-    ingredientsPlaceholder: "اكتب المكونات في أسطر منفصلة أو مفصولة بفواصل",
-    instructions: "طريقة التحضير",
-    instructionsPlaceholder: "اكتب كيفية تحضير هذه الوصفة",
-    uploadMedia: "ارفع صورة أو فيديو للطعام",
-    submitReview: "إرسال للمراجعة",
-    clear: "مسح",
-    submitting: "يتم إرسال الوصفة للمراجعة...",
-    submitted: "تم إرسال الوصفة للمراجعة. شكراً لك!",
-    submitFailed: "فشل الإرسال.",
-    chooseFile: "اختر ملف",
-    noFileSelected: "لم يتم اختيار ملف",
-  },
-
-  es: {
-    shareTitle: "Comparte tu receta",
-    shareDesc: "Sube tu propia receta con una foto o video del plato. Después de la revisión, las recetas aprobadas pueden aparecer en Nili’s Kitchen con tu nombre.",
-    backToApp: "Volver a la app",
-    loggedInAs: "Sesión iniciada como:",
-    creator: "Creador",
-    recipeTitle: "Título de la receta",
-    recipeTitlePlaceholder: "Ejemplo: arroz con pollo estilo María",
-    prepTime: "Tiempo de preparación",
-    prepTimePlaceholder: "Ejemplo: 15 min",
-    servings: "Porciones",
-    servingsPlaceholder: "Ejemplo: 4",
-    ingredients: "Ingredientes",
-    ingredientsPlaceholder: "Escribe los ingredientes, uno por línea o separados por comas",
-    instructions: "Instrucciones",
-    instructionsPlaceholder: "Escribe cómo preparar esta receta",
-    uploadMedia: "Sube una foto o video del plato",
-    submitReview: "Enviar a revisión",
-    clear: "Limpiar",
-    submitting: "Enviando receta para revisión...",
-    submitted: "Receta enviada para revisión. ¡Gracias!",
-    submitFailed: "Error al enviar.",
-    chooseFile: "Seleccionar archivo",
-    noFileSelected: "Ningún archivo seleccionado",
-  },
-
-  fr: {
-    shareTitle: "Partagez votre recette",
-    shareDesc: "Téléchargez votre propre recette avec une photo ou une vidéo du plat. Après vérification, les recettes approuvées peuvent apparaître dans Nili’s Kitchen avec votre nom.",
-    backToApp: "Retour à l’application",
-    loggedInAs: "Connecté en tant que :",
-    creator: "Créateur",
-    recipeTitle: "Titre de la recette",
-    recipeTitlePlaceholder: "Exemple : riz au poulet façon Maria",
-    prepTime: "Temps de préparation",
-    prepTimePlaceholder: "Exemple : 15 min",
-    servings: "Portions",
-    servingsPlaceholder: "Exemple : 4",
-    ingredients: "Ingrédients",
-    ingredientsPlaceholder: "Écrivez les ingrédients, un par ligne ou séparés par des virgules",
-    instructions: "Instructions",
-    instructionsPlaceholder: "Expliquez comment préparer cette recette",
-    uploadMedia: "Télécharger une photo ou vidéo du plat",
-    submitReview: "Envoyer pour vérification",
-    clear: "Effacer",
-    submitting: "Envoi de la recette pour vérification...",
-    submitted: "Recette envoyée pour vérification. Merci !",
-    submitFailed: "Échec de l’envoi.",
-    chooseFile: "Choisir un fichier",
-    noFileSelected: "Aucun fichier sélectionné",
-  },
-
-  pt: {
-    shareTitle: "Compartilhe sua receita",
-    shareDesc: "Envie sua própria receita com uma foto ou vídeo do prato. Após a revisão, receitas aprovadas podem aparecer no Nili’s Kitchen com seu nome.",
-    backToApp: "Voltar ao app",
-    loggedInAs: "Conectado como:",
-    creator: "Criador",
-    recipeTitle: "Título da receita",
-    recipeTitlePlaceholder: "Exemplo: arroz com frango à moda Maria",
-    prepTime: "Tempo de preparo",
-    prepTimePlaceholder: "Exemplo: 15 min",
-    servings: "Porções",
-    servingsPlaceholder: "Exemplo: 4",
-    ingredients: "Ingredientes",
-    ingredientsPlaceholder: "Escreva os ingredientes, um por linha ou separados por vírgulas",
-    instructions: "Instruções",
-    instructionsPlaceholder: "Escreva como preparar esta receita",
-    uploadMedia: "Enviar foto ou vídeo do prato",
-    submitReview: "Enviar para revisão",
-    clear: "Limpar",
-    submitting: "Enviando receita para revisão...",
-    submitted: "Receita enviada para revisão. Obrigado!",
-    submitFailed: "Falha ao enviar.",
-    chooseFile: "Selecionar arquivo",
-    noFileSelected: "Nenhum arquivo selecionado",
-  },
-  de: {
-shareTitle: "Teilen Sie Ihr Rezept",
-shareDesc: "Laden Sie Ihr eigenes Rezept mit einem Foto oder Video des Gerichts hoch. Nach der Überprüfung können genehmigte Rezepte mit Ihrem Namen in Nili's Kitchen erscheinen.",
-backToApp: "Zurück zur App",
-loggedInAs: "Angemeldet als:",
-creator: "Creator",
-recipeTitle: "Rezepttitel",
-recipeTitlePlaceholder: "Beispiel: Hähnchenreis nach Maria-Art",
-prepTime: "Zubereitungszeit",
-prepTimePlaceholder: "Beispiel: 15 Min",
-servings: "Portionen",
-servingsPlaceholder: "Beispiel: 4",
-ingredients: "Zutaten",
-ingredientsPlaceholder: "Zutaten eingeben, eine pro Zeile oder durch Kommas getrennt",
-instructions: "Anleitung",
-instructionsPlaceholder: "Beschreiben Sie die Zubereitung dieses Rezepts",
-uploadMedia: "Foto oder Video des Gerichts hochladen",
-submitReview: "Zur Prüfung einreichen",
-clear: "Leeren",
-submitting: "Rezept wird zur Prüfung eingereicht...",
-submitted: "Rezept wurde zur Prüfung eingereicht. Vielen Dank!",
-submitFailed: "Einreichen fehlgeschlagen.",
-chooseFile: "Datei auswählen",
-noFileSelected: "Keine Datei ausgewählt"
-},
-ja: {
-shareTitle: "レシピを共有",
-shareDesc: "料理の写真または動画付きでオリジナルレシピを投稿してください。審査後、承認されたレシピはあなたの名前とともに Nili's Kitchen に掲載される場合があります。",
-backToApp: "アプリに戻る",
-loggedInAs: "ログイン中:",
-creator: "クリエイター",
-recipeTitle: "レシピ名",
-recipeTitlePlaceholder: "例: マリア風チキンライス",
-prepTime: "調理時間",
-prepTimePlaceholder: "例: 15分",
-servings: "人数",
-servingsPlaceholder: "例: 4人分",
-ingredients: "材料",
-ingredientsPlaceholder: "材料を1行ずつ、またはカンマ区切りで入力",
-instructions: "作り方",
-instructionsPlaceholder: "このレシピの作り方を書いてください",
-uploadMedia: "料理の写真または動画をアップロード",
-submitReview: "審査に提出",
-clear: "クリア",
-submitting: "レシピを審査に提出中...",
-submitted: "レシピを審査に提出しました。ありがとうございます！",
-submitFailed: "送信に失敗しました。",
-chooseFile: "ファイルを選択",
-noFileSelected: "ファイルが選択されていません"
-},
-zh: {
-shareTitle: "分享您的食谱",
-shareDesc: "上传您自己的食谱，并附上美食照片或视频。审核通过后，您的食谱可能会以您的名字出现在 Nili's Kitchen 中。",
-backToApp: "返回应用",
-loggedInAs: "当前登录:",
-creator: "创作者",
-recipeTitle: "食谱标题",
-recipeTitlePlaceholder: "例如：玛丽亚风味鸡肉饭",
-prepTime: "准备时间",
-prepTimePlaceholder: "例如：15分钟",
-servings: "份数",
-servingsPlaceholder: "例如：4份",
-ingredients: "食材",
-ingredientsPlaceholder: "输入食材，每行一个或用逗号分隔",
-instructions: "制作步骤",
-instructionsPlaceholder: "请描述如何制作这道菜",
-uploadMedia: "上传美食照片或视频",
-submitReview: "提交审核",
-clear: "清空",
-submitting: "正在提交食谱审核...",
-submitted: "食谱已提交审核，谢谢！",
-submitFailed: "提交失败。",
-chooseFile: "选择文件",
-noFileSelected: "未选择文件"
-},
-
-};
-
-function ct(key){
-  return creatorTranslations[currentLang]?.[key] ||
-         creatorTranslations.en?.[key] ||
-         key;
-}
-
-function applyCreatorLanguage(){
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.dataset.i18n;
-    el.textContent = ct(key);
-  });
-
-  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
-    const key = el.dataset.i18nPlaceholder;
-    el.placeholder = ct(key);
-  });
-}
-
-function setText(id, text){
-  const el = document.getElementById(id);
-  if(el) el.textContent = text;
-}
-
-function setPlaceholder(id, text){
-  const el = document.getElementById(id);
-  if(el) el.placeholder = text;
-}
-
-    const creatorForm =
-    document.getElementById("creatorForm");
-
-    const creatorMessage =
-    document.getElementById("creatorMessage");
-
-    const creatorInfo =
-    document.getElementById("creatorInfo");
-
-    const username =
-    localStorage.getItem("creatorUsername") || "";
-
-    const emailOrUser =
-    localStorage.getItem("creatorEmailOrUser") || "";
-
-    const mode =
-    localStorage.getItem("creatorMode") || "signup";
-
-    document.getElementById("creatorUsernameHidden").value =
-    username;
-
-    document.getElementById("creatorEmailHidden").value =
-    emailOrUser;
-
-    creatorInfo.textContent =
-  mode === "login"
-    ? ct("loggedInAs") + " " + emailOrUser
-    : ct("creator") + ": " + username + " • " + emailOrUser;
-
-
-    applyCreatorLanguage();  
-
-    const recipeMediaInput =
-  document.getElementById("recipeMediaInput");
-
-const selectedFileName =
-  document.getElementById("selectedFileName");
-
-if(recipeMediaInput && selectedFileName){
-
-  recipeMediaInput.addEventListener("change", () => {
-
-    if(recipeMediaInput.files.length){
-      selectedFileName.textContent =
-        recipeMediaInput.files[0].name;
-    }else{
-      selectedFileName.textContent =
-        ct("noFileSelected");
-    }
-
-  });
-
-}
-
-    creatorForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      creatorMessage.textContent = ct("submitting");
-      creatorMessage.style.color = "#6b7280";
-
-      const formData =
-      new FormData(creatorForm);
-
-      try{
-
-  const res = await fetch(`${API_BASE}/submit-recipe`, {
-  method: "POST",
-  body: formData
-});
-
-const raw = await res.text();
-
-let data = {};
-try {
-  data = JSON.parse(raw);
-} catch (e) {
-  console.log("SUBMIT RAW RESPONSE:", raw);
-  throw new Error("Server JSON dönmedi. Status: " + res.status);
-}
-
-if (!res.ok) {
-  creatorMessage.textContent =
-    data.error || "Submit failed.";
-
-  creatorMessage.style.color =
-    "#c2410c";
-
-  return;
-}
-
-        creatorMessage.textContent =
-        ct("submitted")
-
-        creatorMessage.style.color =
-        "#315c45";
-
-        creatorForm.reset();
-
-      }catch(err){
-
-        creatorMessage.textContent =
-        ct("submitFailed")
-
-        creatorMessage.style.color =
-        "#c2410c";
-
-      }
-
-    });
-
- 
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1648900139544436');
+  fbq('track','PageView');
   </script>
+  <!-- End Meta Pixel Code -->
+</head>
+<body class="nili-type-system">
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1648900139544436&amp;ev=PageView&amp;noscript=1"
+  alt=""></noscript>
+  <main class="creator-shell">
+    <aside class="creator-sidebar" data-i18n-aria-label="sidebarAria" aria-label="Creator adımları">
+      <a class="brand" id="creatorHomeLink" href="/?lang=tr" data-i18n-aria-label="homeAria" aria-label="Nili's Kitchen ana sayfa">
+        <span class="brand-mark">
+          <img src="/logo.jpeg" alt="Nili's Kitchen">
+        </span>
+        <span>
+          <strong>Nili's Kitchen</strong>
+          <small data-i18n="brandSubtitle">Recipe Creator</small>
+        </span>
+      </a>
 
+      <nav class="step-nav">
+        <a href="#basic" class="step-link active" data-i18n="stepBasic">1. Temel Bilgiler</a>
+        <a href="#ingredients" class="step-link" data-i18n="stepIngredients">2. Malzemeler</a>
+        <a href="#steps" class="step-link" data-i18n="stepSteps">3. Tarif Adımları</a>
+        <a href="#media" class="step-link" data-i18n="stepMedia">4. Fotoğraf / Video</a>
+        <a href="#preview" class="step-link" data-i18n="stepPreview">5. Önizleme</a>
+      </nav>
+
+      <section class="smart-card">
+        <strong data-i18n="smartCardTitle">Akıllı giriş</strong>
+        <p data-i18n="smartCardText">Malzeme adında 2-3 harf yazınca öneri gelir. Ölçüler hazır listeden seçilir.</p>
+      </section>
+    </aside>
+
+    <section class="creator-main">
+      <header class="hero-card">
+        <div>
+          <span class="eyebrow" data-i18n="heroEyebrow">Kullanıcı tarif gönderme ekranı</span>
+          <h1 data-i18n="heroTitle">Tarifi kolay ekle, sistemi düzenli tut.</h1>
+          <p data-i18n="heroText">Kullanıcı az yazar; form malzeme, ölçü, süre ve medya alanlarını standartlaştırır.</p>
+        </div>
+        <div class="hero-pills" data-i18n-aria-label="uploadLimitsAria" aria-label="Yükleme limitleri">
+          <span data-i18n="pillPhoto">1+ foto</span>
+          <span>5 MB</span>
+          <span>100 MB</span>
+        </div>
+      </header>
+
+      <div class="creator-info" id="creatorInfo" data-i18n="creatorLoading">Creator bilgisi yükleniyor...</div>
+
+      <form id="recipeCreatorForm" class="creator-form">
+        <input type="hidden" name="creatorUsername" id="creatorUsernameHidden">
+        <input type="hidden" name="creatorEmail" id="creatorEmailHidden">
+
+        <section id="smart-fill" class="form-section smart-fill-section">
+          <div class="section-head">
+            <span>AI</span>
+            <div>
+              <h2 data-i18n="smartFillTitle">Tarifi hızlı doldur</h2>
+              <p data-i18n="smartFillText">Hazır tarif sayfasının fotoğrafını yükle, sesle anlat veya metin yapıştır. Nili formu senin için doldursun.</p>
+            </div>
+          </div>
+
+          <div class="smart-fill-grid">
+            <label class="smart-source-card">
+              <input id="recipePhotoSource" type="file" accept="image/*">
+              <strong data-i18n="photoSourceTitle">Tarif fotoğrafı</strong>
+              <small data-i18n="photoSourceText">Defter, kitap, ekran görüntüsü veya hazır tarif sayfası.</small>
+            </label>
+
+            <div class="smart-source-card smart-voice-card">
+              <strong data-i18n="voiceTitle">Sesli anlat</strong>
+              <small data-i18n="voiceText">Mikrofona bas, tarifi doğal şekilde anlat.</small>
+              <button id="voiceFillBtn" type="button" data-i18n="voiceStart">🎙 Başlat</button>
+            </div>
+
+            <label class="smart-text-card">
+              <span data-i18n="quickTextLabel">Metin veya ses dökümü</span>
+              <textarea id="quickRecipeText" rows="6" data-i18n-placeholder="quickTextPlaceholder" placeholder="Örn: Karnıyarık. 4 patlıcan, 300 gram kıyma... Önce patlıcanları kızart..."></textarea>
+            </label>
+          </div>
+
+          <div class="action-row smart-actions">
+            <button id="smartFillBtn" class="submit-btn" type="button" data-i18n="smartFillButton">Formu otomatik doldur</button>
+            <button id="clearSmartBtn" class="soft-btn" type="button" data-i18n="clearSmart">Bu alanı temizle</button>
+            <span id="smartFillStatus" class="smart-fill-status"></span>
+          </div>
+        </section>
+
+        <section id="basic" class="form-section">
+          <div class="section-head">
+            <span>01</span>
+            <div>
+              <h2 data-i18n="basicTitle">Temel Bilgiler</h2>
+              <p data-i18n="basicText">Yemeğin adı, mutfağı, türü, porsiyon ve süre bilgileri.</p>
+            </div>
+          </div>
+
+          <div class="field-grid">
+            <label class="field field-wide">
+              <span data-i18n="titleLabel">Tarif adı *</span>
+              <input id="title" name="title" type="text" data-i18n-placeholder="titlePlaceholder" placeholder="Örn: Karnıyarık" required>
+            </label>
+            <label class="field">
+              <span data-i18n="typeLabel">Yemek türü</span>
+              <select id="type" name="type"></select>
+            </label>
+            <label class="field">
+              <span data-i18n="cuisineLabel">Mutfak</span>
+              <select id="cuisine" name="cuisine"></select>
+            </label>
+            <label class="field">
+              <span data-i18n="servingsLabel">Kaç kişilik?</span>
+              <input id="servings" name="servings" type="number" min="1" value="4">
+            </label>
+            <label class="field">
+              <span data-i18n="prepLabel">Hazırlık süresi</span>
+              <input id="prepTime" type="number" min="0" value="15">
+            </label>
+            <label class="field">
+              <span data-i18n="cookLabel">Pişirme süresi</span>
+              <input id="cookTime" type="number" min="0" value="30">
+            </label>
+            <label class="field">
+              <span data-i18n="totalLabel">Toplam süre</span>
+              <input id="totalTime" name="prepTime" type="text" value="45 dk" readonly>
+            </label>
+            <label class="field field-wide">
+              <span data-i18n="descriptionLabel">Kısa açıklama</span>
+              <textarea id="description" rows="3" data-i18n-placeholder="descriptionPlaceholder" placeholder="Tarifi kısaca anlatın."></textarea>
+            </label>
+          </div>
+        </section>
+
+        <section id="ingredients" class="form-section">
+          <div class="section-head">
+            <span>02</span>
+            <div>
+              <h2 data-i18n="ingredientsTitle">Malzemeler</h2>
+              <p data-i18n="ingredientsText">Malzeme adında 2-3 harf yazınca öneri gelir. Ölçü birimleri hazır listeden seçilir.</p>
+            </div>
+          </div>
+
+          <div class="ingredient-entry">
+            <label class="field ingredient-name-wrap">
+              <span data-i18n="ingredientNameLabel">Malzeme *</span>
+              <input id="ingredientName" type="text" autocomplete="off" data-i18n-placeholder="ingredientPlaceholder" placeholder="pat">
+              <div id="ingredientSuggestions" class="suggestions" hidden></div>
+            </label>
+            <label class="field">
+              <span data-i18n="amountLabel">Miktar *</span>
+              <input id="ingredientAmount" type="text" data-i18n-placeholder="amountPlaceholder" placeholder="4">
+            </label>
+            <label class="field">
+              <span data-i18n="unitLabel">Ölçü *</span>
+              <select id="ingredientUnit"></select>
+            </label>
+            <button id="addIngredientBtn" class="add-btn" type="button" data-i18n="addIngredient">+ Ekle</button>
+          </div>
+
+          <div id="quickUnits" class="unit-chips" data-i18n-aria-label="quickUnitAria" aria-label="Hızlı ölçü seçimi"></div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-i18n="tableIngredient">Malzeme</th>
+                  <th data-i18n="tableAmount">Miktar</th>
+                  <th data-i18n="tableUnit">Ölçü</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="ingredientsTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="steps" class="form-section">
+          <div class="section-head">
+            <span>03</span>
+            <div>
+              <h2 data-i18n="stepsTitle">Tarif Adımları</h2>
+              <p data-i18n="stepsText">Her adımı ayrı yaz. Kart ve admin ekranı daha okunur olur.</p>
+            </div>
+          </div>
+          <div id="stepsList" class="steps-list"></div>
+          <button id="addStepBtn" class="ghost-btn" type="button" data-i18n="addStep">+ Tarif adımı ekle</button>
+        </section>
+
+        <section id="media" class="form-section">
+          <div class="section-head">
+            <span>04</span>
+            <div>
+              <h2 data-i18n="mediaTitle">Fotoğraf / Video</h2>
+              <p data-i18n="mediaText">En az bir yemek fotoğrafı yükle. Görseller küçük önizleme olarak görünür ve silinebilir.</p>
+            </div>
+          </div>
+
+          <div class="upload-grid">
+            <label class="upload-card">
+              <input id="photos" type="file" accept="image/*" multiple>
+              <span data-i18n="choosePhoto">Fotoğraf seç</span>
+              <small data-i18n="photoLimit">En fazla 5 fotoğraf, her biri 5 MB</small>
+            </label>
+            <label class="upload-card">
+              <input id="video" type="file" accept="video/*" multiple>
+              <span data-i18n="chooseVideo">Videoları seç</span>
+              <small data-i18n="videoLimit">En fazla 3 video, her biri 100 MB</small>
+            </label>
+          </div>
+          <div id="mediaStatus" class="media-status" data-i18n="mediaWaiting">Fotoğraf bekleniyor. Video yok.</div>
+          <div id="imagePreviewGrid" class="image-preview-grid"></div>
+        </section>
+
+        <section id="preview" class="form-section">
+          <div class="section-head">
+            <span>05</span>
+            <div>
+              <h2 data-i18n="previewTitle">Önizleme ve Gönderim</h2>
+              <p data-i18n="previewText">Göndermeden önce tarif kartını kontrol et.</p>
+            </div>
+          </div>
+          <div class="action-row">
+            <button id="previewBtn" class="ghost-btn" type="button" data-i18n="previewButton">Önizleme oluştur</button>
+            <button class="submit-btn" type="submit" data-i18n="submitButton">İncelemeye gönder</button>
+            <button id="clearFormBtn" class="soft-btn" type="button" data-i18n="clearButton">Temizle</button>
+          </div>
+          <div id="formMessage" class="form-message" role="status"></div>
+          <div id="previewBox" class="preview-box" hidden></div>
+        </section>
+      </form>
+    </section>
+  </main>
+
+  <script src="/i18n-extra.js?v=1"></script>
+  <script src="/creator.js?v=4"></script>
 </body>
 </html>

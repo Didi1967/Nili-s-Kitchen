@@ -1,3 +1,27 @@
 .env
 node_modules
 uploads/
+recipe-import-images/
+creator-uploads/
+.chrome-*/
+.chrome-poster-profile/
+.chrome-test-profile/
+.codex-remote-attachments/
+*.zip
+*.tar.gz
+Videolar/
+Nili's Kitchen Foto/
+__pycache__/
+*.xlsx
+*.log
+*.bak
+*.tmp
+*.before-*
+tmp/
+output/
+outputs/
+data-backups/
+image-optimization-backups/
+optimized-images/
+recipe-card-approved-*/
+recipe-posters/

@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Nili's Kitchen - E-Tarif Kitabını Oluştur</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Kalam:wght@400;700&family=Lilita+One&family=Lobster&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/ebook-builder.css?v=7">
+  <link rel="stylesheet" href="/ebook-interior-v2.css?v=15">
+</head>
+<body>
+  <aside class="book-header">
+    <a class="book-brand" href="/index.html">
+      <span class="book-logo"><img src="/logo.jpeg" alt="Nili's Kitchen"></span>
+      <span><strong>Nili's Kitchen</strong><small>Kişisel E-Tarif Kitabı</small></span>
+    </a>
+    <div class="sidebar-scroll">
+      <section class="sidebar-section">
+        <h2><span>01</span> Kitabını oluştur</h2>
+        <label class="field"><span>Kitabın adı</span><input id="bookTitle" value="Benim Tarif Kitabım" maxlength="70"></label>
+        <label class="field"><span>Kapakta yazacak isim</span><input id="recipientName" value="Emilie" maxlength="40" placeholder="Örn. Emilie"></label>
+        <label class="field"><span>Kişisel kapak mesajı</span><input id="bookMessage" value="Nili's Kitchen'dan sevgiyle" maxlength="90"></label>
+        <div class="side-field-pair">
+          <label class="field"><span>Kitap dili</span><select id="bookLanguage"><option value="tr">Türkçe</option><option value="en">English</option><option value="de">Deutsch</option><option value="fr">Français</option><option value="es">Español</option><option value="pt">Português</option><option value="ru">Русский</option><option value="ar">العربية</option><option value="ja">日本語</option><option value="zh">中文</option></select></label>
+          <label class="field"><span>Tarif sayısı</span><select id="bookSize"><option>10</option><option>20</option><option>30</option><option selected>50</option><option>75</option><option>100</option><option>200</option><option>300</option><option>400</option><option>500</option><option>1000</option><option value="full">Tümü</option></select></label>
+        </div>
+        <label class="field"><span>Kitap biçimi</span><select id="bookFormat"><option value="flipbook">Sayfaları çevrilen dijital kitap</option></select></label>
+      </section>
+      <section class="sidebar-section sidebar-food-search">
+        <h2><span>02</span> Yemeklerini seç</h2>
+        <form id="recipeSearchForm" class="search-grid">
+          <label><span>Yemek adı</span><input id="recipeQuery" placeholder="Örn. Karnıyarık..."></label>
+          <label><span>Ülke / mutfak</span><select id="recipeCuisine"><option value="">Tüm ülkeler</option></select></label>
+          <label><span>Yemek çeşidi</span><select id="recipeCategory"><option value="">Tüm çeşitler</option></select></label>
+          <button type="submit">Tarifleri ara</button>
+        </form>
+      </section>
+      <div class="launch-gift"><b>🎁 İLK 100 KİŞİYE HEDİYE</b><span>50 tariflik kişiselleştirilmiş e‑kitap ücretsiz.</span></div>
+      <div class="price-card"><span>Tahmini satış fiyatı</span><strong id="bookPrice">€0*</strong><small id="priceNote">* İlk 100 adet için lansman hediyesi.</small></div>
+      <div class="selection-meter"><span><b id="selectedCount">0</b> tarif seçildi</span><span>Hedef: <b id="targetCount">20</b></span><div><i id="selectionProgress"></i></div></div>
+      <button id="draftButton" class="draft-button" type="button">Kitap taslağını oluştur</button>
+      <p id="draftStatus" class="draft-status" role="status" aria-live="polite"></p>
+    </div>
+    <a class="home-link" href="/index.html">← Siteye geri dön</a>
+  </aside>
+
+  <main>
+    <section class="book-hero">
+      <div>
+        <span class="eyebrow">SANA ÖZEL, SATIN ALINABİLİR DİJİTAL KİTAP</span>
+        <h1>Sevdiğin tarifleri seç.<br><em>Kendi kitabını oluştur.</em></h1>
+        <p>Ülke, yemek çeşidi veya yemek adına göre ara. Kitabının büyüklüğünü ve dilini seç; Nili senin için kapaklı, içindekiler bağlantılı bir tarif kitabı hazırlasın.</p>
+        <div class="hero-points"><span>✓ Tıklanabilir içindekiler</span><span>✓ Tek tek açılan tarif sayfaları</span><span>✓ Anında dijital indirme</span></div>
+      </div>
+      <div class="book-showcase" aria-label="Yemek kitabı önizlemesi">
+        <div class="food-orbit food-orbit-one"><img src="/optimized-images/site/Tom_Yum_Goong_featuring_1-1.webp.webp" alt="Renkli bir yemek"></div>
+        <div class="food-orbit food-orbit-two"><img src="/optimized-images/site/Italian-Meatballs_1-1.webp.webp" alt="Köfteli yemek"></div>
+        <div class="cover-preview">
+          <span class="cover-kicker">NILI'S KITCHEN</span>
+          <h2 id="coverTitle">Benim Tarif Kitabım</h2>
+          <p><span id="coverCount">50</span> özel tarif</p>
+          <div class="cover-photo"><img src="/optimized-images/site/YEMEK-2.webp.webp" alt="Nili's Kitchen yemek kitabı kapağı"></div>
+          <small id="coverDedication">Emilie’ye Nili's Kitchen'dan sevgiyle ♡</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-book-preview" aria-labelledby="miniBookPreviewTitle">
+      <header>
+        <span>10 TARİFLİK KİŞİSEL E-KİTAP</span>
+        <h2 id="miniBookPreviewTitle">Satın almadan önce <em>kitabını hisset.</em></h2>
+        <p>Kapaktan kişisel ithaf sayfasına, fotoğraflı içindekilerden ayrıntılı tariflere kadar gerçek kitabın kısa bir önizlemesi.</p>
+      </header>
+      <div class="preview-book-ribbon">
+        <article class="preview-sheet preview-cover-sheet"><img src="/recipe-posters/ebook-cover-portrait-concept-v1.png" alt="Kişiye özel Nili's Kitchen kitap kapağı"><b><span>01</span> Kişisel kapak</b></article>
+        <article class="preview-sheet preview-dedication-sheet"><div><small>NILI'S KITCHEN'DAN</small><strong>Emilie’ye özel</strong><p>Bu küçük lezzet yolculuğu senin için hazırlandı.</p><i>Sevgiyle ♡</i></div><b><span>02</span> Sana özel sayfa</b></article>
+        <article class="preview-sheet preview-contents-sheet"><div><small>İÇİNDEKİLER</small><ol><li>Karnıyarık</li><li>Pizza Napoletana</li><li>Sushi Nigiri</li><li>Tom Yum Goong</li></ol></div><b><span>03</span> Fotoğraflı içerik</b></article>
+        <article class="preview-sheet preview-recipe-sheet"><img src="/recipe-posters/ebook-karniyarik-master-reference-v1.png" alt="Karnıyarık çift sayfa tarif önizlemesi"><b><span>04</span> Ayrıntılı tarifler</b></article>
+      </div>
+      <div class="mini-book-offer"><div><strong>10 tarif · kişiye özel · sayfaları çevrilen</strong><small>İsim, mesaj, dil ve tarif seçimi sana ait.</small></div><button id="productPreviewButton" type="button">Örnek kitabı incele →</button></div>
+    </section>
+
+    <section class="builder-shell">
+      <section class="recipe-picker">
+        <div class="step-heading"><b>02</b><span><small>TARİFLERİNİ BUL</small><strong>Kitap içeriğini seç</strong></span></div>
+        <div class="food-picker-intro"><span>🍲</span><div><strong>Yemeklere bak ve kitabına ekle</strong><small>Fotoğrafa veya yemek adına tıklayarak seçim yapabilirsin.</small></div></div>
+        <div class="picker-toolbar"><p id="resultStatus">Tarifler yükleniyor...</p><div><button id="selectVisible" type="button">Görünenleri seç</button><button id="clearSelection" type="button">Seçimi temizle</button></div></div>
+        <section id="selectedRecipeTray" class="selected-recipe-tray" hidden>
+          <header><div><small>KİTABINDAKİ TARİFLER</small><strong>Seçtiklerin</strong></div><span id="selectedTrayCount">0 tarif</span></header>
+          <div id="selectedRecipeList" class="selected-recipe-list"></div>
+        </section>
+        <div id="recipeResults" class="recipe-results" aria-live="polite"></div>
+        <button id="loadMore" class="load-more" type="button" hidden>Daha fazla tarif göster</button>
+      </section>
+    </section>
+  </main>
+
+  <div id="draftModal" class="draft-modal flipbook-modal" hidden>
+    <section>
+      <button id="closeDraft" class="modal-close" type="button" aria-label="Kitabı kapat">×</button>
+      <div class="flipbook-stage">
+        <button id="previousPage" class="page-arrow page-arrow-left" type="button" aria-label="Önceki sayfa">‹</button>
+        <div id="flipbookPage" class="flipbook-page"></div>
+        <button id="nextPage" class="page-arrow page-arrow-right" type="button" aria-label="Sonraki sayfa">›</button>
+      </div>
+      <div class="flipbook-footer"><span id="pageCounter"></span><small>Sayfayı çevirmek için sağa veya sola tıkla</small></div>
+    </section>
+  </div>
+  <script src="/ebook-builder.js?v=25"></script>
+</body>
+</html>
+

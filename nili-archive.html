@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Nili's Recipe Archive</title>
+  <meta name="description" content="Explore every published recipe from Nili's Kitchen.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Playfair+Display:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="nili-recipe-cards.css?v=4">
+  <link rel="stylesheet" href="nili-recipe-page.css?v=11">
+  <link rel="stylesheet" href="nili-archive.css?v=1">
+</head>
+<body class="world-page nili-archive-page nili-type-system">
+  <header class="archive-topbar">
+    <a class="archive-brand" href="index.html" aria-label="Nili's Kitchen home">
+      <img src="logo.jpeg" alt="Nili's Kitchen">
+      <span><strong>Nili's Kitchen</strong><small id="brandSub">Recipe Archive</small></span>
+    </a>
+    <nav class="archive-nav" aria-label="Page navigation">
+      <a id="homeLink" href="index.html">Home</a>
+      <a id="worldLink" href="world-cuisines.html">World cuisines</a>
+      <div class="archive-language">
+        <button id="languageButton" type="button" aria-expanded="false"></button>
+        <div id="languageMenu" class="archive-language-menu" aria-hidden="true"></div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="archive-main">
+    <section class="archive-hero">
+      <div class="archive-hero-copy">
+        <span id="heroEyebrow">NILI'S OWN COLLECTION</span>
+        <h1 id="heroTitle">Every Nili's recipe, in one place</h1>
+        <p id="heroText">Search our published collection by dish, cuisine, category or creator.</p>
+      </div>
+      <div class="archive-hero-mark" aria-hidden="true"><span>N</span><small>RECIPE<br>ARCHIVE</small></div>
+    </section>
+
+    <section class="archive-filter-card" aria-labelledby="filterTitle">
+      <div class="archive-filter-heading">
+        <div><span id="filterEyebrow">FIND YOUR RECIPE</span><h2 id="filterTitle">Explore the archive</h2></div>
+        <button id="clearFilters" type="button">Clear filters</button>
+      </div>
+      <form id="archiveForm" class="archive-filters">
+        <label class="archive-search-field"><span id="searchLabel">Dish name</span><div><input id="archiveQuery" type="search" autocomplete="off" placeholder="Search recipes..."><button id="searchButton" type="submit" aria-label="Search">⌕</button></div></label>
+        <label><span id="cuisineLabel">Cuisine / region</span><select id="archiveCuisine"><option value="">All cuisines</option></select></label>
+        <label><span id="categoryLabel">Dish type</span><select id="archiveCategory"><option value="">All dish types</option></select></label>
+        <label><span id="creatorLabel">Creator</span><select id="archiveCreator"><option value="">All creators</option></select></label>
+        <label><span id="sortLabel">Sort</span><select id="archiveSort"><option value="newest">Newest</option><option value="title">A-Z</option><option value="popular">Most popular</option></select></label>
+      </form>
+    </section>
+
+    <section class="archive-results" aria-labelledby="resultsTitle">
+      <header class="archive-results-heading">
+        <div><span id="resultsEyebrow">PUBLISHED BY NILI'S KITCHEN</span><h2 id="resultsTitle">Recipe collection</h2></div>
+        <strong id="resultsCount" aria-live="polite"></strong>
+      </header>
+      <div id="archiveStatus" class="archive-status" aria-live="polite"></div>
+      <div id="archiveGrid" class="wc-results-grid archive-grid"></div>
+      <nav id="archivePagination" class="archive-pagination" aria-label="Recipe pages"></nav>
+    </section>
+  </main>
+
+  <footer class="archive-footer"><img src="logo.jpeg" alt=""><span id="footerText">Nili's Kitchen recipe archive</span><a id="footerHome" href="index.html">Back home</a></footer>
+
+  <section id="recipeFullPage" class="recipe-full-page" aria-hidden="true"><div id="recipeFullPageBody"></div></section>
+  <script src="nili-archive.js?v=2" defer></script>
+</body>
+</html>

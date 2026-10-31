@@ -62,3 +62,10 @@ body:has(.creator-page){padding:34px!important}.creator-page{position:relative;m
     font-weight:700!important;
   }
 }
+
+/* Keep editorial photography unique across static content pages. */
+.how-hero{background:linear-gradient(90deg,rgba(22,35,26,.94),rgba(22,35,26,.7)),url("/optimized-images/site/Italian-Meatballs_1-1.webp.webp") center/cover!important}
+.how-hero:after{background-image:url("/optimized-images/recipe-import/Acarajé.jpg.webp")!important}
+.creator-page:after{background-image:url("/optimized-images/recipe-import/Aloo-Gobi.png.webp")!important}
+.welcome-card{background:linear-gradient(90deg,rgba(26,43,31,.96),rgba(26,43,31,.66)),url("/optimized-images/recipe-import/Arroz-Chaufa.png.webp") center/cover!important}
+.welcome-card:after{background-image:url("/optimized-images/recipe-import/Anticuchos-de-Corazón.png.webp")!important}

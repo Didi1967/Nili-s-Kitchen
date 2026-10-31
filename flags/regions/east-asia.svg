@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="East Asia cuisine">
+  <circle cx="32" cy="32" r="29" fill="#234832"/>
+  <path d="M18 25h28l-4 23H22z" fill="#f7ead7"/>
+  <path d="M16 25h32" stroke="#d5a642" stroke-width="5" stroke-linecap="round"/>
+  <path d="M24 18l8 7 8-7" fill="none" stroke="#d5a642" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 35h16" stroke="#234832" stroke-width="3" stroke-linecap="round"/>
+</svg>

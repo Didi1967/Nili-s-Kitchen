@@ -6,11 +6,397 @@
   <title>World Cuisines | Nili's Kitchen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@600;700;800&family=Lobster&family=Manrope:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3108">
-  <link rel="stylesheet" href="world-cuisines.css?v=46">
+  <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@600;700;800&family=Caveat:wght@500;600;700&family=Lobster&family=Manrope:wght@500;600;700;800&family=Nunito+Sans:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="nili-core.css?v=14">
+  <link rel="stylesheet" href="nili-world.css?v=14">
+  <link rel="stylesheet" href="nili-typography.css?v=1">
+  <link rel="stylesheet" href="nili-luxe.css?v=16">
+  <link rel="stylesheet" href="nili-recipe-page.css?v=20">
+  <style id="wc-layout-fix-v16">
+    body.world-page #sidebar.sidebar-unified.world-sidebar .world-country-panel,
+    body.world-page #worldMobileFlow > .world-country-panel{
+      display:grid!important;
+      grid-template-columns:minmax(0,1fr)!important;
+      grid-template-rows:20px 170px 262px!important;
+      align-content:start!important;
+      align-items:start!important;
+      gap:8px!important;
+      width:100%!important;
+      height:auto!important;
+      min-height:492px!important;
+      max-height:none!important;
+      overflow:visible!important;
+    }
+    body.world-page #sidebar.sidebar-unified.world-sidebar .world-country-panel > .panel-title,
+    body.world-page #worldMobileFlow > .world-country-panel > .panel-title{
+      position:static!important;
+      grid-row:1!important;
+      width:100%!important;
+      height:20px!important;
+      min-height:20px!important;
+      margin:0!important;
+      padding:0!important;
+      transform:none!important;
+    }
+    body.world-page #sidebar.sidebar-unified.world-sidebar .category-grid,
+    body.world-page #worldMobileFlow > .world-country-panel > .category-grid{
+      position:relative!important;
+      inset:auto!important;
+      z-index:1!important;
+      grid-row:2!important;
+      grid-template-columns:repeat(2,minmax(0,1fr))!important;
+      grid-template-rows:repeat(5,30px)!important;
+      grid-auto-rows:30px!important;
+      gap:5px 7px!important;
+      height:170px!important;
+      min-height:170px!important;
+      max-height:170px!important;
+      overflow:visible!important;
+      transform:none!important;
+    }
+    body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-dock,
+    body.world-page #worldMobileFlow > .world-country-panel > .wc-type-dock{
+      position:relative!important;
+      inset:auto!important;
+      z-index:1!important;
+      grid-row:3!important;
+      display:flex!important;
+      flex-direction:column!important;
+      gap:0!important;
+      height:262px!important;
+      min-height:262px!important;
+      max-height:262px!important;
+      margin:0!important;
+      padding:9px 0 0!important;
+      overflow:visible!important;
+      transform:none!important;
+      float:none!important;
+      clear:both!important;
+    }
+    body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-dock>div:first-child,
+    body.world-page #worldMobileFlow > .world-country-panel > .wc-type-dock>div:first-child{
+      position:static!important;
+      flex:0 0 44px!important;
+      height:44px!important;
+      min-height:44px!important;
+      margin:0!important;
+      padding:0!important;
+    }
+    body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-list,
+    body.world-page #worldMobileFlow > .world-country-panel > .wc-type-dock .wc-type-list{
+      position:static!important;
+      display:grid!important;
+      grid-template-columns:repeat(2,minmax(0,1fr))!important;
+      grid-template-rows:repeat(6,30px)!important;
+      grid-auto-rows:30px!important;
+      gap:5px 7px!important;
+      width:100%!important;
+      height:205px!important;
+      min-height:205px!important;
+      max-height:205px!important;
+      overflow:visible!important;
+      transform:none!important;
+    }
+    body.world-page #sidebar.sidebar-unified.world-sidebar .category-btn,
+    body.world-page #sidebar.sidebar-unified.world-sidebar .wc-filter-button,
+    body.world-page #worldMobileFlow > .world-country-panel .category-btn,
+    body.world-page #worldMobileFlow > .world-country-panel .wc-filter-button{
+      height:30px!important;
+      min-height:30px!important;
+      max-height:30px!important;
+      margin:0!important;
+    }
+    @media(min-width:981px){
+      body.world-page #sidebar.sidebar-unified.world-sidebar .world-country-panel{
+        grid-template-rows:18px 107px 157px!important;
+        gap:6px!important;
+        height:318px!important;
+        min-height:318px!important;
+        max-height:318px!important;
+      }
+      body.world-page #sidebar.sidebar-unified.world-sidebar .world-country-panel > .panel-title{
+        height:18px!important;
+        min-height:18px!important;
+        font-size:15px!important;
+        line-height:18px!important;
+      }
+      body.world-page #sidebar.sidebar-unified.world-sidebar .category-grid{
+        grid-template-rows:repeat(5,19px)!important;
+        grid-auto-rows:19px!important;
+        gap:3px 7px!important;
+        height:107px!important;
+        min-height:107px!important;
+        max-height:107px!important;
+      }
+      body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-dock{
+        height:157px!important;
+        min-height:157px!important;
+        max-height:157px!important;
+        padding:3px 0 0!important;
+      }
+      body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-dock>div:first-child{
+        flex:0 0 22px!important;
+        height:22px!important;
+        min-height:22px!important;
+      }
+      body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-dock h2{
+        height:18px!important;
+        min-height:18px!important;
+        margin:0!important;
+        font-size:13px!important;
+        line-height:18px!important;
+      }
+      body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-list{
+        grid-template-rows:repeat(6,19px)!important;
+        grid-auto-rows:19px!important;
+        gap:3px 7px!important;
+        height:129px!important;
+        min-height:129px!important;
+        max-height:129px!important;
+      }
+      html body.world-page #sidebar.sidebar-unified.world-sidebar .category-grid .category-btn,
+      html body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-list .wc-filter-button{
+        height:19px!important;
+        min-height:19px!important;
+        max-height:19px!important;
+        padding:1px 7px!important;
+        font-size:8.5px!important;
+        line-height:1!important;
+      }
+      html body.world-page #sidebar.sidebar-unified.world-sidebar .category-grid .category-btn img{
+        width:19px!important;
+        height:12px!important;
+      }
+    }
+    body.world-page #sidebar .wc-type-list .wc-filter-button:nth-child(11),
+    body.world-page #worldMobileFlow .wc-type-list .wc-filter-button:nth-child(11){
+      display:flex!important;
+      visibility:visible!important;
+      grid-column:1!important;
+      grid-row:6!important;
+    }
+    body.world-page #sidebar .wc-type-list .wc-filter-button:nth-child(12),
+    body.world-page #worldMobileFlow .wc-type-list .wc-filter-button:nth-child(12){
+      display:flex!important;
+      visibility:visible!important;
+      grid-column:2!important;
+      grid-row:6!important;
+    }
+    @media(max-width:980px){
+      html{
+        height:100%!important;
+        overflow:hidden!important;
+      }
+      body.world-page.world-mobile-arranged{
+        height:100dvh!important;
+        min-height:100dvh!important;
+        max-height:100dvh!important;
+        overflow:hidden!important;
+      }
+      body.world-page #worldMobileFlow{
+        display:flex!important;
+        width:100%!important;
+        height:100dvh!important;
+        min-height:100dvh!important;
+        max-height:100dvh!important;
+        padding-bottom:max(24px,env(safe-area-inset-bottom))!important;
+        overflow-x:hidden!important;
+        overflow-y:auto!important;
+        overscroll-behavior-y:contain!important;
+        -webkit-overflow-scrolling:touch!important;
+        touch-action:pan-y!important;
+      }
+      body.world-page #worldMobileFlow > .ad-media-box{
+        display:block!important;
+        order:initial!important;
+        width:100%!important;
+        height:auto!important;
+        min-height:0!important;
+        max-height:none!important;
+        aspect-ratio:16/9!important;
+        margin:0!important;
+        overflow:hidden!important;
+        border-radius:18px!important;
+      }
+      body.world-page #worldMobileFlow > .ad-media-box video{
+        display:block!important;
+        width:100%!important;
+        height:100%!important;
+        object-fit:cover!important;
+      }
+      body.world-page #worldMobileFlow > .join-area,
+      body.world-page #worldMobileFlow > .site-footer-note{
+        display:block!important;
+        width:100%!important;
+        flex:none!important;
+        margin:0!important;
+      }
+    }
+    body.world-page #worldScanButton{
+      display:none!important;
+    }
+    html body.world-page #sidebar.sidebar-unified.world-sidebar .world-country-panel,
+    html body.world-page #worldMobileFlow > .world-country-panel{
+      grid-template-rows:20px 136px 46px 209px!important;
+      gap:8px!important;
+      height:459px!important;
+      min-height:459px!important;
+      max-height:459px!important;
+    }
+    html body.world-page #sidebar.sidebar-unified.world-sidebar .world-country-panel > .panel-title,
+    html body.world-page #worldMobileFlow > .world-country-panel > .panel-title{
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      height:20px!important;
+      min-height:20px!important;
+      margin:0!important;
+      font:700 15px/20px "Playfair Display",serif!important;
+      text-align:center!important;
+    }
+    html body.world-page #sidebar.sidebar-unified.world-sidebar .category-grid,
+    html body.world-page #worldMobileFlow > .world-country-panel > .category-grid{
+      grid-template-rows:repeat(5,24px)!important;
+      grid-auto-rows:24px!important;
+      gap:4px 7px!important;
+      height:136px!important;
+      min-height:136px!important;
+      max-height:136px!important;
+    }
+    html body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-dock,
+    html body.world-page #worldMobileFlow > .world-country-panel > .wc-type-dock{
+      grid-row:4!important;
+      height:209px!important;
+      min-height:209px!important;
+      max-height:209px!important;
+      padding:7px 0 0!important;
+    }
+    html body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-dock>div:first-child,
+    html body.world-page #worldMobileFlow > .world-country-panel > .wc-type-dock>div:first-child{
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      flex:0 0 34px!important;
+      height:34px!important;
+      min-height:34px!important;
+    }
+    html body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-dock .wc-eyebrow,
+    html body.world-page #worldMobileFlow > .world-country-panel .wc-type-dock .wc-eyebrow{
+      display:none!important;
+    }
+    html body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-dock h2,
+    html body.world-page #worldMobileFlow > .world-country-panel .wc-type-dock h2{
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      height:20px!important;
+      min-height:20px!important;
+      margin:0!important;
+      font:700 15px/20px "Playfair Display",serif!important;
+      text-align:center!important;
+    }
+    html body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-list,
+    html body.world-page #worldMobileFlow > .world-country-panel > .wc-type-dock .wc-type-list{
+      grid-template-rows:repeat(6,24px)!important;
+      grid-auto-rows:24px!important;
+      gap:4px 7px!important;
+      height:164px!important;
+      min-height:164px!important;
+      max-height:164px!important;
+    }
+    html body.world-page #sidebar.sidebar-unified.world-sidebar .category-grid .category-btn,
+    html body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-list .wc-filter-button,
+    html body.world-page #worldMobileFlow > .world-country-panel .category-grid .category-btn,
+    html body.world-page #worldMobileFlow > .world-country-panel .wc-type-list .wc-filter-button{
+      display:flex!important;
+      align-items:center!important;
+      height:24px!important;
+      min-height:24px!important;
+      max-height:24px!important;
+      margin:0!important;
+      padding:2px 7px!important;
+      font:700 9px/1 "Manrope",sans-serif!important;
+    }
+    html body.world-page #sidebar.sidebar-unified.world-sidebar .world-country-panel > .manual,
+    html body.world-page #worldMobileFlow > .world-country-panel > .manual{
+      position:static!important;
+      inset:auto!important;
+      z-index:1!important;
+      grid-row:3!important;
+      display:grid!important;
+      grid-template-columns:minmax(0,1fr) 42px!important;
+      width:100%!important;
+      height:46px!important;
+      min-height:46px!important;
+      max-height:46px!important;
+      margin:0!important;
+      padding:3px!important;
+      transform:none!important;
+    }
+    html body.world-page #sidebar.sidebar-unified.world-sidebar .category-grid .category-btn img,
+    html body.world-page #worldMobileFlow > .world-country-panel .category-grid .category-btn img{
+      width:20px!important;
+      height:13px!important;
+    }
+    @media(min-width:981px) and (min-height:850px){
+      html body.world-page #sidebar.sidebar-unified.world-sidebar .world-country-panel{
+        grid-template-rows:20px 161px 46px 235px!important;
+        height:510px!important;
+        min-height:510px!important;
+        max-height:510px!important;
+      }
+      html body.world-page #sidebar.sidebar-unified.world-sidebar .category-grid{
+        grid-template-rows:repeat(5,29px)!important;
+        grid-auto-rows:29px!important;
+        height:161px!important;
+        min-height:161px!important;
+        max-height:161px!important;
+      }
+      html body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-dock{
+        height:235px!important;
+        min-height:235px!important;
+        max-height:235px!important;
+      }
+      html body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-list{
+        grid-template-rows:repeat(6,29px)!important;
+        grid-auto-rows:29px!important;
+        height:194px!important;
+        min-height:194px!important;
+        max-height:194px!important;
+      }
+      html body.world-page #sidebar.sidebar-unified.world-sidebar .category-grid .category-btn,
+      html body.world-page #sidebar.sidebar-unified.world-sidebar .wc-type-list .wc-filter-button{
+        height:29px!important;
+        min-height:29px!important;
+        max-height:29px!important;
+        font-size:9.5px!important;
+      }
+      html body.world-page #sidebar.sidebar-unified.world-sidebar .category-grid .category-btn img{
+        width:21px!important;
+        height:14px!important;
+      }
+    }
+  </style>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1648900139544436');
+  fbq('track','PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
+  <link rel="stylesheet" href="nili-recipe-cards.css?v=4">
 </head>
-<body>
+<body class="world-page nili-type-system">
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1648900139544436&amp;ev=PageView&amp;noscript=1"
+  alt=""></noscript>
   <div class="wc-page-tools">
     <a id="backHome" class="wc-back" href="index.html">← <span>Home kitchen</span></a>
     <div class="wc-language"><button id="languageButton" type="button">TR</button><div id="languageMenu" class="wc-language-menu"></div></div>
@@ -25,7 +411,13 @@
         </div>
         <div class="wc-mobile-brand-controls">
           <div class="wc-mobile-account">
-            <button id="worldMobileUserButton" type="button"><span aria-hidden="true">&#128100;</span> <span id="worldMobileUserName">Login</span></button>
+            <button id="worldMobileUserButton" type="button">
+              <svg class="user-avatar-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.25"></circle>
+                <path d="M5.5 19c.7-3.5 3-5.3 6.5-5.3s5.8 1.8 6.5 5.3"></path>
+              </svg>
+              <span id="worldMobileUserName">Login</span>
+            </button>
             <div id="worldMobileUserMenu" class="wc-mobile-control-menu">
               <a id="worldMobileDashboard" href="creator-dashboard.html">Dashboard</a>
               <a id="worldMobileAddRecipe" href="creator.html">Add Recipe</a>
@@ -49,21 +441,20 @@
         <input type="file" id="worldPhoto" hidden accept="image/*" capture="environment">
         <input type="file" id="worldPhotoGallery" hidden accept="image/*">
 
-        <div class="manual">
-          <div class="manual-input-wrap"><input id="worldManualInput" placeholder="Search a dish" autocomplete="off"></div>
-          <button id="worldManualButton" type="button">+</button>
-        </div>
-
         <div class="category-panel world-country-panel">
           <div class="panel-title" id="cuisineTitle">World cuisines</div>
           <div class="category-grid" id="worldSidebarCuisineList"></div>
+          <div class="manual">
+            <div class="manual-input-wrap"><input id="worldManualInput" placeholder="Search a dish" autocomplete="off"></div>
+            <button id="worldManualButton" type="button">+</button>
+          </div>
           <section class="wc-type-dock">
             <div><span id="typeEyebrow" class="wc-eyebrow">WHAT TO COOK</span><h2 id="typeTitle">Dish types</h2></div>
             <div id="typeList" class="wc-type-list"></div>
           </section>
         </div>
 
-        <div class="ad-media-box"><video autoplay muted loop playsinline controls><source src="./ad-video.mp4" type="video/mp4"></video></div>
+        <div class="ad-media-box"><video class="nili-video-playlist" autoplay muted playsinline controls preload="metadata"><source src="./Videolar/WhatsApp%20Video%202026-07-24%20at%2019.21.52.mp4" type="video/mp4"></video></div>
 
         <div class="join-area"><div class="nk-mini-card"><div class="nk-mini-icon nk-mini-icon-logo"><img src="logo.jpeg" alt="Nili's Kitchen"></div><div class="nk-mini-content"><h4 id="worldJoinTitle">Join Nili's Kitchen</h4><p id="worldJoinDesc">Save favorites, upload recipes and unlock creator features.</p></div><button id="worldJoinButton" type="button">Join Free</button></div></div>
         <div class="site-footer-note"><span id="worldFooter">© 2026 Nili's Kitchen AI. All rights reserved.</span></div>
@@ -81,7 +472,7 @@
   <main class="wc-main">
     <section class="wc-mosaic">
       <article class="wc-mosaic-main">
-        <img src="japanese-nigiri-sushi-recipe-1749130962.jpg" alt="World cuisine">
+        <img src="/optimized-images/site/japanese-nigiri-sushi-recipe-1749130962.jpg.webp" alt="World cuisine">
         <div class="wc-mosaic-copy">
           <span id="mosaicEyebrow">A TABLE WITHOUT BORDERS</span>
           <h1 id="mosaicTitle">Discover the world's most loved dishes</h1>
@@ -89,17 +480,17 @@
         </div>
         <div class="wc-hero-actions">
           <button type="button" id="heroSearchAction">
-            <span id="heroSearchActionEyebrow">FIND A DISH</span>
+            <span id="heroSearchActionEyebrow" class="wc-hero-action-eyebrow">FIND A DISH</span>
             <strong id="heroSearchActionTitle">What are you craving?</strong>
           </button>
           <button type="button" id="heroResultsAction">
-            <span id="heroResultsActionEyebrow" style="color:#e7c77f;text-shadow:0 1px 2px rgba(0,0,0,.24);">CURATED RESULTS</span>
-            <strong id="heroResultsActionTitle" style="color:#fffaf0;text-shadow:0 1px 2px rgba(0,0,0,.24);">Recipes worth discovering</strong>
+            <span id="heroResultsActionEyebrow" class="wc-hero-action-eyebrow">CURATED RESULTS</span>
+            <strong id="heroResultsActionTitle">Recipes worth discovering</strong>
           </button>
         </div>
       </article>
-      <article class="wc-mosaic-small"><img src="20250904-SEA-WhiteChocolateCheesecake-LorenaMasso-HERO-206c88529afb4abbb2ca8f114b1d0f2b.webp" alt="Fresh world cuisine"><span id="mosaicCardOne">Fresh discoveries</span></article>
-      <article class="wc-mosaic-small"><img src="amberg_121108_018.jpg" alt="Healthy world cuisine"><span id="mosaicCardTwo">Cook around the world</span></article>
+      <article class="wc-mosaic-small"><img src="/optimized-images/site/Tom_Yum_Goong_featuring_1-1.webp.webp" alt="Fresh world cuisine"><span id="mosaicCardOne">Fresh discoveries</span></article>
+      <article class="wc-mosaic-small"><img src="/optimized-images/site/vegetable-noodles.jpg.webp" alt="Healthy world cuisine"><span id="mosaicCardTwo">Cook around the world</span></article>
     </section>
 
     <section class="wc-search-card">
@@ -114,12 +505,12 @@
           </form>
         </div>
         <div class="wc-search-gallery" aria-hidden="true">
-          <img src="CD_R315020_Buttery-Croissant_8998_preview-b9cb4afd77df47978601ec2438b95ce6.webp" alt="">
-          <img src="Little-Black-Pastry-Box-Authentic-French-Patisserie-Pastry-Desserts-Giftbox-Giftset-cake-Boite-de-gateaux-01_e13a8ce0-ba57-4390-a3e4-17dcadec2282.webp" alt="">
-          <img src="Old-Fashioned-Hamburger-Recipe-Simply-LaKita-5.jpg" alt="">
-          <img src="Doner-Kebabs-main.jpg" alt="">
-          <img src="Easy-Mediterranean-Pizza-Recipe-3-765x1148.jpg" alt="">
-          <img src="Tom_Yum_Goong_featuring_1-1.webp" alt="">
+          <img src="/optimized-images/site/CD_R315020_Buttery-Croissant_8998_preview-b9cb4afd77df47978601ec2438b95ce6.webp.webp" alt="">
+          <img src="/optimized-images/site/Little-Black-Pastry-Box-Authentic-French-Patisserie-Pastry-Desserts-Giftbox-Giftset-cake-Boite-de-gateaux-01_e13a8ce0-ba57-4390-a3e4-17dcadec2282.webp.webp" alt="">
+          <img src="/optimized-images/site/20250904-SEA-WhiteChocolateCheesecake-LorenaMasso-HERO-206c88529afb4abbb2ca8f114b1d0f2b.webp.webp" alt="">
+          <img src="/optimized-images/site/amberg_121108_018.jpg.webp" alt="">
+          <img src="/optimized-images/site/Easy-Mediterranean-Pizza-Recipe-3-765x1148.jpg.webp" alt="">
+          <img src="/optimized-images/site/Doner-Kebabs-main.jpg.webp" alt="">
         </div>
       </div>
     </section>
@@ -127,12 +518,25 @@
     <section id="resultsSection" class="wc-results">
       <header class="wc-results-header">
         <div><span id="resultsEyebrow" class="wc-eyebrow">CURATED RESULTS</span><h2 id="resultsTitle">Recipes worth discovering</h2></div>
-        <span id="resultsMeta"></span>
+        <div class="wc-results-tools">
+          <span id="resultsMeta"></span>
+        </div>
       </header>
       <div id="worldStatus" class="wc-status"></div>
       <div id="worldResults" class="wc-results-grid"></div>
+      <nav id="worldResultsActions" class="wc-results-actions" hidden aria-label="Recipe results navigation">
+        <button id="worldPreviousPage" type="button">← Back</button>
+        <button id="worldLoadMore" type="button">Next →</button>
+        <button id="worldOtherCuisines" type="button">Flavours from other countries</button>
+        <button id="worldResultsBack" type="button">World cuisines</button>
+        <button id="worldResultsHome" type="button">Home</button>
+      </nav>
     </section>
   </main>
+
+  <section id="recipeFullPage" class="recipe-full-page" aria-hidden="true">
+    <div id="recipeFullPageBody"></div>
+  </section>
 
   <div id="worldDetectedModal" class="wc-detected-modal" aria-hidden="true">
     <section class="wc-detected-card">
@@ -154,8 +558,8 @@
       <div id="recipeModalBody"></div>
     </article>
   </div>
-  <script src="world-cuisines.js?v=38" defer></script>
+<script src="nili-recipe-editorial.js?v=4" defer></script>
+<script src="world-cuisines.js?v=80" defer></script>
+<script src="video-playlist.js?v=1" defer></script>
 </body>
 </html>
-
-

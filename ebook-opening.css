@@ -1,0 +1,54 @@
+.flipbook-page.page-cover{width:min(67vh,620px);aspect-ratio:3/4}
+.digital-cover>.approved-cover-concept{position:absolute;z-index:20;inset:0;width:100%;height:100%;object-fit:cover;opacity:1}
+.flipbook-page.page-welcome{width:min(67vh,620px);aspect-ratio:3/4;background:#faecd3}
+.welcome-page{position:absolute;inset:0;overflow:hidden;padding:11% 10%;display:flex;flex-direction:column;align-items:flex-start;color:#214b2d;background:#faecd3 url('/recipe-posters/decorative-vegetable-overlay-v1.png') left bottom/62% auto no-repeat}
+.welcome-page:before{content:"♡";position:absolute;top:5%;right:8%;color:#e7602d;font:700 52px Caveat,cursive}
+.welcome-page .welcome-kicker{color:#e45b28;font:900 12px Nunito,sans-serif;letter-spacing:.18em}
+.welcome-page h2{max-width:72%;margin:8% 0 5%;color:#285c2d;font:400 clamp(36px,6vw,66px)/.9 'Lilita One',Nunito,sans-serif}
+.welcome-page p{max-width:63%;margin:0;color:#4c453b;font:700 clamp(14px,1.8vw,20px)/1.45 Kalam,cursive}
+.welcome-page strong{max-width:60%;margin-top:8%;padding:10px 16px;color:#fff;background:#e65e29;clip-path:polygon(2% 12%,98% 0,100% 86%,0 100%);font:700 clamp(16px,2.2vw,25px) Caveat,cursive}
+.welcome-page>img{position:absolute;z-index:2;right:-7%;bottom:-4%;width:51%;height:67%;object-fit:contain;object-position:right bottom}
+.welcome-page>small{position:absolute;z-index:3;right:7%;bottom:4%;left:7%;padding:8px;color:#fff;background:#315b24;font:700 clamp(11px,1.4vw,16px) Kalam,cursive;text-align:center;clip-path:polygon(1% 10%,99% 0,100% 88%,0 100%)}
+.flipbook-page.page-contents{width:min(88vw,1160px);aspect-ratio:3/2}
+.page-contents .contents-page{padding:5% 6%}
+.page-contents .contents-page:after{content:"";position:absolute;top:0;bottom:0;left:50%;width:20px;height:auto;border:0;transform:translateX(-50%);background:linear-gradient(90deg,#76542d22,#fff6,#76542d22)}
+.page-contents .contents-page ol{grid-template-columns:1fr 1fr;column-gap:8%}
+
+/* Proportional reader chrome: the book, not the modal, is the visual focus. */
+.flipbook-modal{padding:0;background:rgba(25,27,22,.88)}
+.flipbook-modal>section{width:96vw;max-width:none;height:96vh;padding:28px 70px 42px;border:0;background:transparent;box-shadow:none}
+.flipbook-stage{width:100%;height:100%}
+.flipbook-page.page-recipe,.flipbook-page.page-contents{width:min(84vw,1260px,calc(82vh * 1.5));max-width:none;aspect-ratio:3/2;border:0;border-radius:5px;background:#f7ead2;box-shadow:0 22px 65px #000a}
+.page-arrow{top:50%;width:46px;height:58px;border:2px solid #d7aa59;color:#fff;background:#e7612d;font-size:36px;box-shadow:0 7px 18px #0005}
+.page-arrow-left{left:4px}.page-arrow-right{right:4px}
+.flipbook-footer{bottom:9px}
+
+/* Recipe spread rebuilt to match the approved visual concept. */
+.recipe-spread{grid-template-columns:1fr 1fr;background:#faeed9}
+.recipe-spread:after{width:18px;background:linear-gradient(90deg,#6b472928,#fff8,#6b47292c);box-shadow:inset 4px 0 7px #5e3c2525,inset -4px 0 7px #fff8}
+.book-leaf{padding:3.4% 3.8% 4.2%;box-shadow:inset 0 0 0 4px #f8e5c3,inset 0 0 0 6px #ca963d;background-size:42% auto}
+.book-leaf header{text-align:center}.book-leaf header>span{font-size:clamp(7px,.7vw,10px)}
+.book-leaf header h2{margin:1px 0 0;font-size:clamp(25px,3vw,45px);line-height:.92}
+.book-leaf header em{display:block;margin:2px 0 8px;color:#e15d29;font:700 clamp(12px,1.55vw,23px)/1 Caveat,cursive}
+.recipe-left-page .spread-food-photo{float:none;width:100%;height:38%;margin:0 0 8px;border:4px solid #fff7e8;border-radius:18px 38px 18px 38px;box-shadow:0 7px 17px #58351d35}
+.recipe-left-page .spread-food-photo img{object-position:center}
+.spread-facts{margin:3px 0 7px;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;text-align:center}
+.spread-facts span{padding:4px 2px;border:0;border-right:1px dotted #d38c53;border-radius:0;background:transparent}.spread-facts span:last-child{border-right:0}
+.spread-facts small{font-size:clamp(5px,.5vw,7px)}.spread-facts b{font-size:clamp(7px,.7vw,10px)}
+.book-leaf h3{margin:4px auto 6px;padding:5px 12px;width:90%;font-size:clamp(14px,1.6vw,23px)}
+.spread-ingredients{grid-template-columns:1fr 1fr;column-gap:17px;row-gap:1px}
+.spread-ingredients li{padding:1px 0 1px 17px;font-size:clamp(7px,.8vw,11px);line-height:1.15}.spread-ingredients li:before{font-size:13px}
+.recipe-right-page{padding:3.5% 4.2% 4.5% 4.8%;background-size:35% auto}
+.recipe-right-page header h2{width:82%;margin:0 auto 8px;padding:6px 12px;font-size:clamp(16px,1.8vw,27px)}
+.recipe-right-page header>span{display:none}
+.spread-steps{margin:0 0 8px;gap:2px;padding-right:20%}
+.spread-steps li{grid-template-columns:25px 1fr;gap:6px;padding:2px 0;border-bottom:1px dotted #d8a97a;font-size:clamp(7px,.75vw,10.5px);line-height:1.17}
+.spread-steps li>b:before{width:22px;height:22px;background:#e45f2b;font-size:9px}
+.spread-notes{position:relative;z-index:2;grid-template-columns:1fr 1fr;gap:5px;padding-right:17%}
+.spread-notes section{min-height:44px;padding:5px 7px;border:1px dashed #d8a162;border-radius:7px;background:#fff5dfeb}
+.spread-notes h4{font-size:clamp(6px,.65vw,9px)}.spread-notes p{font-size:clamp(6px,.64vw,9px);line-height:1.18}
+.spread-nili{position:absolute;z-index:3;right:-1.5%;bottom:5%;width:24%;height:49%;object-fit:contain;object-position:right bottom;filter:drop-shadow(-4px 4px 5px #58341d28)}
+.book-leaf footer{right:4%;bottom:2.2%;left:4%;padding:5px;font-size:clamp(7px,.75vw,10px)}
+.recipe-spread.is-dense .spread-ingredients li,.recipe-spread.is-dense .spread-steps li{font-size:clamp(6px,.67vw,9px)}
+
+@media(max-width:760px){.flipbook-modal>section{padding:52px 44px 38px}.page-arrow{width:34px;height:48px;font-size:28px}.page-arrow-left{left:3px}.page-arrow-right{right:3px}.spread-nili{display:none}.spread-steps,.spread-notes{padding-right:0}.book-leaf{padding:4%}.spread-ingredients{column-gap:7px}}

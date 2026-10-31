@@ -15,29 +15,56 @@
   <title>Nili's Kitchen AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@600;700;800&family=Lobster&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=3108">
-  <style>
-    .nk-title{
-      font-family:"Sora",sans-serif !important;
-      font-weight:600 !important;
-      letter-spacing:-0.02em !important;
-      color:#13202b !important;
-    }
+  <link href="https://fonts.googleapis.com/css2?family=Blinker:wght@600;700;800&family=Caveat:wght@500;600;700&family=Lobster&family=Manrope:wght@400;500;600;700;800&family=Nunito+Sans:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/nili-core.css?v=14">
+  <link rel="stylesheet" href="/nili-home.css?v=18">
+  <link rel="stylesheet" href="/nili-typography.css?v=1">
+  <link rel="stylesheet" href="/nili-luxe.css?v=21">
+  <link rel="stylesheet" href="/nili-recipe-page.css?v=22">
+  <link rel="stylesheet" href="/today-cook.css?v=3">
+  <style id="today-cook-critical">
+    .today-cook-modal{display:none}
+    .today-cook-modal.is-open{display:grid}
   </style>
+  <link rel="stylesheet" href="/nili-assistant.css?v=2">
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1648900139544436');
+  fbq('track','PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
+  <link rel="stylesheet" href="/nili-recipe-cards.css?v=4">
+  <link rel="stylesheet" href="/nili-archive-entry.css?v=1">
 </head>
 
-<body>
+<body class="nili-type-system">
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1648900139544436&amp;ev=PageView&amp;noscript=1"
+  alt=""></noscript>
 
   <div class="floating-lang">
 
     <div id="userMenu" class="user-menu">
   <button id="userMenuBtn" class="user-menu-btn" type="button">
-    👤 <span id="userMenuName">Login</span>
+    <svg class="user-avatar-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="8" r="3.25"></circle>
+      <path d="M5.5 19c.7-3.5 3-5.3 6.5-5.3s5.8 1.8 6.5 5.3"></path>
+    </svg>
+    <span id="userMenuName">Login</span>
   </button>
 
   <div id="userMenuDropdown" class="user-menu-dropdown">
     <a href="creator-dashboard.html" id="userDashboardLink">Dashboard</a>
+    <a href="meal-plan.html" id="userMealPlanLink">Weekly Meal Plan</a>
+    <a href="ebook-builder.html" id="userEbookLink">E-Recipe Book</a>
     <a href="creator.html" id="userAddRecipeLink">Add Recipe</a>
 
     <button type="button" onclick="openFavoritesPage()" id="userFavoritesBtn">
@@ -45,6 +72,10 @@
     </button>
 
     <a href="how-it-works.html" id="userHowLink">How It Works</a>
+
+    <button type="button" onclick="openContactModal()" id="userContactBtn">
+      Send Message
+    </button>
 
     <button type="button" onclick="logoutUser()" id="userLogoutBtn">
       Logout
@@ -121,15 +152,44 @@
   </div>
 </div>
 
-      <div class="mobile-only mobile-hero-big">
-  <img src="YEMEK-2.webp" alt="">
+      <a id="niliArchiveEntry" class="nili-archive-entry" href="nili-archive.html">
+        <span class="nili-archive-entry-icon" aria-hidden="true">✦</span>
+        <span class="nili-archive-entry-copy">
+          <strong id="niliArchiveEntryTitle">Nili's Recipe Archive</strong>
+          <small id="niliArchiveEntryText">Explore every published Nili's recipe</small>
+        </span>
+        <span class="nili-archive-entry-arrow" aria-hidden="true">→</span>
+      </a>
 
-  <div class="mobile-hero-text">
-    <span class="hero-badge-text">AI Powered Real Recipes</span>
-    <h1 class="hero-title-text">Cook smarter with what you already have</h1>
-    <p class="hero-desc-text">Upload ingredients...</p>
-  </div>
-</div>
+      <section id="mobileNiliPicks" class="mobile-only mobile-nili-picks" aria-label="Nili's Kitchen recipes">
+        <div class="mobile-nili-picks-heading">
+          <div>
+            <span id="mobilePicksEyebrow">NILI'S DAILY TABLE</span>
+            <h2 id="mobilePicksTitle">A little inspiration for today</h2>
+          </div>
+          <span class="mobile-nili-picks-count" aria-hidden="true">12</span>
+        </div>
+        <div class="mobile-nili-picks-grid" id="mobileNiliPicksGrid"></div>
+      </section>
+
+      <div class="mobile-world-search-bar">
+        <button class="mobile-world-search-open" type="button" onclick="openWorldSearch()">
+          <span class="world-search-open-icon">◎</span>
+          <span data-world-open-label>Explore world cuisines</span>
+        </button>
+        <div class="mobile-world-flags" aria-label="World cuisines">
+          <button type="button" onclick="openWorldSearch('turkey')" aria-label="Türkiye"><img src="https://flagcdn.com/w40/tr.png" alt="Türkiye"></button>
+          <button type="button" onclick="openWorldSearch('italy')" aria-label="Italia"><img src="https://flagcdn.com/w40/it.png" alt="Italia"></button>
+          <button type="button" onclick="openWorldSearch('mexico')" aria-label="Mexico"><img src="https://flagcdn.com/w40/mx.png" alt="Mexico"></button>
+          <button type="button" onclick="openWorldSearch('india')" aria-label="India"><img src="https://flagcdn.com/w40/in.png" alt="India"></button>
+          <button type="button" onclick="openWorldSearch('china')" aria-label="China"><img src="https://flagcdn.com/w40/cn.png" alt="China"></button>
+          <button type="button" onclick="openWorldSearch('japan')" aria-label="Japan"><img src="https://flagcdn.com/w40/jp.png" alt="Japan"></button>
+          <button type="button" onclick="openWorldSearch('france')" aria-label="France"><img src="https://flagcdn.com/w40/fr.png" alt="France"></button>
+          <button type="button" onclick="openWorldSearch('greece')" aria-label="Greece"><img src="https://flagcdn.com/w40/gr.png" alt="Greece"></button>
+          <button type="button" onclick="openWorldSearch('usa')" aria-label="USA"><img src="https://flagcdn.com/w40/us.png" alt="USA"></button>
+          <button type="button" onclick="openWorldSearch('thailand')" aria-label="Thailand"><img src="https://flagcdn.com/w40/th.png" alt="Thailand"></button>
+        </div>
+      </div>
 
      <div class="sidebar-main">
 
@@ -167,8 +227,23 @@
     <button type="button" onclick="addManual()">+</button>
   </div>
 
+      <div class="mobile-only mobile-hero-big">
+  <img src="/optimized-images/site/YEMEK-2.webp.webp" alt="">
+
+  <div class="mobile-hero-text">
+    <span class="hero-badge-text">AI Powered Real Recipes</span>
+    <h1 class="hero-title-text">Cook smarter with what you already have</h1>
+    <p class="hero-desc-text">Upload ingredients...</p>
+    <button class="today-cook-launch today-cook-launch-mobile" type="button" onclick="openTodayCookFlow()">
+      <span class="today-cook-launch-icon">✦</span>
+      <span data-today-copy="launch">What should I cook today?</span>
+      <small data-today-copy="launchHint">Get 3 personal suggestions</small>
+    </button>
+  </div>
+</div>
+
         <div class="mobile-only mobile-hero-small">
-  <img src="YEMEK-4.webp"loading="lazy" alt="">
+  <img src="/optimized-images/site/YEMEK-4.webp.webp"loading="lazy" alt="">
 
   <div class="mobile-hero-small-text">
     <strong id="smartScanTitle">📸 Smart Scan</strong>
@@ -196,8 +271,8 @@
 </div>
 
         <div class="ad-media-box">
-          <video autoplay muted loop playsinline controls>
-            <source src="./ad-video.mp4" type="video/mp4">
+          <video class="nili-video-playlist" autoplay muted playsinline controls preload="metadata">
+            <source src="./Videolar/WhatsApp%20Video%202026-07-24%20at%2019.21.52.mp4" type="video/mp4">
           </video>
         </div>
 
@@ -219,7 +294,7 @@
 </div>
 
                <div class="mobile-only mobile-hero-small">
-  <img src="YEMEK-6.webp"loading="lazy" alt="">
+  <img src="/optimized-images/site/YEMEK-6.webp.webp"loading="lazy" alt="">
 
   <div class="mobile-hero-small-text">
    <strong id="cookSmarterTitle">🍳 Cook Smarter</strong>
@@ -309,11 +384,171 @@
     </div>
   </div>
 
+  <div id="todayCookModal" class="today-cook-modal" aria-hidden="true">
+    <div class="today-cook-panel" role="dialog" aria-modal="true" aria-labelledby="todayCookTitle">
+      <button class="today-cook-close" type="button" onclick="closeTodayCookFlow()" aria-label="Close">×</button>
+
+      <div class="today-cook-heading">
+        <span class="today-cook-eyebrow" data-today-copy="eyebrow">NILI'S QUICK CHOICE</span>
+        <h2 id="todayCookTitle" data-today-copy="title">What should I cook today?</h2>
+        <p data-today-copy="description">Tell us how you want to cook. Nili will select the best 3 recipes.</p>
+      </div>
+
+      <section class="today-cook-ingredients">
+        <div>
+          <strong data-today-copy="ingredients">Your ingredients</strong>
+          <span id="todayCookIngredientCount">0</span>
+        </div>
+        <p id="todayCookIngredientPreview" data-today-copy="noIngredients">No ingredients selected yet.</p>
+        <div class="today-cook-ingredient-actions">
+          <button type="button" class="today-cook-secondary" onclick="todayCookChooseIngredients()">
+            <span>＋</span><span data-today-copy="chooseIngredients">Choose ingredients</span>
+          </button>
+          <button type="button" class="today-cook-secondary" onclick="todayCookScanPhoto()">
+            <span>▣</span><span data-today-copy="scanPhoto">Scan a photo</span>
+          </button>
+        </div>
+      </section>
+
+      <div class="today-cook-options">
+        <fieldset class="today-cook-fieldset">
+          <legend data-today-copy="servings">How many people?</legend>
+          <div class="today-cook-choice-row" data-today-group="servings">
+            <button type="button" data-value="1">1</button>
+            <button type="button" data-value="2" class="is-active">2</button>
+            <button type="button" data-value="4">4</button>
+            <button type="button" data-value="6">6</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="today-cook-fieldset">
+          <legend data-today-copy="time">How much time?</legend>
+          <div class="today-cook-choice-row" data-today-group="time">
+            <button type="button" data-value="15">15 <span data-today-copy="minute">min</span></button>
+            <button type="button" data-value="30" class="is-active">30 <span data-today-copy="minute">min</span></button>
+            <button type="button" data-value="60">60 <span data-today-copy="minute">min</span></button>
+          </div>
+        </fieldset>
+
+        <fieldset class="today-cook-fieldset today-cook-preferences">
+          <legend data-today-copy="preference">What matters today?</legend>
+          <div class="today-cook-choice-row" data-today-group="preference">
+            <button type="button" data-value="easy" class="is-active"><span>⚡</span><span data-today-copy="easy">Easy</span></button>
+            <button type="button" data-value="economic"><span>◌</span><span data-today-copy="economic">Economical</span></button>
+            <button type="button" data-value="healthy"><span>♧</span><span data-today-copy="healthy">Healthy</span></button>
+            <button type="button" data-value="elegant"><span>✦</span><span data-today-copy="elegant">Elegant</span></button>
+            <button type="button" data-value="kids"><span>☺</span><span data-today-copy="kids">For kids</span></button>
+          </div>
+        </fieldset>
+      </div>
+
+      <p id="todayCookStatus" class="today-cook-status" role="status"></p>
+      <button id="todayCookSubmit" class="today-cook-submit" type="button" onclick="getTodayCookSuggestions()">
+        <span data-today-copy="submit">Find my 3 recipes</span><span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+
+  <button
+    id="niliAssistantLauncher"
+    class="nili-assistant-launcher"
+    type="button"
+    onclick="openNiliAssistant()"
+    aria-controls="niliAssistant"
+    aria-expanded="false"
+  >
+    <span class="nili-assistant-launcher-avatar">
+      <img src="/logo.jpeg" alt="">
+    </span>
+    <span>
+      <strong data-nili-assistant-copy="launch">Ask Nili</strong>
+      <small data-nili-assistant-copy="launchHint">Your personal kitchen assistant</small>
+    </span>
+    <span class="nili-assistant-launcher-mark" aria-hidden="true">✦</span>
+  </button>
+
+  <div id="niliAssistant" class="nili-assistant" aria-hidden="true">
+    <section class="nili-assistant-panel is-locked" role="dialog" aria-modal="true" aria-labelledby="niliAssistantTitle">
+      <header class="nili-assistant-header">
+        <span class="nili-assistant-avatar">
+          <img src="/logo.jpeg" alt="">
+        </span>
+        <div>
+          <span data-nili-assistant-copy="eyebrow">YOUR KITCHEN COMPANION</span>
+          <h2 id="niliAssistantTitle">Nili</h2>
+          <p data-nili-assistant-copy="online">Ready to help</p>
+        </div>
+        <button type="button" class="nili-assistant-close" onclick="closeNiliAssistant()" aria-label="Close" data-nili-assistant-aria="close">×</button>
+      </header>
+
+      <div id="niliAssistantGate" class="nili-assistant-gate">
+        <span class="nili-assistant-gate-icon" aria-hidden="true">✉</span>
+        <h3 data-nili-assistant-copy="verifyTitle">Verify your email</h3>
+        <p data-nili-assistant-copy="verifyDesc">Enter your email and we will send a 6-digit verification code.</p>
+
+        <div id="niliAssistantEmailStep" class="nili-assistant-auth-step">
+          <input
+            id="niliAssistantEmail"
+            type="email"
+            autocomplete="email"
+            data-nili-assistant-placeholder="emailPlaceholder"
+            placeholder="Email address"
+          >
+          <button id="niliAssistantCodeRequest" type="button" data-nili-assistant-copy="sendCode">Send code</button>
+        </div>
+
+        <div id="niliAssistantCodeStep" class="nili-assistant-auth-step is-hidden">
+          <input
+            id="niliAssistantCode"
+            type="text"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+            maxlength="6"
+            data-nili-assistant-placeholder="codePlaceholder"
+            placeholder="6-digit code"
+          >
+          <button id="niliAssistantCodeVerify" type="button" data-nili-assistant-copy="verifyCode">Verify and chat</button>
+        </div>
+
+        <button id="niliAssistantChangeEmail" class="nili-assistant-change-email is-hidden" type="button" data-nili-assistant-copy="changeEmail">Use another email</button>
+        <p id="niliAssistantAuthStatus" class="nili-assistant-auth-status" role="status"></p>
+        <small data-nili-assistant-copy="privacy">Your email is used only to secure this conversation.</small>
+      </div>
+
+      <div id="niliAssistantContext" class="nili-assistant-context"></div>
+      <div id="niliAssistantMessages" class="nili-assistant-messages" aria-live="polite"></div>
+
+      <div class="nili-assistant-quick-actions">
+        <button type="button" data-assistant-prompt="quick" data-nili-assistant-copy="quick">Make it quick</button>
+        <button type="button" data-assistant-prompt="lighter" data-nili-assistant-copy="lighter">Make it lighter</button>
+        <button type="button" data-assistant-prompt="substitute" data-nili-assistant-copy="substitute">Suggest a substitute</button>
+        <button type="button" data-assistant-prompt="recipes" data-nili-assistant-copy="recipes">Show recipes</button>
+        <button type="button" data-assistant-prompt="plan" data-nili-assistant-copy="plan">Plan my week</button>
+      </div>
+
+      <form id="niliAssistantForm" class="nili-assistant-form">
+        <input
+          id="niliAssistantInput"
+          type="text"
+          maxlength="500"
+          autocomplete="off"
+          data-nili-assistant-placeholder="placeholder"
+          placeholder="Ask Nili anything about cooking..."
+        >
+        <button id="niliAssistantSend" type="submit" aria-label="Send">➜</button>
+      </form>
+      <p id="niliAssistantStatus" class="nili-assistant-status" role="status"></p>
+    </section>
+  </div>
+
 <div id="ingredientModal" class="ingredient-modal">
   <div class="ingredient-modal-content">
 
     <div class="ingredient-modal-header">
-      <h2 id="ingredientModalTitle">Ingredients</h2>
+      <div class="ingredient-modal-heading">
+        <h2 id="ingredientModalTitle">Ingredients</h2>
+        <p id="ingredientModalSubtitle">Select the ingredients you want to use</p>
+      </div>
 
       <button
         type="button"
@@ -333,32 +568,30 @@
       >
     </div>
 
+    <section class="ingredient-modal-selected" aria-live="polite">
+      <div class="ingredient-modal-selected-heading">
+        <h3 id="ingredientModalSelectedTitle">Selected</h3>
+        <span id="ingredientModalSelectedCount">0</span>
+      </div>
+      <div id="ingredientModalSelectedChips" class="ingredient-modal-selected-chips"></div>
+    </section>
+
     <p id="ingredientSearchEmpty" class="ingredient-search-empty">No ingredients found.</p>
 
     <div id="ingredientModalItems"></div>
+
+    <footer class="ingredient-modal-footer">
+      <strong id="ingredientModalFooterCount">0 ingredients selected</strong>
+      <div class="ingredient-modal-footer-actions">
+        <button id="ingredientModalClear" type="button">Clear</button>
+        <button id="ingredientModalDone" type="button">Complete selection</button>
+      </div>
+    </footer>
 
   </div>
 </div>
 
   <main class="content" id="content">
-    <div class="mobile-world-search-bar">
-      <button class="mobile-world-search-open" type="button" onclick="openWorldSearch()">
-        <span class="world-search-open-icon">◎</span>
-        <span data-world-open-label>Explore world cuisines</span>
-      </button>
-      <div class="mobile-world-flags" aria-label="World cuisines">
-        <button type="button" onclick="openWorldSearch('turkey')" aria-label="Türkiye"><img src="https://flagcdn.com/w40/tr.png" alt="Türkiye"></button>
-        <button type="button" onclick="openWorldSearch('italy')" aria-label="Italia"><img src="https://flagcdn.com/w40/it.png" alt="Italia"></button>
-        <button type="button" onclick="openWorldSearch('mexico')" aria-label="Mexico"><img src="https://flagcdn.com/w40/mx.png" alt="Mexico"></button>
-        <button type="button" onclick="openWorldSearch('india')" aria-label="India"><img src="https://flagcdn.com/w40/in.png" alt="India"></button>
-        <button type="button" onclick="openWorldSearch('china')" aria-label="China"><img src="https://flagcdn.com/w40/cn.png" alt="China"></button>
-        <button type="button" onclick="openWorldSearch('japan')" aria-label="Japan"><img src="https://flagcdn.com/w40/jp.png" alt="Japan"></button>
-        <button type="button" onclick="openWorldSearch('france')" aria-label="France"><img src="https://flagcdn.com/w40/fr.png" alt="France"></button>
-        <button type="button" onclick="openWorldSearch('greece')" aria-label="Greece"><img src="https://flagcdn.com/w40/gr.png" alt="Greece"></button>
-        <button type="button" onclick="openWorldSearch('usa')" aria-label="USA"><img src="https://flagcdn.com/w40/us.png" alt="USA"></button>
-        <button type="button" onclick="openWorldSearch('thailand')" aria-label="Thailand"><img src="https://flagcdn.com/w40/th.png" alt="Thailand"></button>
-      </div>
-    </div>
     <section class="hero" id="hero">
       <div class="hero-bg">
 
@@ -381,7 +614,7 @@
               <button type="button" onclick="openWorldSearch('thailand')" aria-label="Thailand"><img src="https://flagcdn.com/w40/th.png" alt="Thailand"></button>
             </div>
           </div>
-          <img src="YEMEK-2.webp"class="hero-main-img">
+          <img src="/optimized-images/site/YEMEK-2.webp.webp"class="hero-main-img">
 
           <div class="hero-dark"></div>
 
@@ -390,6 +623,11 @@
 <p id="heroKickerText" class="hero-kicker">A brighter, more refined way to turn everyday ingredients into beautiful meals.</p>
 <h1 id="heroTitleText" class="hero-title-text">Cook smarter with what you already have</h1>
 <p id="heroDescText" class="hero-desc-text">Upload ingredients...</p>
+<button class="today-cook-launch" type="button" onclick="openTodayCookFlow()">
+  <span class="today-cook-launch-icon">✦</span>
+  <span data-today-copy="launch">What should I cook today?</span>
+  <small data-today-copy="launchHint">Get 3 personal suggestions</small>
+</button>
           </div>
 
           <div class="hero-floating-strip">
@@ -397,9 +635,9 @@
               <span id="heroStrip1Label" class="hero-strip-label">Smart Scan</span>
               <strong id="heroStrip1Text">Photo-powered ingredient detection</strong>
             </a>
-            <a class="hero-strip-item hero-strip-button" href="how-it-works.html">
-              <span id="heroStrip2Label" class="hero-strip-label">Real Recipes</span>
-              <strong id="heroStrip2Text">From APIs and creator submissions</strong>
+            <a class="hero-strip-item hero-strip-button" href="nili-archive.html">
+              <span id="heroStrip2Label" class="hero-strip-label">Nili's Recipe Archive</span>
+              <strong id="heroStrip2Text">Explore every published Nili's recipe</strong>
             </a>
             <a class="hero-strip-item hero-strip-button" href="how-it-works.html">
               <span id="heroStrip3Label" class="hero-strip-label">Multi-Language</span>
@@ -409,8 +647,8 @@
         </div>
 
         <div class="hero-side-images">
-          <img src="YEMEK-4.webp"loading="lazy">
-          <img src="YEMEK-6.webp"loading="lazy">
+          <img src="/optimized-images/site/YEMEK-4.webp.webp"loading="lazy">
+          <img src="/optimized-images/site/YEMEK-6.webp.webp"loading="lazy">
         </div>
 
       </div>
@@ -429,6 +667,10 @@
 
     <div class="grid" id="result"></div>
   </main>
+
+  <section id="recipeFullPage" class="recipe-full-page" aria-hidden="true">
+    <div id="recipeFullPageBody"></div>
+  </section>
 
   <div id="worldSearchModal" class="world-search-modal" aria-hidden="true">
     <div class="world-search-panel" role="dialog" aria-modal="true" aria-labelledby="worldSearchTitle">
@@ -464,7 +706,10 @@
     </div>
   </div>
 
-  <script src="app.js?v=3108" defer></script>
+<script src="i18n-extra.js?v=1" defer></script>
+<script src="nili-recipe-editorial.js?v=4" defer></script>
+<script src="app.js?v=3168" defer></script>
+<script src="video-playlist.js?v=1" defer></script>
 
   <script>
 window.toggleLangMenu = function(){
@@ -503,6 +748,25 @@ window.setLang = function(lang){
     renderChecklist();
   }
 };
+
+const homeHeaderControls = document.querySelector(".floating-lang");
+const homeHeaderBrand = document.querySelector(".nk-brand-card");
+const homeHeaderSidebar = document.getElementById("sidebar");
+
+function arrangeHomeHeaderControls(){
+  if(!homeHeaderControls || !homeHeaderBrand || !homeHeaderSidebar) return;
+
+  if(window.innerWidth <= 980){
+    if(homeHeaderControls.parentElement !== homeHeaderBrand){
+      homeHeaderBrand.appendChild(homeHeaderControls);
+    }
+  }else if(homeHeaderControls.parentElement === homeHeaderBrand){
+    document.body.insertBefore(homeHeaderControls, homeHeaderSidebar);
+  }
+}
+
+arrangeHomeHeaderControls();
+window.addEventListener("resize", arrangeHomeHeaderControls);
 </script>
 <div id="signupInviteModal" class="signup-invite-modal">
   <div class="signup-invite-box">
@@ -549,6 +813,22 @@ window.setLang = function(lang){
   </div>
 </div>
 
+<div id="contactModal" class="contact-modal" aria-hidden="true">
+  <div class="contact-box">
+    <button class="contact-close" type="button" onclick="closeContactModal()">×</button>
+    <span id="contactEyebrow" class="contact-eyebrow">MESSAGE</span>
+    <h2 id="contactTitle">Send us a message</h2>
+    <p id="contactDesc">Tell us what you noticed, liked, or want improved.</p>
+
+    <input id="contactName" type="text" autocomplete="name" placeholder="Your name">
+    <input id="contactEmail" type="email" autocomplete="email" placeholder="Your email">
+    <textarea id="contactMessage" placeholder="Your message"></textarea>
+
+    <button id="contactSubmitBtn" class="contact-submit" type="button" onclick="sendContactMessage()">Send message</button>
+    <p id="contactStatus" class="contact-status" role="status"></p>
+  </div>
+</div>
+
     <div id="howItWorksModal" class="how-modal">
   <div class="how-box">
 
@@ -574,5 +854,3 @@ window.setLang = function(lang){
 </div>
 </body>
 </html>
-
-

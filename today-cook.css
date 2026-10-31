@@ -1,0 +1,271 @@
+:root{
+  --today-forest:#183f2c;
+  --today-forest-deep:#0c2f22;
+  --today-gold:#d7a943;
+  --today-cream:#fff9ef;
+  --today-ink:#24362d;
+}
+
+.today-cook-launch{
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr);
+  grid-template-rows:auto auto;
+  align-items:center;
+  gap:1px 12px;
+  width:340px;
+  min-height:64px;
+  margin:18px 0 0 -28px;
+  padding:10px 18px 10px 12px;
+  border:1px solid rgba(245,202,94,.82);
+  border-radius:19px;
+  background:linear-gradient(135deg,#d96a2f,#b65025);
+  box-shadow:0 15px 35px rgba(116,49,20,.3),inset 0 1px rgba(255,255,255,.2);
+  color:#fff;
+  text-align:left;
+  cursor:pointer;
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+}
+
+.today-cook-launch:hover{
+  transform:translateY(-2px);
+  background:linear-gradient(135deg,#eb7938,#bd5125);
+  box-shadow:0 19px 42px rgba(116,49,20,.4),0 0 0 3px rgba(215,169,67,.16);
+}
+
+.today-cook-launch-icon{
+  grid-row:1/3;
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  background:linear-gradient(145deg,#ffe09a,#d7a943);
+  color:#6f3219;
+  font-size:19px;
+  box-shadow:inset 0 1px rgba(255,255,255,.6);
+}
+
+.today-cook-launch>span:nth-child(2){
+  font:800 16px/1.15 "Sora",sans-serif;
+}
+
+.today-cook-launch small{
+  color:rgba(255,255,255,.72);
+  font:600 11px/1.2 "Manrope",sans-serif;
+}
+
+.today-cook-modal{
+  position:fixed;
+  inset:0;
+  z-index:1000005;
+  display:none;
+  place-items:center;
+  padding:22px;
+  background:rgba(9,25,18,.72);
+  backdrop-filter:blur(13px);
+}
+
+.today-cook-modal.is-open{display:grid}
+
+.today-cook-panel{
+  position:relative;
+  width:min(760px,96vw);
+  max-height:min(880px,94dvh);
+  overflow:auto;
+  padding:30px;
+  border:1px solid rgba(215,169,67,.65);
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 92% 5%,rgba(215,169,67,.18),transparent 25%),
+    linear-gradient(145deg,#fffdf8,#f7ead6);
+  box-shadow:0 38px 110px rgba(0,0,0,.4);
+  color:var(--today-ink);
+}
+
+.today-cook-panel::before{
+  content:"";
+  position:absolute;
+  inset:9px;
+  pointer-events:none;
+  border:1px solid rgba(215,169,67,.2);
+  border-radius:23px;
+}
+
+.today-cook-close{
+  position:sticky;
+  z-index:4;
+  top:0;
+  float:right;
+  width:42px;
+  height:42px;
+  border:1px solid var(--today-gold);
+  border-radius:50%;
+  background:var(--today-forest);
+  color:#fff5d6;
+  font-size:27px;
+  line-height:1;
+  cursor:pointer;
+}
+
+.today-cook-heading{padding-right:55px}
+.today-cook-eyebrow{
+  color:#a9632e;
+  font:800 11px/1 "Sora",sans-serif;
+  letter-spacing:.16em;
+}
+.today-cook-heading h2{
+  margin:8px 0 5px;
+  color:#183f2c;
+  font:700 clamp(31px,4.2vw,48px)/1.02 "Playfair Display",serif;
+}
+.today-cook-heading p{
+  margin:0;
+  color:#6f6a60;
+  font:600 14px/1.55 "Manrope",sans-serif;
+}
+
+.today-cook-ingredients{
+  position:relative;
+  margin:24px 0 20px;
+  padding:18px;
+  border:1px solid rgba(29,79,53,.18);
+  border-radius:20px;
+  background:rgba(255,255,255,.72);
+}
+.today-cook-ingredients>div:first-child{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.today-cook-ingredients strong{font:800 15px/1.2 "Sora",sans-serif}
+#todayCookIngredientCount{
+  display:grid;
+  place-items:center;
+  min-width:31px;
+  height:31px;
+  padding:0 8px;
+  border-radius:50px;
+  background:var(--today-forest);
+  color:#fff;
+  font:800 12px/1 "Sora",sans-serif;
+}
+#todayCookIngredientPreview{
+  min-height:20px;
+  margin:9px 0 13px;
+  color:#6d6a63;
+  font:600 12px/1.5 "Manrope",sans-serif;
+}
+.today-cook-ingredient-actions{display:grid!important;grid-template-columns:1fr 1fr;gap:10px}
+.today-cook-secondary{
+  min-height:42px;
+  border:1px solid rgba(29,79,53,.25);
+  border-radius:13px;
+  background:#fffaf2;
+  color:#254835;
+  font:750 12px/1.2 "Manrope",sans-serif;
+  cursor:pointer;
+}
+
+.today-cook-options{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.today-cook-fieldset{
+  min-width:0;
+  margin:0;
+  padding:15px;
+  border:1px solid rgba(177,111,44,.22);
+  border-radius:18px;
+  background:rgba(255,252,246,.72);
+}
+.today-cook-fieldset legend{
+  padding:0 7px;
+  color:#2b4134;
+  font:800 13px/1.2 "Sora",sans-serif;
+}
+.today-cook-preferences{grid-column:1/-1}
+.today-cook-choice-row{display:flex;gap:8px}
+.today-cook-choice-row button{
+  flex:1 1 0;
+  min-width:0;
+  min-height:42px;
+  padding:7px 9px;
+  border:1px solid rgba(29,79,53,.18);
+  border-radius:12px;
+  background:#fff;
+  color:#394a40;
+  font:750 12px/1.15 "Manrope",sans-serif;
+  cursor:pointer;
+}
+.today-cook-choice-row button.is-active{
+  border-color:var(--today-gold);
+  background:linear-gradient(145deg,var(--today-forest),var(--today-forest-deep));
+  color:#fff;
+  box-shadow:0 8px 18px rgba(15,58,39,.18);
+}
+.today-cook-preferences button span:first-child{display:block;margin-bottom:3px;color:var(--today-gold)}
+.today-cook-status{
+  min-height:18px;
+  margin:15px 0 7px;
+  color:#a1442c;
+  text-align:center;
+  font:700 12px/1.4 "Manrope",sans-serif;
+}
+.today-cook-submit{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:15px;
+  width:100%;
+  min-height:56px;
+  border:1px solid var(--today-gold);
+  border-radius:17px;
+  background:linear-gradient(135deg,var(--today-forest),var(--today-forest-deep));
+  box-shadow:0 14px 30px rgba(15,58,39,.24);
+  color:#fff;
+  font:800 15px/1 "Sora",sans-serif;
+  cursor:pointer;
+}
+.today-cook-submit:disabled{opacity:.58;cursor:wait}
+
+.today-match-badge{
+  position:absolute;
+  z-index:8;
+  top:72px;
+  left:28px;
+  max-width:calc(100% - 92px);
+  padding:8px 12px;
+  border:1px solid rgba(255,220,128,.8);
+  border-radius:999px;
+  background:rgba(15,58,39,.94);
+  box-shadow:0 8px 24px rgba(0,0,0,.2);
+  color:#fff8de;
+  font:800 10px/1.2 "Sora",sans-serif;
+}
+
+@media(max-width:980px){
+  .today-cook-launch-mobile{
+    width:100%;
+    min-height:56px;
+    margin:13px 0 0;
+    grid-template-columns:36px minmax(0,1fr);
+    padding:8px 13px 8px 9px;
+    border-radius:16px;
+  }
+  .today-cook-launch-mobile .today-cook-launch-icon{width:36px;height:36px;border-radius:12px}
+  .today-cook-launch-mobile>span:nth-child(2){font-size:14px}
+  .today-cook-launch-mobile small{font-size:10px}
+  .today-cook-modal{padding:10px}
+  .today-cook-panel{
+    width:100%;
+    max-height:calc(100dvh - 20px);
+    padding:22px 16px 18px;
+    border-radius:25px;
+  }
+  .today-cook-heading{padding-right:44px}
+  .today-cook-heading h2{font-size:31px}
+  .today-cook-options{grid-template-columns:1fr;gap:12px}
+  .today-cook-preferences{grid-column:auto}
+  .today-cook-preferences .today-cook-choice-row{display:grid;grid-template-columns:repeat(3,1fr)}
+  .today-cook-preferences button:last-child{grid-column:2}
+  .today-cook-ingredient-actions{grid-template-columns:1fr!important}
+  .today-match-badge{top:68px;left:24px}
+}

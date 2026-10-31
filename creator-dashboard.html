@@ -50,7 +50,7 @@ body{
 
 .stats-grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(5,1fr);
   gap:18px;
   margin-bottom:24px;
 }
@@ -210,10 +210,28 @@ body{
   }
 }
 </style>
-<link rel="stylesheet" href="/premium-pages.css?v=3">
+<link rel="stylesheet" href="/premium-pages.css?v=5">
+<link rel="stylesheet" href="/nili-typography.css?v=1">
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1648900139544436');
+  fbq('track','PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
 </head>
 
-<body class="content-page-body">
+<body class="content-page-body nili-type-system">
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1648900139544436&amp;ev=PageView&amp;noscript=1"
+  alt=""></noscript>
 
 <div class="dashboard">
 
@@ -248,6 +266,12 @@ body{
       <p id="dashViews">Views</p>
     </div>
 
+    <div class="stat-card bonus-card">
+      <span>💰</span>
+      <h2 id="totalBonus">$0.00</h2>
+      <p id="dashBonus">Bonus</p>
+    </div>
+
   </div>
 
   <div class="action-grid">
@@ -266,8 +290,12 @@ body{
 
 <script>
 const API_BASE =
-  location.hostname === "localhost" || location.hostname === "127.0.0.1"
-    ? "http://localhost:3000"
+  location.hostname === "localhost" ||
+  location.hostname === "127.0.0.1" ||
+  location.hostname.startsWith("192.168.") ||
+  location.hostname.startsWith("10.") ||
+  location.hostname.startsWith("172.")
+    ? location.origin
     : "https://api.niliskitchen.com";
 
 
@@ -300,6 +328,7 @@ const dashTranslations = {
     pending: "Pending",
     published: "Published",
     views: "Views",
+    bonus: "Bonus",
     upload: "➕ Upload New Recipe",
     back: "🏠 Back to Nili's Kitchen",
     myRecipes: "My Recipes",
@@ -315,6 +344,7 @@ const dashTranslations = {
     pending: "Bekleyen",
     published: "Yayınlanan",
     views: "Görüntülenme",
+    bonus: "Bonus",
     upload: "➕ Yeni Tarif Yükle",
     back: "🏠 Nili's Kitchen’a Dön",
     myRecipes: "Tariflerim",
@@ -330,6 +360,7 @@ const dashTranslations = {
     pending: "На проверке",
     published: "Опубликовано",
     views: "Просмотры",
+    bonus: "Бонус",
     upload: "➕ Загрузить новый рецепт",
     back: "🏠 Вернуться в Nili's Kitchen",
     myRecipes: "Мои рецепты",
@@ -345,6 +376,7 @@ const dashTranslations = {
     pending: "قيد المراجعة",
     published: "منشورة",
     views: "المشاهدات",
+    bonus: "المكافأة",
     upload: "➕ رفع وصفة جديدة",
     back: "🏠 العودة إلى Nili's Kitchen",
     myRecipes: "وصفاتي",
@@ -360,6 +392,7 @@ const dashTranslations = {
     pending: "Pendientes",
     published: "Publicadas",
     views: "Vistas",
+    bonus: "Bono",
     upload: "➕ Subir nueva receta",
     back: "🏠 Volver a Nili's Kitchen",
     myRecipes: "Mis recetas",
@@ -375,6 +408,7 @@ const dashTranslations = {
     pending: "En attente",
     published: "Publiées",
     views: "Vues",
+    bonus: "Bonus",
     upload: "➕ Ajouter une nouvelle recette",
     back: "🏠 Retour à Nili's Kitchen",
     myRecipes: "Mes recettes",
@@ -390,6 +424,7 @@ const dashTranslations = {
     pending: "Pendentes",
     published: "Publicadas",
     views: "Visualizações",
+    bonus: "Bônus",
     upload: "➕ Enviar nova receita",
     back: "🏠 Voltar para Nili's Kitchen",
     myRecipes: "Minhas receitas",
@@ -405,6 +440,7 @@ total: "Gesamtrezepte",
 pending: "Ausstehend",
 published: "Veröffentlicht",
 views: "Aufrufe",
+bonus: "Bonus",
 upload: "➕ Neues Rezept hochladen",
 back: "🏠 Zurück zu Nili's Kitchen",
 myRecipes: "Meine Rezepte",
@@ -420,6 +456,7 @@ total: "レシピ総数",
 pending: "審査待ち",
 published: "公開済み",
 views: "閲覧数",
+bonus: "ボーナス",
 upload: "➕ 新しいレシピを投稿",
 back: "🏠 Nili's Kitchen に戻る",
 myRecipes: "私のレシピ",
@@ -435,6 +472,7 @@ total: "食谱总数",
 pending: "待审核",
 published: "已发布",
 views: "浏览量",
+bonus: "奖金",
 upload: "➕ 上传新食谱",
 back: "🏠 返回 Nili's Kitchen",
 myRecipes: "我的食谱",
@@ -477,6 +515,7 @@ function applyDashboardLanguage(){
   setText("dashPending", dt("pending"));
   setText("dashPublished", dt("published"));
   setText("dashViews", dt("views"));
+  setText("dashBonus", dt("bonus"));
   setText("dashUploadBtn", dt("upload"));
   setText("dashBackBtn", dt("back"));
   setText("dashMyRecipes", dt("myRecipes"));
@@ -507,6 +546,8 @@ async function loadDashboard(){
     document.getElementById("pendingRecipes").textContent = data.stats.pending;
     document.getElementById("publishedRecipes").textContent = data.stats.published;
     document.getElementById("totalViews").textContent = data.stats.views;
+    document.getElementById("totalBonus").textContent =
+      "$" + Number(data.stats.earnings || 0).toFixed(2);
 
     const allRecipes = [
       ...(data.pendingRecipes || []),
@@ -535,6 +576,7 @@ async function loadDashboard(){
             <div>
               <h3>${recipe.title || "-"}</h3>
               <p>${recipe.ingredients || ""}</p>
+              <p>${Number(recipe.clicks || 0)} clicks · $${Number(recipe.totalBonus || 0).toFixed(2)}</p>
               <span class="status ${recipe.status || ""}">
                 ${recipe.status === "approved" ? dt("publishedStatus") : dt("pendingStatus")}
               </span>

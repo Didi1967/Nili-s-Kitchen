@@ -8,6 +8,9 @@ const recipesPerPage = 6;
 let lastRecipeIngredients = [];
 let activeRecipeId = null;
 let isRecipeLangRefreshing = false;
+const trackedCreatorRecipeOpens = new Set();
+const CATEGORY_DATA = window.CATEGORY_DATA || {};
+let currentMobileNiliPicks = [];
  
 
 window.API_BASE =
@@ -21,6 +24,92 @@ window.API_BASE =
 
 console.log("API_BASE:", window.API_BASE);
 
+function resolveRecipeImageUrl(value) {
+  let url = String(value || "").trim().replace(/\\/g, "/");
+  if (/\/flags\//i.test(url)) return "";
+  url = url
+    .replace(/\/recipe-import-images\/optimized-images\//gi, "/optimized-images/")
+    .replace(/\/recipe-import-images\/recipe-import-images\//gi, "/recipe-import-images/");
+  if (!url || /^(?:https?:|data:|blob:)/i.test(url)) return url;
+  if (url.startsWith("/")) return `${window.API_BASE}${url}`;
+  return url;
+}
+
+function resolveStaticAssetUrl(value) {
+  const url = String(value || "").trim().replace(/\\/g, "/");
+  if (!url || /^(?:https?:|data:|blob:)/i.test(url)) return url;
+  if (url.startsWith("/")) return `${window.API_BASE}${url}`;
+  return url;
+}
+
+function getRecipeImageCandidates(recipe) {
+  const values = [
+    recipe?.mediaUrl,
+    recipe?.fullImage,
+    recipe?.image,
+    ...(Array.isArray(recipe?.mediaUrls) ? recipe.mediaUrls : [])
+  ];
+
+  return [...new Set(values.map(resolveRecipeImageUrl).filter(Boolean))];
+}
+
+function getRecipeImageUrl(recipe) {
+  return getRecipeImageCandidates(recipe)[0] || "";
+}
+
+function recipeImageAttrs(recipe, index = 0) {
+  const candidates = getRecipeImageCandidates(recipe);
+  const src = candidates[0] || "";
+  const retryList = candidates.slice(1);
+  const onError =
+    "const list=JSON.parse(this.dataset.fallbacks||'[]');" +
+    "const next=list.shift();" +
+    "if(next){this.dataset.fallbacks=JSON.stringify(list);this.src=next;}" +
+    "else{this.onerror=null;const card=this.closest('.recipe-card,.mobile-nili-pick');if(card){card.remove();}else{this.remove();}}";
+
+  return `src="${escapeHtml(src)}" data-fallbacks="${escapeHtml(JSON.stringify(retryList))}" onerror="${escapeHtml(onError)}"`;
+}
+
+function getRecipeCardImageCandidates(recipe) {
+  const cardUrls = recipe?.recipeCardUrls && typeof recipe.recipeCardUrls === "object"
+    ? recipe.recipeCardUrls
+    : {};
+  const cardStatuses = recipe?.recipeCardStatuses && typeof recipe.recipeCardStatuses === "object"
+    ? recipe.recipeCardStatuses
+    : {};
+  const language = String(currentLang || "en").toLowerCase();
+  const englishCard = resolveRecipeImageUrl(cardUrls.en);
+  if (cardStatuses.en !== "approved" || !englishCard) return [];
+  const values = [
+    cardStatuses[language] === "approved" ? cardUrls[language] : "",
+    englishCard
+  ];
+  return [...new Set(values.map(resolveRecipeImageUrl).filter(Boolean))];
+}
+
+function recipeCardImageAttrs(recipe) {
+  const candidates = getRecipeCardImageCandidates(recipe);
+  const src = candidates[0] || "";
+  const retryList = candidates.slice(1);
+  const onError =
+    "const list=JSON.parse(this.dataset.fallbacks||'[]');" +
+    "const next=list.shift();" +
+    "if(next){this.dataset.fallbacks=JSON.stringify(list);this.src=next;}" +
+    "else{this.onerror=null;this.remove();}";
+  return 'src="' + escapeHtml(src) + '" data-fallbacks="' +
+    escapeHtml(JSON.stringify(retryList)) + '" onerror="' + escapeHtml(onError) + '"';
+}
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
+  }[ch]));
+}
+
 const statusText = document.getElementById("statusText");
 const bar = document.getElementById("bar");
 const checklist = document.getElementById("checklist");
@@ -29,6 +118,8 @@ const confirmCheck = document.getElementById("confirmCheck");
 const result = document.getElementById("result");
 const modal = document.getElementById("modal");
 const modalBody = document.getElementById("modalBody");
+const recipeFullPage = document.getElementById("recipeFullPage");
+const recipeFullPageBody = document.getElementById("recipeFullPageBody");
 const manualInput = document.getElementById("manualInput");
 const langSelect = document.getElementById("langSelect");
 
@@ -37,6 +128,13 @@ const ingredientModalTitle = document.getElementById("ingredientModalTitle");
 const ingredientModalItems = document.getElementById("ingredientModalItems");
 const ingredientModalSearch = document.getElementById("ingredientModalSearch");
 const ingredientSearchEmpty = document.getElementById("ingredientSearchEmpty");
+const ingredientModalSubtitle = document.getElementById("ingredientModalSubtitle");
+const ingredientModalSelectedTitle = document.getElementById("ingredientModalSelectedTitle");
+const ingredientModalSelectedCount = document.getElementById("ingredientModalSelectedCount");
+const ingredientModalSelectedChips = document.getElementById("ingredientModalSelectedChips");
+const ingredientModalFooterCount = document.getElementById("ingredientModalFooterCount");
+const ingredientModalClear = document.getElementById("ingredientModalClear");
+const ingredientModalDone = document.getElementById("ingredientModalDone");
 
 const LANG_STORAGE_KEY = "niliKitchenLangV2";
 
@@ -86,16 +184,22 @@ const ingredientFiles = [
 
 window.allIngredients = [];
 window.categoryIngredients = {};
+let allIngredientsLoadPromise = null;
 
 async function loadAllIngredients(){
 
   window.allIngredients = [];
   window.categoryIngredients = {};
+  const ingredientById = new Map();
 
   for(const file of ingredientFiles){
 
     try{
-      const res = await fetch(`/ingredients/${file}`);
+      let res = await fetch(`/ingredients/${file}`);
+
+      if(!res.ok && window.API_BASE){
+        res = await fetch(`${window.API_BASE}/ingredients/${file}`);
+      }
 
       if(!res.ok){
         console.log("Ingredient file not found:", file);
@@ -110,16 +214,30 @@ async function loadAllIngredients(){
       }
 
       items.forEach(item => {
+        const id = String(item?.id || "").trim().toLowerCase();
+        if(!id) return;
 
-        window.allIngredients.push(item);
+        const existing = ingredientById.get(id);
+        if(existing){
+          existing.name = {...(item.name || {}), ...(existing.name || {})};
+          existing.aliases = [...new Set([
+            ...(Array.isArray(existing.aliases) ? existing.aliases : []),
+            ...(Array.isArray(item.aliases) ? item.aliases : [])
+          ])];
+          return;
+        }
 
-        const cat = item.category || "unknown";
+        const normalizedItem = {...item,id};
+        ingredientById.set(id, normalizedItem);
+        window.allIngredients.push(normalizedItem);
+
+        const cat = normalizedItem.category || "unknown";
 
         if(!window.categoryIngredients[cat]){
           window.categoryIngredients[cat] = [];
         }
 
-        window.categoryIngredients[cat].push(item);
+        window.categoryIngredients[cat].push(normalizedItem);
 
       });
 
@@ -163,7 +281,10 @@ function getAllCategoryIngredients(){
 function getIngredientLabel(item){
 
   if(typeof item === "object"){
-    return item.name?.[currentLang] || item.name?.en || item.id;
+    const englishName = item.name?.en || item.id;
+    return item.name?.[currentLang] ||
+      ingredientTranslationCache[currentLang]?.[englishName] ||
+      englishName;
   }
 
   const found =
@@ -173,7 +294,7 @@ function getIngredientLabel(item){
     );
 
   if(found){
-    return found.name?.[currentLang] || found.name?.en || found.id;
+    return getIngredientLabel(found);
   }
 
   if(currentLang === "en") return item;
@@ -289,8 +410,8 @@ const translations = {
     heroSecondaryBtn: "Join Free",
     heroStrip1Label: "Smart Scan",
     heroStrip1Text: "Photo-powered ingredient detection",
-    heroStrip2Label: "Real Recipes",
-    heroStrip2Text: "From APIs and creator submissions",
+    heroStrip2Label: "Nili's Recipe Archive",
+    heroStrip2Text: "Explore every published Nili's recipe",
     heroStrip3Label: "Multi-Language",
     heroStrip3Text: "Cook in the language you prefer",
     galleryBtn: "Choose from gallery",
@@ -305,6 +426,18 @@ const translations = {
     menuFavorites: "Favorites",
     menuLogout: "Logout",
     menuHowItWorks: "How It Works",
+    menuContact: "Send Message",
+    contactEyebrow: "Message",
+    contactTitle: "Send us a message",
+    contactDesc: "Tell us what you noticed, liked, or want improved.",
+    contactName: "Your name",
+    contactEmail: "Your email",
+    contactMessage: "Your message",
+    contactSend: "Send message",
+    contactSending: "Sending...",
+    contactDone: "Thank you. Your message has been sent.",
+    contactError: "Message could not be sent. Please try again.",
+    contactRequired: "Please write a message.",
 
     howTitle: "👋 How Nili's Kitchen Works",
     howStep1: "1️⃣ Select ingredients from categories.",
@@ -428,8 +561,8 @@ continueSelecting: "+ Continue selecting ingredients",
     heroSecondaryBtn: "Ücretsiz Katıl",
     heroStrip1Label: "Akıllı Tarama",
     heroStrip1Text: "Fotoğrafla çalışan malzeme algılama",
-    heroStrip2Label: "Gerçek Tarifler",
-    heroStrip2Text: "API'lerden ve creator tariflerinden",
+    heroStrip2Label: "Nili's Tarif Arşivi",
+    heroStrip2Text: "Yayınlanmış tüm Nili's tariflerini keşfet",
     heroStrip3Label: "Çok Dilli",
     heroStrip3Text: "İstediğin dilde yemek pişir",
     galleryBtn: "Galeriden seç",
@@ -444,6 +577,18 @@ continueSelecting: "+ Continue selecting ingredients",
     menuFavorites: "Favoriler",
     menuLogout: "Çıkış Yap",
     menuHowItWorks: "Nasıl Kullanılır",
+    menuContact: "Mesaj Gönder",
+    contactEyebrow: "Mesaj",
+    contactTitle: "Bize mesaj gönder",
+    contactDesc: "Gördüğün hata, eleştiri, öneri ya da aklına gelen fikri yaz.",
+    contactName: "Adın",
+    contactEmail: "E-posta adresin",
+    contactMessage: "Mesajın",
+    contactSend: "Mesajı gönder",
+    contactSending: "Gönderiliyor...",
+    contactDone: "Teşekkürler. Mesajın gönderildi.",
+    contactError: "Mesaj gönderilemedi. Lütfen tekrar dene.",
+    contactRequired: "Lütfen bir mesaj yaz.",
 
     
     howTitle: "👋 Nili's Kitchen Nasıl Çalışır?",
@@ -567,8 +712,8 @@ continueSelecting: "+ Malzeme seçmeye devam et",
     heroSecondaryBtn: "Присоединиться бесплатно",
     heroStrip1Label: "Умное сканирование",
     heroStrip1Text: "Распознавание ингредиентов по фото",
-    heroStrip2Label: "Настоящие рецепты",
-    heroStrip2Text: "Из API и рецептов авторов",
+    heroStrip2Label: "Архив рецептов Nili's",
+    heroStrip2Text: "Все опубликованные рецепты Nili's",
     heroStrip3Label: "Много языков",
     heroStrip3Text: "Готовьте на удобном вам языке",
     galleryBtn: "Выбрать из галереи",
@@ -704,8 +849,8 @@ continueSelecting: "+ Продолжить выбор ингредиентов",
     heroSecondaryBtn: "Rejoindre gratuitement",
     heroStrip1Label: "Scan intelligent",
     heroStrip1Text: "Détection des ingrédients par photo",
-    heroStrip2Label: "Vraies recettes",
-    heroStrip2Text: "Depuis les API et les créateurs",
+    heroStrip2Label: "Archives de recettes Nili's",
+    heroStrip2Text: "Découvrez toutes les recettes publiées",
     heroStrip3Label: "Multilingue",
     heroStrip3Text: "Cuisinez dans la langue de votre choix",
     galleryBtn: "Choisir dans la galerie",
@@ -842,8 +987,8 @@ continueSelecting: "+ Continuer à choisir des ingrédients",
     heroSecondaryBtn: "Unirse gratis",
     heroStrip1Label: "Escaneo inteligente",
     heroStrip1Text: "Detección de ingredientes por foto",
-    heroStrip2Label: "Recetas reales",
-    heroStrip2Text: "De APIs y recetas de creadores",
+    heroStrip2Label: "Archivo de recetas Nili's",
+    heroStrip2Text: "Explora todas las recetas publicadas",
     heroStrip3Label: "Multilenguaje",
     heroStrip3Text: "Cocina en el idioma que prefieras",
     galleryBtn: "Elegir de la galería",
@@ -978,8 +1123,8 @@ continueSelecting: "+ Continuar seleccionando ingredientes",
     heroSecondaryBtn: "Participar grátis",
     heroStrip1Label: "Escaneamento inteligente",
     heroStrip1Text: "Detecção de ingredientes por foto",
-    heroStrip2Label: "Receitas reais",
-    heroStrip2Text: "De APIs e receitas de criadores",
+    heroStrip2Label: "Arquivo de receitas Nili's",
+    heroStrip2Text: "Explore todas as receitas publicadas",
     heroStrip3Label: "Multilíngue",
     heroStrip3Text: "Cozinhe no idioma que preferir",
     galleryBtn: "Elegir de la galería",
@@ -1115,8 +1260,8 @@ continueSelecting: "+ Continuar selecionando ingredientes",
     heroSecondaryBtn: "انضم مجانًا",
     heroStrip1Label: "مسح ذكي",
     heroStrip1Text: "اكتشاف المكونات بالصور",
-    heroStrip2Label: "وصفات حقيقية",
-    heroStrip2Text: "من واجهات API ووصفات المبدعين",
+    heroStrip2Label: "أرشيف وصفات Nili's",
+    heroStrip2Text: "استكشف جميع وصفات Nili's المنشورة",
     heroStrip3Label: "متعدد اللغات",
     heroStrip3Text: "اطبخ باللغة التي تفضلها",
     galleryBtn: "اختر من المعرض",
@@ -1253,8 +1398,8 @@ continueSelecting: "+ اختر المزيد من المكونات",
   heroSecondaryBtn: "Kostenlos beitreten",
   heroStrip1Label: "Smarter Scan",
   heroStrip1Text: "Foto-basierte Zutaten-Erkennung",
-  heroStrip2Label: "Echte Rezepte",
-  heroStrip2Text: "Aus APIs und von Creators",
+  heroStrip2Label: "Nili's Rezeptarchiv",
+  heroStrip2Text: "Alle veröffentlichten Rezepte entdecken",
   heroStrip3Label: "Mehrsprachig",
   heroStrip3Text: "Koche in deiner bevorzugten Sprache",
 
@@ -1394,8 +1539,8 @@ ja: {
   heroSecondaryBtn: "無料で参加",
   heroStrip1Label: "スマートスキャン",
   heroStrip1Text: "写真で食材を検出",
-  heroStrip2Label: "本物のレシピ",
-  heroStrip2Text: "APIとクリエイター投稿から",
+  heroStrip2Label: "Nili's レシピアーカイブ",
+  heroStrip2Text: "公開中の全レシピを見る",
   heroStrip3Label: "多言語対応",
   heroStrip3Text: "好きな言語で料理できます",
 
@@ -1533,8 +1678,8 @@ zh: {
   heroSecondaryBtn: "免费加入",
   heroStrip1Label: "智能扫描",
   heroStrip1Text: "通过照片识别食材",
-  heroStrip2Label: "真实食谱",
-  heroStrip2Text: "来自 API 和创作者投稿",
+  heroStrip2Label: "Nili's 食谱档案",
+  heroStrip2Text: "浏览全部已发布食谱",
   heroStrip3Label: "多语言",
   heroStrip3Text: "用你喜欢的语言烹饪",
 
@@ -1607,6 +1752,23 @@ zh: {
   }
 }
 
+};
+
+Object.entries(window.NILI_I18N_EXTRA?.main || {}).forEach(([lang, values]) => {
+  translations[lang] = { ...(translations[lang] || translations.en), ...values };
+});
+
+const mobilePicksCopy = {
+  en:["NILI'S DAILY TABLE","A little inspiration for today"],
+  tr:["NILI'NİN GÜNLÜK SOFRASI","Bugün için biraz ilham"],
+  de:["NILIS TÄGLICHE TAFEL","Ein wenig Inspiration für heute"],
+  fr:["LA TABLE DU JOUR DE NILI","Un peu d'inspiration pour aujourd'hui"],
+  es:["LA MESA DIARIA DE NILI","Un poco de inspiración para hoy"],
+  pt:["A MESA DIÁRIA DA NILI","Um pouco de inspiração para hoje"],
+  ru:["ЕЖЕДНЕВНЫЙ СТОЛ НИЛИ","Немного вдохновения на сегодня"],
+  ar:["مائدة نيلي اليومية","قليل من الإلهام لليوم"],
+  ja:["NILIの今日の食卓","今日のための小さなひらめき"],
+  zh:["NILI 今日餐桌","给今天一点灵感"]
 };
 
 function t(key){
@@ -1751,10 +1913,21 @@ setText("heroStrip1Label", t("heroStrip1Label"));
 setText("heroStrip1Text", t("heroStrip1Text"));
 setText("heroStrip2Label", t("heroStrip2Label"));
 setText("heroStrip2Text", t("heroStrip2Text"));
+setText("niliArchiveEntryTitle", t("heroStrip2Label"));
+setText("niliArchiveEntryText", t("heroStrip2Text"));
 setText("heroStrip3Label", t("heroStrip3Label"));
 setText("heroStrip3Text", t("heroStrip3Text"));
 
+const niliArchiveEntry = document.getElementById("niliArchiveEntry");
+if(niliArchiveEntry){
+  niliArchiveEntry.href = `nili-archive.html?lang=${encodeURIComponent(currentLang)}`;
+}
+
 setText("appSubtitle", t("appSubtitle"));
+
+const mobilePicksText = mobilePicksCopy[currentLang] || mobilePicksCopy.en;
+setText("mobilePicksEyebrow", mobilePicksText[0]);
+setText("mobilePicksTitle", mobilePicksText[1]);
 
 setText("scanTitle", t("scanTitle"));
 setText("statusText", t("scanSubtitle"));
@@ -1791,7 +1964,16 @@ setText("footerNoteText", t("footerNote"));
 setText("userDashboardLink", t("menuDashboard"));
 setText("userAddRecipeLink", t("menuAddRecipe"));
 setText("userFavoritesBtn", "❤️ " + t("menuFavorites"));
+setText("userContactBtn", "✉ " + t("menuContact"));
 setText("userLogoutBtn", t("menuLogout"));
+
+setText("contactEyebrow", t("contactEyebrow"));
+setText("contactTitle", t("contactTitle"));
+setText("contactDesc", t("contactDesc"));
+setPlaceholder("#contactName", t("contactName"));
+setPlaceholder("#contactEmail", t("contactEmail"));
+setPlaceholder("#contactMessage", t("contactMessage"));
+setText("contactSubmitBtn", t("contactSend"));
 
 setText("howTitle", t("howTitle"));
 setText("howStep1", t("howStep1"));
@@ -1999,7 +2181,9 @@ function addIngredient(item){
 
   console.log("SELECTED UPDATED:", selected);
 
+  saveState();
   renderChecklist();
+  syncIngredientModalSelection();
 
 }
 
@@ -2010,6 +2194,7 @@ window.removeIngredient = function(value){
 
   saveState();
   renderChecklist();
+  syncIngredientModalSelection();
 
 };
 
@@ -2019,6 +2204,7 @@ window.clearIngredients = function(){
 
   saveState();
   renderChecklist();
+  syncIngredientModalSelection();
 
 };
 
@@ -2040,9 +2226,34 @@ function ingredientSearchValues(item){
   return [item?.id, ...names, ...aliases].filter(Boolean);
 }
 
+function ingredientSearchText(item, fallback = ""){
+  if(item && typeof item === "object"){
+    return ingredientSearchValues(item)
+      .map(normalizeIngredientLookup)
+      .join(" ");
+  }
+
+  const found =
+    window.allIngredients?.find(x =>
+      x.id === item ||
+      x.name?.en === item ||
+      Object.values(x.name || {}).includes(item)
+    );
+
+  const values = found
+    ? ingredientSearchValues(found)
+    : [item, fallback];
+
+  return values
+    .filter(Boolean)
+    .map(normalizeIngredientLookup)
+    .join(" ");
+}
+
 function findManualIngredientMatches(query){
   const needle = normalizeIngredientLookup(query);
   if(!needle || !Array.isArray(window.allIngredients)) return [];
+  const tokens = needle.split(/\s+/).filter(Boolean);
 
   return window.allIngredients
     .map(item => {
@@ -2050,7 +2261,8 @@ function findManualIngredientMatches(query){
       const normalized = values.map(normalizeIngredientLookup);
       const exact = normalized.includes(needle);
       const starts = normalized.some(value => value.startsWith(needle));
-      const contains = normalized.some(value => value.includes(needle));
+      const searchable = normalized.join(" ");
+      const contains = tokens.every(token => searchable.includes(token));
       return { item, exact, starts, contains };
     })
     .filter(match => match.exact || match.starts || match.contains)
@@ -2129,10 +2341,11 @@ window.addManual = async function(){
   let ingredientId = manualInput.dataset.ingredientId || "";
 
   if(!ingredientId){
-    const exactMatch = findManualIngredientMatches(rawValue)
+    const matches = findManualIngredientMatches(rawValue);
+    const exactMatch = matches
       .find(item => ingredientSearchValues(item)
         .some(value => normalizeIngredientLookup(value) === normalizeIngredientLookup(rawValue)));
-    ingredientId = exactMatch?.id || await normalizeUnknownIngredient(rawValue);
+    ingredientId = exactMatch?.id || matches[0]?.id || await normalizeUnknownIngredient(rawValue);
   }
 
   addIngredient(ingredientId);
@@ -2146,8 +2359,11 @@ window.addManual = async function(){
 };
 
 if(manualInput){
-  manualInput.addEventListener("input", () => {
+  manualInput.addEventListener("input", async () => {
     delete manualInput.dataset.ingredientId;
+    if(!window.allIngredients?.length){
+      await (allIngredientsLoadPromise || (allIngredientsLoadPromise = loadAllIngredients()));
+    }
     renderManualSuggestions();
   });
 
@@ -2335,6 +2551,54 @@ window.toggleCategories = function(){
 
 };
 
+const ingredientModalUiCopy = {
+  en:{subtitle:"Select the ingredients you want to use",selected:"Selected",count:n=>`${n} ingredients selected`,clear:"Clear",done:"Complete selection",empty:"No ingredients selected yet"},
+  tr:{subtitle:"Tarifinde kullanacağın malzemeleri seç",selected:"Seçilenler",count:n=>`${n} malzeme seçildi`,clear:"Temizle",done:"Seçimi tamamla",empty:"Henüz malzeme seçilmedi"},
+  de:{subtitle:"Wähle die Zutaten für dein Rezept",selected:"Ausgewählt",count:n=>`${n} Zutaten ausgewählt`,clear:"Löschen",done:"Auswahl bestätigen",empty:"Noch keine Zutaten ausgewählt"},
+  fr:{subtitle:"Choisissez les ingrédients de votre recette",selected:"Sélectionnés",count:n=>`${n} ingrédients sélectionnés`,clear:"Effacer",done:"Terminer la sélection",empty:"Aucun ingrédient sélectionné"},
+  es:{subtitle:"Elige los ingredientes de tu receta",selected:"Seleccionados",count:n=>`${n} ingredientes seleccionados`,clear:"Limpiar",done:"Completar selección",empty:"Aún no hay ingredientes"},
+  pt:{subtitle:"Escolha os ingredientes da sua receita",selected:"Selecionados",count:n=>`${n} ingredientes selecionados`,clear:"Limpar",done:"Concluir seleção",empty:"Nenhum ingrediente selecionado"},
+  ru:{subtitle:"Выберите ингредиенты для рецепта",selected:"Выбрано",count:n=>`Выбрано ингредиентов: ${n}`,clear:"Очистить",done:"Завершить выбор",empty:"Ингредиенты еще не выбраны"},
+  ar:{subtitle:"اختر المكونات التي ستستخدمها في وصفتك",selected:"المحدد",count:n=>`تم اختيار ${n} مكونات`,clear:"مسح",done:"إتمام الاختيار",empty:"لم يتم اختيار مكونات بعد"},
+  ja:{subtitle:"レシピに使う食材を選んでください",selected:"選択済み",count:n=>`${n}個の食材を選択`,clear:"クリア",done:"選択を完了",empty:"食材はまだ選択されていません"},
+  zh:{subtitle:"选择食谱中要使用的食材",selected:"已选择",count:n=>`已选择 ${n} 种食材`,clear:"清除",done:"完成选择",empty:"尚未选择食材"}
+};
+
+function ingredientLabelForValue(value){
+  const button = ingredientModalItems?.querySelector(
+    `.modal-ingredient-btn[data-value="${CSS.escape(String(value))}"]`
+  );
+  if(button){
+    return button.querySelector("span")?.textContent?.trim() || value;
+  }
+
+  const item = window.allIngredients?.find(entry =>
+    String(entry?.id || "").trim().toLowerCase() === String(value).trim().toLowerCase()
+  );
+  return item ? getIngredientLabel(item) : String(value).replace(/[_-]+/g, " ");
+}
+
+function renderIngredientModalSummary(){
+  const ui = ingredientModalUiCopy[currentLang] || ingredientModalUiCopy.en;
+  if(ingredientModalSubtitle) ingredientModalSubtitle.textContent = ui.subtitle;
+  if(ingredientModalSelectedTitle) ingredientModalSelectedTitle.textContent = ui.selected;
+  if(ingredientModalSelectedCount) ingredientModalSelectedCount.textContent = selected.length;
+  if(ingredientModalFooterCount) ingredientModalFooterCount.textContent = ui.count(selected.length);
+  if(ingredientModalClear) ingredientModalClear.textContent = ui.clear;
+  if(ingredientModalDone) ingredientModalDone.textContent = ui.done;
+
+  if(ingredientModalSelectedChips){
+    ingredientModalSelectedChips.innerHTML = selected.length
+      ? selected.map((value, index) => `
+          <button type="button" data-remove-ingredient="${escapeHtml(value)}" class="ingredient-selected-chip ingredient-selected-chip-${index % 3}">
+            <span>${escapeHtml(ingredientLabelForValue(value))}</span>
+            <strong aria-hidden="true">×</strong>
+          </button>
+        `).join("")
+      : `<span class="ingredient-selected-empty">${escapeHtml(ui.empty)}</span>`;
+  }
+}
+
 async function openIngredientModal(categoryKey, items){
 
   if(!ingredientModal || !ingredientModalItems) return;
@@ -2408,13 +2672,17 @@ if(!safeItems.length && window.NilisIngredients){
             x.id === item || x.name?.en === item
           );
 
-    const value =
-      itemObj?.id || item;
+    const value = String(
+      itemObj?.id || item || ""
+    ).trim().toLowerCase();
 
     const label =
       itemObj
         ? getIngredientLabel(itemObj)
         : getIngredientLabel(item);
+
+    const searchText =
+      ingredientSearchText(itemObj || item, label);
 
     const isSelected =
       selected.includes(value);
@@ -2425,6 +2693,8 @@ if(!safeItems.length && window.NilisIngredients){
     type="button"
     data-value="${value}"
     data-index="${index}"
+    data-search="${searchText.replace(/"/g, "&quot;")}"
+    aria-pressed="${isSelected ? "true" : "false"}"
   >
     <span>${label}</span>
     <strong class="ingredient-mark">${isSelected ? "✓" : "+"}</strong>
@@ -2458,9 +2728,58 @@ if(!safeItems.length && window.NilisIngredients){
   }
 
   filterIngredientModalItems();
+  renderIngredientModalSummary();
 
   ingredientModal.style.display = "flex";
+  translateVisibleIngredientItems(safeItems, categoryKey);
 
+}
+
+async function translateVisibleIngredientItems(items, categoryKey){
+  if(!currentLang || currentLang === "en" || !Array.isArray(items) || !items.length) return;
+
+  const englishNames = items
+    .map(item => typeof item === "object" ? (item.name?.en || item.id) : String(item))
+    .filter(Boolean);
+  const unresolved = [...new Set(englishNames.filter((name, index) => {
+    const item = items[index];
+    const localName = typeof item === "object" ? item.name?.[currentLang] : "";
+    return !localName || normalizeIngredientLookup(localName) === normalizeIngredientLookup(name);
+  }))];
+
+  if(!unresolved.length) return;
+
+  try{
+    const response = await fetch(`${window.API_BASE}/translate-ingredients`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({items:unresolved,lang:currentLang})
+    });
+    if(!response.ok) return;
+    const data = await response.json();
+    if(!Array.isArray(data.items)) return;
+
+    if(!ingredientTranslationCache[currentLang]){
+      ingredientTranslationCache[currentLang] = {};
+    }
+    unresolved.forEach((name,index) => {
+      ingredientTranslationCache[currentLang][name] = data.items[index] || name;
+    });
+
+    if(activeCategoryKey !== categoryKey) return;
+    ingredientModalItems?.querySelectorAll(".modal-ingredient-btn").forEach(button => {
+      const item = window.allIngredients.find(entry => entry.id === button.dataset.value);
+      if(!item) return;
+      const label = getIngredientLabel(item);
+      const labelElement = button.querySelector("span");
+      if(labelElement) labelElement.textContent = label;
+      button.dataset.search = ingredientSearchText(item,label);
+    });
+    filterIngredientModalItems();
+    renderIngredientModalSummary();
+  }catch(error){
+    console.warn("Ingredient category translation skipped:",error);
+  }
 }
 
 window.closeIngredientModal = function(){
@@ -2472,6 +2791,8 @@ window.closeIngredientModal = function(){
     ingredientModal.style.display = "none";
   }
 
+  returnHomeAfterOverlayClose();
+
 };
 
 function filterIngredientModalItems(){
@@ -2479,6 +2800,7 @@ function filterIngredientModalItems(){
 
   const query =
   normalizeIngredientLookup(ingredientModalSearch.value);
+  const queryTokens = query.split(/\s+/).filter(Boolean);
 
   let visibleCount = 0;
 
@@ -2486,12 +2808,15 @@ function filterIngredientModalItems(){
     .querySelectorAll(".modal-ingredient-btn")
     .forEach(button => {
       const label =
+      button.dataset.search ||
       normalizeIngredientLookup(button.textContent);
 
       const visible =
-      !query || label.includes(query);
+      !query || queryTokens.every(token => label.includes(token));
 
       button.hidden = !visible;
+      button.classList.toggle("is-filtered-out", !visible);
+      button.style.display = visible ? "" : "none";
 
       if(visible){
         visibleCount++;
@@ -2517,12 +2842,16 @@ document
 .querySelectorAll(".category-btn")
 .forEach(btn => {
 
-  btn.addEventListener("click", () => {
+  btn.addEventListener("click", async () => {
 
     const key =
     btn.dataset.category;
 
     let items = [];
+
+    if(!window.allIngredients?.length){
+      await (allIngredientsLoadPromise || (allIngredientsLoadPromise = loadAllIngredients()));
+    }
 
 if(window.categoryIngredients?.[key]?.length){
 
@@ -2564,7 +2893,7 @@ if(ingredientModalItems){
     if(!btn) return;
 
     const value =
-    btn.dataset.value;
+    String(btn.dataset.value || "").trim().toLowerCase();
 
     if(selected.includes(value)){
 
@@ -2581,11 +2910,44 @@ if(ingredientModalItems){
 
     }
 
+    const mark = btn.querySelector(".ingredient-mark");
+    const isActive = selected.includes(value);
+    btn.setAttribute("aria-pressed", String(isActive));
+    if(mark) mark.textContent = isActive ? "✓" : "+";
+
     saveState();
     renderChecklist();
+    renderIngredientModalSummary();
 
   });
 
+}
+
+if(ingredientModalSelectedChips){
+  ingredientModalSelectedChips.addEventListener("click", event => {
+    const chip = event.target.closest("[data-remove-ingredient]");
+    if(!chip) return;
+    const value = String(chip.dataset.removeIngredient || "").trim().toLowerCase();
+    selected = selected.filter(item => item !== value);
+    saveState();
+    renderChecklist();
+    syncIngredientModalSelection();
+    renderIngredientModalSummary();
+  });
+}
+
+if(ingredientModalClear){
+  ingredientModalClear.addEventListener("click", () => {
+    selected = [];
+    saveState();
+    renderChecklist();
+    syncIngredientModalSelection();
+    renderIngredientModalSummary();
+  });
+}
+
+if(ingredientModalDone){
+  ingredientModalDone.addEventListener("click", closeIngredientModal);
 }
 
 function continueSelectingIngredients(){
@@ -2675,7 +3037,10 @@ const res = await fetch(`${window.API_BASE}/recipes`, {
   },
   body: JSON.stringify({
     ingredients: normalizedIngredientsForRecipe,
-    lang: currentLang
+    originalIngredients: ingredientsForRecipe,
+    lang: currentLang,
+    limit: 12,
+    offset: 0
   })
 });
 
@@ -2850,7 +3215,10 @@ function updateRecipePageHeader(visibleCount){
     fr:["SÉLECTIONNÉ POUR VOTRE CUISINE","Des recettes à cuisiner","sélections personnalisées"],
     es:["SELECCIONADO PARA TU COCINA","Recetas que vale la pena cocinar","selecciones personales"],
     pt:["SELECIONADO PARA SUA COZINHA","Receitas que valem a pena","seleções pessoais"],
-    ru:["ПОДОБРАНО ДЛЯ ВАШЕЙ КУХНИ","Рецепты, которые стоит приготовить","персональных рецептов"]
+    ru:["ПОДОБРАНО ДЛЯ ВАШЕЙ КУХНИ","Рецепты, которые стоит приготовить","персональных рецептов"],
+    ar:["مختارة لمطبخك","وصفات تستحق الطهي","اختيارات شخصية"],
+    ja:["あなたのキッチンに厳選","作る価値のあるレシピ","件のおすすめ"],
+    zh:["为你的厨房精选","值得烹饪的食谱","份个性推荐"]
   };
   const copy = copyByLang[currentLang] || copyByLang.en;
   const eyebrow = document.getElementById("recipePageEyebrow");
@@ -2870,17 +3238,41 @@ const worldSearchCopy = {
   es:{open:"Explorar cocinas del mundo",eyebrow:"COCINAS DEL MUNDO",title:"¿Qué te gustaría cocinar?",intro:"Busca un plato o elige cocina y categoría.",dish:"Nombre del plato",placeholder:"Pizza, ramen, baklava...",find:"Buscar recetas",cuisine:"Elegir cocina",category:"Categoría",required:"Escribe un plato o elige una opción.",loading:"Buscando en nuestras recetas...",empty:"No se encontraron recetas.",error:"No se pudieron cargar las recetas."},
   pt:{open:"Explorar cozinhas do mundo",eyebrow:"COZINHAS DO MUNDO",title:"O que gostaria de cozinhar?",intro:"Pesquise um prato ou escolha cozinha e categoria.",dish:"Nome do prato",placeholder:"Pizza, ramen, baklava...",find:"Encontrar receitas",cuisine:"Escolher cozinha",category:"Categoria",required:"Digite um prato ou escolha uma opção.",loading:"Pesquisando nossas receitas...",empty:"Nenhuma receita encontrada.",error:"Não foi possível carregar as receitas."},
   ru:{open:"Кухни мира",eyebrow:"КУХНИ МИРА",title:"Что вы хотите приготовить?",intro:"Найдите блюдо или выберите кухню и категорию.",dish:"Название блюда",placeholder:"Пицца, рамен, баклава...",find:"Найти рецепты",cuisine:"Выберите кухню",category:"Категория",required:"Введите блюдо или выберите вариант.",loading:"Ищем в коллекции рецептов...",empty:"Рецепты не найдены.",error:"Не удалось загрузить рецепты."},
-  ar:{open:"استكشف مطابخ العالم",eyebrow:"مطابخ العالم",title:"ماذا تريد أن تطبخ؟",intro:"ابحث باسم الطبق أو اختر المطبخ والفئة.",dish:"اسم الطبق",placeholder:"بيتزا، رامن، بقلاوة...",find:"ابحث عن وصفات",cuisine:"اختر المطبخ",category:"الفئة",required:"اكتب اسم طبق أو اختر خياراً.",loading:"جارٍ البحث في مجموعة الوصفات...",empty:"لم يتم العثور على وصفات.",error:"تعذر تحميل الوصفات."}
+  ar:{open:"استكشف مطابخ العالم",eyebrow:"مطابخ العالم",title:"ماذا تريد أن تطبخ؟",intro:"ابحث باسم الطبق أو اختر المطبخ والفئة.",dish:"اسم الطبق",placeholder:"بيتزا، رامن، بقلاوة...",find:"ابحث عن وصفات",cuisine:"اختر المطبخ",category:"الفئة",required:"اكتب اسم طبق أو اختر خياراً.",loading:"جارٍ البحث في مجموعة الوصفات...",empty:"لم يتم العثور على وصفات.",error:"تعذر تحميل الوصفات."},
+  ja:{open:"世界の料理を探す",eyebrow:"世界の料理",title:"何を作りたいですか？",intro:"料理名で検索するか、国とカテゴリーを選んでください。",dish:"料理名",placeholder:"ピザ、ラーメン、バクラヴァ...",find:"レシピを探す",cuisine:"国の料理を選ぶ",category:"カテゴリー",required:"料理名を入力するか、項目を選んでください。",loading:"レシピを検索しています...",empty:"レシピが見つかりません。",error:"レシピを読み込めませんでした。"},
+  zh:{open:"探索世界美食",eyebrow:"世界美食",title:"你想做什么？",intro:"按菜名搜索，或选择国家和类别。",dish:"菜名",placeholder:"披萨、拉面、果仁蜜饼...",find:"查找食谱",cuisine:"选择国家美食",category:"类别",required:"请输入菜名或选择一个选项。",loading:"正在搜索食谱库...",empty:"未找到食谱。",error:"无法加载食谱，请重试。"}
 };
 
-const worldCuisines = [
-  ["turkey","Türkiye"],["italy","İtalya"],["mexico","Meksika"],["india","Hindistan"],["china","Çin"],
-  ["japan","Japonya"],["france","Fransa"],["greece","Yunanistan"],["usa","ABD"],["thailand","Tayland"]
-];
-const worldCuisineEnglish = {turkey:"Turkey",italy:"Italy",mexico:"Mexico",india:"India",china:"China",japan:"Japan",france:"France",greece:"Greece",usa:"USA",thailand:"Thailand"};
+const worldCuisineIds = ["turkey","italy","mexico","india","china","japan","france","greece","usa","thailand"];
+const worldCuisineLabels = {
+  en:["Turkey","Italy","Mexico","India","China","Japan","France","Greece","USA","Thailand"],
+  tr:["Türkiye","İtalya","Meksika","Hindistan","Çin","Japonya","Fransa","Yunanistan","ABD","Tayland"],
+  de:["Türkei","Italien","Mexiko","Indien","China","Japan","Frankreich","Griechenland","USA","Thailand"],
+  fr:["Turquie","Italie","Mexique","Inde","Chine","Japon","France","Grèce","États-Unis","Thaïlande"],
+  es:["Turquía","Italia","México","India","China","Japón","Francia","Grecia","EE. UU.","Tailandia"],
+  pt:["Turquia","Itália","México","Índia","China","Japão","França","Grécia","EUA","Tailândia"],
+  ru:["Турция","Италия","Мексика","Индия","Китай","Япония","Франция","Греция","США","Таиланд"],
+  ar:["تركيا","إيطاليا","المكسيك","الهند","الصين","اليابان","فرنسا","اليونان","أمريكا","تايلاند"],
+  ja:["トルコ","イタリア","メキシコ","インド","中国","日本","フランス","ギリシャ","アメリカ","タイ"],
+  zh:["土耳其","意大利","墨西哥","印度","中国","日本","法国","希腊","美国","泰国"]
+};
 const worldCategories = ["main course","side dish","dessert","appetizer","salad","soup","breakfast","pasta","seafood"];
+const worldCategoryLabels = {
+  en:["Main course","Side dish","Dessert","Appetizer","Salad","Soup","Breakfast","Pasta","Seafood"],
+  tr:["Ana yemek","Yan yemek","Tatlı","Başlangıç","Salata","Çorba","Kahvaltı","Makarna","Deniz ürünleri"],
+  de:["Hauptgericht","Beilage","Dessert","Vorspeise","Salat","Suppe","Frühstück","Pasta","Meeresfrüchte"],
+  fr:["Plat principal","Accompagnement","Dessert","Entrée","Salade","Soupe","Petit-déjeuner","Pâtes","Fruits de mer"],
+  es:["Plato principal","Guarnición","Postre","Entrante","Ensalada","Sopa","Desayuno","Pasta","Mariscos"],
+  pt:["Prato principal","Acompanhamento","Sobremesa","Entrada","Salada","Sopa","Café da manhã","Massa","Frutos do mar"],
+  ru:["Основное блюдо","Гарнир","Десерт","Закуска","Салат","Суп","Завтрак","Паста","Морепродукты"],
+  ar:["طبق رئيسي","طبق جانبي","حلوى","مقبلات","سلطة","شوربة","إفطار","معكرونة","مأكولات بحرية"],
+  ja:["メイン料理","副菜","デザート","前菜","サラダ","スープ","朝食","パスタ","シーフード"],
+  zh:["主菜","配菜","甜点","开胃菜","沙拉","汤","早餐","意大利面","海鲜"]
+};
 let selectedWorldCuisine = "";
 let selectedWorldCategory = "";
+let lastWorldSearchPayload = null;
+let currentRecipeSearchMeta = null;
 
 function getWorldSearchCopy(){
   return worldSearchCopy[currentLang] || worldSearchCopy.en;
@@ -2899,18 +3291,36 @@ function applyWorldSearchLanguage(){
 function renderWorldSearchOptions(){
   const cuisineBox=document.getElementById("worldCuisineOptions");
   const categoryBox=document.getElementById("worldCategoryOptions");
+  const cuisineLabels=worldCuisineLabels[currentLang] || worldCuisineLabels.en;
+  const categoryLabels=worldCategoryLabels[currentLang] || worldCategoryLabels.en;
   if(cuisineBox){
-    cuisineBox.innerHTML=worldCuisines.map(([id,trLabel]) => `<button type="button" class="world-option ${selectedWorldCuisine===id?"selected":""}" data-world-cuisine="${id}">${currentLang==="tr"?trLabel:worldCuisineEnglish[id]}</button>`).join("");
+    cuisineBox.innerHTML=worldCuisineIds.map((id,index) => `<button type="button" class="world-option ${selectedWorldCuisine===id?"selected":""}" data-world-cuisine="${id}">${cuisineLabels[index]}</button>`).join("");
   }
   if(categoryBox){
-    categoryBox.innerHTML=worldCategories.map(value => `<button type="button" class="world-category-option ${selectedWorldCategory===value?"selected":""}" data-world-category="${value}">${value}</button>`).join("");
+    categoryBox.innerHTML=worldCategories.map((value,index) => `<button type="button" class="world-category-option ${selectedWorldCategory===value?"selected":""}" data-world-category="${value}">${categoryLabels[index]}</button>`).join("");
   }
 }
 
 function openWorldSearch(cuisine=""){
   const params=new URLSearchParams({lang:currentLang || "en"});
   if(cuisine) params.set("cuisine",cuisine);
-  window.location.href=`world-cuisines.html?${params.toString()}`;
+  window.location.href=`/world-cuisines.html?${params.toString()}`;
+}
+
+function returnHomeAfterOverlayClose(){
+  const modalOpen =
+    modal && modal.style.display === "flex";
+
+  const recipeDetailOpen =
+    document.body.classList.contains("recipe-full-page-open");
+
+  if(
+    !modalOpen &&
+    !recipeDetailOpen &&
+    document.body.classList.contains("show-recipes-page")
+  ){
+    backToHome();
+  }
 }
 
 function closeWorldSearch(){
@@ -2930,10 +3340,14 @@ async function searchWorldRecipes(){
   if(status) status.textContent=copy.loading;
   if(submit) submit.disabled=true;
   try{
-    const response=await fetch(`${window.API_BASE}/discover-recipes`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query,cuisine:selectedWorldCuisine,category:selectedWorldCategory,lang:currentLang,limit:24})});
+    const payloadToSend = {query,cuisine:selectedWorldCuisine,category:selectedWorldCategory,lang:currentLang,limit:24};
+    lastWorldSearchPayload = payloadToSend;
+    currentRecipeSearchMeta = null;
+    const response=await fetch(`${window.API_BASE}/discover-recipes`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payloadToSend)});
     const payload=await response.json();
     if(!response.ok) throw new Error(payload.error || "Search failed");
     if(!Array.isArray(payload.recipes) || !payload.recipes.length){ if(status) status.textContent=copy.empty; return; }
+    currentRecipeSearchMeta = payload.meta || null;
     recipePage=1;
     lastRecipeIngredients=[];
     closeWorldSearch();
@@ -2943,6 +3357,48 @@ async function searchWorldRecipes(){
     if(status) status.textContent=copy.error;
   }finally{
     if(submit) submit.disabled=false;
+  }
+}
+
+async function loadSimilarWorldRecipes(){
+  if(!lastWorldSearchPayload) return;
+  const actions=document.getElementById("recipeResultActions");
+  const button=document.getElementById("showSimilarRecipesBtn");
+  const labels={
+    tr:"Benzer tarifler aranıyor...",
+    en:"Finding similar recipes...",
+    de:"Ähnliche Rezepte werden gesucht...",
+    fr:"Recherche de recettes similaires...",
+    es:"Buscando recetas similares...",
+    pt:"Buscando receitas semelhantes...",
+    ru:"Ищем похожие рецепты...",
+    ar:"جارٍ البحث عن وصفات مشابهة...",
+    ja:"似たレシピを検索中...",
+    zh:"正在查找相似食谱..."
+  };
+  if(button){
+    button.disabled=true;
+    button.textContent=labels[currentLang] || labels.en;
+  }
+  try{
+    const response=await fetch(`${window.API_BASE}/discover-recipes`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({...lastWorldSearchPayload,includeExternal:true,limit:24})
+    });
+    const payload=await response.json();
+    if(!response.ok) throw new Error(payload.error || "Search failed");
+    if(Array.isArray(payload.recipes) && payload.recipes.length){
+      currentRecipeSearchMeta = payload.meta || null;
+      renderRecipes(payload.recipes);
+    }
+  }catch(error){
+    console.error("SIMILAR WORLD RECIPE SEARCH ERROR:",error);
+    if(actions){
+      actions.insertAdjacentHTML("beforeend",`<span class="recipe-action-error">${(getWorldSearchCopy().error || "Recipes could not be loaded.")}</span>`);
+    }
+  }finally{
+    if(button) button.disabled=false;
   }
 }
 
@@ -2960,6 +3416,7 @@ document.addEventListener("keydown", event => {
 });
 
 document.addEventListener("DOMContentLoaded", applyWorldSearchLanguage);
+document.addEventListener("DOMContentLoaded", loadMobileNiliPicks);
 
 function placeMobileWorldSearch(){
   const bar=document.querySelector(".mobile-world-search-bar");
@@ -2976,14 +3433,15 @@ function placeMobileWorldSearch(){
 document.addEventListener("DOMContentLoaded", placeMobileWorldSearch);
 window.addEventListener("resize", placeMobileWorldSearch);
 
-function renderRecipes(data){
+function renderRecipes(data, preservePage = false){
 
   currentRecipes = data;
+  if(!preservePage) recipePage = 1;
 
   console.log("RENDER RECIPES COUNT:", data.length);
 
   if(!result){
-    alert("Result element not found");
+    console.error("Recipe result element not found");
     return;
   }
 
@@ -3007,14 +3465,22 @@ function renderRecipes(data){
   result.style.visibility = "visible";
   result.style.opacity = "1";
 
-const visibleRecipes = data;
+const totalPages = Math.min(2, Math.max(1, Math.ceil(data.length / recipesPerPage)));
+recipePage = Math.min(Math.max(recipePage, 1), totalPages);
+const pageStart = (recipePage - 1) * recipesPerPage;
+const visibleRecipes = data.slice(pageStart, pageStart + recipesPerPage);
+
+const openRecipeLabels = {
+  en:"View recipe", tr:"Tarifi gör", de:"Rezept ansehen", fr:"Voir la recette",
+  es:"Ver receta", pt:"Ver receita", ru:"Открыть рецепт", ar:"عرض الوصفة",
+  ja:"レシピを見る", zh:"查看食谱"
+};
+const openRecipeLabel = openRecipeLabels[currentLang] || openRecipeLabels.en;
 
 updateRecipePageHeader(visibleRecipes.length);
 
-const totalPages = 1;
-
   result.innerHTML =
-    visibleRecipes.map(recipe => {
+    visibleRecipes.map((recipe, index) => {
 
       const allIngredients = getAllRecipeIngredients(recipe);
       const usedCount =
@@ -3059,10 +3525,7 @@ const totalPages = 1;
             >🤍</button>
 
             <img
-              src="${
-                recipe.image ||
-                "https://img.spoonacular.com/recipes/716429-556x370.jpg"
-              }"
+              ${recipeImageAttrs(recipe, pageStart + index)}
               alt="${recipe.title || t("recipeTitleFallback")}"
             >
           </div>
@@ -3104,6 +3567,10 @@ const totalPages = 1;
               </ul>
             </div>
 
+            <button class="recipe-card-open-btn" type="button" data-open-recipe="${recipe.id}">
+              <span>${openRecipeLabel}</span><span aria-hidden="true">→</span>
+            </button>
+
           </div>
 
         </div>
@@ -3118,17 +3585,58 @@ if(oldActions){
   oldActions.remove();
 }
 
+const shouldOfferSimilar =
+  currentRecipeSearchMeta?.fallbackMode === "nili-exact" &&
+  lastWorldSearchPayload;
+const similarLabels = {
+  tr:"Benzer tarifleri de göster",
+  en:"Show similar recipes",
+  de:"Ähnliche Rezepte zeigen",
+  fr:"Voir des recettes similaires",
+  es:"Ver recetas similares",
+  pt:"Mostrar receitas semelhantes",
+  ru:"Показать похожие рецепты",
+  ar:"عرض وصفات مشابهة",
+  ja:"似たレシピも表示",
+  zh:"显示相似食谱"
+};
+const navigationLabels = {
+  tr:{previous:"← Geri",home:"⌂ Ana sayfa",next:"İleri →"},
+  en:{previous:"← Back",home:"⌂ Home",next:"Next →"},
+  de:{previous:"← Zurück",home:"⌂ Startseite",next:"Weiter →"},
+  fr:{previous:"← Retour",home:"⌂ Accueil",next:"Suivant →"},
+  es:{previous:"← Atrás",home:"⌂ Inicio",next:"Siguiente →"},
+  pt:{previous:"← Voltar",home:"⌂ Início",next:"Seguinte →"},
+  ru:{previous:"← Назад",home:"⌂ Главная",next:"Далее →"},
+  ar:{previous:"→ السابق",home:"⌂ الرئيسية",next:"التالي ←"},
+  ja:{previous:"← 戻る",home:"⌂ ホーム",next:"次へ →"},
+  zh:{previous:"← 上一页",home:"⌂ 首页",next:"下一页 →"}
+};
+const navLabels = navigationLabels[currentLang] || navigationLabels.en;
+
 result.insertAdjacentHTML("afterend", `
   <div id="recipeResultActions" class="recipe-result-actions">
 
-    <button
-      type="button"
-      class="recipe-back-btn"
-      onclick="backToHome()">
-      ← Back
+    ${recipePage > 1
+      ? `<button type="button" class="recipe-back-btn" onclick="previousRecipePage()">${navLabels.previous}</button>`
+      : ""
+    }
+
+    <button type="button" class="recipe-home-btn" onclick="backToHome()">
+      ${navLabels.home}
     </button>
 
-     
+    ${
+      shouldOfferSimilar
+        ? `<button
+            id="showSimilarRecipesBtn"
+            type="button"
+            class="show-more-recipes-btn"
+            onclick="loadSimilarWorldRecipes()">
+            ${similarLabels[currentLang] || similarLabels.en}
+          </button>`
+        : ""
+    }
 
     ${
       recipePage < totalPages
@@ -3137,7 +3645,7 @@ result.insertAdjacentHTML("afterend", `
             type="button"
             class="recipe-next-btn"
             onclick="nextRecipePage()">
-            Next →
+            ${navLabels.next}
           </button>
         `
         : ""
@@ -3190,6 +3698,22 @@ if(favBtn){
 
 }
 
+document.addEventListener("click", event => {
+  const mobilePick = event.target.closest("[data-mobile-pick-id]");
+  if(!mobilePick) return;
+
+  const recipeId = mobilePick.dataset.mobilePickId;
+  if(!currentMobileNiliPicks.length) return;
+
+  renderRecipes(currentMobileNiliPicks);
+
+  requestAnimationFrame(() => {
+    localStorage.setItem("niliOpenRecipeId", recipeId);
+    history.replaceState(null, "", "#recipe-" + recipeId);
+    openRecipe(recipeId);
+  });
+});
+
 const persistentSidebar = document.getElementById("sidebar");
 if(persistentSidebar){
   persistentSidebar.addEventListener("click", event => {
@@ -3205,25 +3729,111 @@ if(persistentSidebar){
   }, true);
 }
 
-function openRecipe(id){
+function trackCreatorRecipeOpen(recipe){
+  if(!recipe || recipe.source !== "nili_creator"){
+    return;
+  }
+
+  const isLocalPreview =
+    location.hostname === "localhost" ||
+    location.hostname === "127.0.0.1" ||
+    location.hostname.startsWith("192.168.") ||
+    location.hostname.startsWith("10.") ||
+    location.hostname.startsWith("172.");
+
+  // Live Server watches the workspace. Updating the local click-stat JSON on
+  // every recipe open makes it reload the page and reopen the recipe forever.
+  if(isLocalPreview){
+    return;
+  }
+
+  const recipeId =
+    recipe.sourceId ||
+    recipe.id;
+
+  if(!recipeId || trackedCreatorRecipeOpens.has(String(recipeId))){
+    return;
+  }
+
+  trackedCreatorRecipeOpens.add(String(recipeId));
+
+  fetch(`${window.API_BASE}/creator-recipe-click/${encodeURIComponent(recipeId)}`, {
+    method:"POST"
+  }).catch(err => {
+    console.warn("Creator bonus tracking skipped:", err);
+  });
+}
+
+async function ensureRecipeDetailLanguage(recipe){
+  if(
+    recipe?._localizedLang===String(currentLang || "en").toLowerCase() &&
+    recipe?._detailsLocalized===true
+  ){
+    return recipe;
+  }
+
+  const controller=new AbortController();
+  const timeoutId=setTimeout(()=>controller.abort(),7000);
+  try{
+    const response=await fetch(`${window.API_BASE}/localize-recipe-detail`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({recipe,lang:currentLang}),
+      signal:controller.signal
+    });
+    const payload=await response.json();
+    if(!response.ok || !payload?.recipe){
+      throw new Error(payload?.error || "Recipe translation failed");
+    }
+    const localized=payload.recipe;
+    currentRecipes=currentRecipes.map(item=>
+      String(item.id)===String(recipe.id) ? localized : item
+    );
+    currentMobileNiliPicks=currentMobileNiliPicks.map(item=>
+      String(item.id)===String(recipe.id) ? localized : item
+    );
+    return localized;
+  }finally{
+    clearTimeout(timeoutId);
+  }
+}
+
+async function openRecipe(id){
 
   activeRecipeId = id;
 
-  const recipe =
+  let recipe =
   currentRecipes.find(
     item => String(item.id) === String(id)
   );
 
   if(!recipe){
-
-    modalBody.innerHTML =
-    "<h2>Recipe not found</h2>";
-
-    modal.style.display = "flex";
-
+    if(recipeFullPageBody){
+      recipeFullPageBody.innerHTML = `<div class="recipe-page-empty"><h2>${t("recipeNotFound") || "Recipe not found"}</h2></div>`;
+    }
+    if(recipeFullPage) recipeFullPage.setAttribute("aria-hidden", "false");
+    document.body.classList.add("recipe-full-page-open");
     return;
 
   }
+
+  try{
+    if(
+      recipe?._localizedLang!==String(currentLang || "en").toLowerCase() ||
+      recipe?._detailsLocalized!==true
+    ){
+      if(recipeFullPageBody){
+        recipeFullPageBody.innerHTML=`<div class="recipe-page-empty"><h2>${t("loadingRecipes") || "Loading recipe..."}</h2></div>`;
+      }
+      if(recipeFullPage) recipeFullPage.setAttribute("aria-hidden","false");
+      document.body.classList.add("recipe-full-page-open");
+      recipe=await ensureRecipeDetailLanguage(recipe);
+    }
+  }catch(error){
+    console.warn("RECIPE DETAIL LANGUAGE FALLBACK:",error);
+  }
+
+  trackCreatorRecipeOpen(recipe);
 
   const allIngredients = getAllRecipeIngredients(recipe);
   const ingredientHtml =
@@ -3246,7 +3856,7 @@ function openRecipe(id){
         .map((step, index) => `
           <li class="recipe-detail-step">
             <span class="recipe-step-number">${index + 1}</span>
-            <span>${step}</span>
+            <span class="recipe-step-text">${escapeHtml(step)}</span>
           </li>
         `).join("")
     : `<li class="recipe-detail-step">
@@ -3265,27 +3875,152 @@ function openRecipe(id){
   const cuisineLabel =
   getRecipeCuisineLabel(recipe);
 
+  const detailNavigationLabels = {
+    tr:{back:"Geri",home:"Ana sayfa",brand:"NILI'S KITCHEN TARİFİ"},
+    en:{back:"Back",home:"Home",brand:"A NILI'S KITCHEN RECIPE"},
+    de:{back:"Zurück",home:"Startseite",brand:"EIN NILI'S KITCHEN REZEPT"},
+    fr:{back:"Retour",home:"Accueil",brand:"UNE RECETTE NILI'S KITCHEN"},
+    es:{back:"Atrás",home:"Inicio",brand:"UNA RECETA DE NILI'S KITCHEN"},
+    pt:{back:"Voltar",home:"Início",brand:"UMA RECEITA NILI'S KITCHEN"},
+    ru:{back:"Назад",home:"Главная",brand:"РЕЦЕПТ NILI'S KITCHEN"},
+    ar:{back:"رجوع",home:"الرئيسية",brand:"وصفة من NILI'S KITCHEN"},
+    ja:{back:"戻る",home:"ホーム",brand:"NILI'S KITCHEN レシピ"},
+    zh:{back:"返回",home:"首页",brand:"NILI'S KITCHEN 食谱"}
+  };
+  const detailNav = detailNavigationLabels[currentLang] || detailNavigationLabels.en;
+
+  const viewerFlag = recipeFlagInfo(recipe);
+  const approvedCardCandidates = getRecipeCardImageCandidates(recipe);
+  const isLocalRecipePreview =
+    location.port === "5500" ||
+    String(window.API_BASE || "").includes(":3000") ||
+    location.hostname === "localhost" ||
+    location.hostname === "127.0.0.1" ||
+    location.hostname === "::1" ||
+    location.hostname.startsWith("192.168.") ||
+    location.hostname.startsWith("10.") ||
+    location.hostname.startsWith("172.");
+  const hasApprovedRecipeCard =
+    approvedCardCandidates.length > 0 && !isLocalRecipePreview;
+  if(recipeFullPage){
+    recipeFullPage.classList.toggle("recipe-detail-mode", !hasApprovedRecipeCard);
+  }
+
+  if(hasApprovedRecipeCard){
+  recipeFullPageBody.innerHTML = `
+    <article class="recipe-card-viewer">
+      <nav class="recipe-card-viewer-nav" aria-label="Recipe navigation">
+        <button type="button" onclick="closeModal()"><span aria-hidden="true">←</span> ${detailNav.back}</button>
+        <button type="button" onclick="closeRecipeToHome()">${detailNav.home} <span aria-hidden="true">⌂</span></button>
+
+      </nav>
+      <div class="recipe-card-viewer-stage">
+        <img
+          class="recipe-card-viewer-image"
+          ${recipeCardImageAttrs(recipe)}
+          alt="${escapeHtml(recipe.title || "Recipe")}"
+        >
+        <span class="recipe-card-country-badge">
+          ${viewerFlag.src ? `<img src="${escapeHtml(viewerFlag.src)}" alt="">` : ""}
+          <strong>${escapeHtml(cuisineLabel || viewerFlag.label || "World")}</strong>
+        </span>
+      </div>
+    </article>
+  `;
+
+  if(recipeFullPage){
+    recipeFullPage.setAttribute("aria-hidden", "false");
+  }
+  document.body.classList.add("recipe-full-page-open");
+  history.replaceState(null, "", `#recipe-${encodeURIComponent(id)}`);
+  window.scrollTo({top:0, behavior:"instant"});
+  return;
+  }
+
+  recipeFullPageBody.innerHTML = `
+    <article class="recipe-story-page">
+      <nav class="recipe-story-nav" aria-label="Recipe navigation">
+        <button type="button" onclick="closeModal()"><span aria-hidden="true">←</span> ${detailNav.back}</button>
+        <button type="button" onclick="closeRecipeToHome()">${detailNav.home} <span aria-hidden="true">⌂</span></button>
+      </nav>
+
+      <div class="recipe-story-frame">
+        <header class="recipe-story-heading">
+          <span class="recipe-detail-wordmark">${detailNav.brand}</span>
+          <h1>${escapeHtml(recipe.title || "Recipe")}</h1>
+
+          <div class="recipe-story-origin">
+            ${countryBadge}
+          </div>
+        </header>
+
+        <div class="recipe-story-lead">
+          <div class="recipe-detail-hero">
+            <img
+              ${recipeImageAttrs(recipe)}
+              alt="${escapeHtml(recipe.title || "Recipe")}"
+            >
+          </div>
+
+          <div class="recipe-story-summary">
+            <div class="recipe-detail-meta">
+              <span class="recipe-detail-pill">
+                <small>⏱</small>
+                <strong>${recipe.readyInMinutes ? `${recipe.readyInMinutes} ${t("timeMin")}` : `${recipe.timeLabel || t("timeUnavailable") || "-"}`}</strong>
+              </span>
+              ${servingsValue ? `<span class="recipe-detail-pill"><small>👥</small><strong>${servingsValue}</strong></span>` : ""}
+              <span class="recipe-detail-pill"><small>🥗</small><strong>${allIngredients.length}</strong></span>
+            </div>
+
+            <div class="recipe-detail-ingredients-panel">
+              <h2>🥗 ${t("ingredientsTitle")}</h2>
+              <ul class="recipe-detail-ingredients">
+                ${ingredientHtml}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <section class="recipe-detail-content">
+          <div class="recipe-story-section-title">
+            <span>👨‍🍳</span>
+            <h2>${t("instructionsTitle")}</h2>
+          </div>
+          <ol class="recipe-detail-steps">
+            ${instructionsHtml}
+          </ol>
+        </section>
+
+        <footer class="recipe-story-footer">
+          <span>Nili's Kitchen</span>
+          <button type="button" onclick="closeModal()">← ${detailNav.back}</button>
+        </footer>
+      </div>
+    </article>
+  `;
+
+  if(recipeFullPage){
+    recipeFullPage.setAttribute("aria-hidden", "false");
+  }
+  document.body.classList.add("recipe-full-page-open");
+  history.replaceState(null, "", `#recipe-${encodeURIComponent(id)}`);
+  window.scrollTo({top:0, behavior:"instant"});
+  return;
+
+  /* Legacy modal markup retained below temporarily for compatibility. */
   modalBody.innerHTML = `
     <div class="recipe-detail-shell recipe-detail-portrait">
       <div class="recipe-detail-fixed">
         <div class="recipe-detail-heading">
+        <span class="recipe-detail-wordmark">NILI'S KITCHEN</span>
         <h1>${recipe.title || "Recipe"}</h1>
-
-        ${
-          cuisineLabel
-            ? `<p class="recipe-detail-subtitle">${cuisineLabel}</p>`
-            : ""
-        }
 
         ${countryBadge}
         </div>
 
         <div class="recipe-detail-hero">
           <img
-            src="${
-              recipe.image ||
-              "https://img.spoonacular.com/recipes/716429-556x370.jpg"
-            }"
+            ${recipeImageAttrs(recipe)}
             alt="${recipe.title || "Recipe"}"
           >
         </div>
@@ -3323,6 +4058,7 @@ function openRecipe(id){
   `;
 
   modal.style.display = "flex";
+  document.body.classList.add("recipe-modal-open");
 
   const modalContent = modal.querySelector(".modal-content");
   if(modalContent){
@@ -3347,43 +4083,327 @@ function getRecipeCuisineLabel(recipe){
   );
 }
 
-function getRecipeCountryBadge(recipe){
-  const raw =
-  normalizeText(
-    recipe.country ||
-    recipe.cuisine ||
-    recipe.category ||
-    ""
+const recipeCountryLabels = {
+  turkey:{tr:"Türkiye",en:"Turkey",de:"Türkei",fr:"Turquie",es:"Turquía",pt:"Turquia",ru:"Турция",ar:"تركيا",ja:"トルコ",zh:"土耳其"},
+  italy:{tr:"İtalya",en:"Italy",de:"Italien",fr:"Italie",es:"Italia",pt:"Itália",ru:"Италия",ar:"إيطاليا",ja:"イタリア",zh:"意大利"},
+  mexico:{tr:"Meksika",en:"Mexico",de:"Mexiko",fr:"Mexique",es:"México",pt:"México",ru:"Мексика",ar:"المكسيك",ja:"メキシコ",zh:"墨西哥"},
+  india:{tr:"Hindistan",en:"India",de:"Indien",fr:"Inde",es:"India",pt:"Índia",ru:"Индия",ar:"الهند",ja:"インド",zh:"印度"},
+  china:{tr:"Çin",en:"China",de:"China",fr:"Chine",es:"China",pt:"China",ru:"Китай",ar:"الصين",ja:"中国",zh:"中国"},
+  japan:{tr:"Japonya",en:"Japan",de:"Japan",fr:"Japon",es:"Japón",pt:"Japão",ru:"Япония",ar:"اليابان",ja:"日本",zh:"日本"},
+  france:{tr:"Fransa",en:"France",de:"Frankreich",fr:"France",es:"Francia",pt:"França",ru:"Франция",ar:"فرنسا",ja:"フランス",zh:"法国"},
+  greece:{tr:"Yunanistan",en:"Greece",de:"Griechenland",fr:"Grèce",es:"Grecia",pt:"Grécia",ru:"Греция",ar:"اليونان",ja:"ギリシャ",zh:"希腊"},
+  thailand:{tr:"Tayland",en:"Thailand",de:"Thailand",fr:"Thaïlande",es:"Tailandia",pt:"Tailândia",ru:"Таиланд",ar:"تايلاند",ja:"タイ",zh:"泰国"},
+  usa:{tr:"ABD",en:"USA",de:"USA",fr:"États-Unis",es:"EE. UU.",pt:"EUA",ru:"США",ar:"أمريكا",ja:"アメリカ",zh:"美国"}
+};
+
+const recipeCountryFlagRules = [
+  { key:"turkey", code:"tr", match:["turk", "turkish", "turkiye", "turkey", "türkiye"] },
+  { key:"italy", code:"it", match:["ital", "italian", "italy", "italia"] },
+  { key:"mexico", code:"mx", match:["mexic", "mexico", "méxico"] },
+  { key:"india", code:"in", match:["indian", "india", "hindistan"] },
+  { key:"china", code:"cn", match:["chinese", "china", "çin"] },
+  { key:"japan", code:"jp", match:["japan", "japanese", "japon"] },
+  { key:"france", code:"fr", match:["french", "france", "fransa"] },
+  { key:"greece", code:"gr", match:["greek", "greece", "yunan"] },
+  { key:"thailand", code:"th", match:["thai", "thailand", "tayland"] },
+  { key:"usa", code:"us", match:["american", "usa", "united states", "abd"] },
+  { key:"morocco", code:"ma", match:["morocco", "moroccan", "fas"] },
+  { key:"uzbekistan", code:"uz", match:["uzbek", "uzbekistan", "özbek"] },
+  { key:"kazakhstan", code:"kz", match:["kazakh", "kazakhstan", "kazak"] },
+  { key:"azerbaijan", code:"az", match:["azerbaijan", "azeri", "azerbaycan"] },
+  { key:"georgia", code:"ge", match:["georgia", "georgian", "gürcü"] },
+  { key:"korea", code:"kr", match:["korea", "korean", "kore"] },
+  { key:"vietnam", code:"vn", match:["vietnam", "vietnamese"] },
+  { key:"spain", code:"es", match:["spain", "spanish", "ispanya"] },
+  { key:"portugal", code:"pt", match:["portugal", "portuguese"] },
+  { key:"germany", code:"de", match:["germany", "german", "almanya"] },
+  { key:"iran", code:"ir", match:["iran", "persian", "iranian"] },
+  { key:"lebanon", code:"lb", match:["lebanon", "lebanese", "lübnan"] },
+  { key:"syria", code:"sy", match:["syria", "syrian", "suriye"] },
+  { key:"egypt", code:"eg", match:["egypt", "egyptian", "mısır"] },
+  { key:"croatia", code:"hr", match:["croatia", "croatian", "hırvat"] },
+  { key:"indonesia", code:"id", match:["indonesia", "indonesian", "endonezya"] },
+  { key:"argentina", code:"ar", match:["argentina", "argentinian", "arjantin"] },
+  { key:"albania", code:"al", match:["albania", "albanian", "arnavut"] },
+  { key:"australia", code:"au", match:["australia", "australian", "avustralya"] },
+  { key:"austria", code:"at", match:["austria", "austrian", "avusturya"] },
+  { key:"belgium", code:"be", match:["belgium", "belgian", "belçika"] },
+  { key:"bolivia", code:"bo", match:["bolivia", "bolivian", "bolivya"] },
+  { key:"bosnia", code:"ba", match:["bosnia", "bosnian", "bosna"] },
+  { key:"brazil", code:"br", match:["brazil", "brazilian", "brezilya"] },
+  { key:"bulgaria", code:"bg", match:["bulgaria", "bulgarian", "bulgar"] },
+  { key:"uk", code:"gb", match:["united kingdom", "british", "britanya", "birleşik krallık", "ingiltere", "ingiliz", "galler"] },
+  { key:"algeria", code:"dz", match:["algeria", "algerian", "cezayir"] },
+  { key:"czechia", code:"cz", match:["czech", "çek"] },
+  { key:"denmark", code:"dk", match:["denmark", "danish", "danimarka"] },
+  { key:"ecuador", code:"ec", match:["ecuador", "ecuadorian", "ekvador"] },
+  { key:"estonia", code:"ee", match:["estonia", "estonian", "estonya"] },
+  { key:"ethiopia", code:"et", match:["ethiopia", "ethiopian", "etiyopya"] },
+  { key:"philippines", code:"ph", match:["philippines", "filipino", "filipinler"] },
+  { key:"finland", code:"fi", match:["finland", "finnish", "finlandiya"] },
+  { key:"ghana", code:"gh", match:["ghana", "ghanaian", "gana"] },
+  { key:"south-africa", code:"za", match:["south africa", "güney afrika"] },
+  { key:"netherlands", code:"nl", match:["netherlands", "dutch", "hollanda"] },
+  { key:"iraq", code:"iq", match:["iraq", "iraqi", "ırak"] },
+  { key:"ireland", code:"ie", match:["ireland", "irish", "irlanda"] },
+  { key:"israel", code:"il", match:["israel", "israeli", "israil"] },
+  { key:"sweden", code:"se", match:["sweden", "swedish", "isveç"] },
+  { key:"switzerland", code:"ch", match:["switzerland", "swiss", "isviçre"] },
+  { key:"canada", code:"ca", match:["canada", "canadian", "kanada"] },
+  { key:"colombia", code:"co", match:["colombia", "colombian", "kolombiya"] },
+  { key:"cuba", code:"cu", match:["cuba", "cuban", "küba"] },
+  { key:"malaysia", code:"my", match:["malaysia", "malaysian", "malezya"] },
+  { key:"nepal", code:"np", match:["nepal", "nepali"] },
+  { key:"norway", code:"no", match:["norway", "norwegian", "norveç"] },
+  { key:"peru", code:"pe", match:["peru", "peruvian"] },
+  { key:"poland", code:"pl", match:["poland", "polish", "polonya"] },
+  { key:"romania", code:"ro", match:["romania", "romanian", "romanya"] },
+  { key:"russia", code:"ru", match:["russia", "russian", "rusya"] },
+  { key:"serbia", code:"rs", match:["serbia", "serbian", "sırp"] },
+  { key:"singapore", code:"sg", match:["singapore", "singaporean", "singapur"] },
+  { key:"sri-lanka", code:"lk", match:["sri lanka", "sri lankan"] },
+  { key:"chile", code:"cl", match:["chile", "chilean", "şili"] },
+  { key:"taiwan", code:"tw", match:["taiwan", "taiwanese", "tayvan"] },
+  { key:"tunisia", code:"tn", match:["tunisia", "tunisian", "tunus"] },
+  { key:"ukraine", code:"ua", match:["ukraine", "ukrainian", "ukrayna"] },
+  { key:"uruguay", code:"uy", match:["uruguay", "uruguayan"] },
+  { key:"jordan", code:"jo", match:["jordan", "jordanian", "ürdün"] },
+  { key:"venezuela", code:"ve", match:["venezuela", "venezuelan"] },
+  { key:"yemen", code:"ye", match:["yemen", "yemeni"] },
+  { key:"new-zealand", code:"nz", match:["new zealand", "yeni zelanda"] },
+  { key:"palestine", code:"ps", match:["palestine", "palestinian", "filistin"] }
+];
+
+const recipeRegionFlagRules = [
+  { key:"central-asia", match:["central asia", "orta asya"] },
+  { key:"middle-east", match:["middle east", "arab", "levant", "orta dogu", "orta doğu"] },
+  { key:"mediterranean", match:["mediterranean", "akdeniz"] },
+  { key:"balkan", match:["balkan"] },
+  { key:"east-asia", match:["east asia", "far east", "uzak dogu", "uzak doğu"] },
+  { key:"north-africa", match:["north africa", "kuzey afrika"] },
+  { key:"latin-america", match:["latin america", "latin"] },
+  { key:"caucasus", match:["caucasus", "kafkas"] }
+];
+
+function recipeFlagInfo(recipe){
+  const raw = normalizeIngredientLookup([
+    recipe?.cuisineKey,
+    recipe?.country,
+    recipe?.cuisine,
+    recipe?.category,
+    recipe?.area,
+    recipe?.region,
+    recipe?.origin
+  ].filter(Boolean).join(" "));
+
+  const country = recipeCountryFlagRules.find(item =>
+    item.match.some(keyword => raw.includes(normalizeIngredientLookup(keyword)))
   );
 
-  const countryMap = [
-    { match:["turk", "turkish", "turkiye"], flag:"🇹🇷", label:"Türkiye" },
-    { match:["ital", "italian"], flag:"🇮🇹", label:"Italy" },
-    { match:["mexic"], flag:"🇲🇽", label:"Mexico" },
-    { match:["indian", "india"], flag:"🇮🇳", label:"India" },
-    { match:["chinese", "china"], flag:"🇨🇳", label:"China" },
-    { match:["japan", "japanese"], flag:"🇯🇵", label:"Japan" },
-    { match:["french", "france"], flag:"🇫🇷", label:"France" },
-    { match:["greek", "greece"], flag:"🇬🇷", label:"Greece" },
-    { match:["thai", "thailand"], flag:"🇹🇭", label:"Thailand" },
-    { match:["american", "usa", "united states"], flag:"🇺🇸", label:"USA" }
-  ];
-
-  const found =
-  countryMap.find(item =>
-    item.match.some(keyword => raw.includes(keyword))
-  );
-
-  if(!found){
-    return "";
+  if(country){
+    return {
+      key: country.key,
+      label: recipeCountryLabel(country.key, recipe?.country || recipe?.cuisine || country.key),
+      src: resolveStaticAssetUrl(`/flags/countries/${country.code}.svg`)
+    };
   }
+
+  const region = recipeRegionFlagRules.find(item =>
+    item.match.some(keyword => raw.includes(normalizeIngredientLookup(keyword)))
+  );
+
+  if(region){
+    return {
+      key: region.key,
+      label: recipe?.region || recipe?.cuisine || "World",
+      src: resolveStaticAssetUrl(`/flags/regions/${region.key}.svg`)
+    };
+  }
+
+  return {
+    key: "world",
+    label: recipe?.country || recipe?.cuisine || "World",
+    src: resolveStaticAssetUrl("/flags/regions/world.svg")
+  };
+}
+
+function recipeCountryLabel(key, fallback){
+  const langKey = currentLang || "en";
+  return recipeCountryLabels[key]?.[langKey] ||
+    recipeCountryLabels[key]?.en ||
+    fallback;
+}
+
+function getRecipeCountryBadge(recipe){
+  const found = recipeFlagInfo(recipe);
+  const fallbackFlag = resolveStaticAssetUrl("/flags/regions/world.svg");
 
   return `
     <div class="recipe-detail-country">
-      <span class="recipe-detail-country-flag">${found.flag}</span>
-      <span class="recipe-detail-country-label">${found.label}</span>
+      <img class="recipe-detail-country-flag" src="${found.src}" alt="" onerror="this.onerror=null;this.src='${fallbackFlag}'">
+      <span class="recipe-detail-country-label">${escapeHtml(found.label)}</span>
     </div>
   `;
+}
+
+function getRecipeFlagImage(recipe) {
+  const flag = recipeFlagInfo(recipe);
+  const fallbackFlag = resolveStaticAssetUrl("/flags/regions/world.svg");
+  return `<img src="${flag.src}" alt="${escapeHtml(flag.label)}" onerror="this.onerror=null;this.src='${fallbackFlag}'">`;
+}
+
+function mobileRecipeImageAttrs(recipe,index=0){
+  const thumbnail=resolveRecipeImageUrl(recipe?.thumbnail);
+  return recipeImageAttrs(
+    thumbnail ? {...recipe,mediaUrl:thumbnail} : recipe,
+    index
+  );
+}
+
+function renderMobileNiliPicks(recipes) {
+  const grid = document.getElementById("mobileNiliPicksGrid");
+  if(!grid) return;
+
+  const safeRecipes = Array.isArray(recipes) ? recipes.slice(0, 12) : [];
+
+  if(!safeRecipes.length) {
+    grid.innerHTML = "";
+    return;
+  }
+
+  grid.innerHTML = safeRecipes.map((recipe, index) => {
+    const title = recipe.title || t("recipeTitleFallback") || "Recipe";
+
+    return `
+      <button
+        class="mobile-nili-pick"
+        type="button"
+        data-mobile-pick-id="${escapeHtml(recipe.id)}"
+        aria-label="${escapeHtml(title)}"
+      >
+        <img
+          ${mobileRecipeImageAttrs(recipe, index)}
+          alt="${escapeHtml(title)}"
+          loading="${index<4 ? "eager" : "lazy"}"
+          fetchpriority="${index<2 ? "high" : "auto"}"
+        >
+        <span class="mobile-nili-pick-name">${escapeHtml(title)}</span>
+        <span class="mobile-nili-pick-flag">${getRecipeFlagImage(recipe)}</span>
+      </button>
+    `;
+  }).join("");
+}
+
+const MOBILE_NILI_PICKS_CACHE_VERSION="v3";
+let mobileNiliPicksRequestToken=0;
+
+function mobileNiliPicksCacheKey(lang){
+  return `nili-mobile-picks-${MOBILE_NILI_PICKS_CACHE_VERSION}-${lang}`;
+}
+
+function readMobileNiliPicksCache(key){
+  try{
+    const parsed=JSON.parse(localStorage.getItem(key) || "null");
+    return Array.isArray(parsed?.recipes) ? parsed.recipes.slice(0,12) : [];
+  }catch{
+    return [];
+  }
+}
+
+function writeMobileNiliPicksCache(key,recipes){
+  try{
+    localStorage.setItem(key,JSON.stringify({
+      savedAt:Date.now(),
+      recipes:(Array.isArray(recipes) ? recipes : []).slice(0,12)
+    }));
+  }catch(error){
+    console.warn("MOBILE PICKS CACHE SKIPPED:",error);
+  }
+}
+
+async function fetchMobileNiliPicks({lang,fast,timeoutMs}){
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),timeoutMs);
+
+  try{
+    const response=await fetch(`${window.API_BASE}/discover-recipes`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      signal:controller.signal,
+      body:JSON.stringify({
+        niliOnly:true,
+        featured:true,
+        fast,
+        lang,
+        limit:12
+      })
+    });
+    const payload=await response.json();
+    if(!response.ok) throw new Error(payload.error || "Mobile picks failed");
+    return Array.isArray(payload.recipes) ? payload.recipes.slice(0,12) : [];
+  }finally{
+    clearTimeout(timeout);
+  }
+}
+
+async function loadMobileNiliPicks() {
+  const grid = document.getElementById("mobileNiliPicksGrid");
+  if(!grid || window.innerWidth > 980) return;
+
+  const requestLang=String(currentLang || "en").toLowerCase();
+  const requestToken=++mobileNiliPicksRequestToken;
+  const localizedCacheKey=mobileNiliPicksCacheKey(requestLang);
+  const quickCacheKey=`nili-mobile-picks-${MOBILE_NILI_PICKS_CACHE_VERSION}-quick`;
+  const localizedCache=readMobileNiliPicksCache(localizedCacheKey);
+  const quickCache=readMobileNiliPicksCache(quickCacheKey);
+  const initialRecipes=localizedCache.length ? localizedCache : quickCache;
+
+  if(initialRecipes.length){
+    currentMobileNiliPicks=initialRecipes;
+    renderMobileNiliPicks(initialRecipes);
+  }else{
+    grid.innerHTML=`<div class="mobile-nili-picks-loading">${t("loadingRecipes") || "Loading recipes..."}</div>`;
+  }
+
+  try {
+    const quickRecipes=await fetchMobileNiliPicks({
+      lang:requestLang,
+      fast:true,
+      timeoutMs:10000
+    });
+    if(requestToken!==mobileNiliPicksRequestToken) return;
+    if(quickRecipes.length){
+      writeMobileNiliPicksCache(quickCacheKey,quickRecipes);
+      if(!localizedCache.length){
+        currentMobileNiliPicks=quickRecipes;
+        renderMobileNiliPicks(quickRecipes);
+      }
+    }
+  } catch(error) {
+    console.warn("MOBILE NILI PICKS QUICK ERROR:",error);
+  }
+
+  try{
+    const localizedRecipes=await fetchMobileNiliPicks({
+      lang:requestLang,
+      fast:false,
+      timeoutMs:60000
+    });
+    if(requestToken!==mobileNiliPicksRequestToken) return;
+    if(localizedRecipes.length){
+      currentMobileNiliPicks=localizedRecipes;
+      writeMobileNiliPicksCache(localizedCacheKey,localizedRecipes);
+      renderMobileNiliPicks(localizedRecipes);
+    }
+  }catch(error){
+    console.warn("MOBILE NILI PICKS LOCALIZE ERROR:",error);
+    if(
+      requestToken===mobileNiliPicksRequestToken &&
+      !currentMobileNiliPicks.length
+    ){
+      grid.innerHTML=`<div class="mobile-nili-picks-loading">${t("recipesLoadError") || "Recipes could not be loaded."}</div>`;
+    }
+  }
 }
 
 function getInstructionText(recipe){
@@ -3409,30 +4429,77 @@ function getInstructionText(recipe){
 }
 
 function getInstructionSteps(recipe){
+  const cleanStep = value => String(value || "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/^(?:(?:step|adım|étape|etape|paso|schritt)\s*)?\d{1,2}\s*[.)\-:]\s*/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  const usableSteps = values => values
+    .map(value => cleanStep(value?.step ?? value?.text ?? value))
+    .filter(value => value && !/^\d+[.)\-:]?$/.test(value));
+
   if(Array.isArray(recipe.analyzedInstructions) && recipe.analyzedInstructions.length){
-    const steps = recipe.analyzedInstructions
-      .flatMap(block => Array.isArray(block.steps) ? block.steps : [])
-      .map(step => step?.step)
-      .filter(Boolean);
+    const steps = usableSteps(
+      recipe.analyzedInstructions
+        .flatMap(block => Array.isArray(block.steps) ? block.steps : [])
+    );
 
     if(steps.length){
       return steps;
     }
   }
 
-  const plainText = getInstructionText(recipe);
-  if(!plainText){
-    return [];
+  if(Array.isArray(recipe.steps) && recipe.steps.length){
+    const steps = usableSteps(recipe.steps);
+    if(steps.length) return steps;
   }
 
-  return plainText
-    .split(/(?<=[.!?])\s+/)
-    .map(step => step.trim())
-    .filter(Boolean)
-    .slice(0, 8);
+  if(Array.isArray(recipe.instructions) && recipe.instructions.length){
+    const steps = usableSteps(recipe.instructions);
+    if(steps.length) return steps;
+  }
+
+  const rawInstructions = String(recipe.instructions || "")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/(?:p|li|div|section)>/gi, "\n")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\r/g, "\n")
+    .replace(/\u00a0/g, " ")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n[ \t]+/g, "\n")
+    .trim();
+
+  if(!rawInstructions) return [];
+
+  const markerPattern = /(?:^|\s)(?:(?:step|adım|étape|etape|paso|schritt)\s*)?\d{1,2}\s*[.)\-:]\s+/gi;
+  const markers = [...rawInstructions.matchAll(markerPattern)];
+
+  if(markers.length){
+    const numberedSteps = markers.map((marker, index) => {
+      const start = marker.index + marker[0].length;
+      const end = index + 1 < markers.length ? markers[index + 1].index : rawInstructions.length;
+      return rawInstructions.slice(start, end);
+    });
+    const steps = usableSteps(numberedSteps);
+    if(steps.length) return steps.slice(0, 40);
+  }
+
+  const lineSteps = usableSteps(rawInstructions.split(/\n+/));
+  if(lineSteps.length > 1) return lineSteps.slice(0, 40);
+
+  return usableSteps(rawInstructions.split(/(?<=[.!?])\s+/)).slice(0, 40);
 }
 
 window.closeModal = function(){
+
+  if(document.body.classList.contains("recipe-full-page-open")){
+    document.body.classList.remove("recipe-full-page-open");
+    if(recipeFullPage) recipeFullPage.setAttribute("aria-hidden", "true");
+    history.replaceState(null, "", "#recipes");
+    window.scrollTo({top:0, behavior:"instant"});
+    return;
+  }
 
   history.replaceState(null, "", "#recipes");
 
@@ -3444,35 +4511,17 @@ window.closeModal = function(){
     modal.style.display = "none";
   }
 
+  document.body.classList.remove("recipe-modal-open");
+
+  returnHomeAfterOverlayClose();
+
 }
 
-function getFavoritesFile(){
-  return path.join(__dirname, "data", "favorites.json");
-}
-
-function readFavorites(){
-  const file = getFavoritesFile();
-
-  const dir = path.dirname(file);
-  if(!fs.existsSync(dir)){
-    fs.mkdirSync(dir, { recursive: true });
-  }
-
-  if(!fs.existsSync(file)){
-    fs.writeFileSync(file, "{}");
-  }
-
-  return JSON.parse(fs.readFileSync(file, "utf8"));
-}
-
-function writeFavorites(data){
-  const file = getFavoritesFile();
-
-  fs.writeFileSync(
-    file,
-    JSON.stringify(data, null, 2)
-  );
-}
+window.closeRecipeToHome = function(){
+  document.body.classList.remove("recipe-full-page-open");
+  if(recipeFullPage) recipeFullPage.setAttribute("aria-hidden", "true");
+  backToHome();
+};
 
 function renderChecklist(){
 
@@ -3493,6 +4542,9 @@ function renderChecklist(){
  if(!selected.length){
   itemsBox.innerHTML = "";
   tray.classList.remove("has-items");
+  syncIngredientModalSelection();
+  updateTodayCookIngredients();
+  updateNiliAssistantContext();
 
   if(confirmCheck){
     confirmCheck.checked = false;
@@ -3508,35 +4560,710 @@ function renderChecklist(){
   }
 
   itemsBox.innerHTML =
-  selected.map(item => `
+  selected.map((item, index) => `
     <div class="selected-chip">
-      <span>${typeof ingredientLabel === "function" ? ingredientLabel(item) : item}</span>
+      <span>${typeof getIngredientLabel === "function" ? getIngredientLabel(item) : item}</span>
 
       <button
         type="button"
-        onclick="removeSelectedIngredient('${item.replace(/'/g, "\\'")}')"
+        class="selected-chip-remove"
+        data-selected-index="${index}"
+        aria-label="Remove ${typeof getIngredientLabel === "function" ? getIngredientLabel(item) : item}"
       >
         ×
       </button>
     </div>
   `).join("");
 
+  itemsBox.querySelectorAll(".selected-chip-remove").forEach(button => {
+    button.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      const index = Number(button.dataset.selectedIndex);
+      if(Number.isInteger(index)) removeSelectedIngredientAt(index);
+    });
+  });
+
+  syncIngredientModalSelection();
+
   translateSelectedIngredients();
+  updateTodayCookIngredients();
+  updateNiliAssistantContext();
 
 }
 
-function removeSelectedIngredient(item){
+function removeSelectedIngredientAt(index){
+  if(index < 0 || index >= selected.length) return;
+  selected.splice(index, 1);
+  saveState();
+  syncIngredientModalSelection();
+  renderChecklist();
+}
+
+const TODAY_COOK_COPY = {
+  en:{launch:"What should I cook today?",launchHint:"Get 3 personal suggestions",eyebrow:"NILI'S QUICK CHOICE",title:"What should I cook today?",description:"Tell us how you want to cook. Nili will select the best 3 recipes.",ingredients:"Your ingredients",noIngredients:"No ingredients selected yet.",chooseIngredients:"Choose ingredients",scanPhoto:"Scan a photo",servings:"How many people?",time:"How much time?",minute:"min",preference:"What matters today?",easy:"Easy",economic:"Economical",healthy:"Healthy",elegant:"Elegant",kids:"For kids",submit:"Find my 3 recipes",selectFirst:"Please select or scan at least one ingredient.",loading:"Nili is choosing your best 3 recipes...",none:"No suitable recipe was found. Try another time or preference.",all:"All ingredients are available",one:"Only 1 ingredient is missing",two:"Can be made with 2 alternatives",best:"Best match for you"},
+  tr:{launch:"Bugün Ne Pişirsem?",launchHint:"Sana özel 3 öneri al",eyebrow:"NILI'NİN HIZLI SEÇİMİ",title:"Bugün Ne Pişirsem?",description:"Nasıl pişirmek istediğini seç. Nili sana en uygun 3 tarifi bulsun.",ingredients:"Malzemelerin",noIngredients:"Henüz malzeme seçilmedi.",chooseIngredients:"Malzeme seç",scanPhoto:"Fotoğraf tara",servings:"Kaç kişilik?",time:"Ne kadar vaktin var?",minute:"dk",preference:"Bugün ne önemli?",easy:"Kolay",economic:"Ekonomik",healthy:"Sağlıklı",elegant:"Şık",kids:"Çocuklara uygun",submit:"3 tarifimi bul",selectFirst:"Lütfen en az bir malzeme seç veya fotoğraf tara.",loading:"Nili sana en uygun 3 tarifi seçiyor...",none:"Uygun tarif bulunamadı. Süreyi veya tercihi değiştir.",all:"Bütün malzemeler bende",one:"Sadece 1 malzeme eksik",two:"2 alternatif malzemeyle yapılabilir",best:"Sana en uygun eşleşme"},
+  de:{launch:"Was koche ich heute?",launchHint:"3 persönliche Vorschläge",eyebrow:"NILIS SCHNELLAUSWAHL",title:"Was koche ich heute?",description:"Wähle, wie du heute kochen möchtest. Nili findet die besten 3 Rezepte.",ingredients:"Deine Zutaten",noIngredients:"Noch keine Zutaten ausgewählt.",chooseIngredients:"Zutaten wählen",scanPhoto:"Foto scannen",servings:"Für wie viele?",time:"Wie viel Zeit?",minute:"Min.",preference:"Was ist heute wichtig?",easy:"Einfach",economic:"Günstig",healthy:"Gesund",elegant:"Elegant",kids:"Für Kinder",submit:"Meine 3 Rezepte finden",selectFirst:"Bitte wähle oder scanne mindestens eine Zutat.",loading:"Nili wählt deine besten 3 Rezepte...",none:"Kein passendes Rezept gefunden.",all:"Alle Zutaten vorhanden",one:"Nur 1 Zutat fehlt",two:"Mit 2 Alternativen möglich",best:"Beste Übereinstimmung"},
+  fr:{launch:"Que cuisiner aujourd'hui ?",launchHint:"3 suggestions personnalisées",eyebrow:"LE CHOIX RAPIDE DE NILI",title:"Que cuisiner aujourd'hui ?",description:"Choisissez votre façon de cuisiner. Nili sélectionne les 3 meilleures recettes.",ingredients:"Vos ingrédients",noIngredients:"Aucun ingrédient sélectionné.",chooseIngredients:"Choisir les ingrédients",scanPhoto:"Scanner une photo",servings:"Pour combien ?",time:"Combien de temps ?",minute:"min",preference:"Votre priorité ?",easy:"Facile",economic:"Économique",healthy:"Sain",elegant:"Élégant",kids:"Pour enfants",submit:"Trouver mes 3 recettes",selectFirst:"Sélectionnez ou scannez au moins un ingrédient.",loading:"Nili choisit vos 3 meilleures recettes...",none:"Aucune recette adaptée trouvée.",all:"Tous les ingrédients sont là",one:"Il manque 1 ingrédient",two:"Possible avec 2 alternatives",best:"Meilleure sélection"},
+  es:{launch:"¿Qué cocino hoy?",launchHint:"3 sugerencias personales",eyebrow:"SELECCIÓN RÁPIDA DE NILI",title:"¿Qué cocino hoy?",description:"Elige cómo quieres cocinar. Nili seleccionará las 3 mejores recetas.",ingredients:"Tus ingredientes",noIngredients:"Aún no hay ingredientes.",chooseIngredients:"Elegir ingredientes",scanPhoto:"Escanear foto",servings:"¿Para cuántos?",time:"¿Cuánto tiempo?",minute:"min",preference:"¿Qué importa hoy?",easy:"Fácil",economic:"Económico",healthy:"Saludable",elegant:"Elegante",kids:"Para niños",submit:"Buscar mis 3 recetas",selectFirst:"Selecciona o escanea al menos un ingrediente.",loading:"Nili elige tus 3 mejores recetas...",none:"No se encontró una receta adecuada.",all:"Tengo todos los ingredientes",one:"Solo falta 1 ingrediente",two:"Posible con 2 alternativas",best:"Mejor coincidencia"},
+  pt:{launch:"O que cozinhar hoje?",launchHint:"3 sugestões pessoais",eyebrow:"ESCOLHA RÁPIDA DA NILI",title:"O que cozinhar hoje?",description:"Escolha como quer cozinhar. Nili selecionará as 3 melhores receitas.",ingredients:"Seus ingredientes",noIngredients:"Nenhum ingrediente selecionado.",chooseIngredients:"Escolher ingredientes",scanPhoto:"Digitalizar foto",servings:"Para quantas pessoas?",time:"Quanto tempo?",minute:"min",preference:"O que importa hoje?",easy:"Fácil",economic:"Econômico",healthy:"Saudável",elegant:"Elegante",kids:"Para crianças",submit:"Encontrar 3 receitas",selectFirst:"Selecione ou digitalize pelo menos um ingrediente.",loading:"Nili está escolhendo suas 3 melhores receitas...",none:"Nenhuma receita adequada encontrada.",all:"Tenho todos os ingredientes",one:"Falta apenas 1 ingrediente",two:"Possível com 2 alternativas",best:"Melhor combinação"},
+  ru:{launch:"Что приготовить сегодня?",launchHint:"3 личных предложения",eyebrow:"БЫСТРЫЙ ВЫБОР NILI",title:"Что приготовить сегодня?",description:"Выберите условия, и Nili найдет 3 лучших рецепта.",ingredients:"Ваши ингредиенты",noIngredients:"Ингредиенты еще не выбраны.",chooseIngredients:"Выбрать ингредиенты",scanPhoto:"Сканировать фото",servings:"На сколько человек?",time:"Сколько времени?",minute:"мин",preference:"Что важно сегодня?",easy:"Просто",economic:"Экономно",healthy:"Полезно",elegant:"Изысканно",kids:"Для детей",submit:"Найти 3 рецепта",selectFirst:"Выберите или отсканируйте хотя бы один ингредиент.",loading:"Nili выбирает 3 лучших рецепта...",none:"Подходящий рецепт не найден.",all:"Все ингредиенты есть",one:"Не хватает 1 ингредиента",two:"Можно с 2 заменами",best:"Лучшее совпадение"},
+  ar:{launch:"ماذا أطبخ اليوم؟",launchHint:"3 اقتراحات شخصية",eyebrow:"اختيار نيلي السريع",title:"ماذا أطبخ اليوم؟",description:"اختر طريقة الطهي وستحدد نيلي أفضل 3 وصفات.",ingredients:"مكوناتك",noIngredients:"لم يتم اختيار مكونات بعد.",chooseIngredients:"اختر المكونات",scanPhoto:"امسح صورة",servings:"لِكم شخص؟",time:"كم لديك من الوقت؟",minute:"د",preference:"ما المهم اليوم؟",easy:"سهل",economic:"اقتصادي",healthy:"صحي",elegant:"أنيق",kids:"للأطفال",submit:"اعثر على 3 وصفات",selectFirst:"اختر أو امسح مكوناً واحداً على الأقل.",loading:"تختار نيلي أفضل 3 وصفات لك...",none:"لم يتم العثور على وصفة مناسبة.",all:"كل المكونات متوفرة",one:"ينقص مكون واحد فقط",two:"يمكن إعدادها ببديلين",best:"أفضل تطابق"},
+  ja:{launch:"今日は何を作る？",launchHint:"あなた向けの3提案",eyebrow:"NILIのクイックセレクト",title:"今日は何を作る？",description:"条件を選ぶと、Niliが最適な3レシピを選びます。",ingredients:"食材",noIngredients:"食材がまだ選択されていません。",chooseIngredients:"食材を選ぶ",scanPhoto:"写真をスキャン",servings:"何人分？",time:"調理時間は？",minute:"分",preference:"今日の優先は？",easy:"簡単",economic:"節約",healthy:"健康的",elegant:"おしゃれ",kids:"子ども向け",submit:"3レシピを探す",selectFirst:"食材を1つ以上選択またはスキャンしてください。",loading:"Niliが最適な3レシピを選んでいます...",none:"適したレシピが見つかりません。",all:"材料がすべて揃っています",one:"足りない材料は1つ",two:"2つの代替材料で作れます",best:"おすすめの組み合わせ"},
+  zh:{launch:"今天做什么？",launchHint:"获取3个专属建议",eyebrow:"NILI快速选择",title:"今天做什么？",description:"选择你的烹饪方式，Nili会挑选最合适的3个食谱。",ingredients:"你的食材",noIngredients:"尚未选择食材。",chooseIngredients:"选择食材",scanPhoto:"扫描照片",servings:"几人份？",time:"有多少时间？",minute:"分钟",preference:"今天最看重什么？",easy:"简单",economic:"实惠",healthy:"健康",elegant:"精致",kids:"儿童友好",submit:"寻找3个食谱",selectFirst:"请至少选择或扫描一种食材。",loading:"Nili正在挑选最适合你的3个食谱...",none:"没有找到合适的食谱。",all:"所有食材都齐全",one:"只缺1种食材",two:"可用2种替代食材制作",best:"最适合你的选择"}
+};
+
+const todayCookState = {servings:2,time:30,preference:"easy"};
+let todaySuggestionBadges = new Map();
+
+function todayCopy(key){
+  return TODAY_COOK_COPY[currentLang]?.[key] || TODAY_COOK_COPY.en[key] || key;
+}
+
+function updateTodayCookCopy(){
+  document.querySelectorAll("[data-today-copy]").forEach(element => {
+    element.textContent = todayCopy(element.dataset.todayCopy);
+  });
+}
+
+function updateTodayCookIngredients(){
+  const count = document.getElementById("todayCookIngredientCount");
+  const preview = document.getElementById("todayCookIngredientPreview");
+  if(count) count.textContent = selected.length;
+  if(preview){
+    preview.textContent = selected.length
+      ? selected.slice(0,6).map(getIngredientLabel).join(" • ") + (selected.length > 6 ? ` +${selected.length - 6}` : "")
+      : todayCopy("noIngredients");
+  }
+}
+
+window.openTodayCookFlow = function(){
+  updateTodayCookCopy();
+  updateTodayCookIngredients();
+  const modal = document.getElementById("todayCookModal");
+  if(!modal) return;
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+};
+
+window.closeTodayCookFlow = function(){
+  const modal = document.getElementById("todayCookModal");
+  if(!modal) return;
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+};
+
+function syncTodayCookLaunchSize(){
+  const launch = document.querySelector(".hero-content > .today-cook-launch:not(.today-cook-launch-mobile)");
+  const firstStripButton = document.querySelector(".hero-floating-strip .hero-strip-item");
+  const heroContent = document.querySelector(".hero-content");
+  if(!launch) return;
+  if(window.innerWidth <= 980 || !firstStripButton || !heroContent){
+    launch.style.removeProperty("width");
+    launch.style.removeProperty("margin-left");
+    return;
+  }
+  const buttonRect = firstStripButton.getBoundingClientRect();
+  const contentRect = heroContent.getBoundingClientRect();
+  launch.style.width = `${buttonRect.width}px`;
+  launch.style.marginLeft = `${buttonRect.left - contentRect.left}px`;
+}
+
+window.todayCookChooseIngredients = function(){
+  closeTodayCookFlow();
+  const panel = document.querySelector(".category-panel");
+  panel?.scrollIntoView({behavior:"smooth",block:"center"});
+};
+
+window.todayCookScanPhoto = function(){
+  closeTodayCookFlow();
+  document.getElementById("photoGallery")?.click();
+};
+
+function recipeReadyMinutes(recipe){
+  const value = Number(recipe?.readyInMinutes || recipe?.prepTime || 0);
+  return Number.isFinite(value) && value > 0 ? value : 45;
+}
+
+function todayRecipeText(recipe){
+  return [
+    recipe?.title, recipe?.category, recipe?.dishType, recipe?.cuisine,
+    ...(Array.isArray(recipe?.tags) ? recipe.tags : []),
+    ...getAllRecipeIngredients(recipe).map(item => item?.name || item?.original || item)
+  ].join(" ").toLocaleLowerCase();
+}
+
+function todayPreferenceScore(recipe, preference){
+  const text = todayRecipeText(recipe);
+  const ingredientCount = getAllRecipeIngredients(recipe).length || 12;
+  const minutes = recipeReadyMinutes(recipe);
+  if(preference === "easy") return Math.max(0,18 - ingredientCount) + Math.max(0,45 - minutes) / 4;
+  if(preference === "economic") return Math.max(0,20 - ingredientCount) + (/bean|lentil|rice|pasta|potato|egg|soup|fasulye|mercimek|pilav|makarna|patates|yumurta/.test(text) ? 18 : 0);
+  if(preference === "healthy") return /healthy|salad|vegetable|vegan|vegetarian|fish|grill|sebze|salata|balık|ızgara/.test(text) ? 28 : 0;
+  if(preference === "elegant") return /elegant|steak|salmon|risotto|tart|roast|filet|somon|bonfile|şık/.test(text) ? 28 : 0;
+  if(preference === "kids") return /pasta|pizza|chicken|meatball|pancake|burger|makarna|pizza|tavuk|köfte|krep/.test(text) ? 28 : (/spicy|chili|acı/.test(text) ? -18 : 0);
+  return 0;
+}
+
+function todayMatchBadge(recipe, chosenIngredients = []){
+  const selectedTerms = chosenIngredients.flatMap(value => {
+    const item = window.allIngredients?.find(entry => entry.id === value);
+    return item ? ingredientSearchValues(item) : [value];
+  }).map(normalizeIngredientLookup).filter(term => term.length > 2);
+
+  const pantryPattern = /\b(salt|pepper|water|oil|tuz|karabiber|su|yağ|seasoning|baharat)\b/i;
+  const recipeTerms = getAllRecipeIngredients(recipe)
+    .map(item => String(item?.original || item?.originalName || item?.name || item || ""))
+    .filter(text => text && !pantryPattern.test(text));
+  const calculatedMissing = recipeTerms.filter(text => {
+    const normalized = normalizeIngredientLookup(text);
+    return !selectedTerms.some(term => normalized.includes(term) || term.includes(normalized));
+  }).length;
+
+  if(recipeTerms.length && calculatedMissing === 0) return todayCopy("all");
+  if(calculatedMissing === 1) return todayCopy("one");
+  if(calculatedMissing === 2) return todayCopy("two");
+  if(recipeTerms.length) return todayCopy("best");
+
+  const missed = Array.isArray(recipe?.missedIngredients) ? recipe.missedIngredients.length : null;
+  if(missed === 0) return todayCopy("all");
+  if(missed === 1) return todayCopy("one");
+  if(missed === 2) return todayCopy("two");
+  return todayCopy("best");
+}
+
+function decorateTodaySuggestionCards(){
+  document.querySelectorAll("#result .recipe-card").forEach(card => {
+    const label = todaySuggestionBadges.get(String(card.dataset.recipeId));
+    if(!label) return;
+    card.querySelector(".today-match-badge")?.remove();
+    card.insertAdjacentHTML("afterbegin",`<div class="today-match-badge">${escapeHtml(label)}</div>`);
+  });
+}
+
+window.getTodayCookSuggestions = async function(){
+  const status = document.getElementById("todayCookStatus");
+  const submit = document.getElementById("todayCookSubmit");
+  if(!selected.length){
+    if(status) status.textContent = todayCopy("selectFirst");
+    return;
+  }
+  if(!checkGuestSearchLimit()) return;
+  if(status) status.textContent = todayCopy("loading");
+  if(submit) submit.disabled = true;
+
+  try{
+    const ingredientsForRecipe = [...selected];
+    const normalizeRes = await fetch(`${window.API_BASE}/normalize-ingredients`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ingredients:ingredientsForRecipe,lang:currentLang})
+    });
+    const normalizeData = await normalizeRes.json();
+    const normalized = normalizeData?.success && Array.isArray(normalizeData.ingredients)
+      ? normalizeData.ingredients.map(item => item.canonicalEn).filter(Boolean)
+      : ingredientsForRecipe;
+
+    const response = await fetch(`${window.API_BASE}/recipes`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        ingredients:normalized,
+        originalIngredients:ingredientsForRecipe,
+        lang:currentLang,
+        limit:12,
+        offset:0
+      })
+    });
+    const payload = await response.json();
+    if(!response.ok) throw new Error(payload?.error || "Recipe search failed");
+    const recipes = Array.isArray(payload) ? payload : payload?.recipes || payload?.results || [];
+
+    const ranked = recipes
+      .map(recipe => {
+        const minutes = recipeReadyMinutes(recipe);
+        const coverage = Number(recipe.selectedIngredientCoverage || 0);
+        const timeScore = minutes <= todayCookState.time ? 35 : Math.max(-25,35 - (minutes - todayCookState.time) * 2);
+        const sourceScore = recipe.source === "nili_creator" ? 24 : 0;
+        const servingScore = recipe.servings && Number(recipe.servings) >= todayCookState.servings ? 8 : 0;
+        return {recipe,score:coverage * 55 + timeScore + sourceScore + servingScore + todayPreferenceScore(recipe,todayCookState.preference)};
+      })
+      .sort((a,b) => b.score - a.score);
+
+    const withinTime = ranked.filter(item => recipeReadyMinutes(item.recipe) <= todayCookState.time);
+    const chosen = (withinTime.length >= 3 ? withinTime : ranked).slice(0,3).map(item => item.recipe);
+    if(!chosen.length){
+      if(status) status.textContent = todayCopy("none");
+      return;
+    }
+
+    todaySuggestionBadges = new Map(chosen.map(recipe => [
+      String(recipe.id),
+      todayMatchBadge(recipe,ingredientsForRecipe)
+    ]));
+    lastRecipeIngredients = ingredientsForRecipe;
+    recipePage = 1;
+    if(status) status.textContent = "";
+    closeTodayCookFlow();
+    renderRecipes(chosen);
+    decorateTodaySuggestionCards();
+  }catch(error){
+    console.error("TODAY COOK FAILED:",error);
+    if(status) status.textContent = t("serviceTemporaryUnavailable") || "Service is temporarily unavailable.";
+  }finally{
+    if(submit) submit.disabled = false;
+  }
+};
+
+document.addEventListener("DOMContentLoaded",() => {
+  document.querySelectorAll("[data-today-group]").forEach(group => {
+    group.addEventListener("click",event => {
+      const button = event.target.closest("button[data-value]");
+      if(!button) return;
+      group.querySelectorAll("button").forEach(item => item.classList.toggle("is-active",item === button));
+      todayCookState[group.dataset.todayGroup] =
+        group.dataset.todayGroup === "preference" ? button.dataset.value : Number(button.dataset.value);
+    });
+  });
+  document.getElementById("todayCookModal")?.addEventListener("click",event => {
+    if(event.target.id === "todayCookModal") closeTodayCookFlow();
+  });
+  updateTodayCookCopy();
+  updateTodayCookIngredients();
+  requestAnimationFrame(syncTodayCookLaunchSize);
+});
+window.addEventListener("resize",syncTodayCookLaunchSize);
+
+const NILI_ASSISTANT_COPY = {
+  en:{launch:"Ask Nili",launchHint:"Your personal kitchen assistant",eyebrow:"YOUR KITCHEN COMPANION",online:"Ready to help",context:"Selected ingredients",emptyContext:"No ingredients selected yet",greeting:"Hello! Tell me what you have or how you would like to cook today.",greetingSelected:"Hello! I can see your ingredients. Would you like something quick, lighter, economical, or a direct recipe suggestion?",quick:"Make it quick",lighter:"Make it lighter",substitute:"Suggest a substitute",recipes:"Show recipes",quickPrompt:"I want a quick meal with my ingredients.",lighterPrompt:"I want a lighter and healthier meal with my ingredients.",substitutePrompt:"Suggest practical substitutes for ingredients I may be missing.",recipesPrompt:"Show me recipes I can cook with my selected ingredients.",placeholder:"Ask Nili anything about cooking...",thinking:"Nili is thinking...",error:"I could not answer right now. Please try again.",chooseFirst:"Choose at least one ingredient so I can find the right recipes."},
+  tr:{launch:"Nili'ye Sor",launchHint:"Kişisel mutfak asistanın",eyebrow:"MUTFAK ARKADAŞIN",online:"Yardım etmeye hazır",context:"Seçili malzemeler",emptyContext:"Henüz malzeme seçilmedi",greeting:"Merhaba! Evinde neler olduğunu veya bugün nasıl bir yemek istediğini söyle.",greetingSelected:"Merhaba! Malzemelerini görüyorum. Hızlı, hafif, ekonomik bir yemek mi, yoksa doğrudan tarif önerisi mi istersin?",quick:"Hızlı olsun",lighter:"Daha hafif olsun",substitute:"Alternatif öner",recipes:"Tarifleri göster",quickPrompt:"Malzemelerimle hızlı hazırlanacak bir yemek istiyorum.",lighterPrompt:"Malzemelerimle daha hafif ve sağlıklı bir yemek istiyorum.",substitutePrompt:"Eksik olabilecek malzemeler için uygun alternatifler öner.",recipesPrompt:"Seçtiğim malzemelerle yapabileceğim tarifleri göster.",placeholder:"Nili'ye yemekle ilgili istediğini sor...",thinking:"Nili düşünüyor...",error:"Şu anda cevap veremedim. Lütfen tekrar dene.",chooseFirst:"Doğru tarifleri bulabilmem için en az bir malzeme seç."},
+  de:{launch:"Nili fragen",launchHint:"Deine persönliche Küchenhilfe",eyebrow:"DEINE KÜCHENBEGLEITERIN",online:"Bereit zu helfen",context:"Ausgewählte Zutaten",emptyContext:"Noch keine Zutaten ausgewählt",greeting:"Hallo! Sag mir, was du zu Hause hast oder wie du heute kochen möchtest.",greetingSelected:"Hallo! Ich sehe deine Zutaten. Soll es schnell, leicht, günstig oder direkt ein Rezept sein?",quick:"Schnell kochen",lighter:"Leichter kochen",substitute:"Ersatz vorschlagen",recipes:"Rezepte zeigen",quickPrompt:"Ich möchte mit meinen Zutaten schnell kochen.",lighterPrompt:"Ich möchte mit meinen Zutaten leichter und gesünder kochen.",substitutePrompt:"Schlage praktische Alternativen für fehlende Zutaten vor.",recipesPrompt:"Zeige Rezepte mit meinen ausgewählten Zutaten.",placeholder:"Frag Nili etwas über das Kochen...",thinking:"Nili denkt nach...",error:"Ich konnte gerade nicht antworten. Bitte versuche es erneut.",chooseFirst:"Wähle mindestens eine Zutat aus."},
+  fr:{launch:"Demander à Nili",launchHint:"Votre assistante de cuisine",eyebrow:"VOTRE COMPAGNE EN CUISINE",online:"Prête à vous aider",context:"Ingrédients sélectionnés",emptyContext:"Aucun ingrédient sélectionné",greeting:"Bonjour ! Dites-moi ce que vous avez ou ce que vous souhaitez cuisiner aujourd'hui.",greetingSelected:"Bonjour ! Je vois vos ingrédients. Préférez-vous un plat rapide, léger, économique ou une suggestion directe ?",quick:"Cuisine rapide",lighter:"Plus léger",substitute:"Trouver un substitut",recipes:"Voir les recettes",quickPrompt:"Je veux un plat rapide avec mes ingrédients.",lighterPrompt:"Je veux un plat plus léger et sain avec mes ingrédients.",substitutePrompt:"Propose des substituts pratiques pour les ingrédients manquants.",recipesPrompt:"Montre les recettes possibles avec mes ingrédients.",placeholder:"Posez une question culinaire à Nili...",thinking:"Nili réfléchit...",error:"Je ne peux pas répondre maintenant. Réessayez.",chooseFirst:"Choisissez au moins un ingrédient."},
+  es:{launch:"Preguntar a Nili",launchHint:"Tu asistente personal de cocina",eyebrow:"TU COMPAÑERA DE COCINA",online:"Lista para ayudar",context:"Ingredientes seleccionados",emptyContext:"Aún no hay ingredientes",greeting:"¡Hola! Dime qué tienes o cómo te gustaría cocinar hoy.",greetingSelected:"¡Hola! Veo tus ingredientes. ¿Quieres algo rápido, ligero, económico o recetas directas?",quick:"Que sea rápido",lighter:"Más ligero",substitute:"Sugerir sustituto",recipes:"Ver recetas",quickPrompt:"Quiero una comida rápida con mis ingredientes.",lighterPrompt:"Quiero una comida más ligera y saludable.",substitutePrompt:"Sugiere sustitutos prácticos para los ingredientes que falten.",recipesPrompt:"Muéstrame recetas con mis ingredientes.",placeholder:"Pregunta a Nili sobre cocina...",thinking:"Nili está pensando...",error:"No pude responder. Inténtalo de nuevo.",chooseFirst:"Selecciona al menos un ingrediente."},
+  pt:{launch:"Perguntar à Nili",launchHint:"Sua assistente pessoal de cozinha",eyebrow:"SUA COMPANHEIRA DE COZINHA",online:"Pronta para ajudar",context:"Ingredientes selecionados",emptyContext:"Nenhum ingrediente selecionado",greeting:"Olá! Diga o que tem em casa ou como quer cozinhar hoje.",greetingSelected:"Olá! Vejo seus ingredientes. Quer algo rápido, leve, econômico ou receitas diretas?",quick:"Fazer rápido",lighter:"Mais leve",substitute:"Sugerir substituto",recipes:"Ver receitas",quickPrompt:"Quero uma refeição rápida com meus ingredientes.",lighterPrompt:"Quero uma refeição mais leve e saudável.",substitutePrompt:"Sugira substitutos práticos para ingredientes em falta.",recipesPrompt:"Mostre receitas com meus ingredientes.",placeholder:"Pergunte à Nili sobre cozinha...",thinking:"Nili está pensando...",error:"Não consegui responder agora. Tente novamente.",chooseFirst:"Selecione pelo menos um ingrediente."},
+  ru:{launch:"Спросить Nili",launchHint:"Ваш личный кухонный помощник",eyebrow:"ВАШ КУХОННЫЙ ПОМОЩНИК",online:"Готова помочь",context:"Выбранные ингредиенты",emptyContext:"Ингредиенты не выбраны",greeting:"Здравствуйте! Расскажите, что у вас есть и что вы хотите приготовить.",greetingSelected:"Здравствуйте! Я вижу ваши ингредиенты. Хотите быстрое, лёгкое, экономное блюдо или готовые рецепты?",quick:"Быстро",lighter:"Полегче",substitute:"Найти замену",recipes:"Показать рецепты",quickPrompt:"Хочу быстрое блюдо из выбранных ингредиентов.",lighterPrompt:"Хочу более лёгкое и полезное блюдо.",substitutePrompt:"Предложи практичные замены недостающим ингредиентам.",recipesPrompt:"Покажи рецепты из выбранных ингредиентов.",placeholder:"Спросите Nili о приготовлении...",thinking:"Nili думает...",error:"Сейчас не удалось ответить. Попробуйте ещё раз.",chooseFirst:"Выберите хотя бы один ингредиент."},
+  ar:{launch:"اسأل نيلي",launchHint:"مساعدتك الشخصية في المطبخ",eyebrow:"رفيقتك في المطبخ",online:"جاهزة للمساعدة",context:"المكونات المختارة",emptyContext:"لم يتم اختيار مكونات",greeting:"مرحباً! أخبرني بما لديك أو بما ترغب في طهيه اليوم.",greetingSelected:"مرحباً! أرى مكوناتك. هل تريد وجبة سريعة أو خفيفة أو اقتصادية أو وصفات مباشرة؟",quick:"وجبة سريعة",lighter:"وجبة أخف",substitute:"اقترح بديلاً",recipes:"اعرض الوصفات",quickPrompt:"أريد وجبة سريعة بالمكونات المختارة.",lighterPrompt:"أريد وجبة أخف وأكثر صحة.",substitutePrompt:"اقترح بدائل عملية للمكونات الناقصة.",recipesPrompt:"اعرض وصفات بالمكونات المختارة.",placeholder:"اسأل نيلي عن الطهي...",thinking:"نيلي تفكر...",error:"تعذر الرد الآن. حاول مرة أخرى.",chooseFirst:"اختر مكوناً واحداً على الأقل."},
+  ja:{launch:"Niliに聞く",launchHint:"あなた専用の料理アシスタント",eyebrow:"キッチンのパートナー",online:"お手伝いできます",context:"選択した食材",emptyContext:"食材が未選択です",greeting:"こんにちは。家にある食材や今日作りたい料理を教えてください。",greetingSelected:"食材を確認しました。時短、ヘルシー、節約、またはレシピを直接表示しますか？",quick:"時短料理",lighter:"ヘルシーに",substitute:"代用品を提案",recipes:"レシピを見る",quickPrompt:"選んだ食材で早く作れる料理が欲しいです。",lighterPrompt:"選んだ食材で軽く健康的な料理が欲しいです。",substitutePrompt:"足りない食材の実用的な代用品を提案してください。",recipesPrompt:"選んだ食材で作れるレシピを見せてください。",placeholder:"料理についてNiliに質問...",thinking:"Niliが考えています...",error:"現在回答できません。もう一度お試しください。",chooseFirst:"食材を1つ以上選択してください。"},
+  zh:{launch:"询问Nili",launchHint:"你的私人厨房助手",eyebrow:"你的厨房伙伴",online:"随时提供帮助",context:"已选食材",emptyContext:"尚未选择食材",greeting:"你好！告诉我你家里有什么，或者今天想怎样烹饪。",greetingSelected:"你好！我看到了你的食材。想要快捷、清淡、实惠的菜，还是直接查看食谱？",quick:"快速烹饪",lighter:"更清淡",substitute:"推荐替代品",recipes:"查看食谱",quickPrompt:"我想用已选食材快速做一道菜。",lighterPrompt:"我想用已选食材做一道更清淡健康的菜。",substitutePrompt:"请为缺少的食材推荐实用替代品。",recipesPrompt:"显示可以用已选食材制作的食谱。",placeholder:"向Nili询问烹饪问题...",thinking:"Nili正在思考...",error:"暂时无法回答，请重试。",chooseFirst:"请至少选择一种食材。"}
+};
+
+let niliAssistantStarted=false;
+let niliAssistantVerified=false;
+let niliAssistantVerifiedEmail="";
+let niliAssistantPendingEmail="";
+const NILI_ASSISTANT_TOKEN_KEY="niliAssistantVerifiedTokenV1";
+const NILI_ASSISTANT_EMAIL_KEY="niliAssistantVerifiedEmailV1";
+
+const NILI_ASSISTANT_PLAN_COPY={
+  en:{plan:"Plan my week",planPrompt:"Create a personal weekly dinner plan and shopping list for me."},
+  tr:{plan:"Haftamı planla",planPrompt:"Bana kişisel bir haftalık akşam yemeği planı ve alışveriş listesi hazırla."},
+  de:{plan:"Woche planen",planPrompt:"Erstelle einen persönlichen Wochenplan mit Einkaufsliste."},
+  fr:{plan:"Planifier ma semaine",planPrompt:"Crée mon programme de dîners et ma liste de courses pour la semaine."},
+  es:{plan:"Planificar mi semana",planPrompt:"Crea mi plan semanal de cenas y la lista de compras."},
+  pt:{plan:"Planejar minha semana",planPrompt:"Crie meu plano semanal de jantares e a lista de compras."},
+  ru:{plan:"Спланировать неделю",planPrompt:"Создай мой недельный план ужинов и список покупок."},
+  ar:{plan:"خطط أسبوعي",planPrompt:"أنشئ لي خطة عشاء أسبوعية شخصية وقائمة تسوق."},
+  ja:{plan:"一週間を計画",planPrompt:"一週間の夕食プランと買い物リストを作ってください。"},
+  zh:{plan:"规划一周",planPrompt:"请为我创建每周晚餐计划和购物清单。"}
+};
+
+const NILI_ASSISTANT_AUTH_COPY={
+  en:{verifyTitle:"Verify your email",verifyDesc:"Enter your email and we will send a 6-digit verification code.",emailPlaceholder:"Email address",sendCode:"Send code",codePlaceholder:"6-digit code",verifyCode:"Verify and chat",changeEmail:"Use another email",privacy:"Your email is used only to secure this conversation.",codeSent:"We sent a verification code to your email.",verified:"Email verified. You can now chat with Nili.",invalidEmail:"Enter a valid email address.",registeredEmail:"This email is already registered. Please use another email address.",invalidCode:"Enter the 6-digit code.",mailError:"The verification email could not be sent. Please try again.",codeError:"The code is incorrect or has expired.",sessionError:"Please verify your email to continue.",close:"Close",send:"Send"},
+  tr:{verifyTitle:"E-postanı doğrula",verifyDesc:"E-posta adresini yaz; sana 6 haneli bir doğrulama kodu gönderelim.",emailPlaceholder:"E-posta adresi",sendCode:"Kodu gönder",codePlaceholder:"6 haneli kod",verifyCode:"Doğrula ve sohbete başla",changeEmail:"Başka e-posta kullan",privacy:"E-posta adresin yalnızca bu sohbeti güvenli tutmak için kullanılır.",codeSent:"Doğrulama kodunu e-posta adresine gönderdik.",verified:"E-posta doğrulandı. Artık Nili ile sohbet edebilirsin.",invalidEmail:"Geçerli bir e-posta adresi yaz.",registeredEmail:"Bu e-posta sistemde kayıtlı. Lütfen başka bir e-posta adresi kullan.",invalidCode:"6 haneli kodu yaz.",mailError:"Doğrulama e-postası gönderilemedi. Tekrar dene.",codeError:"Kod hatalı veya süresi dolmuş.",sessionError:"Devam etmek için e-postanı doğrula.",close:"Kapat",send:"Gönder"},
+  de:{verifyTitle:"E-Mail bestätigen",verifyDesc:"Gib deine E-Mail ein. Wir senden dir einen 6-stelligen Bestätigungscode.",emailPlaceholder:"E-Mail-Adresse",sendCode:"Code senden",codePlaceholder:"6-stelliger Code",verifyCode:"Bestätigen und chatten",changeEmail:"Andere E-Mail verwenden",privacy:"Deine E-Mail wird nur zur Sicherung dieses Chats verwendet.",codeSent:"Wir haben einen Bestätigungscode an deine E-Mail gesendet.",verified:"E-Mail bestätigt. Du kannst jetzt mit Nili chatten.",invalidEmail:"Gib eine gültige E-Mail-Adresse ein.",registeredEmail:"Diese E-Mail ist bereits registriert. Bitte verwende eine andere Adresse.",invalidCode:"Gib den 6-stelligen Code ein.",mailError:"Die Bestätigungs-E-Mail konnte nicht gesendet werden.",codeError:"Der Code ist falsch oder abgelaufen.",sessionError:"Bestätige deine E-Mail, um fortzufahren.",close:"Schließen",send:"Senden"},
+  fr:{verifyTitle:"Vérifiez votre e-mail",verifyDesc:"Saisissez votre e-mail pour recevoir un code de vérification à 6 chiffres.",emailPlaceholder:"Adresse e-mail",sendCode:"Envoyer le code",codePlaceholder:"Code à 6 chiffres",verifyCode:"Vérifier et discuter",changeEmail:"Utiliser un autre e-mail",privacy:"Votre e-mail sert uniquement à sécuriser cette conversation.",codeSent:"Un code de vérification a été envoyé à votre e-mail.",verified:"E-mail vérifié. Vous pouvez maintenant discuter avec Nili.",invalidEmail:"Saisissez une adresse e-mail valide.",registeredEmail:"Cet e-mail est déjà enregistré. Veuillez utiliser une autre adresse.",invalidCode:"Saisissez le code à 6 chiffres.",mailError:"L'e-mail de vérification n'a pas pu être envoyé.",codeError:"Le code est incorrect ou expiré.",sessionError:"Vérifiez votre e-mail pour continuer.",close:"Fermer",send:"Envoyer"},
+  es:{verifyTitle:"Verifica tu correo",verifyDesc:"Introduce tu correo y te enviaremos un código de verificación de 6 dígitos.",emailPlaceholder:"Correo electrónico",sendCode:"Enviar código",codePlaceholder:"Código de 6 dígitos",verifyCode:"Verificar y conversar",changeEmail:"Usar otro correo",privacy:"Tu correo se usa únicamente para proteger esta conversación.",codeSent:"Enviamos un código de verificación a tu correo.",verified:"Correo verificado. Ya puedes conversar con Nili.",invalidEmail:"Introduce un correo válido.",registeredEmail:"Este correo ya está registrado. Usa otra dirección de correo.",invalidCode:"Introduce el código de 6 dígitos.",mailError:"No se pudo enviar el correo de verificación.",codeError:"El código es incorrecto o ha caducado.",sessionError:"Verifica tu correo para continuar.",close:"Cerrar",send:"Enviar"},
+  pt:{verifyTitle:"Verifique seu e-mail",verifyDesc:"Digite seu e-mail para receber um código de verificação de 6 dígitos.",emailPlaceholder:"Endereço de e-mail",sendCode:"Enviar código",codePlaceholder:"Código de 6 dígitos",verifyCode:"Verificar e conversar",changeEmail:"Usar outro e-mail",privacy:"Seu e-mail é usado apenas para proteger esta conversa.",codeSent:"Enviamos um código de verificação para seu e-mail.",verified:"E-mail verificado. Agora você pode conversar com Nili.",invalidEmail:"Digite um e-mail válido.",registeredEmail:"Este e-mail já está cadastrado. Use outro endereço de e-mail.",invalidCode:"Digite o código de 6 dígitos.",mailError:"Não foi possível enviar o e-mail de verificação.",codeError:"O código está incorreto ou expirou.",sessionError:"Verifique seu e-mail para continuar.",close:"Fechar",send:"Enviar"},
+  ru:{verifyTitle:"Подтвердите электронную почту",verifyDesc:"Введите e-mail, и мы отправим 6-значный код подтверждения.",emailPlaceholder:"Электронная почта",sendCode:"Отправить код",codePlaceholder:"6-значный код",verifyCode:"Подтвердить и начать чат",changeEmail:"Использовать другой e-mail",privacy:"Ваш e-mail используется только для защиты этой беседы.",codeSent:"Код подтверждения отправлен на вашу почту.",verified:"Почта подтверждена. Теперь можно общаться с Nili.",invalidEmail:"Введите правильный адрес почты.",registeredEmail:"Этот адрес уже зарегистрирован. Используйте другой e-mail.",invalidCode:"Введите 6-значный код.",mailError:"Не удалось отправить письмо с кодом.",codeError:"Код неверен или истёк.",sessionError:"Подтвердите почту, чтобы продолжить.",close:"Закрыть",send:"Отправить"},
+  ar:{verifyTitle:"تحقق من بريدك الإلكتروني",verifyDesc:"أدخل بريدك الإلكتروني وسنرسل رمز تحقق من 6 أرقام.",emailPlaceholder:"البريد الإلكتروني",sendCode:"إرسال الرمز",codePlaceholder:"رمز من 6 أرقام",verifyCode:"تحقق وابدأ الدردشة",changeEmail:"استخدم بريداً آخر",privacy:"يُستخدم بريدك فقط لتأمين هذه المحادثة.",codeSent:"أرسلنا رمز التحقق إلى بريدك الإلكتروني.",verified:"تم التحقق من البريد. يمكنك الآن الدردشة مع Nili.",invalidEmail:"أدخل بريداً إلكترونياً صالحاً.",registeredEmail:"هذا البريد مسجل بالفعل. استخدم عنوان بريد إلكتروني آخر.",invalidCode:"أدخل الرمز المكون من 6 أرقام.",mailError:"تعذر إرسال رسالة التحقق.",codeError:"الرمز غير صحيح أو منتهي الصلاحية.",sessionError:"تحقق من بريدك للمتابعة.",close:"إغلاق",send:"إرسال"},
+  ja:{verifyTitle:"メールアドレスを確認",verifyDesc:"メールアドレスを入力すると、6桁の認証コードを送信します。",emailPlaceholder:"メールアドレス",sendCode:"コードを送信",codePlaceholder:"6桁のコード",verifyCode:"認証してチャット",changeEmail:"別のメールを使用",privacy:"メールはこの会話の安全確保にのみ使用されます。",codeSent:"認証コードをメールで送信しました。",verified:"メール認証が完了しました。Niliとチャットできます。",invalidEmail:"有効なメールアドレスを入力してください。",registeredEmail:"このメールは登録済みです。別のメールアドレスを使用してください。",invalidCode:"6桁のコードを入力してください。",mailError:"認証メールを送信できませんでした。",codeError:"コードが正しくないか期限切れです。",sessionError:"続行するにはメールを認証してください。",close:"閉じる",send:"送信"},
+  zh:{verifyTitle:"验证您的电子邮箱",verifyDesc:"输入邮箱，我们将发送6位验证码。",emailPlaceholder:"电子邮箱",sendCode:"发送验证码",codePlaceholder:"6位验证码",verifyCode:"验证并开始聊天",changeEmail:"使用其他邮箱",privacy:"您的邮箱仅用于保护本次对话。",codeSent:"验证码已发送到您的邮箱。",verified:"邮箱验证成功。现在可以与 Nili 聊天。",invalidEmail:"请输入有效的邮箱地址。",registeredEmail:"此邮箱已注册，请使用其他邮箱地址。",invalidCode:"请输入6位验证码。",mailError:"无法发送验证邮件，请重试。",codeError:"验证码错误或已过期。",sessionError:"请验证邮箱后继续。",close:"关闭",send:"发送"}
+};
+
+function niliAssistantCopy(key){
+  const planCopy=NILI_ASSISTANT_PLAN_COPY[currentLang] || NILI_ASSISTANT_PLAN_COPY.en;
+  if(planCopy[key]) return planCopy[key];
+  const authCopy=NILI_ASSISTANT_AUTH_COPY[currentLang] || NILI_ASSISTANT_AUTH_COPY.en;
+  if(authCopy[key]) return authCopy[key];
+  return NILI_ASSISTANT_COPY[currentLang]?.[key] ||
+    NILI_ASSISTANT_COPY.en[key] ||
+    key;
+}
+
+function updateNiliAssistantCopy(){
+  document.querySelectorAll("[data-nili-assistant-copy]").forEach(element => {
+    element.textContent=niliAssistantCopy(element.dataset.niliAssistantCopy);
+  });
+  document.querySelectorAll("[data-nili-assistant-placeholder]").forEach(element => {
+    element.placeholder=niliAssistantCopy(element.dataset.niliAssistantPlaceholder);
+  });
+  document.querySelectorAll("[data-nili-assistant-aria]").forEach(element => {
+    element.setAttribute("aria-label",niliAssistantCopy(element.dataset.niliAssistantAria));
+  });
+  const send=document.getElementById("niliAssistantSend");
+  if(send) send.setAttribute("aria-label",niliAssistantCopy("send"));
+  updateNiliAssistantContext();
+}
+
+function updateNiliAssistantContext(){
+  const context=document.getElementById("niliAssistantContext");
+  if(!context) return;
+  const labels=selected.slice(0,5).map(getIngredientLabel);
+  const suffix=selected.length>5 ? ` +${selected.length-5}` : "";
+  context.innerHTML=selected.length
+    ? `<strong>${escapeHtml(niliAssistantCopy("context"))}:</strong> ${escapeHtml(labels.join(" • ")+suffix)}`
+    : `<strong>${escapeHtml(niliAssistantCopy("context"))}:</strong> ${escapeHtml(niliAssistantCopy("emptyContext"))}`;
+}
+
+function addNiliAssistantMessage(text,type="nili",extraClass=""){
+  const messages=document.getElementById("niliAssistantMessages");
+  if(!messages || !text) return null;
+  const item=document.createElement("div");
+  item.className=`nili-assistant-message is-${type}${extraClass ? ` ${extraClass}` : ""}`;
+  item.textContent=text;
+  messages.appendChild(item);
+  messages.scrollTop=messages.scrollHeight;
+  return item;
+}
+
+function niliAssistantStoredToken(){
+  return localStorage.getItem(NILI_ASSISTANT_TOKEN_KEY) || "";
+}
+
+function niliAssistantSetAuthStatus(message="",success=false){
+  const status=document.getElementById("niliAssistantAuthStatus");
+  if(!status) return;
+  status.textContent=message;
+  status.classList.toggle("is-success",success);
+}
+
+function startNiliAssistantConversation(){
+  if(niliAssistantStarted) return;
+  addNiliAssistantMessage(selected.length
+    ? niliAssistantCopy("greetingSelected")
+    : niliAssistantCopy("greeting"));
+  niliAssistantStarted=true;
+}
+
+function setNiliAssistantLocked(locked){
+  const panel=document.querySelector(".nili-assistant-panel");
+  panel?.classList.toggle("is-locked",locked);
+  niliAssistantVerified=!locked;
+  if(!locked){
+    startNiliAssistantConversation();
+    setTimeout(()=>document.getElementById("niliAssistantInput")?.focus(),120);
+  }
+}
+
+function resetNiliAssistantVerification(){
+  niliAssistantPendingEmail="";
+  document.getElementById("niliAssistantEmailStep")?.classList.remove("is-hidden");
+  document.getElementById("niliAssistantCodeStep")?.classList.add("is-hidden");
+  document.getElementById("niliAssistantChangeEmail")?.classList.add("is-hidden");
+  const code=document.getElementById("niliAssistantCode");
+  if(code) code.value="";
+  niliAssistantSetAuthStatus("");
+}
+
+async function validateNiliAssistantSession(){
+  const token=niliAssistantStoredToken();
+  if(!token){
+    setNiliAssistantLocked(true);
+    return false;
+  }
+
+  try{
+    const response=await fetch(`${window.API_BASE}/nili-assistant/session`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":`Bearer ${token}`
+      },
+      body:JSON.stringify({verificationToken:token})
+    });
+    const payload=await response.json();
+    if(!response.ok || !payload.valid) throw new Error("Invalid assistant session");
+    niliAssistantVerifiedEmail=payload.email || localStorage.getItem(NILI_ASSISTANT_EMAIL_KEY) || "";
+    setNiliAssistantLocked(false);
+    return true;
+  }catch{
+    localStorage.removeItem(NILI_ASSISTANT_TOKEN_KEY);
+    localStorage.removeItem(NILI_ASSISTANT_EMAIL_KEY);
+    niliAssistantVerifiedEmail="";
+    setNiliAssistantLocked(true);
+    return false;
+  }
+}
+
+async function requestNiliAssistantCode(){
+  const emailInput=document.getElementById("niliAssistantEmail");
+  const button=document.getElementById("niliAssistantCodeRequest");
+  const email=String(emailInput?.value || "").trim().toLowerCase();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){
+    niliAssistantSetAuthStatus(niliAssistantCopy("invalidEmail"));
+    emailInput?.focus();
+    return;
+  }
+
+  if(button) button.disabled=true;
+  niliAssistantSetAuthStatus("");
+  try{
+    const response=await fetch(`${window.API_BASE}/nili-assistant/request-code`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email,lang:currentLang})
+    });
+    const payload=await response.json();
+    if(!response.ok) throw new Error(payload?.code || "MAIL_FAILED");
+    niliAssistantPendingEmail=email;
+    document.getElementById("niliAssistantEmailStep")?.classList.add("is-hidden");
+    document.getElementById("niliAssistantCodeStep")?.classList.remove("is-hidden");
+    document.getElementById("niliAssistantChangeEmail")?.classList.remove("is-hidden");
+    niliAssistantSetAuthStatus(niliAssistantCopy("codeSent"),true);
+    document.getElementById("niliAssistantCode")?.focus();
+  }catch(error){
+    niliAssistantSetAuthStatus(
+      error.message==="CODE_RATE_LIMIT"
+        ? niliAssistantCopy("codeSent")
+        : niliAssistantCopy("mailError")
+    );
+  }finally{
+    if(button) button.disabled=false;
+  }
+}
+
+async function verifyNiliAssistantCode(){
+  const codeInput=document.getElementById("niliAssistantCode");
+  const button=document.getElementById("niliAssistantCodeVerify");
+  const code=String(codeInput?.value || "").replace(/\D/g,"").slice(0,6);
+  if(code.length!==6 || !niliAssistantPendingEmail){
+    niliAssistantSetAuthStatus(niliAssistantCopy("invalidCode"));
+    codeInput?.focus();
+    return;
+  }
+
+  if(button) button.disabled=true;
+  niliAssistantSetAuthStatus("");
+  try{
+    const response=await fetch(`${window.API_BASE}/nili-assistant/verify-code`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:niliAssistantPendingEmail,code})
+    });
+    const payload=await response.json();
+    if(!response.ok || !payload.token) throw new Error(payload?.code || "WRONG_CODE");
+    localStorage.setItem(NILI_ASSISTANT_TOKEN_KEY,payload.token);
+    localStorage.setItem(NILI_ASSISTANT_EMAIL_KEY,payload.email || niliAssistantPendingEmail);
+    niliAssistantVerifiedEmail=payload.email || niliAssistantPendingEmail;
+    niliAssistantSetAuthStatus(niliAssistantCopy("verified"),true);
+    setNiliAssistantLocked(false);
+  }catch{
+    niliAssistantSetAuthStatus(niliAssistantCopy("codeError"));
+  }finally{
+    if(button) button.disabled=false;
+  }
+}
+
+window.openNiliAssistant=function(){
+  const assistant=document.getElementById("niliAssistant");
+  if(!assistant) return;
+  updateNiliAssistantCopy();
+  assistant.classList.add("is-open");
+  assistant.setAttribute("aria-hidden","false");
+  document.getElementById("niliAssistantLauncher")?.setAttribute("aria-expanded","true");
+  document.body.style.overflow="hidden";
+  const suggestedEmail=
+    localStorage.getItem(NILI_ASSISTANT_EMAIL_KEY) ||
+    localStorage.getItem("creatorEmail") ||
+    localStorage.getItem("niliUserEmail") ||
+    "";
+  const emailInput=document.getElementById("niliAssistantEmail");
+  if(emailInput && !emailInput.value) emailInput.value=suggestedEmail;
+  if(niliAssistantVerified){
+    setNiliAssistantLocked(false);
+  }else{
+    setNiliAssistantLocked(true);
+    validateNiliAssistantSession().then(valid=>{
+      if(!valid) setTimeout(()=>document.getElementById("niliAssistantEmail")?.focus(),120);
+    });
+  }
+};
+
+window.closeNiliAssistant=function(){
+  const assistant=document.getElementById("niliAssistant");
+  if(!assistant) return;
+  assistant.classList.remove("is-open");
+  assistant.setAttribute("aria-hidden","true");
+  document.getElementById("niliAssistantLauncher")?.setAttribute("aria-expanded","false");
+  document.body.style.overflow="";
+};
+
+function setAssistantTodayPreference(preference){
+  if(!preference || !["easy","economic","healthy","elegant","kids"].includes(preference)) return;
+  todayCookState.preference=preference;
+  const group=document.querySelector('[data-today-group="preference"]');
+  group?.querySelectorAll("button").forEach(button => {
+    button.classList.toggle("is-active",button.dataset.value===preference);
+  });
+}
+
+function handleNiliAssistantAction(payload){
+  const action=payload?.action || "none";
+  if(action==="find_recipes"){
+    if(!selected.length){
+      addNiliAssistantMessage(niliAssistantCopy("chooseFirst"));
+      return;
+    }
+    const ingredients=[...selected];
+    setTimeout(() => {
+      closeNiliAssistant();
+      getRecipesFromIngredients(ingredients);
+    },500);
+    return;
+  }
+  if(action==="open_today"){
+    setAssistantTodayPreference(payload?.preference || "easy");
+    setTimeout(() => {
+      closeNiliAssistant();
+      openTodayCookFlow();
+    },500);
+    return;
+  }
+  if(action==="open_scan"){
+    setTimeout(() => {
+      closeNiliAssistant();
+      document.getElementById("photoGallery")?.click();
+    },350);
+    return;
+  }
+  if(action==="open_ingredients"){
+    setTimeout(() => {
+      closeNiliAssistant();
+      document.querySelector(".category-panel")?.scrollIntoView({behavior:"smooth",block:"center"});
+    },350);
+    return;
+  }
+  if(action==="open_meal_plan"){
+    setTimeout(() => {
+      closeNiliAssistant();
+      window.location.href=`meal-plan.html?lang=${encodeURIComponent(currentLang)}`;
+    },350);
+  }
+}
+
+async function askNiliAssistant(message){
+  const clean=String(message || "").trim();
+  if(!clean) return;
+  const verificationToken=niliAssistantStoredToken();
+  if(!niliAssistantVerified || !verificationToken){
+    setNiliAssistantLocked(true);
+    niliAssistantSetAuthStatus(niliAssistantCopy("sessionError"));
+    document.getElementById("niliAssistantEmail")?.focus();
+    return;
+  }
+  const status=document.getElementById("niliAssistantStatus");
+  const send=document.getElementById("niliAssistantSend");
+  addNiliAssistantMessage(clean,"user");
+  const thinking=addNiliAssistantMessage(niliAssistantCopy("thinking"),"nili","is-thinking");
+  if(status) status.textContent="";
+  if(send) send.disabled=true;
+
+  try{
+    const response=await fetch(`${window.API_BASE}/nili-assistant`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":`Bearer ${verificationToken}`
+      },
+      body:JSON.stringify({
+        message:clean,
+        ingredients:selected.map(getIngredientLabel),
+        ingredientIds:[...selected],
+        lang:currentLang,
+        verificationToken
+      })
+    });
+    const payload=await response.json();
+    if(response.status===401 && payload?.code==="EMAIL_VERIFICATION_REQUIRED"){
+      localStorage.removeItem(NILI_ASSISTANT_TOKEN_KEY);
+      localStorage.removeItem(NILI_ASSISTANT_EMAIL_KEY);
+      niliAssistantVerifiedEmail="";
+      setNiliAssistantLocked(true);
+      niliAssistantSetAuthStatus(niliAssistantCopy("sessionError"));
+      thinking?.remove();
+      return;
+    }
+    if(!response.ok) throw new Error(payload?.error || "Assistant failed");
+    thinking?.remove();
+    addNiliAssistantMessage(payload.reply || niliAssistantCopy("error"));
+    // Keep the conversation open after every answer; navigation must be user initiated.
+  }catch(error){
+    thinking?.remove();
+    if(status) status.textContent=niliAssistantCopy("error");
+    console.error("NILI ASSISTANT ERROR:",error);
+  }finally{
+    if(send) send.disabled=false;
+  }
+}
+
+document.addEventListener("DOMContentLoaded",() => {
+  updateNiliAssistantCopy();
+  document.getElementById("niliAssistantCodeRequest")?.addEventListener("click",requestNiliAssistantCode);
+  document.getElementById("niliAssistantCodeVerify")?.addEventListener("click",verifyNiliAssistantCode);
+  document.getElementById("niliAssistantChangeEmail")?.addEventListener("click",()=>{
+    resetNiliAssistantVerification();
+    document.getElementById("niliAssistantEmail")?.focus();
+  });
+  document.getElementById("niliAssistantEmail")?.addEventListener("keydown",event=>{
+    if(event.key==="Enter"){
+      event.preventDefault();
+      requestNiliAssistantCode();
+    }
+  });
+  document.getElementById("niliAssistantCode")?.addEventListener("input",event=>{
+    event.target.value=event.target.value.replace(/\D/g,"").slice(0,6);
+  });
+  document.getElementById("niliAssistantCode")?.addEventListener("keydown",event=>{
+    if(event.key==="Enter"){
+      event.preventDefault();
+      verifyNiliAssistantCode();
+    }
+  });
+  document.getElementById("niliAssistant")?.addEventListener("click",event => {
+    if(event.target.id==="niliAssistant") closeNiliAssistant();
+  });
+  document.getElementById("niliAssistantForm")?.addEventListener("submit",event => {
+    event.preventDefault();
+    const input=document.getElementById("niliAssistantInput");
+    const message=input?.value || "";
+    if(input) input.value="";
+    askNiliAssistant(message);
+  });
+  document.querySelectorAll("[data-assistant-prompt]").forEach(button => {
+    button.addEventListener("click",() => {
+      const key=`${button.dataset.assistantPrompt}Prompt`;
+      askNiliAssistant(niliAssistantCopy(key));
+    });
+  });
+});
+
+window.removeSelectedIngredient = function(item){
 
   selected =
   selected.filter(x => x !== item);
 
+  saveState();
+  syncIngredientModalSelection();
   renderChecklist();
-
-}
+};
 
 function clearSelectedIngredients(){
 
   selected = [];
+  saveState();
+  syncIngredientModalSelection();
 
   const tray =
   document.getElementById("selectedTray");
@@ -3607,8 +5334,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
 function updateUserMenuText(){
   setText("userDashboardLink", t("menuDashboard"));
+  const mealPlanLabels={
+    en:"Weekly Meal Plan",tr:"Haftalık Yemek Planı",de:"Wochenplan",fr:"Programme de la semaine",
+    es:"Plan semanal",pt:"Plano semanal",ru:"План на неделю",ar:"خطة الوجبات الأسبوعية",
+    ja:"週間献立",zh:"每周膳食计划"
+  };
+  setText("userMealPlanLink",mealPlanLabels[currentLang] || mealPlanLabels.en);
   setText("userAddRecipeLink", t("menuAddRecipe"));
   setText("userFavoritesBtn", "❤️ " + t("menuFavorites"));
+  setText("userContactBtn", "✉ " + t("menuContact"));
   setText("userHowLink", t("menuHowItWorks"));
   setText("userLogoutBtn", t("menuLogout"));
 }
@@ -3727,6 +5461,8 @@ if(langSelectEl){
     localStorage.setItem("lang", currentLang);
 
     applyLanguage();
+    updateTodayCookCopy();
+    updateNiliAssistantCopy();
     updateCreatorLinks();
 
     updateAllLinks();
@@ -4006,6 +5742,64 @@ window.toggleLangMenu = function(){
   }
 };
 
+async function refreshVisibleRecipesForLanguage(){
+  if(
+    !document.body.classList.contains("show-recipes-page") ||
+    isRecipeLangRefreshing
+  ){
+    return;
+  }
+
+  const detailWasOpen =
+    document.body.classList.contains("recipe-full-page-open");
+  const previousRecipeId = activeRecipeId;
+
+  isRecipeLangRefreshing = true;
+
+  try{
+    if(lastRecipeIngredients.length){
+      await getRecipesFromIngredients([...lastRecipeIngredients]);
+    }else if(lastWorldSearchPayload){
+      const requestPayload = {
+        ...lastWorldSearchPayload,
+        lang: currentLang
+      };
+
+      lastWorldSearchPayload = requestPayload;
+
+      const response = await fetch(`${window.API_BASE}/discover-recipes`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(requestPayload)
+      });
+      const payload = await response.json();
+
+      if(!response.ok){
+        throw new Error(payload.error || "Recipe translation failed");
+      }
+
+      currentRecipeSearchMeta = payload.meta || null;
+      renderRecipes(Array.isArray(payload.recipes) ? payload.recipes : []);
+    }else{
+      return;
+    }
+
+    if(detailWasOpen && previousRecipeId != null){
+      const translatedRecipe = currentRecipes.find(
+        recipe => String(recipe.id) === String(previousRecipeId)
+      );
+
+      if(translatedRecipe){
+        openRecipe(translatedRecipe.id);
+      }
+    }
+  }catch(error){
+    console.error("VISIBLE RECIPE LANGUAGE REFRESH ERROR:", error);
+  }finally{
+    isRecipeLangRefreshing = false;
+  }
+}
+
 window.setLang = function(lang){
 
   currentLang = lang;
@@ -4048,6 +5842,8 @@ window.setLang = function(lang){
   }
 
    applyLanguage();
+  updateTodayCookCopy();
+  updateNiliAssistantCopy();
 
   if(typeof initUserSessionMenu === "function"){
     initUserSessionMenu();
@@ -4067,33 +5863,11 @@ window.setLang = function(lang){
     renderChecklist();
   }
 
-  if(
-  document.body.classList.contains("show-recipes-page") &&
-  lastRecipeIngredients.length &&
-  !isRecipeLangRefreshing
-){
-  isRecipeLangRefreshing = true;
-
-  const oldRecipeId = activeRecipeId;
-
-  getRecipesFromIngredients(lastRecipeIngredients)
-    .then(() => {
-      if(oldRecipeId && modal && modal.style.display === "flex"){
-        openRecipe(oldRecipeId);
-      }
-    })
-    .finally(() => {
-      isRecipeLangRefreshing = false;
-    });
-}
-
-  if(modal && modal.style.display === "flex"){
-    const id = location.hash.replace("#recipe-", "");
-
-    if(id){
-      openRecipe(id);
-    }
+  if(typeof loadMobileNiliPicks === "function"){
+    loadMobileNiliPicks();
   }
+
+  refreshVisibleRecipesForLanguage();
 
   if(
     ingredientModal &&
@@ -4110,12 +5884,14 @@ window.setLang = function(lang){
   const addRecipeLink = document.getElementById("userAddRecipeLink");
   const favoritesBtn = document.getElementById("userFavoritesBtn");
   const howLink = document.getElementById("userHowLink");
+  const contactBtn = document.getElementById("userContactBtn");
   const logoutBtn = document.getElementById("userLogoutBtn");
 
   if(dashboardLink) dashboardLink.textContent = t("menuDashboard");
   if(addRecipeLink) addRecipeLink.textContent = t("menuAddRecipe");
   if(favoritesBtn) favoritesBtn.textContent = "❤️ " + t("menuFavorites");
   if(howLink) howLink.textContent = t("menuHowItWorks");
+  if(contactBtn) contactBtn.textContent = "✉ " + t("menuContact");
   if(logoutBtn) logoutBtn.textContent = t("menuLogout");
 
 };
@@ -4164,7 +5940,7 @@ function saveFavorites(favorites){
   localStorage.setItem("niliFavorites", JSON.stringify(favorites));
 }
 
-function toggleFavorite(recipeId){
+async function toggleFavorite(recipeId){
 
   const email =
   localStorage.getItem("creatorEmail") ||
@@ -4197,18 +5973,27 @@ if(!email){
 
   if(recipe){
 
-  fetch("/user/favorites", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      email,
-      recipe
-    })
-  }).catch(err =>
-    console.log("FAVORITE SAVE ERROR:", err)
-  );
+  try {
+    const response = await fetch(`${window.API_BASE}/user/favorites`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email,
+        recipe
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "Favorite save failed");
+    }
+
+    favorites = Array.isArray(data.favorites) ? data.favorites : favorites;
+  } catch (err) {
+    console.log("FAVORITE SAVE ERROR:", err);
+  }
 
 }
 
@@ -4242,7 +6027,7 @@ async function loadUserFavorites(){
 
     const res =
       await fetch(
-        `/user/favorites/${encodeURIComponent(email)}`
+        `${window.API_BASE}/user/favorites/${encodeURIComponent(email)}`
       );
 
     const data =
@@ -4308,6 +6093,7 @@ function closeSignupInvite(){
   if(modal){
     modal.style.display = "none";
   }
+  returnHomeAfterOverlayClose();
 }
 
 function goToSignup(){
@@ -4360,6 +6146,7 @@ if(username || email){
 }
 
   const dashLink = document.getElementById("userDashboardLink");
+  const mealPlanLink = document.getElementById("userMealPlanLink");
   const addLink = document.getElementById("userAddRecipeLink");
   const howLink = document.getElementById("userHowLink");
 
@@ -4369,6 +6156,10 @@ if(username || email){
 
   if(addLink){
     addLink.href = "creator.html?lang=" + currentLang;
+  }
+
+  if(mealPlanLink){
+    mealPlanLink.href = "meal-plan.html?lang=" + currentLang;
   }
 
   if(howLink){
@@ -4399,8 +6190,15 @@ if(userMenuBtn && userMenu){
 }
 
 setText("userDashboardLink", t("menuDashboard"));
+const mealPlanMenuLabels={
+  en:"Weekly Meal Plan",tr:"Haftalık Yemek Planı",de:"Wochenplan",fr:"Programme de la semaine",
+  es:"Plan semanal",pt:"Plano semanal",ru:"План на неделю",ar:"خطة الوجبات الأسبوعية",
+  ja:"週間献立",zh:"每周膳食计划"
+};
+setText("userMealPlanLink",mealPlanMenuLabels[currentLang] || mealPlanMenuLabels.en);
 setText("userAddRecipeLink", t("menuAddRecipe"));
 setText("userFavoritesBtn", "❤️ " + t("menuFavorites"));
+setText("userContactBtn", "✉ " + t("menuContact"));
 setText("userLogoutBtn", t("menuLogout"));
 
 
@@ -4460,10 +6258,12 @@ function backToHome(){
 }
 
 function nextRecipePage(){
+  const totalPages = Math.min(2, Math.max(1, Math.ceil(currentRecipes.length / recipesPerPage)));
+  if(recipePage >= totalPages) return;
   recipePage++;
   document.body.classList.add("show-recipes-page");
   document.body.classList.add("hide-mobile-top-menu");
-  renderRecipes(currentRecipes);
+  renderRecipes(currentRecipes, true);
 
   const sidebar = document.getElementById("sidebar");
   if(sidebar && window.innerWidth > 980){
@@ -4473,17 +6273,237 @@ function nextRecipePage(){
   }
 }
 
+function previousRecipePage(){
+  if(recipePage <= 1) return;
+  recipePage--;
+  renderRecipes(currentRecipes, true);
+}
+
+function syncIngredientModalSelection(){
+  if(!ingredientModalItems) return;
+
+  ingredientModalItems
+    .querySelectorAll(".modal-ingredient-btn")
+    .forEach(button => {
+      const value = String(button.dataset.value || "").trim().toLowerCase();
+      const isActive = selected.includes(value);
+      const mark = button.querySelector(".ingredient-mark");
+
+      button.classList.toggle("active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
+      if(mark) mark.textContent = isActive ? "✓" : "+";
+    });
+
+  renderIngredientModalSummary();
+}
+
 function openFavoritesPage(){
   const favorites = getFavorites();
 
   if(!favorites.length){
-    alert("No favorite recipes yet.");
+    const emptyFavorites = {
+      en:"No favorite recipes yet.",tr:"Henüz favori tarifiniz yok.",de:"Noch keine Lieblingsrezepte.",
+      fr:"Aucune recette favorite pour le moment.",es:"Aún no hay recetas favoritas.",pt:"Ainda não há receitas favoritas.",
+      ru:"Пока нет избранных рецептов.",ar:"لا توجد وصفات مفضلة بعد.",ja:"お気に入りのレシピはまだありません。",zh:"暂无收藏的食谱。"
+    };
+    alert(emptyFavorites[currentLang] || emptyFavorites.en);
     return;
   }
 
   recipePage = 1;
   renderRecipes(favorites);
 }
+
+function getLoggedUserEmail(){
+  return (
+    localStorage.getItem("creatorEmail") ||
+    localStorage.getItem("niliCreatorEmail") ||
+    localStorage.getItem("niliUserEmail") ||
+    ""
+  );
+}
+
+function getLoggedUserName(){
+  return (
+    localStorage.getItem("creatorUsername") ||
+    localStorage.getItem("niliCreatorUsername") ||
+    localStorage.getItem("niliUsername") ||
+    ""
+  );
+}
+
+window.openContactModal = function(){
+  const modal = document.getElementById("contactModal");
+  const nameInput = document.getElementById("contactName");
+  const emailInput = document.getElementById("contactEmail");
+  const messageInput = document.getElementById("contactMessage");
+  const status = document.getElementById("contactStatus");
+
+  if(!modal) return;
+
+  if(nameInput && !nameInput.value) nameInput.value = getLoggedUserName();
+  if(emailInput && !emailInput.value) emailInput.value = getLoggedUserEmail();
+  if(status) status.textContent = "";
+
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+
+  setTimeout(() => {
+    (messageInput || emailInput || nameInput)?.focus();
+  }, 80);
+};
+
+window.closeContactModal = function(){
+  const modal = document.getElementById("contactModal");
+  if(!modal) return;
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+  returnHomeAfterOverlayClose();
+};
+
+window.sendContactMessage = async function(){
+  const nameInput = document.getElementById("contactName");
+  const emailInput = document.getElementById("contactEmail");
+  const messageInput = document.getElementById("contactMessage");
+  const status = document.getElementById("contactStatus");
+  const submit = document.getElementById("contactSubmitBtn");
+  const message = messageInput?.value.trim() || "";
+
+  if(!message){
+    if(status) status.textContent = t("contactRequired");
+    messageInput?.focus();
+    return;
+  }
+
+  if(status) status.textContent = t("contactSending");
+  if(submit) submit.disabled = true;
+
+  try{
+    const res = await fetch(`${window.API_BASE}/contact-message`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: nameInput?.value.trim() || "",
+        email: emailInput?.value.trim() || "",
+        message,
+        lang: currentLang,
+        page: location.pathname + location.search + location.hash
+      })
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    if(!res.ok || !data.success){
+      throw new Error(data.error || "Contact failed");
+    }
+
+    if(status) status.textContent = t("contactDone");
+    if(messageInput) messageInput.value = "";
+  }catch(error){
+    console.error("CONTACT MESSAGE ERROR:", error);
+    if(status) status.textContent = t("contactError");
+  }finally{
+    if(submit) submit.disabled = false;
+  }
+};
+
+document.addEventListener("click", event => {
+  const contactModal = document.getElementById("contactModal");
+  if(contactModal && event.target === contactModal){
+    closeContactModal();
+  }
+});
+
+document.addEventListener("keydown", event => {
+  const contactModal = document.getElementById("contactModal");
+  if(event.key === "Escape" && contactModal?.classList.contains("open")){
+    closeContactModal();
+  }
+});
+
+function closeOpenMenus(){
+  document.getElementById("userMenu")?.classList.remove("open");
+  document.getElementById("langOptions")?.classList.remove("open");
+}
+
+function closeOverlayFromBackdrop(event){
+  const target = event.target;
+
+  if(target?.id === "ingredientModal"){
+    closeIngredientModal();
+    return true;
+  }
+
+  if(target?.id === "selectedTray"){
+    closeSelectedTray();
+    return true;
+  }
+
+  if(target?.id === "worldSearchModal"){
+    closeWorldSearch();
+    return true;
+  }
+
+  if(target?.id === "signupInviteModal"){
+    closeSignupInvite();
+    return true;
+  }
+
+  if(target?.id === "contactModal"){
+    closeContactModal();
+    return true;
+  }
+
+  if(target?.id === "howItWorksModal"){
+    closeHowItWorks();
+    return true;
+  }
+
+  if(target?.id === "modal"){
+    closeModal();
+    return true;
+  }
+
+  return false;
+}
+
+document.addEventListener("click", event => {
+  if(closeOverlayFromBackdrop(event)){
+    return;
+  }
+
+  if(!event.target.closest("#userMenu, #langWrapper, #langOptions")){
+    closeOpenMenus();
+  }
+});
+
+document.addEventListener("keydown", event => {
+  if(event.key !== "Escape") return;
+
+  closeOpenMenus();
+
+  if(ingredientModal?.style.display === "flex"){
+    closeIngredientModal();
+  }
+
+  if(document.getElementById("selectedTray")?.classList.contains("has-items")){
+    closeSelectedTray();
+  }
+
+  if(document.getElementById("worldSearchModal")?.classList.contains("open")){
+    closeWorldSearch();
+  }
+
+  if(document.getElementById("signupInviteModal")?.style.display === "flex"){
+    closeSignupInvite();
+  }
+
+  if(document.getElementById("howItWorksModal")?.style.display === "flex"){
+    closeHowItWorks();
+  }
+});
 
 function openHowItWorks(){
   applyLanguage();
@@ -4504,6 +6524,7 @@ function closeHowItWorks(){
   }
 
   localStorage.setItem("niliHowSeen", "1");
+  returnHomeAfterOverlayClose();
 }
 
 window.addEventListener("load", () => {
@@ -4693,7 +6714,7 @@ translateSignupPopup();
 document.addEventListener("DOMContentLoaded", () => {
   autoDetectLanguageAndShowIntro();
 
-  loadAllIngredients();
+  allIngredientsLoadPromise = loadAllIngredients();
 }
 
 );
@@ -4713,6 +6734,53 @@ function translateSignupPopup(){
     userMenuName.textContent = t("loginButton");
   }
 }
+
+function ensureVisitorId(){
+  let visitorId = localStorage.getItem("niliVisitorId");
+
+  if(!visitorId){
+    visitorId =
+      (window.crypto?.randomUUID && window.crypto.randomUUID()) ||
+      `visitor-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    localStorage.setItem("niliVisitorId", visitorId);
+  }
+
+  return visitorId;
+}
+
+function sendAnalyticsPing(){
+  if(!window.API_BASE) return;
+
+  if(
+    location.hostname === "localhost" ||
+    location.hostname === "127.0.0.1" ||
+    location.hostname.startsWith("192.168.") ||
+    location.hostname.startsWith("10.") ||
+    location.hostname.startsWith("172.")
+  ){
+    return;
+  }
+
+  const payload = {
+    visitorId: ensureVisitorId(),
+    path: location.pathname + location.search + location.hash,
+    lang: currentLang,
+    userEmail:
+      localStorage.getItem("creatorEmail") ||
+      localStorage.getItem("niliUserEmail") ||
+      ""
+  };
+
+  fetch(`${window.API_BASE}/analytics/ping`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    keepalive: true
+  }).catch(() => {});
+}
+
+sendAnalyticsPing();
+setInterval(sendAnalyticsPing, 30000);
 
 window.addEventListener("pageshow", () => {
   currentLang =

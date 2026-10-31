@@ -1,0 +1,86 @@
+.nili-archive-entry {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 26px;
+  align-items: center;
+  gap: 11px;
+  min-height: 58px;
+  padding: 9px 12px 9px 9px;
+  border: 1px solid #d9a83e;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ed7a36 0%, #d65a2f 100%);
+  box-shadow: 0 12px 26px rgba(133, 65, 29, 0.22);
+  color: #fffdf7;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nili-archive-entry:hover,
+.nili-archive-entry:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(133, 65, 29, 0.3);
+}
+
+.nili-archive-entry-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 13px;
+  background: #f6c557;
+  color: #244832;
+  font-size: 18px;
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.55);
+}
+
+.nili-archive-entry-copy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.nili-archive-entry-copy strong,
+.nili-archive-entry-copy small {
+  display: block;
+  color: inherit !important;
+}
+
+.nili-archive-entry-copy strong {
+  font: 800 13px/1.15 "Sora", "Manrope", sans-serif;
+}
+
+.nili-archive-entry-copy small {
+  overflow: hidden;
+  font: 600 9px/1.25 "Manrope", sans-serif;
+  opacity: 0.88;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nili-archive-entry-arrow {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  color: #fff !important;
+  font-size: 15px;
+}
+
+@media (max-width: 980px) {
+  .nili-archive-entry {
+    position: relative;
+    z-index: 5;
+    min-height: 54px;
+    margin: 7px 0 3px;
+    border-radius: 17px;
+  }
+
+  .nili-archive-entry-copy strong {
+    font-size: 12px;
+  }
+
+  .nili-archive-entry-copy small {
+    font-size: 9px;
+  }
+}
