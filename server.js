@@ -5465,7 +5465,6 @@ function nextAvailableApprovedRecipeId(recipes, excludedRecipeId = "") {
   const existingNumbers = new Set(
     recipes
       .filter(recipe =>
-        recipe?.deleted !== true &&
         String(recipe?.id || "") !== String(excludedRecipeId || "")
       )
       .map(approvedRecipeIdNumber)
@@ -7842,6 +7841,7 @@ app.post(
               ...approvedRecipes[approvedIndex],
               ...recipe,
               ...synchronizedMediaFields,
+              importRecipeId: approvedRecipes[approvedIndex].importRecipeId || recipe.importRecipeId,
               id: approvedRecipes[approvedIndex].id,
               systemKey: approvedRecipes[approvedIndex].systemKey || approvedRecipes[approvedIndex].id,
               status: "approved",
@@ -8637,9 +8637,6 @@ function writeApprovedRecipes(recipes, {
   reason = "approved-update",
   snapshot = true
 } = {}) {
-  if (reason !== "creator-click-stats" && !String(reason).startsWith("recipe-card-")) {
-    compactApprovedRecipeIds(recipes);
-  }
   writeProtectedArray(
     getApprovedRecipesFile(),
     recipes,
@@ -8701,7 +8698,6 @@ app.post("/admin/approve-recipe/:id", async (req, res) => {
 
     const approvedNumber=approvedRecipeIdNumber(approvedRecipe);
     const approvedIdConflict=approvedNumber !== null && approvedRecipes.some(item =>
-      item.deleted !== true &&
       String(item.id || "") !== String(approvedRecipe.id || "") &&
       approvedRecipeIdNumber(item) === approvedNumber
     );
@@ -8720,7 +8716,8 @@ app.post("/admin/approve-recipe/:id", async (req, res) => {
     if(existingApprovedIndex !== -1){
       approvedRecipes[existingApprovedIndex] = {
         ...approvedRecipes[existingApprovedIndex],
-        ...approvedRecipe
+        ...approvedRecipe,
+        importRecipeId: approvedRecipes[existingApprovedIndex].importRecipeId || approvedRecipe.importRecipeId
       };
     }else{
       approvedRecipes.push(approvedRecipe);
