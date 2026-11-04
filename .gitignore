@@ -25,3 +25,7 @@ image-optimization-backups/
 optimized-images/
 recipe-card-approved-*/
 recipe-posters/
+# Generated ingredient snapshots and Office lock files
+ingredients/*.backup.json
+~$*
+
