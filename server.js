@@ -7214,27 +7214,6 @@ app.post("/admin/send-mail", async (req, res) => {
 
 app.get("/admin/export-recipes", async (req, res) => {
   try {
-    if (fs.existsSync(professionalExcelMasterFile)) {
-      const exportId = backupId();
-      const exportTimestamp = safeBackupTimestamp();
-      const fileName = `NILIS_KITCHEN_PROFESYONEL_ANA_EXCEL_${exportTimestamp}_${exportId}.xlsx`;
-      const exportArchiveDir = path.join(protectedDataRoot, "excel-exports");
-      fs.mkdirSync(exportArchiveDir, { recursive: true });
-      fs.copyFileSync(
-        professionalExcelMasterFile,
-        path.join(exportArchiveDir, fileName)
-      );
-      res.setHeader(
-        "Content-Type",
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      );
-      res.setHeader(
-        "Content-Disposition",
-        `attachment; filename="${fileName}"`
-      );
-      return res.sendFile(professionalExcelMasterFile);
-    }
-
     let XLSX;
 
     try {
@@ -7248,8 +7227,8 @@ app.get("/admin/export-recipes", async (req, res) => {
 
     const XLSXLib = XLSX.default || XLSX;
     const approvedRecipes = readApprovedRecipes();
-    const exportableApprovedRecipes = approvedRecipes.filter(recipe => recipe.deleted !== true);
-    const orderedApprovedRecipes = sequentialApprovedRecipes(exportableApprovedRecipes);
+    const orderedApprovedRecipes = sequentialApprovedRecipes(approvedRecipes)
+      .filter(({ recipe }) => approvedManagementState(recipe) === "published");
     const catalogRecipes = readRecipeCatalog();
     const workbook = XLSXLib.utils.book_new();
     const exportId = backupId();
@@ -7354,14 +7333,14 @@ app.get("/admin/export-recipes", async (req, res) => {
       ["Oluşturulma Zamanı", new Date().toISOString()],
       [],
       ["Kaynak", "Tarif Sayısı"],
-      ["Nili's Kitchen", exportableApprovedRecipes.length],
+      ["Yayındaki Nili tarifleri", niliRows.length],
       ["Spoonacular", catalogRecipes.filter(item => item.source === "spoonacular").length],
       ["TheMealDB", catalogRecipes.filter(item => item.source === "themealdb").length],
       ["Edamam", catalogRecipes.filter(item => item.source === "edamam").length],
-      ["TOPLAM", exportableApprovedRecipes.length + catalogRecipes.length],
+      ["Harici arşiv toplamı", externalRows.length],
       [],
       ["Kullanım"],
-      ["Mevcut Nili tariflerini güncellemek için Nili Tarif Yönetimi sekmesini düzenleyip tekrar yükleyin."],
+      ["Mevcut Nili tariflerini güncellemek için Sisteme Aktarım sekmesini düzenleyip tekrar yükleyin."],
       ["Yeni tarifleri Yeni Tarif Yükleme sekmesine ekleyin."],
       ["Harici Tarif Arşivi sekmesi bilgi amaçlıdır ve toplu Nili importuna dahil edilmez."],
       ["Fotoğraf alanı indirilen Excel'de tıklanabilir linktir; birden fazla fotoğraf noktalı virgülle listelenir."],
@@ -7396,7 +7375,7 @@ app.get("/admin/export-recipes", async (req, res) => {
     }));
 
     XLSXLib.utils.book_append_sheet(workbook, summarySheet, "Özet");
-    XLSXLib.utils.book_append_sheet(workbook, niliSheet, "Nili Tarif Yönetimi");
+    XLSXLib.utils.book_append_sheet(workbook, niliSheet, "Sisteme Aktarım");
     XLSXLib.utils.book_append_sheet(workbook, externalSheet, "Harici Tarif Arşivi");
     XLSXLib.utils.book_append_sheet(workbook, templateSheet, "Yeni Tarif Yükleme");
 
@@ -7419,6 +7398,7 @@ app.get("/admin/export-recipes", async (req, res) => {
       "Content-Disposition",
       `attachment; filename="${fileName}"`
     );
+    res.setHeader("Cache-Control", "private, no-store");
     return res.send(output);
   } catch (err) {
     console.log("ADMIN EXPORT RECIPES ERROR:", err.message);
