@@ -6,6 +6,7 @@ from collections import defaultdict
 from copy import copy
 from openpyxl import load_workbook
 from openpyxl.formula.translate import Translator
+from openpyxl.workbook.properties import CalcProperties
 from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.cell_range import MultiCellRange
 
@@ -157,6 +158,8 @@ def render(template, output, recipes):
     for row in wb["Canlı Eşleştirme"].iter_rows(min_row=4):
         if row[0].value == "Hedef aktif tarif":
             row[1].value = len(ids)
+    if wb.calculation is None:
+        wb.calculation = CalcProperties()
     wb.calculation.fullCalcOnLoad = True
     wb.save(output)
 
