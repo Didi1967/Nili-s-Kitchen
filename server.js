@@ -7213,220 +7213,47 @@ app.post("/admin/send-mail", async (req, res) => {
 });
 
 app.get("/admin/export-recipes", async (req, res) => {
+  let temporaryFile;
   try {
-    if (fs.existsSync(professionalExcelMasterFile)) {
-      const exportId = backupId();
-      const exportTimestamp = safeBackupTimestamp();
-      const fileName = `NILIS_KITCHEN_PROFESYONEL_ANA_EXCEL_${exportTimestamp}_${exportId}.xlsx`;
-      const exportArchiveDir = path.join(protectedDataRoot, "excel-exports");
-      fs.mkdirSync(exportArchiveDir, { recursive: true });
-      fs.copyFileSync(
-        professionalExcelMasterFile,
-        path.join(exportArchiveDir, fileName)
-      );
-      res.setHeader(
-        "Content-Type",
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      );
-      res.setHeader(
-        "Content-Disposition",
-        `attachment; filename="${fileName}"`
-      );
-      return res.sendFile(professionalExcelMasterFile);
-    }
-
-    let XLSX;
-
-    try {
-      XLSX = await import("xlsx");
-    } catch (dependencyError) {
-      return res.status(500).json({
-        success: false,
-        error: "Excel export package is missing"
+    const recipes = sequentialApprovedRecipes(readApprovedRecipes())
+      .filter(({ recipe }) => approvedManagementState(recipe) === "published")
+      .map(({ recipe, displayRecipeId }) => ({
+        nk: displayRecipeId,
+        key: recipe.id || recipe.systemKey,
+        recipe,
+        name: recipe.adminTitleTr || recipe.title || "",
+        ingredients: String(recipe.adminIngredientsTr || exportIngredientText(recipe.ingredients) || ""),
+        steps: String(recipe.adminInstructionsTr || exportInstructionText(recipe) || ""),
+        photo: recipeMediaValues(recipe, req)[0] || "",
+        tags: Array.isArray(recipe.tags) ? recipe.tags.join(", ") : recipe.tags || ""
+      }));
+    const directory = path.join(protectedDataRoot, "excel-exports");
+    await fs.promises.mkdir(directory, { recursive: true });
+    const filename = `NILIS_PROFESYONEL_${safeBackupTimestamp()}_${backupId()}.xlsx`;
+    const output = path.join(directory, filename);
+    temporaryFile = output + ".partial";
+    await new Promise((resolve, reject) => {
+      const child = spawn(process.env.NILI_EXCEL_PYTHON || "python3", [
+        path.join(__dirname, "export-professional-workbook.py"),
+        professionalExcelMasterFile, temporaryFile
+      ], { windowsHide: true, stdio: ["pipe", "ignore", "pipe"] });
+      let diagnostic = "";
+      child.stderr.on("data", chunk => { diagnostic = (diagnostic + chunk).slice(-2000); });
+      child.on("error", reject);
+      child.stdin.on("error", error => {
+        if (error.code !== "EPIPE") reject(error);
       });
-    }
-
-    const XLSXLib = XLSX.default || XLSX;
-    const approvedRecipes = readApprovedRecipes();
-    const exportableApprovedRecipes = approvedRecipes.filter(recipe => recipe.deleted !== true);
-    const orderedApprovedRecipes = sequentialApprovedRecipes(exportableApprovedRecipes);
-    const catalogRecipes = readRecipeCatalog();
-    const workbook = XLSXLib.utils.book_new();
-    const exportId = backupId();
-    const exportTimestamp = safeBackupTimestamp();
-
-    const niliHeaders = [
-      "Recipe ID",
-      "Yemek Adı",
-      "Yemek Tipi",
-      "Ülke / Bölge / Mutfak",
-      "Kaç Kişilik",
-      "Hazırlık Süresi",
-      "Pişirme Süresi",
-      "Malzemeler (Ölçülü)",
-      "Tarif (Adım Adım)",
-      "Fotoğraf",
-      "Etiketler",
-      "SEO Başlık",
-      "SEO Açıklama",
-      "Yayına Açık",
-      "Kaynak",
-      "System Key"
-    ];
-
-    const newRecipeHeaders = [
-      "Geçici ID", "Recipe ID", "Orijinal Ad", "Türkçe Ad", "Türkçe Açıklama",
-      "Tür", "Ana Ülke", "İlişkili Ülke/Bölge", "Bölge", "Mutfak",
-      "Porsiyon", "Hazırlık Süresi", "Pasif Süre", "Pişirme Süresi", "Sıcaklık",
-      "Zorluk", "Alerjenler", "Malzemeler", "Tarif Adımları", "Pişme/Kıvam Kontrolü",
-      "Püf Noktası", "Servis Önerisi", "Saklama Önerisi", "Alternatif Malzemeler",
-      "Kültür/Köken", "Kart Kısa Açıklama", "Karta Seçilmiş Malzemeler", "Kart Adımları",
-      "E-Kitap Giriş", "Fotoğraf", "E-Kitap Görsel URL", "Fotoğraf Alt Metni",
-      "Kaynak URL", "Doğrulama Kaynağı", "Doğrulama Durumu", "Etiketler",
-      "SEO Başlık", "SEO Açıklama", "Editoryal Durum", "Editör Kararı",
-      "Editör Notu", "Yayına Açık", "System Key"
-    ];
-
-    const niliRows = orderedApprovedRecipes.map(({ recipe, displayRecipeId }) => [
-      displayRecipeId,
-      recipe.adminTitleTr || recipe.title || "",
-      recipe.type || "",
-      recipe.cuisine || "",
-      recipe.servings || "",
-      recipe.prepTimeText || recipe.prepTime || "",
-      recipe.cookTimeText || "",
-      String(recipe.adminIngredientsTr || exportIngredientText(recipe.ingredients)).replace(/\r\n?/g, "\n"),
-      String(recipe.adminInstructionsTr || exportInstructionText(recipe)).replace(/\r\n?/g, "\n"),
-      excelLinkCell(recipeMediaValues(recipe, req)),
-      Array.isArray(recipe.tags) ? recipe.tags.join(", ") : recipe.tags || "",
-      recipe.seoTitle || recipe.adminTitleTr || recipe.title || "",
-      recipe.seoDescription || "",
-      recipe.publishEnabled === false ? "Hayır" : "Evet",
-      recipe.source || "nili_creator",
-      recipe.id || recipe.systemKey || ""
-    ]);
-
-    const externalHeaders = [
-      "Kaynak",
-      "Kaynak ID",
-      "Katalog ID",
-      "Harici Tarif Başlığı",
-      "Mutfak",
-      "Ülke / Bölge",
-      "Kategori",
-      "Etiketler",
-      "Porsiyon",
-      "Toplam Süre",
-      "Malzemeler",
-      "Tarif Adımları",
-      "Görsel URL",
-      "Kaynak URL",
-      "SEO Başlık",
-      "SEO Açıklama"
-    ];
-
-    const externalRows = catalogRecipes.map(recipe => [
-      recipe.source || "external",
-      recipe.sourceId || "",
-      recipe.id || "",
-      recipe.title || "",
-      recipe.cuisine || "",
-      recipe.country || "",
-      recipe.category || "",
-      Array.isArray(recipe.tags) ? recipe.tags.join(", ") : recipe.tags || "",
-      recipe.servings || "",
-      recipe.readyInMinutes ? `${recipe.readyInMinutes} dk` : "",
-      exportIngredientText(
-        recipe.extendedIngredients?.length
-          ? recipe.extendedIngredients
-          : recipe.usedIngredients
-      ),
-      exportInstructionText(recipe),
-      excelLinkCell(recipeMediaValues(recipe, req)),
-      excelLinkCell([toPublicRecipeUrl(recipe.sourceUrl || "", req)]),
-      recipe.seoTitle || recipe.title || "",
-      recipe.seoDescription || ""
-    ]);
-
-    const summaryRows = [
-      ["Nili's Kitchen - Tarif Yönetim Ana Dosyası"],
-      ["Yedek Kimliği", exportId],
-      ["Oluşturulma Zamanı", new Date().toISOString()],
-      [],
-      ["Kaynak", "Tarif Sayısı"],
-      ["Nili's Kitchen", exportableApprovedRecipes.length],
-      ["Spoonacular", catalogRecipes.filter(item => item.source === "spoonacular").length],
-      ["TheMealDB", catalogRecipes.filter(item => item.source === "themealdb").length],
-      ["Edamam", catalogRecipes.filter(item => item.source === "edamam").length],
-      ["TOPLAM", exportableApprovedRecipes.length + catalogRecipes.length],
-      [],
-      ["Kullanım"],
-      ["Mevcut Nili tariflerini güncellemek için Nili Tarif Yönetimi sekmesini düzenleyip tekrar yükleyin."],
-      ["Yeni tarifleri Yeni Tarif Yükleme sekmesine ekleyin."],
-      ["Harici Tarif Arşivi sekmesi bilgi amaçlıdır ve toplu Nili importuna dahil edilmez."],
-      ["Fotoğraf alanı indirilen Excel'de tıklanabilir linktir; birden fazla fotoğraf noktalı virgülle listelenir."],
-      ["Recipe ID tarif ilk yüklendiğinde atanır ve sonraki indirme veya güncellemelerde değişmez."],
-      ["Gizli System Key sütununu değiştirmeyin; güvenli güncellemeler bu sabit anahtarla eşleştirilir."]
-    ];
-
-    const templateRows = [newRecipeHeaders];
-    for (let index = 0; index < 25; index += 1) {
-      templateRows.push(Array(newRecipeHeaders.length).fill(""));
-    }
-
-    const summarySheet = XLSXLib.utils.aoa_to_sheet(summaryRows);
-    const niliSheet = XLSXLib.utils.aoa_to_sheet([niliHeaders, ...niliRows]);
-    const externalSheet = XLSXLib.utils.aoa_to_sheet([externalHeaders, ...externalRows]);
-    const templateSheet = XLSXLib.utils.aoa_to_sheet(templateRows);
-
-    summarySheet["!cols"] = [{ wch: 96 }, { wch: 16 }];
-    niliSheet["!cols"] = [
-      { wch: 18 }, { wch: 30 }, { wch: 20 }, { wch: 25 }, { wch: 14 },
-      { wch: 18 }, { wch: 18 }, { wch: 60 }, { wch: 72 }, { wch: 42 },
-      { wch: 32 }, { wch: 40 }, { wch: 60 }, { wch: 14 }, { wch: 18 },
-      { wch: 1, hidden: true }
-    ];
-    externalSheet["!cols"] = [
-      { wch: 16 }, { wch: 22 }, { wch: 26 }, { wch: 34 }, { wch: 20 },
-      { wch: 20 }, { wch: 20 }, { wch: 30 }, { wch: 12 }, { wch: 14 },
-      { wch: 60 }, { wch: 72 }, { wch: 42 }, { wch: 42 }, { wch: 40 }, { wch: 60 }
-    ];
-    templateSheet["!cols"] = newRecipeHeaders.map((header) => ({
-      wch: /Malzemeler|Adımlar|Açıklama|Giriş|Kültür|Önerisi|Alternatif/.test(header) ? 55 : 20
-    }));
-
-    XLSXLib.utils.book_append_sheet(workbook, summarySheet, "Özet");
-    XLSXLib.utils.book_append_sheet(workbook, niliSheet, "Nili Tarif Yönetimi");
-    XLSXLib.utils.book_append_sheet(workbook, externalSheet, "Harici Tarif Arşivi");
-    XLSXLib.utils.book_append_sheet(workbook, templateSheet, "Yeni Tarif Yükleme");
-
-    const output = XLSXLib.write(workbook, {
-      type: "buffer",
-      bookType: "xlsx",
-      compression: true
+      child.on("close", code => code === 0 ? resolve() : reject(new Error(diagnostic || "Excel export failed")));
+      child.stdin.end(JSON.stringify(recipes));
     });
-
-    const fileName = `NILIS_TARIF_YONETIM_${exportTimestamp}_${exportId}.xlsx`;
-    const exportArchiveDir = path.join(protectedDataRoot, "excel-exports");
-    fs.mkdirSync(exportArchiveDir, { recursive: true });
-    fs.writeFileSync(path.join(exportArchiveDir, fileName), output);
-
-    res.setHeader(
-      "Content-Type",
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    );
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename="${fileName}"`
-    );
-    return res.send(output);
-  } catch (err) {
-    console.log("ADMIN EXPORT RECIPES ERROR:", err.message);
-    await notifyAdminError("admin-export-recipes", err);
-    return res.status(500).json({
-      success: false,
-      error: "Recipe Excel export failed"
-    });
+    await fs.promises.rename(temporaryFile, output);
+    res.setHeader("Cache-Control", "private, no-store");
+    return res.download(output, filename);
+  } catch (error) {
+    if (temporaryFile) await fs.promises.rm(temporaryFile, { force: true }).catch(() => {});
+    console.error("ADMIN EXPORT RECIPES ERROR:", error.message);
+    await notifyAdminError("admin-export-recipes", error);
+    return res.status(500).json({ success: false, error: "Profesyonel Excel oluşturulamadı." });
   }
 });
 
