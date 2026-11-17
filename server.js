@@ -5852,14 +5852,14 @@ function stopActiveRecipeCardGenerator() {
 function stopOrphanedRecipeCardGenerators() {
   if (process.platform === "win32") return;
   try {
-    const killer = spawn("pkill", ["-TERM", "-f", "[r]ender-master-reference-karniyarik-card.mjs|[g]enerate-reference-recipe-card.mjs"], {
+    const killer = spawn("pkill", ["-TERM", "-f", "[r]ender-modern-recipe-card.mjs|[r]ender-master-reference-karniyarik-card.mjs|[g]enerate-reference-recipe-card.mjs"], {
       detached:true,
       stdio:"ignore"
     });
     killer.unref();
     const forceTimer = setTimeout(() => {
       try {
-        const forceKiller = spawn("pkill", ["-KILL", "-f", "[r]ender-master-reference-karniyarik-card.mjs|[g]enerate-reference-recipe-card.mjs"], {
+        const forceKiller = spawn("pkill", ["-KILL", "-f", "[r]ender-modern-recipe-card.mjs|[r]ender-master-reference-karniyarik-card.mjs|[g]enerate-reference-recipe-card.mjs"], {
           detached:true,
           stdio:"ignore"
         });
@@ -5872,10 +5872,8 @@ function stopOrphanedRecipeCardGenerators() {
 
 function runRecipeCardGenerator(recipeId, lang = "en") {
   return new Promise((resolve, reject) => {
-    // All admin card generation must use the approved Karnıyarık master.
-    // The legacy AI visual-base generator produces a different card design and
-    // must not be reachable from the production queue.
-    const generatorFile = "render-master-reference-karniyarik-card.mjs";
+    // Use the Modern Menemen layout for all explicit admin card requests.
+    const generatorFile = "render-modern-recipe-card.mjs";
     const child = spawn(process.execPath, [
       path.join(__dirname, generatorFile),
       `--id=${recipeId}`,
@@ -5999,7 +5997,7 @@ function recipeCardFatalTranslationFailure(error) {
 
 function recipeCardSkippableValidationFailure(error) {
   const message=String(error?.message || error);
-  return /card localization validation failed|recipe localization failed|recipe translation semantic validation failed/i.test(message);
+  return /card layout validation failed|card localization validation failed|recipe localization failed|recipe translation semantic validation failed/i.test(message);
 }
 
 function queueRecipeCardGeneration(recipeIds, { force = false, reason = "automatic", languages = RECIPE_CARD_PRODUCTION_LANGUAGES } = {}) {
