@@ -9,6 +9,7 @@ import OpenAI from "openai";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import sharp from "sharp";
+import { isManualRecipeCardRequest } from "./recipe-card-policy.mjs";
 import { spawn } from "node:child_process";
 
 dotenv.config();
@@ -5851,14 +5852,14 @@ function stopActiveRecipeCardGenerator() {
 function stopOrphanedRecipeCardGenerators() {
   if (process.platform === "win32") return;
   try {
-    const killer = spawn("pkill", ["-TERM", "-f", "[r]ender-master-reference-karniyarik-card.mjs|[g]enerate-reference-recipe-card.mjs"], {
+    const killer = spawn("pkill", ["-TERM", "-f", "[r]ender-modern-recipe-card.mjs|[r]ender-master-reference-karniyarik-card.mjs|[g]enerate-reference-recipe-card.mjs"], {
       detached:true,
       stdio:"ignore"
     });
     killer.unref();
     const forceTimer = setTimeout(() => {
       try {
-        const forceKiller = spawn("pkill", ["-KILL", "-f", "[r]ender-master-reference-karniyarik-card.mjs|[g]enerate-reference-recipe-card.mjs"], {
+        const forceKiller = spawn("pkill", ["-KILL", "-f", "[r]ender-modern-recipe-card.mjs|[r]ender-master-reference-karniyarik-card.mjs|[g]enerate-reference-recipe-card.mjs"], {
           detached:true,
           stdio:"ignore"
         });
@@ -5871,10 +5872,8 @@ function stopOrphanedRecipeCardGenerators() {
 
 function runRecipeCardGenerator(recipeId, lang = "en") {
   return new Promise((resolve, reject) => {
-    // All admin card generation must use the approved Karnıyarık master.
-    // The legacy AI visual-base generator produces a different card design and
-    // must not be reachable from the production queue.
-    const generatorFile = "render-master-reference-karniyarik-card.mjs";
+    // Use the Modern Menemen layout for all explicit admin card requests.
+    const generatorFile = "render-modern-recipe-card.mjs";
     const child = spawn(process.execPath, [
       path.join(__dirname, generatorFile),
       `--id=${recipeId}`,
@@ -5998,10 +5997,11 @@ function recipeCardFatalTranslationFailure(error) {
 
 function recipeCardSkippableValidationFailure(error) {
   const message=String(error?.message || error);
-  return /card localization validation failed|recipe localization failed|recipe translation semantic validation failed/i.test(message);
+  return /card layout validation failed|card localization validation failed|recipe localization failed|recipe translation semantic validation failed/i.test(message);
 }
 
 function queueRecipeCardGeneration(recipeIds, { force = false, reason = "automatic", languages = RECIPE_CARD_PRODUCTION_LANGUAGES } = {}) {
+  if (!isManualRecipeCardRequest(reason)) return { added:0, skipped:0, automaticGenerationDisabled:true };
   const requestedIds = new Set((Array.isArray(recipeIds) ? recipeIds : [recipeIds]).map(String).filter(Boolean));
   if (!requestedIds.size) return { added:0, skipped:0 };
   const requestedLanguages = [...new Set((Array.isArray(languages) ? languages : []).map(value => String(value).toLowerCase()))]
@@ -6073,6 +6073,14 @@ async function processRecipeCardGenerationQueue() {
       const index = queue.findIndex(item => item.status === "queued" || item.status === "running");
       if (index < 0) break;
       const job = queue[index];
+      if (!isManualRecipeCardRequest(job.reason)) {
+        job.status = "cancelled";
+        job.cancelledAt = new Date().toISOString();
+        job.updatedAt = job.cancelledAt;
+        job.error = "";
+        writeRecipeCardGenerationQueue(queue);
+        continue;
+      }
       job.status = "running";
       job.attempts = Number(job.attempts || 0) + 1;
       job.startedAt = new Date().toISOString();
@@ -7838,12 +7846,7 @@ app.post(
         fs.renameSync(incomingMasterFile, professionalExcelMasterFile);
       }
 
-      if (updatedApprovedRecipes.length && !managedTransferProcessed) {
-        queueRecipeCardGeneration(updatedApprovedRecipes.map(recipe => recipe.id), {
-          force:true,
-          reason:"approved-excel-import"
-        });
-      }
+      // Recipe cards are generated only by explicit admin actions.
 
       if (req.file && fs.existsSync(req.file.path)) {
         fs.unlinkSync(req.file.path);
@@ -8556,9 +8559,7 @@ app.post("/admin/approve-recipe/:id", async (req, res) => {
     writePendingRecipes(pendingRecipes, "admin-approve");
 
 
-    queueRecipeCardGeneration([approvedRecipe.id], {
-      reason:"recipe-approved"
-    });
+    // Approving a recipe does not start card production.
 
     console.log("APPROVED FILE:", getApprovedRecipesFile());
 console.log("APPROVED COUNT:", approvedRecipes.length);
